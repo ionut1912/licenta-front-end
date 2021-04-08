@@ -1,0 +1,32 @@
+.roww{
+  display: flex;
+}
+
+.detail{
+    width: 100%;
+}
+.detail h1{
+ color:rgb(0, 0, 2);
+ font-size:23px;
+ 
+}
+.detail p{
+    font-size:15px;
+    color:rgba(22, 22, 22, 0.959);
+    margin-bottom: 0px;
+}
+
+.roww .actions{
+   display: grid;
+   grid-template-columns: repeat(2, auto);
+   grid-gap: 20px;
+   width: 100%;
+   padding-right: 30px;
+   justify-self: end;
+   justify-content: end;
+   font-size:30px;
+}
+.actions .edit{
+    margin-right: 20px;
+}
+

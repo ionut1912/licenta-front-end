@@ -1,0 +1,120 @@
+.footer{
+    background-color:#060b26;
+    color:#fff;
+}
+
+.text-success{
+    padding-top:10px;
+}
+
+.btn-primary{
+    border:1px solid transparent;
+    padding:.7rem 1.3rem;
+    line-height: 1.3rem;
+    width: 200px;
+}
+
+.btn-big:hover{
+    color:white !important;
+    background:#004244;
+}
+
+.footer-content{
+    width:100%;
+    display: flex;
+    text-align: center;
+    padding-top:10px;
+}
+
+.footer .footer-content .footer-section{
+    flex:1;
+    padding: 25px;
+}
+
+.footer .footer-content h1,.footer .footer-content h2{
+    color:#fff;
+}
+
+.footer .footer-content .about h1 span{
+    color:#05f7ff;
+}
+
+.footer .footer-content .about .contact span{
+    display:block;
+    font-size:1.1em;
+    margin-bottom: 8px;
+}
+
+.footer .footer-content .about .socials a{
+   border:1px solid #fff;
+   width:45px;
+   height:41px;
+   padding-top:5px;
+   margin-right: 5px;
+   text-align: center;
+   display: inline-block;
+   font-size:1.3em;
+   color:#fff;
+   transition:all .3s;
+}
+
+.footer .footer-content .about .socials a:hover{
+    color:#dad731;
+    transition:all .3s;
+}
+
+.footer .footer-content .links ul a{
+    display:block;
+    margin-bottom:10px;
+    font-size:1.2em;
+    transition:all .3s;
+    color:#fff;
+    list-style-type:none;
+}
+
+.footer .footer-content .links ul a:hover {
+    text-decoration: none;
+    margin-left:15px;
+    transition:all .3s;
+    color:#dad731;
+}
+
+.footer .footer-content .contact-form .contact-input{
+    background:#272727;
+    color:#fff;
+    margin-bottom:10px;
+    line-height: 1.5rem;
+    padding:0.9rem 1.9rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border:none;
+}
+
+.footer .footer-content .contact-form .contact-input:focus{
+    background:#1a1a1a;
+}
+
+.footer .footer-bottom{
+   background-color:#03071d;
+   height: 50px;
+   text-align: center;
+   bottom: 5px;
+   left:0px;
+   padding:10px 0;
+}
+
+.footer .footer-bottom span{
+   opacity: 0.5;
+ }
+
+ @media screen and (max-width: 960px) {
+  
+    .footer .footer-content {
+        flex-direction: column;
+    }
+
+    .footer .footer-content .footer-section{
+        padding: 15px;
+    }
+}

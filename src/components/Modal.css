@@ -1,0 +1,117 @@
+.back-drop{
+    position: fixed;
+    z-index: 1;
+    padding-top: 150px; 
+    left: 0;
+    top: 0;
+    width:100%;    
+    height: 100%; 
+    background-color: #1c223791; 
+    transition: all .3s ease;
+
+    
+}
+
+.modal-wrapper{
+    width:83%;
+    position:absolute;
+    left:9%;
+    margin:auto;
+    z-index: 1;
+    transition: all .3s ease;
+
+}
+
+.modal-header{
+    background:#1c2237;
+    color:#e9e9e9;
+    padding: 0 1rem;
+    display:flex;
+    border:none;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header .job-description{
+    color: #dd501d;
+    padding: 5px 0 10px 5px ;
+    margin:auto;
+    
+}
+
+.job-description h2{
+    font-size: 30px;
+}
+
+.modal-header span{
+    font-size:2rem;
+    padding-top:5px;  
+    align-self: flex-end;
+    cursor: pointer;
+    color: #dd501d;
+}
+
+.modal-content{
+    padding:1.5rem 1rem;
+}
+
+.modal-body{
+    margin-bottom: 2rem;
+}
+
+.modal-body h4{
+    font-size:1.8rem;
+    color: #dd501d;
+}
+
+.modal-body p{
+    font-size:1.2rem;
+    color:#333;
+    margin:1rem 0 2rem 0;
+}
+
+
+.modal-body li{
+    list-style: none;
+    font-size:1.2rem;
+}
+
+.modal-body li span{
+    font-size: 1.2rem;
+    color:#dd501d;
+}
+
+.modal-footer{
+    border-top:none;
+}
+.modal-footer .btn-cancel{
+    display:block;
+    font-size:1rem;
+    margin-right:auto;
+    padding:0.5rem 1.8rem;
+    background:#dd501d;
+    color:#fff;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+.modal-footer .btn-apply{
+    display:block;
+    font-size:1rem;
+    margin-left:auto;
+    padding:0.5rem 1.8rem;
+    background:#dd501d;
+    color:#fff;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 960px) {
+    .modal-wrapper{
+        top: 50%;
+    
+    }
+}

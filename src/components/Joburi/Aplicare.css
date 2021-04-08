@@ -1,0 +1,35 @@
+.form-aplicare{
+    width: 50%;
+    align-self: center;
+    padding:25px;
+
+}
+
+.form-aplicare label{
+    font-size: 20px;
+    color:#1c2237c0;
+}
+
+.btn-submit{
+    font-size:1rem;
+    margin-right:auto;
+    padding:0.8rem 4rem;
+    background:#dd501d;
+    color:#fff;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 860px) {
+    .btn-submit{
+        padding:0.5rem 2rem;
+    
+    }
+
+    .form-aplicare{
+        width: 100%;
+    }
+}

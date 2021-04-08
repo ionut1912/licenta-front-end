@@ -1,0 +1,242 @@
+.progressbar{
+   text-align: center;
+   counter-reset: step;
+   margin:40px;
+   display:flex; 
+}
+
+.progressbar li{
+    font-size: 27px;
+    list-style-type: none;
+    padding:20px;
+    width: 33.33%;
+    position: relative;
+    text-align: center;
+}
+
+.progressbar li::before{
+    content: counter(step);
+    counter-increment: step;
+    width:45px;
+    height: 45px;
+    display: block;
+    text-align: center;
+    border:4px solid #00aeff31;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background: #00aeff31;
+}
+
+.progressbar li:after{
+    content:'';
+    position: absolute;
+    width: 87%;
+    height: 6px;
+    background-color: #00aeff31;
+    top:40px;
+    left:-43.5%;
+    z-index:1;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: animate 0.3s linear forwards;
+    
+}
+@keyframes animate{
+    100%{
+        transform: scaleX(1);
+    }
+}
+
+.progressbar li:first-child::after{
+    content: none;
+
+}
+.progressbar li.active{
+    color:#0275d8;
+    border-color:#0275d8;
+}
+
+.progressbar li.active:before{
+    background: #0275d8;
+    border-color:#0275d8;
+    color:white;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: animate 0.3s  forwards;
+}
+
+.progressbar li.active +li::after{
+    background-color: #0275d8;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: animate 0.3s  forwards;
+}
+
+
+#avatar{
+    width: 140px;
+    height: 150px;
+}
+
+.personalDetails, .experience, .finish{
+    padding:30px;
+    background:#fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+
+.text-dangerr{
+    padding:10px 0 0px 10px;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+.hr{
+    border-top: 1px solid #1b18183a;
+}
+
+.form-cls{
+    padding:10px;
+   
+}
+
+.form-cls label{
+    font-size: 20px;
+    color:#1c2237c0;
+    
+}
+
+.form-cls h3{
+    padding: 25px 20px;
+    font-size: 25px;
+}
+
+.form-cls .form-group{
+    padding: 10px;
+}
+
+.form-group input{
+    font-size:17px;
+    padding: 10px;
+}
+
+.select-option{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-gap: 20px;
+    width: 100%;
+    padding:10px 20px 50px 0px;  
+    justify-content: end;
+}
+
+.select-option button{
+    padding:10px;
+    color:#fff;
+    font-size: 15px;
+    background-color: #0275d8;
+    border-radius: 5;
+}
+
+.select-option i{
+    margin-right: 10px;
+}
+
+.toggler-additionalInfo{
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.btn-additionalInfo{
+    padding: 10px 150px;
+    background-color: #0274d83b;
+    border-radius: 2%;
+}
+
+
+.btn-next{
+    position: relative;
+    text-align: center;
+    padding: 20px;
+}
+
+.two-btn{
+    position: relative;
+    text-align: center;
+    padding: 30px;
+}
+
+.two-btn .btn-prev{
+margin-right:50%;
+}
+
+.icon{
+ margin-right: 15px;
+ font-size: 22px;
+}
+
+@media screen and (max-width: 1200px) {
+  .progressbar{
+    margin:20px;
+    padding: 5px;
+ }
+
+.progressbar li:after{
+    width: 86.2%;
+    left:-43.2%;
+}
+
+.additionalInfo{
+    padding: 10px 50px;
+
+}
+
+
+}
+
+@media screen and (max-width: 1000px) {
+      .progressbar{
+        margin:0px
+     }
+    .progressbar li{
+        font-size: 20px;
+    }
+    
+    .progressbar li:after{
+        width: 85.1%;
+        left:-3 .7%;
+        top:38px;
+    }
+    .progressbar li::before{
+
+      width:40px;
+      height:40px;
+
+    }
+  }
+
+
+@media screen and (max-width: 750px) {
+    .progressbar{
+      margin:0px
+   }
+  .progressbar li{
+      font-size: 20px;
+  }
+  
+  .progressbar li:after{
+      width: 76.8%;
+      left:-39%;
+      top:38px;
+  }
+  .progressbar li::before{
+
+    width:40px;
+    height:40px;
+
+  }
+  .additionalInfo{
+    padding: 10px 20px;
+
+}
+}
+

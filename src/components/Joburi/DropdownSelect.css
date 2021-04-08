@@ -1,0 +1,29 @@
+.body-select{
+    background:#f1f1f1;
+    padding:100px 50px 50px;
+    left:100px;
+}
+
+.info{
+    margin-left:100px;
+    padding-bottom: 20px;
+    color:#1c2237;
+}
+
+.select{
+    margin-left:100px;
+    width: 550px;
+}
+
+
+@media screen and (max-width:1500px){
+    .select{
+       margin-left:0;
+       width:450px;
+    }
+    .info{
+        margin-left:0;
+      
+    }
+}
+
