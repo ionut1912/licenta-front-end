@@ -23,13 +23,13 @@ function Navbar(props) {
 
 
   const handleClickNavbar = () => {
-    if (props.setClickForSidebar != undefined)
+    if (props.setClickForSidebar !== undefined)
       props.setClickForSidebar(false);
     setClickForNavBar(!clickForNavbar);
   }
   const handleClickSidebar = () => {
     setClickForNavBar(false);
-    if (props.setClickForSidebar != undefined)
+    if (props.setClickForSidebar !== undefined)
       props.setClickForSidebar(!props.clickForSidebar);
   }
   const closeMobileMenu = () => setClickForNavBar(false);
@@ -37,11 +37,11 @@ function Navbar(props) {
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
-      if (props.setClickForSidebar != undefined)
+      if (props.setClickForSidebar !== undefined)
         props.setClickForSidebar(false);
     } else {
       setButton(true);
-      if (props.setClickForSidebar != undefined)
+      if (props.setClickForSidebar !== undefined)
         props.setClickForSidebar(true);
 
     }
@@ -68,7 +68,7 @@ function Navbar(props) {
           <img src={logo} alt="logo" className="logo" />
         </Link>
 
-        {currentPath == "/user" || currentPath == "/admin" ?
+        {currentPath === "/user" || currentPath === "/admin" ?
           <div className='menu-icon-sidebar' onClick={handleClickSidebar}>
             <i className={props.clickForSidebar ? 'fas fa-times' : 'fas fa-tachometer-alt'} />
           </div> : null

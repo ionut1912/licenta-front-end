@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import UserService from '../../services/user.service';
 import AuthService from '../../services/auth.service'
-import './UserDashboard.css'
 import Sidebar from '../Sidebar';
 import UserProfile from './UserProfile';
+import UserAplications from './UserAplications';
+import './UserDashboard.css'
 
 function UserDashboard(props) {
+
+    const [state, setState] = useState(1);
 
     // const [user, setUser] = useState({
     //     aplicarii: []
@@ -21,8 +24,9 @@ function UserDashboard(props) {
 
     return (
         <div>
-            <Sidebar showSidebar={props.showSidebar} />
-            <UserProfile/>
+            <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} />
+            {state === 1 ? <UserProfile sideState={props.showSidebar} /> : null}
+            {state === 2 ? <UserAplications sideState={props.showSidebar} /> : null}
         </div>
 
 
