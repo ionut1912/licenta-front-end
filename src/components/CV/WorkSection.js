@@ -90,7 +90,12 @@ function WorkSection(props) {
     return (
         <div className="form-cls">
 
-            <h3 className="text-secondary" onClick={() => setWorkExperience(!workExperience)}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
+            <div className="position-relative">
+                <h3 className="text-secondary" onClick={() => setWorkExperience(!workExperience)}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
+                {props.works.length === 0 ? null : <span class="indicator">{props.works.length}</span>}
+            </div>
+
+
             <hr className="hr" />
             <div className="work-section" style={{
                 display: workExperience === false && 'none'
@@ -218,7 +223,7 @@ function WorkSection(props) {
                                     </div>
                                 </div>
                                 <div className="select-option">
-                                    <button type="reset" onClick={() => {removeWork(); props.resetForm()}} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="reset" onClick={() => { removeWork(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
                                     <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>

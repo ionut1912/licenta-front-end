@@ -35,10 +35,13 @@ function Login({ show, close }) {
         email: Yup.string()
             .email("Invalid email!")
             .required("Email is required!"),
+        phone: Yup.string()
+            .required("Phone is required!"),
         password: Yup.string()
             .min(6, "Password is to short!")
             .max(50, "Password is to long!")
             .required("Password is required!"),
+
         password2: Yup.string()
             .when("password", {
                 is: val => (val && val.length > 0 ? true : false),
@@ -53,12 +56,13 @@ function Login({ show, close }) {
 
     function handleRegister(values) {
 
-        const { full_name, email, password } = values;
+        const { full_name, email, phone, password } = values;
 
         AuthService.register(
             full_name,
             email,
-            password
+            phone,
+            password,
         ).then(
             response => {
                 setMessageRegister(response.data.message);
@@ -142,8 +146,8 @@ function Login({ show, close }) {
                                         validationSchema={SigninSchema}>
 
                                         {props => (
-                                          
-                                            
+
+
                                             <form onSubmit={props.handleSubmit} className="form">
                                                 <div className="form-group">
                                                     <input
@@ -181,7 +185,7 @@ function Login({ show, close }) {
 
                                                 />
                                             </form>
-                                            )}
+                                        )}
                                     </Formik>
 
                                     {messageLogin && <div className="alert alert-danger message" role="alert">
@@ -226,9 +230,10 @@ function Login({ show, close }) {
                                     {
                                         full_name: '',
                                         email: '',
+                                        phone: '',
                                         password: '',
                                         password2: ''
-                                    } 
+                                    }
                                 }
                                 onSubmit={(values, { resetForm }) => {
                                     handleRegister(values);
@@ -263,6 +268,19 @@ function Login({ show, close }) {
 
                                             />
                                             {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
+                                        </div>
+                                        <div className="form-group">
+                                            <input
+                                                type="text"
+                                                name="phone"
+                                                className="input-field"
+                                                value={props.values.phone}
+                                                placeholder="Phone"
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur}
+
+                                            />
+                                            {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
                                         </div>
                                         <div className="form-group">
                                             <input
@@ -306,13 +324,13 @@ function Login({ show, close }) {
                                 {messageRegister}
                             </div>
                             }
-                            
+
                             <p className="titlee title-subs">Have an account? <span><a href="#/" className="linktext" onClick={() => setToggler(false)}>Sign in</a></span></p>
                         </div>
                     </div>
                 </div>
             </div>
-      </div>
+        </div>
     )
 }
 

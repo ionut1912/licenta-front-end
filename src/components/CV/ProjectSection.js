@@ -67,7 +67,11 @@ function ProjectSection(props) {
 
     return (
         <div className="form-cls">
-            <h3 className="text-secondary" onClick={() => setProjectExperience(!projectExperience)} ><i className="fa fa-file icon text-dark "></i> Projects</h3>
+            <div className="position-relative">
+                <h3 className="text-secondary" onClick={() => setProjectExperience(!projectExperience)} ><i className="fa fa-file icon text-dark "></i> Projects</h3>
+                {props.projects.length === 0 ? null : <span class="indicator">{props.projects.length}</span>}
+            </div>
+
             <hr className="hr" />
             <div className="projects-section" style={{
                 display: projectExperience === false && 'none'
@@ -123,7 +127,7 @@ function ProjectSection(props) {
                                             className="form-control"
                                             id="inputProject"
                                             placeholder="ex: Site pentru gestionarea unui magazin online" />
-                                              {props.errors.project_name && props.touched.project_name && <p className="text-danger">{props.errors.project_name}</p>}
+                                        {props.errors.project_name && props.touched.project_name && <p className="text-danger">{props.errors.project_name}</p>}
                                     </div>
                                 </div>
 
@@ -141,7 +145,7 @@ function ProjectSection(props) {
                                     </div>
                                 </div>
                                 <div className="select-option">
-                                    <button type="reset" onClick={() => {removeProject(); props.resetForm()}} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="reset" onClick={() => { removeProject(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
                                     <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>

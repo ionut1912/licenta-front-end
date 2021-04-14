@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Testimonial from '../Despre/Testimonial'
 import DropdownSelect from '../Joburi/DropdownSelect'
 import JobService from '../../services/job.service';
@@ -10,17 +10,24 @@ function Jobs() {
 
     const [jobs, setJobs] = useState([]);
 
-    JobService.getJobs()
-        .then(response => (
-            setJobs(
-                response.data
-            )));
+    const [filter, setFilter] = useState("All");
+
+    function loadData() {
+
+        JobService.getJobs().then(
+            response =>
+                setJobs(response.data));
+    }
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     return (
         <div>
             <Navbar />
-            <DropdownSelect />
-            <Testimonial data={jobs} />
+            <DropdownSelect setFilter={setFilter} />
+            <Testimonial data={jobs} filter={filter} />
             <Footer />
         </div>
     )

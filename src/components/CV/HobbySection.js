@@ -64,7 +64,12 @@ function HobbySection(props) {
 
     return (
         <div className="form-cls">
-            <h3 className="text-secondary" onClick={() => setHobbyExperience(!hobbyExperience)}><i className="fas fa-paint-brush icon text-dark"></i>Hobbys</h3>
+            <div className="position-relative">
+                <h3 className="text-secondary" onClick={() => setHobbyExperience(!hobbyExperience)}><i className="fas fa-paint-brush icon text-dark"></i>Hobbys</h3>
+                {props.hobbys.length === 0 ? null : <span class="indicator">{props.hobbys.length}</span>}
+            </div>
+
+
             <hr className="hr" />
             <div className="hobbys-section" style={{
                 display: hobbyExperience === false && 'none'
@@ -124,7 +129,7 @@ function HobbySection(props) {
                                     </div>
                                 </div>
                                 <div className="select-option">
-                                    <button type="reset" onClick={() => {removeHobby(); props.resetForm()}} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="reset" onClick={() => { removeHobby(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
                                     <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>

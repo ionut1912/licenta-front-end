@@ -64,7 +64,11 @@ function SkillSection(props) {
 
     return (
         <div className="form-cls">
-            <h3 className="text-secondary" onClick={() => setSkillExperience(!skillExperience)}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
+            <div className="position-relative">
+                <h3 className="text-secondary" onClick={() => setSkillExperience(!skillExperience)}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
+                {props.skills.length === 0 ? null : <span class="indicator">{props.skills.length}</span>}
+            </div>
+
             <hr className="hr" />
             <div className="skills-section" style={{
                 display: skillExperience === false && 'none'
@@ -125,7 +129,7 @@ function SkillSection(props) {
 
                                 </div>
                                 <div className="select-option">
-                                    <button type="reset" onClick={() => {removeSkill(); props.resetForm()}} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="reset" onClick={() => { removeSkill(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
                                     <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>

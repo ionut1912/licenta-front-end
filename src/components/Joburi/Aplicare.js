@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import AplicareJobService from '../../services/aplicareJob.serivce'
+import UserService from '../../services/auth.service';
 import './Aplicare.css'
 
 function Aplicare(props) {
+
+    const [baseCV, setBaseCV] = useState("");
+
+    const currentUser = UserService.getCurrentUser();
+
+    const idJob = props.idJob;
 
     const validateSchema = Yup.object().shape({
         full_name: Yup.string()
@@ -13,17 +20,67 @@ function Aplicare(props) {
             .email("Invalid email!")
             .required("This field is required!"),
         telefon: Yup.string()
-            .required("This field is required!"),
-        cv: Yup.string()
             .required("This field is required!")
     })
 
     function handleSubmit(values) {
-        console.log(values);
-        AplicareJobService.sendAplicare(1,58,values);
-        props.showDetails(false);
-        props.close(false);
+
+        if (baseCV !== "") {
+            values.cv = baseCV;
+        }
+
+        if (currentUser !== null) {
+            AplicareJobService.sendAplicareUser(currentUser.id, idJob, values).then(
+                () => {
+                    props.setMessage("Ai aplicat cu succes!")
+                    props.state(true)
+                },
+                error => {
+                    props.setMessage("CV ul introdus este eronat,incearca altul!")
+                    props.state(false)
+                }
+
+
+            )
+
+        } else {
+            AplicareJobService.sendAplicareNoUser(idJob, values).then(
+                () => {
+                    props.setMessage("Ai aplicat cu succes!")
+                    props.state(true)
+                },
+                error => {
+                    props.setMessage("CV ul introdus este eronat,incearca altul!")
+                    props.state(false)
+                }
+            )
+        }
+
+
     }
+
+
+    const uploadCV = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertBase64(file);
+        setBaseCV(base64);
+
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     return (
         <div className="form-aplicare">
@@ -32,8 +89,7 @@ function Aplicare(props) {
                     {
                         full_name: '',
                         email: '',
-                        telefon: '',
-                        cv: ''
+                        telefon: ''
                     }
                 }
 
@@ -89,32 +145,14 @@ function Aplicare(props) {
                             {props.errors.telefon && props.touched.telefon && <p className="text-danger">{props.errors.telefon}</p>}
                         </div>
 
-                        
                         <div className="form-group">
-                            <label htmlFor="inputcv">CV*</label>
-                            <input type="text"
-                                name="cv"
-                                value={props.cv}
-                                className="form-control"
-                                id="inputcv"
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
-                            />
-                            {props.errors.cv && props.touched.cv && <p className="text-danger">{props.errors.cv}</p>}
-                        </div>
-                        {/* <div className="form-group">
                             <label htmlFor="inputCV">CV*</label>
                             <input type="file"
                                 id="inputCV"
-                                name="cv"
-                                value={props.cv}
                                 className="form-control"
-                                accept=".pdf,.doc,.docx"
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
+                                onChange={uploadCV}
                             />
-                            {props.errors.cv && props.touched.cv && <p className="text-danger">{props.errors.cv}</p>}
-                        </div> */}
+                        </div>
 
                         <button type="submit" name="submit" className="btn-submit" >Aplica</button>
 

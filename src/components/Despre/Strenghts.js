@@ -10,12 +10,12 @@ function Strenghts({ strenghts }) {
     }
     return (
         <div className="bg-gray">
-           <h1 className="title">Our strenghts</h1>
+            <h1 className="title">Our strenghts</h1>
             <div className="strengths container">
                 <div data-target="#list-strenghts" className="description">
                     {strenghts.map((strenght, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 {index === current ? (
                                     <ul>
                                         {strenght.text.map((item, nr) => {
@@ -33,7 +33,7 @@ function Strenghts({ strenghts }) {
                 <div id="list-strenghts" className="list-group">
                     {strenghts.map((strenght, index) => {
                         return (
-                            <a className={index === current ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action '} href="#list-exemple" onClick={() => { setCurrent(index) }} >{strenght.title}</a>
+                            <a key={index} className={index === current ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action '} href="#list-exemple" onClick={() => { setCurrent(index) }} >{strenght.title}</a>
                         );
                     })}
                 </div>

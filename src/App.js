@@ -25,8 +25,8 @@ function App() {
           <Route path={["/", "/home"]} exact component={Home} />
           <Route path='/about' component={About} />
           <Route path='/jobs' component={Jobs} />
-          <Route path="/user"  component={User} />
           <PrivateRouteAdmin path='/admin' loggedIn={loggedIn} component={Admin} />
+          <PrivateRouteUser path='/user' loggedIn={loggedIn} component={User} />
           <Route path="/makeCV" component={CVMaker} />
           <Route component={NotFound} />
         </Switch>

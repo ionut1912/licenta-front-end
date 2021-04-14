@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import './DropdownSelect.css'
 
 
-function DropdownSelect() {
-
-     const [selectedOption, setSelectedOption] = useState(0);
+function DropdownSelect(props) {
 
      const handleChange = selectedOption => {
-          setSelectedOption(selectedOption);
+          props.setFilter(selectedOption.value);
      };
 
      const options = [
@@ -34,7 +32,6 @@ function DropdownSelect() {
           <div className="body-select">
                <h2 className="info">Select location to see available jobs</h2>
                <Select
-                    value={selectedOption}
                     onChange={handleChange}
                     options={options}
                     styles={customStyles}

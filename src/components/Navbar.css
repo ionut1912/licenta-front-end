@@ -52,6 +52,13 @@
   height: 60px;
 }
 
+.nav-item .img-profile {
+  margin-top:20px;
+  height: 60px;
+  width: 60px;
+  border:2px solid white;
+}
+
 .navbar .nav-links {
   color: #fff;
   display: flex;

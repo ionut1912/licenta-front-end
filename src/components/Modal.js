@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import Aplicare from './Joburi/Aplicare';
 import './Modal.css';
 
-export const Modal = ({ show, close, data }) => {
+export const Modal = ({ show, close, data, buttons }) => {
 
     const [showApplay, setShowApplay] = useState(false);
+    const [messageAplicare, setMessageAplicare] = useState("");
+    const [stateAplicare, setStateAplicare] = useState(false);
 
     return (
         <div>
@@ -32,7 +34,7 @@ export const Modal = ({ show, close, data }) => {
                                     <p>{data.descriere}</p>
                                     <h4>Required Skill Sets</h4>
                                     <ul >
-                                        {data.skills.map((item, nr) => {
+                                        {data.skills.sort((a, b) => a.id - b.id).map((item, nr) => {
                                             return (
                                                 <li key={nr}><span>-{'>'} </span>{item.skill}</li>
                                             );
@@ -40,7 +42,7 @@ export const Modal = ({ show, close, data }) => {
                                     </ul>
                                     <h4>Personal Attributes</h4>
                                     <ul>
-                                        {data.atributePersonale.map((item, nr) => {
+                                        {data.atributePersonale.sort((a, b) => a.id - b.id).map((item, nr) => {
                                             return (
                                                 <li key={nr}><span>-{'>'} </span>{item.atribut}</li>
                                             );
@@ -48,7 +50,7 @@ export const Modal = ({ show, close, data }) => {
                                     </ul>
                                     <h4>Further Details</h4>
                                     <ul>
-                                        {data.moreDetails.map((item, nr) => {
+                                        {data.moreDetails.sort((a, b) => a.id - b.id).map((item, nr) => {
                                             return (
                                                 <li key={nr}><span>-{'>'} </span>{item.detaliu}</li>
                                             );
@@ -78,12 +80,14 @@ export const Modal = ({ show, close, data }) => {
 
                         </div>
                     ) : (
-                        <Aplicare showDetails={setShowApplay} close={close} />
+                        messageAplicare !== "" ? <h1 style={{ padding: "50px", fontSize: "40px" }} className={stateAplicare === true ? "text-success" : "text-danger"}>{messageAplicare}</h1> :
+                            <Aplicare showDetails={setShowApplay} close={close} idJob={data.id} setMessage={setMessageAplicare} state={setStateAplicare} />
+
                     )}
-                    {data.locatie != null ? (
+                    {data.locatie != null && buttons !== false ? (
                         <div className="modal-footer">
                             <button className="btn-cancel" onClick={close}>Close</button>
-                            <button className="btn-apply" onClick={() => setShowApplay(!showApplay)}>{showApplay === false ? "Apply now" : "See details again"}</button>
+                            <button className="btn-apply" onClick={() => { setShowApplay(!showApplay); setMessageAplicare("") }}>{showApplay === false ? "Apply now" : "See details again"}</button>
                         </div>
                     ) : null}
                 </div>

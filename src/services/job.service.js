@@ -8,6 +8,10 @@ class JobService {
     getJobs() {
         return axios.get(API_URL + 'jobs');
     }
+
+    getJob(jobId){
+        return axios.get(API_URL+`jobs/${jobId}`);
+    }
 }
 
 export default new JobService();

@@ -4,10 +4,17 @@ const API_URL = 'http://localhost:8184/';
 
 class UserService {
 
-    getUserAplicarii(userId) {
+    getUser(userId) {
         return axios.get(API_URL + `user/${userId}`);
     }
 
+    getUserAplications(userId){
+        return axios.get(API_URL + `user/${userId}/aplicarii`);
+    }
+
+    updateUserInformation(newInfo){
+        return axios.put(API_URL+'user',newInfo);
+    }
 }
 
 export default new UserService();

@@ -121,12 +121,19 @@ function Navbar(props) {
                 {currentUser.role === "ROLE_ADMIN" ? "Admin" : "User"}
               </Link>
             </li>
+
           ) : null}
           <div>
             <li className='nav-item'>
               <button className={button ? ' btn btn-light nav-links-btn  ' : 'nav-links-mobile'} onClick={() => { currentUser ? logOut() : setShow(true) }}>{currentUser ? "Log-out" : "Logheaza-te"}</button>
             </li>
           </div>
+          {/* {currentUser ? (
+            <li class="nav-item ">
+              <img class="img-profile rounded-circle" src="./images/cap.png" />
+            </li>
+          ) : null} */}
+
 
         </ul>
         {show && <Login show={show} close={closeModalHandler} />}

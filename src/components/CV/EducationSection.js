@@ -88,7 +88,11 @@ function EducationSection(props) {
 
     return (
         <div className="form-cls">
-            <h3 className="text-secondary" onClick={() => setEducationExperience(!educationExperience)}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
+            <div className="position-relative">
+                <h3 className="text-secondary" onClick={() => setEducationExperience(!educationExperience)}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
+                {props.educations.length === 0 ? null : <span class="indicator">{props.educations.length}</span>}
+            </div>
+
             <hr className="hr" />
             <div className="education-section" style={{
                 display: educationExperience === false && 'none'
@@ -218,7 +222,7 @@ function EducationSection(props) {
                                     </div>
                                 </div>
                                 <div className="select-option">
-                                    <button type="reset" onClick={() => {removeEducation(); props.resetForm()}} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="reset" onClick={() => { removeEducation(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
                                     <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>

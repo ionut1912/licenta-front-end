@@ -4,8 +4,6 @@ import './Testimonial.css';
 
 function Testimonial({ data }) {
 
-
-
     const [show, setShow] = useState(false);
     const [currentItem, setCurrentItem] = useState(null);
 

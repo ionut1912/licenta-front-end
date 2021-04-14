@@ -1,0 +1,58 @@
+.filtrare-aplicatii{
+    padding:10px 0px 10px 0px;
+    margin-bottom: 20px;
+    display: flex;
+}
+.filtrare-aplicatii .custom-select{
+    width: 250px;
+}
+
+.filtrare-aplicatii .input-group{
+    margin-left: auto;
+    padding-right: 0px;
+    width: 250px;
+}
+
+.dash-content .card{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+
+.dash-content .card-body{
+    padding:1rem 1.25rem 1rem 1.25rem;
+}
+
+.body-aplicare{
+    display:flex;
+}
+
+.info-aplicare .card-title{
+    margin-bottom: 3px;
+}
+
+.info-aplicare p{
+    font-size:16px;
+}
+
+.btn-detalii{
+    align-self:center;
+    margin-left: auto;
+}
+
+.state-red{
+    color:rgb(221, 22, 22);
+}
+
+.state-green{
+    color:rgb(16, 153, 50);
+}
+
+.card i{
+    margin-right: 5px;
+}
+
+.footer-aplicare{
+    display:flex;
+}
+
+
