@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { Modal } from '../Modal';
+import ViewPopup from '../ViewPopup';
+import JobView from '../Joburi/JobView'
 import './Testimonial.css';
 
-function Testimonial({ data }) {
+function Testimonial({ data, filter }) {
 
-    const [show, setShow] = useState(false);
-    const [currentItem, setCurrentItem] = useState(null);
-
-    const closeModalHandler = () => setShow(false);
+    const [openPopupView, setOpenPopupView] = useState(false);
+    const [currentItem, setCurrentItem] = useState("");
 
     return (
         <div className="testimonials">
-            {show && <Modal show={show} close={closeModalHandler} data={currentItem} />}
             <div className="inner">
                 <div className="row">
-                    {data.map((item, index) => {
+                    {data.filter(element => {
+                        return (filter === undefined ? element : (filter === "All" ? data : filter.toLowerCase().startsWith(element.locatie.toLowerCase())))
+                    }).map((item, index) => {
                         return (
                             <div className="col" key={index}>
                                 <div className={item.img == null ? "testimonial bg-yellow" : "testimonial"} >
@@ -22,7 +22,7 @@ function Testimonial({ data }) {
                                         <div>
                                             <div className="name">{item.numeJob}</div>
                                             <p>Location: {item.locatie}</p>
-                                            <button className="btn btn-primary btn-lg " onClick={() => { setShow(true); setCurrentItem(item); }}>See more details</button>
+                                            <button className="btn btn-primary btn-lg " onClick={() => { setOpenPopupView(true); setCurrentItem(item); }}>See more details</button>
 
                                         </div>
                                     ) : (
@@ -40,14 +40,22 @@ function Testimonial({ data }) {
                                         </div>
                                     )
                                     }
-
-
                                 </div>
                             </div>
                         )
                     })}
                 </div>
             </div>
+            <ViewPopup
+                title={currentItem.numeJob}
+                subTitle={currentItem.locatie}
+                openPopup={openPopupView}
+                setOpenPopup={setOpenPopupView}>
+                <JobView
+                    recordForView={currentItem}
+                    setOpenPopup={setOpenPopupView}
+                />
+            </ViewPopup>
         </div>
     )
 }

@@ -4,18 +4,22 @@ const API_URL = 'http://localhost:8184/';
 
 class AplicareJobService {
 
-    sendAplicareUser(user,job,aplicare) {
-        return axios.post(API_URL + `aplicarii/user/${user}/job/${job}`,aplicare);
+    sendAplicareUser(user, job, aplicare) {
+        return axios.post(API_URL + `aplicarii/user/${user}/job/${job}`, aplicare);
     }
 
-    sendAplicareNoUser(job,aplicare) {
-        return axios.post(API_URL + `aplicarii/job/${job}`,aplicare);
+    sendAplicareNoUser(job, aplicare) {
+        return axios.post(API_URL + `aplicarii/job/${job}`, aplicare);
     }
 
-    getAplicarii(){
-        return axios.get(API_URL+"aplicarii");
-    } 
-    
+    getAplicarii() {
+        return axios.get(API_URL + "aplicarii");
+    }
+
+    updateVerificat(id) {
+        return axios.put(API_URL + `aplicarii/${id}`);
+    }
+
 }
 
 export default new AplicareJobService();

@@ -8,7 +8,7 @@ function SkillSection(props) {
     const [skillExperience, setSkillExperience] = useState(false);
     const [skillFields, setSkillFields] = useState(false);
     const [skill, setSkill] = useState({
-        skill_name: ""
+        skill: ""
     });
 
     function deleteSkill(id) {
@@ -26,7 +26,7 @@ function SkillSection(props) {
         });
 
         setSkill({
-            skill_name: skill1[0].skill_name
+            skill: skill1[0].skill
         })
 
         deleteSkill(id);
@@ -39,14 +39,14 @@ function SkillSection(props) {
         setSkillFields(false);
 
         setSkill({
-            skill_name: ""
+            skill: ""
         })
 
 
     }
 
     const formSchema = Yup.object().shape({
-        skill_name: Yup.string()
+        skill: Yup.string()
             .required("This field is required!"),
     })
 
@@ -57,7 +57,7 @@ function SkillSection(props) {
         setSkillFields(false);
 
         setSkill({
-            skill_name: ""
+            skill: ""
         })
 
     }
@@ -66,7 +66,7 @@ function SkillSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => setSkillExperience(!skillExperience)}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
-                {props.skills.length === 0 ? null : <span class="indicator">{props.skills.length}</span>}
+                {props.skills.length === 0 ? null : <span className="indicator">{props.skills.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -82,9 +82,9 @@ function SkillSection(props) {
                                     <Row
                                         key={index}
                                         id={index}
-                                        title={rowItem.skill_name}
+                                        title={rowItem.skill}
                                         onDelete={deleteSkill}
-                                        onEdit={skill.skill_name !== "" ? (() => { }) : editSkill}
+                                        onEdit={skill.skill !== "" ? (() => { }) : editSkill}
                                     />);
                             })}
                         </div>
@@ -99,7 +99,7 @@ function SkillSection(props) {
 
                         initialValues={
                             {
-                                skill_name: skill.skill_name
+                                skill: skill.skill
                             }
                         }
 
@@ -117,14 +117,14 @@ function SkillSection(props) {
                                     <div className="form-group col-md-12">
                                         <label htmlFor="inputSkill">Skill name*</label>
                                         <input type="text"
-                                            name="skill_name"
+                                            name="skill"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
-                                            value={props.values.skill_name}
+                                            value={props.values.skill}
                                             className="form-control"
                                             id="inputSkill"
                                             placeholder="ex:Java" />
-                                        {props.errors.skill_name && props.touched.skill_name && <p className="text-danger">{props.errors.skill_name}</p>}
+                                        {props.errors.skill && props.touched.skill && <p className="text-danger">{props.errors.skill}</p>}
                                     </div>
 
                                 </div>

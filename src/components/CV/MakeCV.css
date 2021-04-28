@@ -97,7 +97,7 @@
     height: 150px;
 }
 
-.personalDetails, .experience, .finish{
+.personalDetails, .experience, .finish,.addJob{
     padding:30px;
     background:#fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24);

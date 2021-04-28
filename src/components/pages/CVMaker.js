@@ -6,7 +6,7 @@ function CVMaker() {
     return (
         <div>
             <Navbar />
-            <MakeCV />
+            <MakeCV addCv={false}/>
         </div>
     )
 }

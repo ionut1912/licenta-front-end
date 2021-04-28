@@ -89,7 +89,8 @@ function Aplicare(props) {
                     {
                         full_name: '',
                         email: '',
-                        telefon: ''
+                        telefon: '',
+                        
                     }
                 }
 
@@ -102,8 +103,6 @@ function Aplicare(props) {
 
                 {props => (
                     <form onSubmit={props.handleSubmit}>
-
-
                         <div className="form-group">
                             <label htmlFor="inputfn">Full name*</label>
                             <input type="text"
@@ -149,8 +148,10 @@ function Aplicare(props) {
                             <label htmlFor="inputCV">CV*</label>
                             <input type="file"
                                 id="inputCV"
+                                accept=".pdf,.doc,.docx"
                                 className="form-control"
                                 onChange={uploadCV}
+                                required
                             />
                         </div>
 

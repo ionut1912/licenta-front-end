@@ -9,7 +9,7 @@ import LanguageSection from './LanguageSection'
 import HobbySection from './HobbySection'
 import ProjectSection from './ProjectSection'
 
-function MakeCV() {
+function MakeCV(props) {
 
     const [valid, setValid] = useState(false);
 
@@ -71,17 +71,20 @@ function MakeCV() {
         });
     }
 
+    function addCVToDB() {
+        console.log("test");
+    }
 
 
     return (
         <div style={{ background: '#f1f1f1', height: '100%', padding: '50px' }}>
 
-            <div className="container proggres-bar">
+            <div className="container">
 
-                <ul className="progressbar">
+                <ul className="progressbar" style={{ justifyContent: "center" }}>
                     <li className="active" onClick={() => setStateForm(1)}>Personal</li>
                     <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { valid && setStateForm(2) }}>Experiences</li>
-                    <li className={stateForm === 3 ? "active" : null} onClick={() => { valid && setStateForm(3) }}>Finish</li>
+                    {props.addCv === false ? <li className={stateForm === 3 ? "active" : null} onClick={() => { valid && setStateForm(3) }}>Finish</li> : null}
                 </ul>
 
                 {/**********************************PersonalDetails********************************************************/}
@@ -116,7 +119,8 @@ function MakeCV() {
                     <div className="two-btn">
                         <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
 
-                        <button type="submit" className="btn btn-primary" onClick={() => setStateForm(3)}>Next  <i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                        {props.addCv === true ? null : <button type="submit" className="btn btn-primary" onClick={() => setStateForm(3)}>Next <i className="fa fa-arrow-right" aria-hidden="true"></i></button>}
+                        {props.addCv === true ? <button type="submit" className="btn btn-primary" onClick={() => addCVToDB()}>Add CV</button> : null}
                     </div>
                 </div>
 

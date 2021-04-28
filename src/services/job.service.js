@@ -9,8 +9,16 @@ class JobService {
         return axios.get(API_URL + 'jobs');
     }
 
-    getJob(jobId){
-        return axios.get(API_URL+`jobs/${jobId}`);
+    getJob(jobId) {
+        return axios.get(API_URL + `jobs/${jobId}`);
+    }
+
+    addJob(newJob) {
+        return axios.post(API_URL + 'jobs', newJob);
+    }
+
+    deleteJob(jobId) {
+        return axios.delete(API_URL + `jobs/${jobId}`);
     }
 }
 

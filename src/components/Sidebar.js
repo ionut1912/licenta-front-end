@@ -1,7 +1,10 @@
 import React from 'react'
-import { IconContext } from 'react-icons';
 import * as CgIcons from 'react-icons/cg';
 import * as IoIcons from 'react-icons/io';
+import * as FaIcons from 'react-icons/fa';
+import * as VscIcons from 'react-icons/vsc';
+import * as AiIcons from 'react-icons/ai';
+
 
 
 import './Sidebar.css';
@@ -9,10 +12,10 @@ function Sidebar(props) {
 
   return (
     <div className="sidebar">
-      <IconContext.Provider value={{ color: '#fff' }}>
-        <nav className={props.showSidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' >
+      <nav className={props.showSidebar ? 'nav-menu active' : 'nav-menu'}>
 
+        {props.gradUser === "ROLE_USER" ? (
+          <ul className='nav-menu-items' >
             <li className="nav-text" onClick={() => props.setState(1)}>
               <p className={props.state === 1 ? "selected" : null}>
                 <CgIcons.CgProfile />
@@ -26,10 +29,63 @@ function Sidebar(props) {
                 <span>Aplications</span>
               </p>
             </li>
+          </ul>
+        ) : (
+          <ul className='nav-menu-items' >
+            <li className="nav-text" onClick={() => props.setState(1)}>
+              <p className={props.state === 1 ? "selected" : null}>
+                <VscIcons.VscGraph />
+                <span>Statistics</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(2)}>
+              <p className={props.state === 2 ? "selected" : null}>
+                <FaIcons.FaUsersCog />
+                <span>Users</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(3)}>
+              <p className={props.state === 3 ? "selected" : null}>
+                <i className="fas fa-briefcase"></i>
+                <span>Jobs</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(4)}>
+              <p className={props.state === 4 ? "selected" : null}>
+                <i className="fas fa-briefcase"></i>
+                <span>Add job</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(5)}>
+              <p className={props.state === 5 ? "selected" : null}>
+                <IoIcons.IoIosPaper />
+                <span>Aplications</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(6)}>
+              <p className={props.state === 6 ? "selected" : null}>
+                <FaIcons.FaAddressCard />
+                <span>All CV</span>
+              </p>
+            </li>
+
+            <li className="nav-text" onClick={() => props.setState(7)}>
+              <p className={props.state === 7 ? "selected" : null}>
+                <AiIcons.AiOutlineFileAdd />
+                <span>Add CV</span>
+              </p>
+            </li>
 
           </ul>
-        </nav>
-      </IconContext.Provider>
+        )
+        }
+
+      </nav>
     </div>
   )
 }

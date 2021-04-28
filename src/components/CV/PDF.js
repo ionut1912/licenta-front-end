@@ -1,17 +1,14 @@
-import React, { useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
+import React from 'react';
+import Pdf from 'react-to-pdf';
 import './PDF.css'
+
+const ref=React.createRef();
 
 const PDF = (props) => {
 
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
   return (
-    <div ref={componentRef}>
-      <div className="cv-body" style={{ margin: "50px" }}>
+    <div ref={ref}>
+      <div className="cv-body" >
         <div className="personal-info">
 
           <div style={{ maxWidth: "400px" }}>
@@ -123,7 +120,7 @@ const PDF = (props) => {
               <ul className="skills-list">
                 {props.skills.map((item, index) => {
                   return (
-                    <li key={index}>{item.skill_name}</li>
+                    <li key={index}>{item.skill}</li>
                   );
                 })}
               </ul>
@@ -179,8 +176,9 @@ const PDF = (props) => {
         </div>
       </div>
 
-
-      <button className="btn btn-primary" style={{ marginLeft: "40%", marginTop: "50px" }} onClick={handlePrint}>Export pdf!</button>
+      <Pdf targetRef={ref} filename="post.pdf">
+        {({ toPdf }) => <button onClick={toPdf}>Capture as PDF</button>}
+      </Pdf>
     </div>
   )
 }

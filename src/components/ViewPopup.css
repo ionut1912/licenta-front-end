@@ -1,28 +1,3 @@
-.back-drop{
-    position: fixed;
-    z-index: 1;
-    padding-top: 150px; 
-    left: 0;
-    top: 0;
-    width:100%;    
-    height: 100%; 
-    background-color: #1c223791; 
-    transition: all .3s ease;
-
-    
-}
-
-.modal-wrapper{
-    text-align: center;
-    width:83%;
-    position:absolute;
-    left:9%;
-    margin:auto;
-    z-index: 1;
-    transition: all .3s ease;
-
-}
-
 .modal-header{
     background:#1c2237;
     color:#e9e9e9;
@@ -46,8 +21,8 @@
 }
 
 .modal-header span{
-    font-size:2rem;
-    padding-top:5px;  
+    font-size:25px;
+    padding:10px 10px 0 0;  
     align-self: flex-end;
     cursor: pointer;
     color: #dd501d;
@@ -55,6 +30,7 @@
 
 .modal-content{
     padding:1.5rem 1rem;
+    border:none
 }
 
 .modal-body{
@@ -111,8 +87,7 @@
 }
 
 @media screen and (max-width: 960px) {
-    .modal-wrapper{
-        top: 50%;
-    
+    .modal-footer{
+        padding:0;
     }
 }
