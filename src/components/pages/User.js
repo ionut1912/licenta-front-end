@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
-import Navbar from '../Navbar'
+import React from 'react'
 import UserDashboard from '../UserDashboard/UserDashboard'
 
 
-function User() {
-
-  const [click, setClick] = useState(true);
-
+function User(props) {
   return (
-    <div>
-      <Navbar clickForSidebar={click} setClickForSidebar={setClick} />
-      <UserDashboard showSidebar={click} />
-    </div>
+    <UserDashboard showSidebar={props.click} />
   )
 }
 

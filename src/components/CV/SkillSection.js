@@ -8,11 +8,22 @@ function SkillSection(props) {
     const [skillExperience, setSkillExperience] = useState(false);
     const [skillFields, setSkillFields] = useState(false);
     const [skill, setSkill] = useState({
+        id: '',
         skill: ""
     });
-
+   //popup pt delete aici
     function deleteSkill(id) {
         props.setSkills(prevSkills => {
+            if (props.setJobInfo !== undefined) {
+                props.setJobInfo(prevInfo => {
+                    return {
+                        ...prevInfo,
+                        skills: prevSkills.filter((skillItem, index) => {
+                            return index !== id;
+                        })
+                    }
+                })
+            }
             return prevSkills.filter((skillItem, index) => {
                 return index !== id;
             });
@@ -26,6 +37,7 @@ function SkillSection(props) {
         });
 
         setSkill({
+            id: skill1[0].id,
             skill: skill1[0].skill
         })
 
@@ -33,12 +45,13 @@ function SkillSection(props) {
 
         setSkillFields(true);
     }
-
+   //popup pt delete aici
     function removeSkill() {
 
         setSkillFields(false);
 
         setSkill({
+            id: '',
             skill: ""
         })
 
@@ -57,6 +70,7 @@ function SkillSection(props) {
         setSkillFields(false);
 
         setSkill({
+            id: '',
             skill: ""
         })
 
@@ -99,6 +113,7 @@ function SkillSection(props) {
 
                         initialValues={
                             {
+                                id: skill.id,
                                 skill: skill.skill
                             }
                         }
@@ -139,7 +154,7 @@ function SkillSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setSkillFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another skill to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setSkillFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another skill to experience</a>
                 </div>
                 <hr className="hr" />
             </div>

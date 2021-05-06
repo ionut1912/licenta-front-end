@@ -138,7 +138,7 @@ function HobbySection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setHobbyFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another hobby to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setHobbyFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another hobby to experience</a>
                 </div>
                 <hr className="hr" />
             </div>

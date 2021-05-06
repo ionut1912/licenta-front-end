@@ -12,19 +12,51 @@ function JobView(props) {
     const close = () => {
         props.setOpenPopup(false)
     }
-    function addNewJob() {
+    function addEditJob() {
         console.log(props.recordForView)
-        jobService.addJob(props.recordForView).then(
-            response => {
-                props.setNotify({
-                    isOpen: true,
-                    message: 'Job added with success!',
-                    type: 'success'
-                });
-                props.reset();
-                close();
-            }
-        );
+
+        if(props.editJob===false){
+            jobService.addJob(props.recordForView).then(
+                response => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Job added with success!',
+                        type: 'success'
+                    });
+                    props.reset();
+                    close();
+                },
+                error => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
+                    close();
+                }
+            )
+        }else{
+            jobService.updateJob(props.recordForView).then(
+                response => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Job updated with success!',
+                        type: 'success'
+                    });
+                    props.reset();
+                    close();
+                },
+                error => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
+                    close();
+                }
+            )
+        }
+       
     }
     return (
         <div className="modal-content">
@@ -85,7 +117,7 @@ function JobView(props) {
             {props.buttonsAddJob !== false ? (
                 <div className="modal-footer">
                     <button className="btn-cancel" onClick={close}>Close</button>
-                    <button className="btn-apply" onClick={addNewJob} >Add job</button>
+                    <button className="btn-apply" onClick={addEditJob} >Add job</button>
                 </div>
             ) : null}
         </div>

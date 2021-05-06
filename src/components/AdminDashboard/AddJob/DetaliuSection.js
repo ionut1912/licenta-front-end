@@ -7,12 +7,21 @@ function DetaliuSection(props) {
     const [detaliuExperience, setDetaliuExperience] = useState(false);
     const [detaliuFields, setDetaliuFields] = useState(false);
     const [detaliu, setDetaliu] = useState({
+        id: '',
         detaliu: ""
     });
-
+   //popup pt delete aici
     function deleteDetaliu(id) {
-        props.setDetalii(prevDetalius => {
-            return prevDetalius.filter((detaliuItem, index) => {
+        props.setDetalii(prevDetalii => {
+            props.setJobInfo(prevInfo => {
+                return {
+                    ...prevInfo,
+                    moreDetails: prevDetalii.filter((detaliuItem, index) => {
+                        return index !== id;
+                    })
+                }
+            })
+            return prevDetalii.filter((detaliuItem, index) => {
                 return index !== id;
             });
         });
@@ -25,6 +34,7 @@ function DetaliuSection(props) {
         });
 
         setDetaliu({
+            id: detaliu1[0].id,
             detaliu: detaliu1[0].detaliu
         })
 
@@ -32,12 +42,13 @@ function DetaliuSection(props) {
 
         setDetaliuFields(true);
     }
-
+   //popup pt delete aici
     function removeDetaliu() {
 
         setDetaliuFields(false);
 
         setDetaliu({
+            id: '',
             detaliu: ""
         })
 
@@ -56,6 +67,7 @@ function DetaliuSection(props) {
         setDetaliuFields(false);
 
         setDetaliu({
+            id: '',
             detaliu: ""
         })
 
@@ -97,6 +109,7 @@ function DetaliuSection(props) {
 
                         initialValues={
                             {
+                                id: detaliu.id,
                                 detaliu: detaliu.detaliu
                             }
                         }
@@ -137,7 +150,7 @@ function DetaliuSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setDetaliuFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another detaliu to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setDetaliuFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another detaliu to experience</a>
                 </div>
                 <hr className="hr" />
             </div>

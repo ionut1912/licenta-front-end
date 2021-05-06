@@ -121,7 +121,7 @@ function UserAplications(props) {
                 subTitle={currentItem.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={currentItem} setOpenPopup={setOpenPopupView} buttons={false} />
+                <JobView recordForView={currentItem} setOpenPopup={setOpenPopupView} buttons={false} buttonsAddJob={false} />
             </ViewPopup>
         </div>
     )

@@ -1,16 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AdminDashboard from '../AdminDashboard/AdminDashboard'
-import Navbar from '../Navbar'
 
-function Admin() {
-
-    const [click, setClick] = useState(true);
-
+function Admin(props) {
     return (
-        <div>
-            <Navbar clickForSidebar={click} setClickForSidebar={setClick} />
-            <AdminDashboard showSidebar={click} />
-        </div>
+        <AdminDashboard showSidebar={props.click} />
     )
 }
 

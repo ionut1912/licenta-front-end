@@ -168,7 +168,7 @@ function LanguageSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setLanguageFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another language to experience</a>
+                    <a href="#/" className="btn-additionalInfo" onClick={() => { setLanguageFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another language</a>
                 </div>
                 <hr className="hr" />
             </div>

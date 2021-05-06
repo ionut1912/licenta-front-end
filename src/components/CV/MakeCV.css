@@ -170,7 +170,11 @@
     background-color: #0274d83b;
     border-radius: 2%;
 }
-
+.btn-moreInfo{
+    padding: 10px 150px;
+    background-color: #0274d83b;
+    border-radius: 2%;
+}
 
 .btn-next{
     position: relative;
@@ -179,13 +183,12 @@
 }
 
 .two-btn{
-    position: relative;
-    text-align: center;
+    display: flex;
     padding: 30px;
 }
 
 .two-btn .btn-prev{
-margin-right:50%;
+margin-right: auto;
 }
 
 .icon{
@@ -231,10 +234,14 @@ margin-right:50%;
       height:40px;
 
     }
+    .btn-moreInfo{
+        padding: 10px 30px;
+    }
+    
   }
 
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 770px) {
     .progressbar{
       margin:0px
    }
@@ -256,6 +263,12 @@ margin-right:50%;
   .additionalInfo{
     padding: 10px 20px;
 
-}
+  }
+   .btn-additionalInfo{
+    padding: 10px 50px;
+ }
+ .two-btn .btn-primary{
+     width:150px;
+ }
 }
 

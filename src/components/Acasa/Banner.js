@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Banner.css';
+import Aos from 'aos';
+import "aos/dist/aos.css"
 
 function Banner() {
+
+    useEffect(() => {
+        Aos.init({ duration: 1000 });
+    }, [])
     return (
-        <div id="about">
-            <div className="container">
-                <div className="col-text">
-                    <h1 className="section-title">Crystal at a glance</h1>
-                    <p>Crystal System Group is today the IT strategic partner to some of the most influential corporations in Europe.
+        <div id="about" >
+            <div className="container" >
+                <div className="col-text" >
+                    <h1 className="section-title" data-aos="fade-right" data-aos-offset="500">Crystal at a glance</h1>
+                    <p data-aos="fade-left" data-aos-offset="500">Crystal System Group is today the IT strategic partner to some of the most influential corporations in Europe.
                     With headquarters in Cyprus, Crystal System has software factories located in Romania, Moldova, Greece and Albania, countries
                     where IT culture is widespread and it is possible to provide cost-effective services to global clients applying the Nearshore Delivery Model.
                     Leveraging the existing quality of the Academic world, over the years we have developed an original education and hiring approach
@@ -18,7 +24,7 @@ function Banner() {
                     System Group has gained a competitive edge through extensive international experience in offering value added IT outsourcing
                     consulting and development services.
                     </p>
-                    <Link to="/about"><button className="btn btn-primary btn-lg" >Read more about us</button></Link>
+                    <Link to="/about"><button className="btn btn-primary btn-lg" data-aos="fade-in" data-aos-offset="500">Read more about us</button></Link>
                 </div>
             </div>
         </div>

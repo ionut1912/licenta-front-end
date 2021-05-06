@@ -17,12 +17,20 @@ function StaticInfoSection(props) {
 
     function handleSubmit(values) {
         props.setStaticInfo(values);
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                numeJob: values.nume_job,
+                locatie: values.locatie,
+                descriere: values.descriere
+            }
+        })
         props.changeState(2);
     }
     return (
         <div className="form-cls">
             <Formik
-            enableReinitialize={true}
+                enableReinitialize={true}
                 initialValues={
                     {
                         nume_job: props.staticInfo.nume_job,

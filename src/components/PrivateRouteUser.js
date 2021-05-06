@@ -2,13 +2,13 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom';
 
 
-const PrivateRouteUser = ({ component: Comp, loggedIn, path }) => {
+const PrivateRouteUser = ({ component: Comp, loggedIn, path,clickForSidebar }) => {
     return (
         <Route
             path={path}
             render={() => {
                 return loggedIn &&loggedIn.role==="ROLE_USER" ? (
-                    <Comp />
+                    <Comp click={clickForSidebar}/>
                 ) : (
                         <Redirect
                             to={{

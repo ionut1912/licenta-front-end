@@ -7,12 +7,10 @@ import Banner from '../Acasa/Banner'
 import JobSection from '../Acasa/JobSection'
 import { JobSectionData } from '../Acasa/JobSectionData'
 import Footer from '../Footer';
-import Navbar from '../Navbar';
 
 function Home() {
     return (
         <div>
-            <Navbar />
             <Slider slides={SliderData} />
             <Services data={ServicesData} />
             <Banner />

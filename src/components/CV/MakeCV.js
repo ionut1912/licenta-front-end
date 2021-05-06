@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import PersonalInfoSection from './PersonalInfoSection'
-import PDF from './PDF'
-import './MakeCV.css'
 import WorkSection from './WorkSection'
 import EducationSection from './EducationSection'
 import SkillSection from './SkillSection'
 import LanguageSection from './LanguageSection'
 import HobbySection from './HobbySection'
 import ProjectSection from './ProjectSection'
+import PDF from './PDF'
+import './MakeCV.css'
 
-function MakeCV(props) {
+export default function MakeCV(props) {
 
     const [valid, setValid] = useState(false);
 
@@ -77,10 +77,8 @@ function MakeCV(props) {
 
 
     return (
-        <div style={{ background: '#f1f1f1', height: '100%', padding: '50px' }}>
-
+        <div style={{ background: '#fff', height: '100%', padding: '30px' }}>
             <div className="container">
-
                 <ul className="progressbar" style={{ justifyContent: "center" }}>
                     <li className="active" onClick={() => setStateForm(1)}>Personal</li>
                     <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { valid && setStateForm(2) }}>Experiences</li>
@@ -119,8 +117,11 @@ function MakeCV(props) {
                     <div className="two-btn">
                         <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
 
-                        {props.addCv === true ? null : <button type="submit" className="btn btn-primary" onClick={() => setStateForm(3)}>Next <i className="fa fa-arrow-right" aria-hidden="true"></i></button>}
-                        {props.addCv === true ? <button type="submit" className="btn btn-primary" onClick={() => addCVToDB()}>Add CV</button> : null}
+                        {props.addCv === true ? (
+                            <button type="submit" className="btn btn-primary" onClick={() => addCVToDB()}>Add CV</button>
+                        ) : (
+                            <button type="submit" className="btn btn-primary" onClick={() => setStateForm(3)}>Next <i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                        )}
                     </div>
                 </div>
 
@@ -145,5 +146,3 @@ function MakeCV(props) {
         </div>
     )
 }
-
-export default MakeCV

@@ -231,7 +231,7 @@ function EducationSection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setEducationFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another education to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setEducationFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another education to experience</a>
                 </div>
                 <hr className="hr" />
             </div>

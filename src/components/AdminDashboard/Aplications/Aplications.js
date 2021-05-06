@@ -163,7 +163,7 @@ function Aplications(props) {
                 else if (name === "dataAplicare")
                     return items.filter(x => x.dataAplicarii.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "verificat")
-                    return items.filter(x => x.role.toLowerCase().includes(value.toLowerCase()))
+                    return items.filter(x => x.verificat.toLowerCase().includes(value.toLowerCase()))
             }
         })
     }

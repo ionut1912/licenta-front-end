@@ -232,7 +232,7 @@ function WorkSection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setWorkFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another work to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setWorkFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another work to experience</a>
                 </div>
                 <hr className="hr" />
             </div>

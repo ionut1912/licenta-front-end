@@ -54,6 +54,7 @@ function Testimonial({ data, filter }) {
                 <JobView
                     recordForView={currentItem}
                     setOpenPopup={setOpenPopupView}
+                    buttonsAddJob={false}
                 />
             </ViewPopup>
         </div>

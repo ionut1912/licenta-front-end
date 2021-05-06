@@ -245,7 +245,7 @@ function JobsList(props) {
                 subTitle={recordForView.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={recordForView} buttons={false} />
+                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={false}/>
             </ViewPopup>
 
             <Notification

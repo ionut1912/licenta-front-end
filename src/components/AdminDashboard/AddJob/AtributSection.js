@@ -9,11 +9,21 @@ function AtributSection(props) {
     const [atributExperience, setAtributExperience] = useState(false);
     const [atributFields, setAtributFields] = useState(false);
     const [atribut, setAtribut] = useState({
+        id: '',
         atribut: ""
     });
 
+    //popup pt delete aici
     function deleteAtribut(id) {
         props.setAtributePersonale(prevAtributs => {
+            props.setJobInfo(prevInfo => {
+                return {
+                    ...prevInfo,
+                    atributePersonale: prevAtributs.filter((atributItem, index) => {
+                        return index !== id;
+                    })
+                }
+            })
             return prevAtributs.filter((atributItem, index) => {
                 return index !== id;
             });
@@ -26,20 +36,22 @@ function AtributSection(props) {
             return index === id;
         });
 
+
         setAtribut({
+            id: atribut1[0].id,
             atribut: atribut1[0].atribut
         })
 
         deleteAtribut(id);
-
         setAtributFields(true);
     }
 
     function removeAtribut() {
 
         setAtributFields(false);
-
+//popup pt delete aici
         setAtribut({
+            id: '',
             atribut: ""
         })
 
@@ -58,6 +70,7 @@ function AtributSection(props) {
         setAtributFields(false);
 
         setAtribut({
+            id: '',
             atribut: ""
         })
 
@@ -99,6 +112,7 @@ function AtributSection(props) {
 
                         initialValues={
                             {
+                                id: atribut.id,
                                 atribut: atribut.atribut
                             }
                         }
@@ -139,7 +153,7 @@ function AtributSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setAtributFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another atribut to experience</a>
+                    <a href="#/" className="btn-moreInfo" onClick={() => { setAtributFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another atribut to experience</a>
                 </div>
                 <hr className="hr" />
             </div>
