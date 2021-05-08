@@ -13,7 +13,6 @@ function JobView(props) {
         props.setOpenPopup(false)
     }
     function addEditJob() {
-        console.log(props.recordForView)
 
         if(props.editJob===false){
             jobService.addJob(props.recordForView).then(

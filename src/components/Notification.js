@@ -2,9 +2,10 @@ import React from 'react'
 import { makeStyles, Snackbar } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 
+//de modificat locul aparitiei si marimea
 const useStyles = makeStyles(theme => ({
     root: {
-        top: theme.spacing(12)
+        top: theme.spacing(12),
     }
 }))
 

@@ -2,6 +2,7 @@ export const ServicesData = [
     {
         img: "./images/sap.png",
         name: "SAP",
+        litleDescription:'With over a decade of successful history working with big European corporations and several industries, Crystal System Group has gained a great know how and expertise in implementing SAP.',
         descriere: "SAP is market leader in Enterprise Application Software and Products for Business Analysis, with >355.000 customers in more than 180 countries. Our SAP specialised team is one of the largest in South-East Europe. With over a decade of successful history working with big European corporations and several industries, Crystal System Group has gained a great know how and expertise in implementing SAP; our experts can handle the needs and the performance requirements of the most demanding multinational enterprises. We supply for our clients a wide variety of services that range from system analysis to design, re-engineering, development, testing, implementation and maintenance of SAP applications.",
         category: [
             {
@@ -36,6 +37,7 @@ export const ServicesData = [
     {
         img: "./images/business-intelligence.png",
         name: "Business intelligence",
+        litleDescription:'The goal of BI is to ease the interpretation of large volumes of data using a set of tools and the visualisation of information, through reporting, querying,analysing,dashboards and OLAP.',
         descriere: "Business intelligence (BI) is the set of tools used to elaborate the data collected within an enterprise and transform them into meaningful information for business analysis purposes. The goal of BI is to ease the interpretation of large volumes of data and the visualisation of information, through reporting, querying, dashboards and OLAP.",
         category: [
             {
@@ -55,6 +57,7 @@ export const ServicesData = [
     {
         img: "./images/management.png",
         name: "BPM",
+        litleDescription:'Business Process Management (BPM) is a discipline that focuses on managing and optimising the processes’ lifecycle to improve corporate performance and provides total visibility into the organization.',
         descriere: "Business Process Management (BPM) is a discipline that focuses on managing and optimising the processes’ lifecycle to improve corporate performance. BPM provides total visibility into the organization as it leads the discovering, modelling, analysing, measuring and enhancing of business processes, so it enables organizations to be more efficient, more effective and more capable of change."
             + "The processes under analysis are all the set of activities and transactions that an organization conducts in order to achieve an objective; processes coordinate the behaviour of people, systems, information and things, they go from simple actions (i.e. order fulfillment) to complex projects (i.e. new product development), and each of them will be under control thanks to a well-developed BPM.",
         category: [
@@ -74,6 +77,7 @@ export const ServicesData = [
     {
         img: "./images/cloud.png",
         name: "Web Cloud Mobile",
+        litleDescription:'An important team of Crystal System specialists works directly with IBM GDS and another team is focused on Microsoft Web technology, based on the .NET platform and leading tool for corporate intranets.',
         category: [
             {
                 title: "Java /J2EE",
@@ -88,6 +92,7 @@ export const ServicesData = [
     {
         img: "./images/statistics.png",
         name: "Analytics",
+        litleDescription:'Analytics is the set of techniques, based upon statistical and quantitative tools, which allows the insight and discovery of meaningful patterns in data in order to obtain forecasts and prediction of future trends.',
         descriere: "Analytics is the set of techniques, based upon statistical and quantitative tools, which allows the insight and discovery of meaningful patterns in data in order to obtain forecasts and prediction of future trends. Analytics applied to business data allows interpretation of historical and current scenarios and, moreover, predictive views of business operations in order to improve performance.",
         category: [
             {

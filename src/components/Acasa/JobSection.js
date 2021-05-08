@@ -1,43 +1,33 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react'
 import './JobSection.css'
-import Aos from 'aos';
-import "aos/dist/aos.css"
 
+export default function JobSection() {
 
-function InfoHome({
-    lightBg, topLine, lightText, lightTextDesc, headline,
-    description, buttonLabel, img, alt, imgStart
-}) {
-    useEffect(() => {
-        Aos.init({ duration: 1000 });
-    }, [])
     return (
-        <>
-            <div className={lightBg ? 'home__hero-section' : 'home__hero-section grayBg'}>
+            <div className='infoHiring-section'>
                 <div className="container">
-                    <div className="row__item home__hero-row" data-aos="fade-left" data-aos-offset="500"
-                        style={{ display: 'flex', flexDirection: imgStart === 'start' ? 'row-reverse' : 'row' }}>
+                    <div className="row__item">
+
                         <div className="col__item">
-                            <div className="home__hero-text-wrapper">
-                                <div className="top-line">{topLine}</div>
-                                <h1 className={lightText ? 'heading' : 'heading dark'}>{headline}</h1>
-                                <p className={lightTextDesc ? 'home__hero-subtitle' : 'home__hero-subtitle dark'}>{description}</p>
-                                <Link to="/jobs">
-                                    <button className="btn btn-primary btn-lg ">{buttonLabel}</button>
-                                </Link>
+                            <div className="infoHiring-text-wrapper">
+                                <div className="top-line">An oportunitie for you</div>
+                                <h1 className='heading'>Do you want a job in our company?</h1>
+                                <p className='infoHiring-subtitle'>Crystal System is a community of young and passionate technology enthusiasts. If you are willing to learn, if you are ambitious, if you like challenges, we offer you a career with an international vision, diverse experiences and continuous growth.</p>
+                                <a href="/jobs">
+                                    <button className="btn btn-primary btn-lg">Join Us</button>
+                                </a>
                             </div>
                         </div>
-                        <div className="col__item" data-aos="fade-left" data-aos-offset="500">
-                            <div className="home__hero-img-wrapper">
-                                <img src={img} alt={alt} className="home__hero-img" />
+
+                        <div className="col__item" >
+                            <div className="infoHiring-img-wrapper">
+                                <img src='./images/job-search.png' alt='img' className="infoHiring-img" />
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
-        </>
     )
 }
 
-export default InfoHome;

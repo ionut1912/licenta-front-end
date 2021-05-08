@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import ContactService from '../services/contact.service';
+import Notification from './Notification'
 import './Footer.css';
 
 function Footer() {
 
-    const [message, setMessage] = useState("");
-
-    const [successful, setSuccessful] = useState(false);
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const ContactSchema = Yup.object().shape({
         email: Yup.string()
@@ -21,22 +20,28 @@ function Footer() {
     function handleSend(values) {
 
         const { email, message } = values;
-    
+
         ContactService.sendContactEmail(
             email,
             message
         ).then(
             response => {
-                setMessage(response.data.message);
-                setSuccessful(true);
+                setNotify({
+                    isOpen: true,
+                    message: response.data.message,
+                    type: 'success'
+                });
             },
             error => {
                 const resMessage = (
                     error.response &&
                     error.response.data &&
                     error.response.data.message) || error.message || error.toString();
-                setMessage(resMessage);
-                setSuccessful(false);
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                });
             }
         );
     }
@@ -47,6 +52,7 @@ function Footer() {
                 <div className="footer-content">
                     <div className="footer-section about">
                         <h1 className="logo-text"><span>C</span>rystal System</h1>
+                        <br />
                         <p>Here you can find some information about our events and some photos.</p>
                         <div className="contact">
                             <span><i className="fas fa-phone" /> &nbsp; 021-335-2123</span>
@@ -79,7 +85,6 @@ function Footer() {
                             }
 
                             onSubmit={(values, { resetForm }) => {
-                                console.log(values);
                                 handleSend(values);
                                 resetForm({ values: '' })
                             }}
@@ -92,7 +97,7 @@ function Footer() {
                                         type="email"
                                         name="email"
                                         value={props.values.email}
-                                        className="text-input contact-input"
+                                        className="contact-input"
                                         placeholder="Your email address"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
@@ -102,29 +107,28 @@ function Footer() {
                                     <textarea
                                         name="message"
                                         value={props.values.message}
-                                        className="text-input contact-input"
+                                        className="contact-input"
                                         placeholder="Your message"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                     />
                                     {props.errors.message && props.touched.message && <p className="text-danger">{props.errors.message}</p>}
 
-                                    <input type="submit" name="submit" value="Send" className="btn btn-primary btn-lg contact-btn" disabled={props.isSubmitting} />
+                                    <input type="submit" name="submit" value="Send" className="btn btn-primary btn-lg" disabled={props.isSubmitting} />
                                 </form>
                             )}
                         </Formik>
-
-                        {(successful || message) && <div className={successful ? "text-success" : "text-danger"} style={{fontSize : "20px" }} role="alert">
-                            {message}
-                        </div>
-                        }
                     </div>
                 </div>
 
                 <div className="footer-bottom">
-                    Copyright &copy; 2020. Desgined by <span>Matei Alexandru</span>
+                    Copyright &copy; 2021. Desgined by <span>Matei Alexandru</span>
                 </div>
             </div>
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </>
     )
 }

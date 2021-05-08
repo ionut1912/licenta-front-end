@@ -5,7 +5,7 @@ import DetaliuSection from './DetaliuSection'
 import StaticInfoSection from './StaticInfoSection';
 import JobView from '../../Joburi/JobView'
 import ViewPopup from '../../ViewPopup'
-import Notification from '../Notification'
+import Notification from '../../Notification'
 
 
 function NewEditJob(props) {

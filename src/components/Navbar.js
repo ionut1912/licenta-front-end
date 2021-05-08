@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import logo from '../images/logo.png';
 import Login from './Login';
@@ -15,7 +14,6 @@ export default function Navbar(props) {
 
   const [clickForNavbar, setClickForNavBar] = useState(false);
   const [button, setButton] = useState(true);
-  const [statePage, setStatePage] = useState(1);
 
   const [showLogin, setShowLogin] = useState(false);
   const closeLogin = () => setShowLogin(false);
@@ -77,9 +75,9 @@ export default function Navbar(props) {
 
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/home' className='navbar-logo' onClick={() => { setStatePage(1); closeMobileMenu(); }}>
+          <a href='/home' className='navbar-logo' onClick={() => { closeMobileMenu(); }}>
             <img src={logo} alt="logo" className="logo" />
-          </Link>
+          </a>
 
           {currentPath === "/user" || currentPath === "/admin" ?
             <div className='menu-icon-sidebar' onClick={handleClickSidebar}>
@@ -98,45 +96,45 @@ export default function Navbar(props) {
               </div>
             </li>
             <li className='nav-item'>
-              <Link to='/home'
-                className={statePage === 1 ? 'nav-links active' : 'nav-links'}
-                onClick={() => { setStatePage(1); closeMobileMenu(); }}>
+              <a href='/home'
+                className={currentPath === '/home' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
                 Acasa
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/about'
-                className={statePage === 2 ? 'nav-links active' : 'nav-links'}
-                onClick={() => { setStatePage(2); closeMobileMenu(); }}
+              <a
+                href='/about'
+                className={currentPath === '/about' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}
               >
                 Despre
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/jobs'
-                className={statePage === 3 ? 'nav-links active' : 'nav-links'}
-                onClick={() => { setStatePage(3); closeMobileMenu(); }}>
+              <a
+                href='/jobs'
+                className={currentPath === '/jobs' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
                 Joburi
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/makeCV'
-                className={statePage === 4 ? 'nav-links active' : 'nav-links'}
-                onClick={() => { setStatePage(4); closeMobileMenu(); }}>
+              <a
+                href='/makeCV'
+                className={currentPath === '/makeCV' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
                 MakeCV
-              </Link>
+              </a>
             </li>
             {currentUser ? (
               <li className='nav-item'>
-                <Link
-                  to={currentUser.role === "ROLE_ADMIN" ? "/admin" : "/user"}
-                  className={statePage === 5 ? 'nav-links active' : 'nav-links'}
-                  onClick={() => { setStatePage(5); closeMobileMenu(); }}>
+                <a
+                  href={currentUser.role === "ROLE_ADMIN" ? "/admin" : "/user"}
+                  className={currentPath === '/admin' || currentPath === '/user' ? 'nav-links active' : 'nav-links'}
+                  onClick={() => { closeMobileMenu(); }}>
                   {currentUser.role === "ROLE_ADMIN" ? "Admin" : "User"}
-                </Link>
+                </a>
               </li>
             ) : null}
             <div>
@@ -148,7 +146,6 @@ export default function Navbar(props) {
           {showLogin && <Login show={showLogin} close={closeLogin} />}
         </div>
       </nav>
-
     </div>
 
 

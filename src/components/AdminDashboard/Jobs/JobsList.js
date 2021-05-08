@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ViewPopup from '../../ViewPopup'
 import JobView from '../../Joburi/JobView'
-import Notification from '../Notification'
+import Notification from '../../Notification'
 import Button from '../Button'
 import ConfirmDialog from '../ConfirmDialog';
 

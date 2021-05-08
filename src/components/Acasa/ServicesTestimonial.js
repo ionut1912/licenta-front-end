@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ViewPopup from '../ViewPopup'
 import ViewService from './ViewServices'
-import './ServicesSlider.css'
-import Aos from 'aos';
-import "aos/dist/aos.css"
+import './ServicesTestimonial.css'
 
-function ServicesSlider({ data }) {
+export default function ServicesTestimonial({ data }) {
 
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
@@ -20,8 +18,9 @@ function ServicesSlider({ data }) {
                         return (
                             <div className="col" key={index}>
                                 <div className="box">
-                                    <img src={item.img} alt={"img " + index} onClick={() => { setOpenPopupView(true); setCurrentItem(item); }}  />
+                                    <img src={item.img} alt={"img " + index} onClick={() => { setOpenPopupView(true); setCurrentItem(item); }} />
                                     <div className="name" >{item.name}</div>
+                                    <p>{item.litleDescription}</p>
                                 </div>
                             </div>
                         )
@@ -38,4 +37,3 @@ function ServicesSlider({ data }) {
     )
 }
 
-export default ServicesSlider

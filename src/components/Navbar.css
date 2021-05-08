@@ -1,3 +1,15 @@
+.back-drop{
+  position: fixed;
+  z-index: 1;
+  padding-top: 150px; 
+  left: 0;
+  top: 0;
+  width:100%;    
+  height: 100%; 
+  background-color: #1c2237b7; 
+}
+
+
 .navbar {
   background-color:#fff;
   height: 90px;
@@ -8,7 +20,7 @@
   box-shadow: 0 0 15px 1px rgb(0 0 0 / 25%);
   z-index: 999;  
   width: 100%;
-  position: fixed;
+  position: sticky;
   font-family: 'PT Sans', sans-serif;
 }
 

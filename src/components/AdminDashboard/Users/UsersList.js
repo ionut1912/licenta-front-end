@@ -6,7 +6,7 @@ import userService from '../../../services/user.service';
 import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FormPopup from '../FormPopup'
-import Notification from '../Notification'
+import Notification from '../../Notification'
 import FormGradUser from '../FormGradUser'
 import ConfirmDialog from '../ConfirmDialog';
 

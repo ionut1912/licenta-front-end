@@ -5,7 +5,7 @@ import Button from '../Button'
 import AddIcon from '@material-ui/icons/Add';
 import aplicariiService from '../../../services/aplicareJob.serivce';
 import CloseIcon from '@material-ui/icons/Close';
-import Notification from '../Notification'
+import Notification from '../../Notification'
 import ConfirmDialog from '../ConfirmDialog';
 import DescriptionIcon from '@material-ui/icons/Description';
 

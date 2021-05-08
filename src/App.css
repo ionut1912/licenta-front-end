@@ -5,3 +5,69 @@
   font-family: 'PT Sans', sans-serif;
 }
 
+.btn-primary{
+  border:1px solid transparent;
+  padding:.7rem 1.3rem;
+  line-height: 1.3rem;
+  width: 200px;
+}
+
+.btn-primary:hover{
+  transform: translateY(-2px);
+  transition: 0.25s;
+  background-color: #fc1930d5;
+  border-color: #fc1930d5;
+}
+
+/* clasa pentru titlurile sectiunilor din paginile home & about*/
+
+.section-title{
+  margin-top:30px;
+  margin-bottom: 50px;
+  font-weight: 700;
+  line-height: 1;
+  color:#191d34;
+  font-size: 60px;
+  font-family: "Poppins",sans-serif;
+  text-align: center;
+}
+
+
+/*****************clasele pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/
+.col{
+  flex:33.33%;
+  max-width: 33.33%;
+  box-sizing: border-box;
+  padding:20px;
+}
+
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+
+
+.inner{
+  max-width: 1200px;
+  margin:auto;
+  overflow: hidden;
+  padding:0 20px;
+}
+
+@media screen and (max-width:960px){
+
+  /*****************clasa pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/
+  .col{
+      flex:100%;
+      max-width: 80%;
+  }
+}
+  
+@media screen and (max-width:600px){
+    /*****************clasa pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/
+      .col{
+          flex:100%;
+          max-width: 100%; 
+      }
+}

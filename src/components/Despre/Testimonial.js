@@ -3,7 +3,7 @@ import ViewPopup from '../ViewPopup';
 import JobView from '../Joburi/JobView'
 import './Testimonial.css';
 
-function Testimonial({ data, filter }) {
+export default function Testimonial({ data, filter }) {
 
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
@@ -17,7 +17,7 @@ function Testimonial({ data, filter }) {
                     }).map((item, index) => {
                         return (
                             <div className="col" key={index}>
-                                <div className={item.img == null ? "testimonial bg-yellow" : "testimonial"} >
+                                <div className={item.img == null ? "testimonial bg-yellow" : "testimonial col-shadow"} >
                                     {item.img == null ? (
                                         <div>
                                             <div className="name">{item.numeJob}</div>
@@ -61,4 +61,3 @@ function Testimonial({ data, filter }) {
     )
 }
 
-export default Testimonial;
