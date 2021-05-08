@@ -51,14 +51,14 @@
 
 .footer .footer-content .about .socials a:hover{
     color:#fc1930d5;
-    transition:all .5s;
+    transition:all .25s;
 }
 
 .footer .footer-content .links ul a{
     display:block;
     margin-bottom:10px;
     font-size:1.2em;
-    transition:all .5s;
+    transition:all .25s;
     color:#fff;
     list-style-type:none;
 }

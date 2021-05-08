@@ -3,6 +3,8 @@ import Testimonial from '../Despre/Testimonial'
 import DropdownSelect from '../Joburi/DropdownSelect'
 import JobService from '../../services/job.service';
 import Footer from '../Footer';
+import FlexDinamicInfo from '../FlexDinamicInfo';
+import { MakeCVInfoData } from '../Joburi/MakeCVInfoData';
 
 
 function Jobs() {
@@ -24,6 +26,7 @@ function Jobs() {
 
     return (
         <div>
+            <FlexDinamicInfo {...MakeCVInfoData} />
             <DropdownSelect setFilter={setFilter} />
             <Testimonial data={jobs} filter={filter} />
             <Footer />

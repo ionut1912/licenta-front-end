@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
-function PersonalInfoSection(props) {
+export default function PersonalInfoSection(props) {
 
     const [openAditionalInfo, setOpenAditionalInfo] = useState(false);
 
@@ -27,9 +27,6 @@ function PersonalInfoSection(props) {
 
     return (
         <div className="form-cls">
-            {/* <div className="form-group avatar col-md-2">
-                            <img id="avatar" src="./images/cap.png" alt="3qwqq" />
-                </div> */}
 
             <Formik
                 initialValues={
@@ -235,4 +232,3 @@ function PersonalInfoSection(props) {
     )
 }
 
-export default PersonalInfoSection

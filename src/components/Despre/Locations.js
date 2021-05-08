@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
   map: {
     background: '#fff',
-    padding: '40px 0'
+    padding: '40px 0px',
+    margin:'20px'
   },
   frame: {
     width: '100%',

@@ -17,7 +17,7 @@ export default function Testimonial({ data, filter }) {
                     }).map((item, index) => {
                         return (
                             <div className="col" key={index}>
-                                <div className={item.img == null ? "testimonial bg-yellow" : "testimonial col-shadow"} >
+                                <div className={item.img == null ? "testimonial bg-yellow col-shadow" : "testimonial col-shadow"} >
                                     {item.img == null ? (
                                         <div>
                                             <div className="name">{item.numeJob}</div>

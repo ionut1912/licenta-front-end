@@ -9,8 +9,8 @@ function Strenghts({ strenghts }) {
         return null;
     }
     return (
-        <div className="bg-gray">
-            <h1 className="title">Our strenghts</h1>
+        <div className="strenghts-section">
+            <h1 className="section-title" style={{color:"#fff"}}>Our strenghts</h1>
             <div className="strengths container">
                 <div data-target="#list-strenghts" className="description">
                     {strenghts.map((strenght, index) => {

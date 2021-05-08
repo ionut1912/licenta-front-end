@@ -5,7 +5,7 @@ import ContactService from '../services/contact.service';
 import Notification from './Notification'
 import './Footer.css';
 
-function Footer() {
+export default function Footer() {
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
@@ -68,6 +68,7 @@ function Footer() {
                         <h2>Quick Links</h2>
                         <br />
                         <ul>
+                            <a href="/home"><li>Home</li></a>
                             <a href="/about"><li>About</li></a>
                             <a href="/jobs"><li>Jobs</li></a>
                             <a href="/makeCV"><li>Make CV</li></a>
@@ -133,4 +134,3 @@ function Footer() {
     )
 }
 
-export default Footer

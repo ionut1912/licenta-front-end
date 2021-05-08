@@ -5,7 +5,7 @@
   font-family: 'PT Sans', sans-serif;
 }
 
-.btn-primary{
+.btn-primary, .btn-danger{
   border:1px solid transparent;
   padding:.7rem 1.3rem;
   line-height: 1.3rem;
@@ -17,6 +17,13 @@
   transition: 0.25s;
   background-color: #fc1930d5;
   border-color: #fc1930d5;
+}
+
+.btn-danger:hover{
+  transform: translateY(-2px);
+  transition: 0.25s;
+  background-color: #0c398db7;
+  border-color: #0c398db7;
 }
 
 /* clasa pentru titlurile sectiunilor din paginile home & about*/

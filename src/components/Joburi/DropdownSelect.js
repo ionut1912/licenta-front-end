@@ -1,9 +1,9 @@
 import React from 'react';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import './DropdownSelect.css'
 
 
-function DropdownSelect(props) {
+export default function DropdownSelect(props) {
 
      const handleChange = selectedOption => {
           props.setFilter(selectedOption.value);
@@ -18,28 +18,30 @@ function DropdownSelect(props) {
           { value: 'Limassol,Cipru', label: 'Limassol,Cipru' },
      ];
 
-
      const customStyles = {
           option: (provided, state) => ({
                ...provided,
-               color: state.isSelected ? 'blue' : 'dark',
-               backgroundColor: state.isSelected ? 'yellow' : 'white'
+               color: state.isSelected ? '#fff' : state.isFocused ? '#000' : null,
+               backgroundColor: state.isSelected ? '#fc1930d5' : state.isFocused ? '#f7b0b0b2' : null,
+               ':active': {
+                    backgroundColor: state.isSelected ? null : '#f7b0b0'
+               }
           }),
      }
 
-
      return (
           <div className="body-select">
-               <h2 className="info">Select location to see available jobs</h2>
                <Select
                     onChange={handleChange}
                     options={options}
                     styles={customStyles}
-                    placeholder={options[0].label}
+                    placeholder='Select location to see available jobs'
                     className="select"
+                    components={{
+                         Menu: (props) => <components.Menu {...props} className="menu" />
+                    }}
                />
           </div>
      )
 }
 
-export default DropdownSelect
