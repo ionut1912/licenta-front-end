@@ -4,17 +4,13 @@
 
 }
 
-.strenghts-section h1{
-  color:#fada25;
-  text-align:center;
-  padding-top:70px;
-  font-size: 4em;
-  font-family: 'Yusei Magic', sans-serif ;
-}
 .strengths{
     display: flex;
     padding:20px 30px;
 
+}
+.strenghts-section .container{
+  max-width: 1200px;
 }
 .list-group{
     padding:25px;

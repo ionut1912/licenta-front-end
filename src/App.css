@@ -22,8 +22,8 @@
 .btn-danger:hover{
   transform: translateY(-2px);
   transition: 0.25s;
-  background-color: #0c398db7;
-  border-color: #0c398db7;
+  background-color: #7038f5d5;
+  border-color: #7038f5d5;
 }
 
 /* clasa pentru titlurile sectiunilor din paginile home & about*/
@@ -39,6 +39,35 @@
   text-align: center;
 }
 
+
+/* clasele pentru stilizarea carouselelor*/
+.carousel {
+  background-color: #060b26;
+  padding:70px 0;
+  color:#fff;
+}
+
+.right-arrow{
+  position: absolute;
+  top:40%;
+  right:5px;
+  font-size:2.5rem;
+  z-index:10;
+  cursor: pointer;
+  user-select:none;
+  color:#fff;
+}
+
+.left-arrow{
+  position: absolute;
+  top:40%;
+  left:5px;
+  font-size:2.5rem;
+  z-index:10;
+  cursor: pointer;
+  user-select:none;
+  color:#fff;
+}
 
 /*****************clasele pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/
 .col{
@@ -62,6 +91,18 @@
   padding:0 20px;
 }
 
+
+@media screen and (max-width:1045px){
+  /* .right-arrow{
+    display: none;
+  }
+  
+  .left-arrow{
+    display: none;
+  } */
+}
+
+
 @media screen and (max-width:960px){
 
   /*****************clasa pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/
@@ -76,5 +117,9 @@
       .col{
           flex:100%;
           max-width: 100%; 
+      }
+
+      .btn-danger{
+        width: 150px;
       }
 }

@@ -65,7 +65,7 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className="footer-section links">
-                        <h2>Quick Links</h2>
+                        <h1>Quick Links</h1>
                         <br />
                         <ul>
                             <a href="/home"><li>Home</li></a>
@@ -75,7 +75,7 @@ export default function Footer() {
                         </ul>
                     </div>
                     <div className="footer-section contact-form">
-                        <h2>Contact</h2>
+                        <h1>Contact</h1>
                         <br />
                         <Formik
                             initialValues={

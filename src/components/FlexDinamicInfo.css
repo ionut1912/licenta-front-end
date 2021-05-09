@@ -73,18 +73,18 @@
     .infoDinamic-section .container{
         padding-right: 30px;
         padding-left: 30px;
-     }
+}
 
     .col_item{
         max-width: 100%;
         flex-basis: 100%;
-    }
+}
 
     .heading{
         font-size:40px;
-    }
+}
     
     .infoDinamic-subtitle{
         font-size:16px;
-    }
+}
 }

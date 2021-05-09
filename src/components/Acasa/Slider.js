@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './Slider.css';
-import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
-import Aos from 'aos';
-import "aos/dist/aos.css"
-function Slider({ slides }) {
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+
+export default function Slider({ slides }) {
 
     const [current, setCurrent] = useState(0);
     const length = slides.length;
@@ -16,45 +15,48 @@ function Slider({ slides }) {
         setCurrent(current === 0 ? length - 1 : current - 1);
     }
 
-    useEffect(() => {
-        Aos.init({ duration: 1000 });
-    }, [])
-    
-
-    if (!Array.isArray(slides) || slides.length <= 0) {
-        return null;
-    }
-
 
     return (
-
-        <div className="carousel slide">
-            <BsArrowLeftShort className='left-arrow' onClick={prevSlide} />
-            <BsArrowRightShort className='right-arrow' onClick={nextSlide} />
-            <div className="carousel-inner">
+        <div className="carousel">
+            <IoIosArrowBack className='left-arrow' onClick={prevSlide} />
+            <IoIosArrowForward className='right-arrow' onClick={nextSlide} />
+            <div className="carousel-inner container">
                 {slides.map((slide, index) => {
                     return (
                         <div className="carousel-item active" key={index}>
-                            {index === current && <img src={slide.image} alt={"img " + index} />}
-                            <div className="carousel-caption">
-                                <h2 className="display-2" data-aos="fade-left" data-aos-offset="500">{slide.h2}</h2>
-                                <h5><ul>
-                                    {slide.h5.map((item, current) => {
-                                        return (
-                                            <li key={current}  data-aos="fade-left" data-aos-offset="500">{item}</li>
-                                        );
-                                    })}
-                                </ul></h5>
+                            {index === current &&
+                                <div className="carousel-row" >
 
+                                    <div className="carousel-col">
+                                        <div className="infoDinamic-text-wrapper">
+                                            <div className="static-text">CRYSTAL SYSTEM GROUP</div>
+                                            <h1 >{slide.h1}</h1>
+                                            {slide.p.map((item, current) => {
+                                                return (
+                                                    <p key={current} >{item}</p>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
 
-
-                            </div>
+                                    <div className="carousel-col">
+                                        <img src={slide.image} alt={"img " + index} className="infoDinamic-img" />
+                                    </div>
+                                    
+                                </div>
+                            }
                         </div>
                     )
                 })}
             </div>
+
+            <ol className="carousel-indicators">
+                <li className={current === 0 ? "active" : null} onClick={()=> setCurrent(0)}></li>
+                <li className={current === 1 ? "active" : null} onClick={()=> setCurrent(1)}></li>
+                <li className={current === 2 ? "active" : null} onClick={()=> setCurrent(2)}></li>
+            </ol>
+
         </div>
     )
 }
 
-export default Slider

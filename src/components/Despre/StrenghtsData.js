@@ -4,7 +4,7 @@ export const StrenghtsData = [
         text: [
             "The software development process is managed with a project-oriented approach: on this purpose we use Project Objects (PO), an innovative and powerful Enterprise Project Intelligence platform. PO is our key ally for the management and control of projects and for the exchange of information with our clients. Using a project oriented approach grants rigorous compliance with approved budget and in-time deliveries.",
             "PO supports Planning & Scheduling, Progress Monitoring & Control, Analysis, Reporting and Collaboration processes across Company portfolios, projects, initiatives, opportunities and services.",
-            "For each project, PO allows to create the breakdown structure and the plan; the project is organized in tasks, which are split into tickets; each must be opened, scheduled, executed, tested, accepted by the client and just then the development can be released"
+            "For each project, PO allows to create the breakdown structure and the plan; the project is organized in tasks, which are split into tickets; each must be opened, scheduled, executed, tested, accepted by the client and just then the development can be released."
         ]
     },
     {
@@ -40,7 +40,7 @@ export const StrenghtsData = [
             "- Quantify: calculate the probability of adverse event occurring, multiplied by the cost of occurrence;",
             "- Assign the risk ownership;",
             "- Mitigate: decrease the probability of occurrence, reduce business impact;",
-            "- Monitor: issue tracking."
+            "- Monitor: issue tracking;"
         ]
     }
 ];

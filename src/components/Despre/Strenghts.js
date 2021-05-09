@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import './Strenghts.css'
 
-function Strenghts({ strenghts }) {
+export default function Strenghts({ strenghts }) {
 
     const [current, setCurrent] = useState(0);
 
-    if (!Array.isArray(strenghts) || strenghts.length <= 0) {
-        return null;
-    }
     return (
         <div className="strenghts-section">
-            <h1 className="section-title" style={{color:"#fff"}}>Our strenghts</h1>
+            <h1 className="section-title" style={{ color: "#fff", paddingTop: '70px', marginBottom: '20px' }}>Our strenghts</h1>
             <div className="strengths container">
+
                 <div data-target="#list-strenghts" className="description">
                     {strenghts.map((strenght, index) => {
                         return (
@@ -30,7 +28,7 @@ function Strenghts({ strenghts }) {
                     })}
                 </div>
 
-                <div id="list-strenghts" className="list-group">
+                <div id="list-strenghts" className="list-group" id="list-tab" role="tablist">
                     {strenghts.map((strenght, index) => {
                         return (
                             <a key={index} className={index === current ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action '} href="#list-exemple" onClick={() => { setCurrent(index) }} >{strenght.title}</a>
@@ -43,4 +41,3 @@ function Strenghts({ strenghts }) {
     )
 }
 
-export default Strenghts;

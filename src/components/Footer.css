@@ -19,7 +19,7 @@
     padding: 25px;
 }
 
-.footer .footer-content h1,.footer .footer-content h2{
+.footer .footer-content h1{
     color:#fff;
 }
 
@@ -106,7 +106,14 @@
         flex-direction: column;
     }
 
+    .footer .footer-content h1{
+        font-size:50px;
+    }
+    .logo-text{
+        padding-top:20px;
+    }
+
     .footer .footer-content .footer-section{
-        padding: 55px 0px;
+        padding: 20px 0px;
     }
 }
