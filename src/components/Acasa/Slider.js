@@ -40,7 +40,7 @@ export default function Slider({ slides }) {
                                     </div>
 
                                     <div className="carousel-col">
-                                        <img src={slide.image} alt={"img " + index} className="infoDinamic-img" />
+                                        <img src={slide.image} alt={"img " + index} className="img" />
                                     </div>
                                     
                                 </div>

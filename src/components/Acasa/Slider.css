@@ -14,6 +14,9 @@
   flex-basis: 50%;
 }
 
+.carousel-item{
+padding:0px 20px;
+}
 .carousel-item img{
     width:500px;
     height: 400px;
@@ -39,6 +42,12 @@
     margin-bottom:5px;
     font-size:18px;
     line-height: 24px;
+}
+
+.carousel-col .img{
+    max-width: 90%;
+    padding-right: 0;
+    margin : 0 0 0 10px;
 }
 
 
