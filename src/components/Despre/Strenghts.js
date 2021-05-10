@@ -15,7 +15,7 @@ export default function Strenghts({ strenghts }) {
                     {strenghts.map((strenght, index) => {
                         return (
                             <div key={index} className={index === current ? "strength-col-logo active" : "strength-col-logo "} onClick={() => { setCurrent(index) }}>
-                                <img src={strenght.logo} className="strength-logo" />
+                                <img src={strenght.logo} alt="img" className="strength-logo" />
                                 <p className="strength-title">{strenght.title}</p>
                             </div>
                         )

@@ -2,7 +2,7 @@
     width: 50%;
     align-self: center;
     padding:25px;
-
+    margin-bottom: 50px;
 }
 
 .form-aplicare label{
@@ -10,23 +10,27 @@
     color:#1c2237c0;
 }
 
-.btn-submit{
+.form-aplicare .btn-submit{
+    background-color: #fc1930d5;
+    border-color: #fc1930d5;
+    color: #fff;
     font-size:1rem;
+    padding: 0.8rem 4rem;
     margin-right:auto;
-    padding:0.8rem 4rem;
-    background:#dd501d;
-    color:#fff;
-    border:none;
-    outline:none;
-    cursor: pointer;
+    text-decoration: none;
+}
+
+.form-aplicare .btn-submit:hover{
+    transform: translateY(-3px);
+    transition: 0.25s;
+    background-color: #7038f5d5;
+    border-color: #7038f5d5;
 }
 
 
-
 @media screen and (max-width: 860px) {
-    .btn-submit{
+    .form-aplicare .btn-submit{
         padding:0.5rem 2rem;
-    
     }
 
     .form-aplicare{

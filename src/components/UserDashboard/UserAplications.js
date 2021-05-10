@@ -27,6 +27,7 @@ function UserAplications(props) {
             response => {
                 setCurrentItem(response.data);
                 setOpenPopupView(true);
+                console.log(response.data)
             }
         )
 
@@ -77,6 +78,7 @@ function UserAplications(props) {
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
 
             <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Aplicarile mele</h1>
+            
             <div className="filtrare-aplicatii">
                 <select className="custom-select" id="inputGroupSelect01" onChange={onChangeSelect}>
                     <option value="Toate aplicarile">Toate aplicarile</option>

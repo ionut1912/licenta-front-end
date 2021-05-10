@@ -86,7 +86,7 @@ export default function Navbar(props) {
           </li>
           <li className='nav-item'>
             <a href='/home'
-              className={currentPath === '/home' ? 'nav-links active' : 'nav-links'}
+              className={currentPath === '/home' || currentPath === '/'? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
               Acasa
               </a>

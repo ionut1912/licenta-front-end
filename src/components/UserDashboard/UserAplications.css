@@ -55,4 +55,20 @@
     display:flex;
 }
 
+@media screen and (max-width: 590px) {
+    .filtrare-aplicatii{
+       flex-direction: column;
+    }
+
+    .filtrare-aplicatii .custom-select{
+        width: 100%;
+    }
+
+    .filtrare-aplicatii .input-group{
+        margin-left: 0px;
+        padding:20px 0;
+        width: 100%;
+    }
+}
+
 

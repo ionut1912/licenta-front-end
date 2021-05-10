@@ -1,24 +1,18 @@
 import React from 'react'
 import { Dialog, DialogContent, makeStyles } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
     modal: {
         textAlign: 'center',
-        width: '83%',
-        position: 'absolute',
-        left: '9%',
+        width: '85%',
         margin: 'auto',
-        zIndex: '1',
-        transition: 'all .3s ease',
         '& .MuiDialogContent-root': {
             padding: '0'
         },
         '& .MuiDialog-paperWidthMd': {
             width: '2000px',
             maxWidth: '2000px'
-        },
-        '& .MuiPaper-root': {
-            backgroundColor: 'transparent'
         }
     }
 }))
@@ -33,11 +27,11 @@ export default function ViewPopup(props) {
     return (
         <Dialog open={openPopup} maxWidth="md" className={classes.modal} onClose={handleClose} >
             <div className="modal-header">
-                <div className="job-description">
-                    <h2>{title}</h2>
+                <span onClick={() => setOpenPopup(false)} className="close-modal"><CloseIcon fontSize="large" /></span>
+                <div className="header-description">
+                    <h2 style={subTitle === null ? { marginBottom: '10px' } : null}>{title}</h2>
                     {subTitle != null ? <p>{subTitle}</p> : null}
                 </div>
-                <span onClick={() => setOpenPopup(false)}>X</span>
 
             </div>
             <DialogContent style={{ backgroundColor: "white" }}>

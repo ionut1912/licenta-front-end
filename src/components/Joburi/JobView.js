@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Aplicare from '../Joburi/Aplicare'
-import '../ViewPopup.css'
 import jobService from '../../services/job.service'
+import '../ViewPopup.css'
 
-function JobView(props) {
+export default function JobView(props) {
 
     const [showApplay, setShowApplay] = useState(false);
     const [messageAplicare, setMessageAplicare] = useState("");
@@ -12,6 +12,7 @@ function JobView(props) {
     const close = () => {
         props.setOpenPopup(false)
     }
+
     function addEditJob() {
 
         if(props.editJob===false){
@@ -105,22 +106,20 @@ function JobView(props) {
             ) : (
                 messageAplicare !== "" ? <h1 style={{ padding: "50px", fontSize: "40px" }} className={stateAplicare === true ? "text-success" : "text-danger"}>{messageAplicare}</h1> :
                     <Aplicare showDetails={setShowApplay} close={close} idJob={props.recordForView.id} setMessage={setMessageAplicare} state={setStateAplicare} />
-
             )}
             {props.buttons !== false ? (
                 <div className="modal-footer">
-                    <button className="btn-cancel" onClick={close}>Close</button>
-                    <button className="btn-apply" onClick={() => { setShowApplay(!showApplay); setMessageAplicare("") }}>{showApplay === false ? "Apply now" : "See details again"}</button>
+                    <button className="btn btn-cancel" onClick={close}>Close</button>
+                    <button className="btn btn-apply" onClick={() => { setShowApplay(!showApplay); setMessageAplicare("") }}>{showApplay === false ? "Apply now" : "See details"}</button>
                 </div>
             ) : null}
             {props.buttonsAddJob !== false ? (
                 <div className="modal-footer">
-                    <button className="btn-cancel" onClick={close}>Close</button>
-                    <button className="btn-apply" onClick={addEditJob} >Add job</button>
+                    <button className="btn btn-cancel" onClick={close}>Close</button>
+                    <button className="btn btn-apply" onClick={addEditJob} >Add job</button>
                 </div>
             ) : null}
         </div>
     )
 }
 
-export default JobView

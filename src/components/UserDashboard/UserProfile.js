@@ -97,9 +97,11 @@ function UserProfile(props) {
                 {props => (
 
                     <form className="form-profile" onSubmit={props.handleSubmit}>
-                        {edit === false ? <label className="col-sm-2 col-form-label">Profile picture:</label> : null}
-                        <img src={baseImage !== "" ? baseImage : props.values.img} className="avatar" alt="" />
-                        {edit === true ? <input type="file" id="input" onChange={uploadImage} className="input-img" /> : null}
+                        <div className="form-group">
+                            {edit === false ? <label className="col-sm-2 col-form-label" style={{alignSelf:'center'}}>Profile picture:</label> : null}
+                            <img src={baseImage !== "" ? baseImage : props.values.img} className="avatar" alt="" />
+                            {edit === true ? <input type="file" id="input" onChange={uploadImage} className="input-img"  style={{alignSelf:'center'}}/> : null}
+                        </div>
 
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
@@ -117,6 +119,7 @@ function UserProfile(props) {
                                 {props.errors.full_name && props.touched.full_name && <p className="text-danger">{props.errors.full_name}</p>}
                             </div>
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email:</label>
                             <div className="col-md-6 col-sm-8">
@@ -134,6 +137,7 @@ function UserProfile(props) {
                                 {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
                             </div>
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="inputPhone" className="col-sm-2 col-form-label">Phone:</label>
                             <div className="col-md-6 col-sm-8">
