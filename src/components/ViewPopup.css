@@ -76,8 +76,8 @@
     border-top:none;
 }
 .modal-footer .btn-cancel{
-    background-color: #fc1930d5;
-    border-color: #fc1930d5;
+    background-color: #fc1930;
+    border-color: #fc1930;
     color: #fff;
     font-size:1rem;
     padding: 0.5rem 2rem;
@@ -86,8 +86,8 @@
 }
 
 .modal-footer .btn-apply{
-    background-color: #fc1930d5;
-    border-color: #fc1930d5;
+    background-color: #fc1930;
+    border-color: #fc1930;
     color: #fff;
     font-size:1rem;
     padding: 0.5rem 2rem;
@@ -115,4 +115,14 @@
         padding: 0.5rem 1rem;
     }
     
+}
+
+@media screen and (max-width: 550px) {
+    .modal-footer .btn-cancel{
+        padding: 0.5rem 1rem;
+    }
+    
+    .modal-footer .btn-apply{
+        padding: 0.5rem 0.5rem; 
+    }
 }

@@ -9,6 +9,7 @@ import "./UserProfile.css"
 function UserProfile(props) {
 
     const [edit, setEdit] = useState(false);
+    const [fileChoosen, setFileChosen] = useState('No file choosen');
 
     const currentUser = AuthService.getCurrentUser();
 
@@ -52,9 +53,11 @@ function UserProfile(props) {
 
     const uploadImage = async (e) => {
         const file = e.target.files[0];
-        const base64 = await convertBase64(file);
-        setBaseImage(base64);
-
+        if (file.name !== null) {
+            setFileChosen(file.name);
+            const base64 = await convertBase64(file);
+            setBaseImage(base64);
+        }
     };
 
     const convertBase64 = (file) => {
@@ -98,9 +101,13 @@ function UserProfile(props) {
 
                     <form className="form-profile" onSubmit={props.handleSubmit}>
                         <div className="form-group">
-                            {edit === false ? <label className="col-sm-2 col-form-label" style={{alignSelf:'center'}}>Profile picture:</label> : null}
+                            {edit === false ? <label className="col-sm-2 col-form-label img-label" style={{ alignSelf: 'center' }}>Profile picture:</label> : null}
                             <img src={baseImage !== "" ? baseImage : props.values.img} className="avatar" alt="" />
-                            {edit === true ? <input type="file" id="input" onChange={uploadImage} className="input-img"  style={{alignSelf:'center'}}/> : null}
+                           
+                            {edit === true ? <div style={{ display: 'flex' }}>
+                                <input type="file" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
+                                <p className="file-name text-primary">{fileChoosen}</p>
+                            </div> : null}
                         </div>
 
                         <div className="form-group">
@@ -156,8 +163,8 @@ function UserProfile(props) {
                             </div>
                         </div>
                         {edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
-                        {edit === true && <div>
-                            <button type="button" className="btn btn-outline-primary btn-edit-send"
+                        {edit === true && <div className="btns">
+                            <button type="button" className="btn btn-outline-primary btn-detalii"
                                 onClick={() => {
                                     setBaseImage("");
                                     setEdit(false);
@@ -167,7 +174,7 @@ function UserProfile(props) {
                                     props.setFieldValue('email', currentUser.email);
                                     props.setFieldValue('phone', currentUser.phone);
                                 }}>Elimina modificarile</button>
-                            <button type="submit" style={{ marginLeft: "80px" }} name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
+                            <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
                         </div>}
                     </form>
                 )}

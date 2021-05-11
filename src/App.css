@@ -26,6 +26,13 @@
   border-color: #7038f5d5;
 }
 
+.file-name{
+  margin-right:auto;
+  align-self: center;
+  font-size: 16px;
+  margin-left:10px;
+ }
+
 /* clasa pentru titlurile sectiunilor din paginile home & about*/
 
 .section-title{
@@ -51,6 +58,7 @@
   cursor: pointer;
 }
 
+
 .right-arrow{
   position: absolute;
   top:40%;
@@ -62,6 +70,12 @@
   color:#fff;
 }
 
+.right-arrow:hover{
+  transform: translateX(2px);
+  transition: 0.25s;
+  color: #fc1930d5;
+}
+
 .left-arrow{
   position: absolute;
   top:40%;
@@ -71,6 +85,12 @@
   cursor: pointer;
   user-select:none;
   color:#fff;
+}
+
+.left-arrow:hover{
+  transform: translateX(-2px);
+  transition: 0.25s;
+  color: #fc1930d5;
 }
 
 /*****************clasele pentru afisarea serviciilor,job-urilor si a testimonialelor pe rand uri si coloane**************/

@@ -8,7 +8,7 @@ import './Aplicare.css'
 export default function Aplicare(props) {
 
     const [baseCV, setBaseCV] = useState("");
-
+    const [fileChoosen, setFileChosen] = useState('No file choosen');
     const currentUser = UserService.getCurrentUser();
 
     const idJob = props.idJob;
@@ -64,9 +64,11 @@ export default function Aplicare(props) {
 
     const uploadCV = async (e) => {
         const file = e.target.files[0];
-        const base64 = await convertBase64(file);
-        setBaseCV(base64);
-
+        if (file.name !== null) {
+            setFileChosen(file.name);
+            const base64 = await convertBase64(file);
+            setBaseCV(base64);
+        }
     };
 
     const convertBase64 = (file) => {
@@ -103,7 +105,7 @@ export default function Aplicare(props) {
 
                 {props => (
                     <form onSubmit={props.handleSubmit}>
-                    
+
                         <div className="form-group">
                             <label htmlFor="inputfn">Full name*</label>
                             <input type="text"
@@ -145,17 +147,19 @@ export default function Aplicare(props) {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="inputCV">CV*</label>
-                            <input type="file"
-                                id="inputCV"
-                                accept=".pdf,.doc,.docx"
-                                className="form-control"
-                                onChange={uploadCV}
-                                required
-                            />
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <div>
+                                    <input type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        className="input-file"
+                                        onChange={uploadCV}
+                                        required
+                                    />
+                                    <p className="file-name text-secondary" style={{marginLeft:'0px'}}>{fileChoosen}</p>
+                                </div>
+                                <button type="submit" name="submit" className="btn btn-submit" >Apply</button>
+                            </div>
                         </div>
-
-                        <button type="submit" name="submit" className="btn btn-submit" >Apply</button>
 
                     </form>
                 )}

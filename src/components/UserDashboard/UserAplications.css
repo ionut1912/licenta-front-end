@@ -69,6 +69,13 @@
         padding:20px 0;
         width: 100%;
     }
+
 }
 
 
+
+@media screen and (max-width: 550px) {
+    .info-aplicare h3{
+      font-size: 1.25rem;
+    }
+}
