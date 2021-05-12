@@ -20,8 +20,7 @@ export default function Aplicare(props) {
             .email("Invalid email!")
             .required("This field is required!"),
         telefon: Yup.string()
-            .required("This field is required!"),
-        baseCV: Yup.string()
+            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
             .required("This field is required!")
     })
 
@@ -30,6 +29,7 @@ export default function Aplicare(props) {
         if (baseCV !== "") {
             values.cv = baseCV;
         }
+        console.log(values);
 
         if (currentUser !== null) {
             AplicareJobService.sendAplicareUser(currentUser.id, idJob, values).then(
@@ -90,11 +90,18 @@ export default function Aplicare(props) {
         <div className="form-aplicare">
             <Formik
                 initialValues={
-                    {
-                        full_name: '',
-                        email: '',
-                        telefon: ''
-                    }
+                    currentUser === null ?
+                        {
+                            full_name: '',
+                            email: '',
+                            telefon: ''
+                        }
+                        :
+                        {
+                            full_name: currentUser.full_name,
+                            email: currentUser.email,
+                            telefon: currentUser.phone
+                        }
                 }
 
                 onSubmit={(values) => {
@@ -110,7 +117,7 @@ export default function Aplicare(props) {
                             <label htmlFor="inputfn">Full name*</label>
                             <input type="text"
                                 name="full_name"
-                                value={props.full_name}
+                                value={props.values.full_name}
                                 className="form-control"
                                 id="inputfn"
                                 onChange={props.handleChange}
@@ -123,7 +130,7 @@ export default function Aplicare(props) {
                             <label htmlFor="inputEmail">Email*</label>
                             <input type="email"
                                 name="email"
-                                value={props.email}
+                                value={props.values.email}
                                 className="form-control"
                                 id="inputEmail"
                                 onChange={props.handleChange}
@@ -137,7 +144,7 @@ export default function Aplicare(props) {
                             <label htmlFor="inputPhone">Telefon*</label>
                             <input type="text"
                                 name="telefon"
-                                value={props.telefon}
+                                value={props.values.telefon}
                                 className="form-control"
                                 id="inputPhone"
                                 onChange={props.handleChange}
@@ -155,9 +162,9 @@ export default function Aplicare(props) {
                                         onChange={uploadCV}
                                         required
                                     />
-                                    <p className="file-name text-secondary" style={{marginLeft:'0px'}}>{fileChoosen}</p>
+                                    <p className="file-name text-secondary" style={{ marginLeft: '0px' }}>{fileChoosen}</p>
                                 </div>
-                                <button type="submit" name="submit" className="btn btn-submit" >Apply</button>
+                                <button type="submit" name="submit" className="btn btn-submit">Apply</button>
                             </div>
                         </div>
 

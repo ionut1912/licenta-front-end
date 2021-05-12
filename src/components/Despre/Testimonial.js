@@ -8,6 +8,14 @@ export default function Testimonial({ data, filter }) {
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
 
+    function format(date) {
+        return new Intl.DateTimeFormat("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        }).format(new Date(date));
+    }
+
     return (
         <div className="testimonials">
             <div className="inner">
@@ -22,6 +30,7 @@ export default function Testimonial({ data, filter }) {
                                         <div>
                                             <div className="name">{item.numeJob}</div>
                                             <p>Location: {item.locatie}</p>
+                                            <p style={{color:'#f00946'}}>Data limita: {format(item.dataMaxima)}</p>
                                             <button className="btn btn-primary btn-lg " onClick={() => { setOpenPopupView(true); setCurrentItem(item); }}>See more details</button>
 
                                         </div>

@@ -11,7 +11,7 @@ function StaticInfoSection(props) {
             .required("This field is required!"),
         descriere: Yup.string()
             .required("This field is required!"),
-        last_date: Yup.string()
+        dataMaxima: Yup.string()
             .required("This field is required!")
     })
 
@@ -22,7 +22,8 @@ function StaticInfoSection(props) {
                 ...prevInfo,
                 numeJob: values.nume_job,
                 locatie: values.locatie,
-                descriere: values.descriere
+                descriere: values.descriere,
+                dataMaxima:values.dataMaxima
             }
         })
         props.changeState(2);
@@ -31,19 +32,10 @@ function StaticInfoSection(props) {
         <div className="form-cls">
             <Formik
                 enableReinitialize={true}
-                initialValues={
-                    {
-                        nume_job: props.staticInfo.nume_job,
-                        locatie: props.staticInfo.locatie,
-                        last_date: props.staticInfo.last_date,
-                        descriere: props.staticInfo.descriere
-
-                    }
-                }
+                initialValues={props.staticInfo}
 
                 onSubmit={(values) => {
                     handleSubmit(values);
-
                 }}
 
                 validationSchema={validateSchema}>
@@ -83,8 +75,8 @@ function StaticInfoSection(props) {
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputDate">Last date*</label>
                                 <input type="date"
-                                    name="last_date"
-                                    value={props.values.last_date}
+                                    name="dataMaxima"
+                                    value={props.values.dataMaxima}
                                     data-date-format="dd-mm-yyyy"
                                     className="form-control"
                                     id="inputDate"
@@ -92,7 +84,7 @@ function StaticInfoSection(props) {
                                     onBlur={props.handleBlur}
                                 />
 
-                                {props.errors.last_date && props.touched.last_date && <p className="text-danger">{props.errors.last_date}</p>}
+                                {props.errors.dataMaxima && props.touched.dataMaxima && <p className="text-danger">{props.errors.dataMaxima}</p>}
                             </div>
 
                         </div>

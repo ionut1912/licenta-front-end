@@ -20,7 +20,7 @@ function NewEditJob(props) {
         nume_job: '',
         locatie: '',
         descriere: '',
-        last_date: ''
+        dataMaxima: ''
     });
 
     const [detalii, setDetalii] = useState([]);
@@ -31,6 +31,7 @@ function NewEditJob(props) {
         numeJob: '',
         locatie: '',
         descriere: '',
+        dataMaxima:'',
         skills: [],
         atributePersonale: [],
         moreDetails: []
@@ -79,7 +80,7 @@ function NewEditJob(props) {
             nume_job: '',
             locatie: '',
             descriere: '',
-            last_date: ''
+            dataMaxima: ''
         });
         setDetalii([]);
         setAtributePersonale([]);

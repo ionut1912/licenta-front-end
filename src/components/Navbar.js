@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import logo from '../images/logo.png';
 import Login from './Login';
 import AuthService from "../services/auth.service";
+import ViewPopup from './ViewPopup'
 import './Navbar.css';
 
 export default function Navbar(props) {
@@ -14,9 +15,8 @@ export default function Navbar(props) {
 
   const [button, setButton] = useState(true);
 
-  const [showLogin, setShowLogin] = useState(false);
-  const closeLogin = () => setShowLogin(false);
-
+  const [openPopupView, setOpenPopupView] = useState(false);
+  const [title,setTitle]=useState('Sign in');
 
   const handleClickNavbar = () => {
     if (props.setClickForSidebar !== undefined)
@@ -86,7 +86,7 @@ export default function Navbar(props) {
           </li>
           <li className='nav-item'>
             <a href='/home'
-              className={currentPath === '/home' || currentPath === '/'? 'nav-links active' : 'nav-links'}
+              className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
               Acasa
               </a>
@@ -128,11 +128,17 @@ export default function Navbar(props) {
           ) : null}
           <div>
             <li className='nav-item'>
-              <button className={button ? ' btn nav-links-btn  ' : 'btn nav-links-mobile'} onClick={() => { currentUser ? logOut() : setShowLogin(true) }}>{currentUser ? "Log-out" : "Logheaza-te"}</button>
+              <button className={button ? ' btn nav-links-btn  ' : 'btn nav-links-mobile'} onClick={() => { currentUser ? logOut() : setOpenPopupView(true) }}>{currentUser ? "Log-out" : "Logheaza-te"}</button>
             </li>
           </div>
         </ul>
-        {showLogin && <Login show={showLogin} close={closeLogin} />}
+          <ViewPopup
+            title={title}
+            openPopup={openPopupView}
+            setOpenPopup={setOpenPopupView}
+            showLogin={true}>
+            <Login setTitle={setTitle} />
+          </ViewPopup>
       </div>
     </nav>
   );

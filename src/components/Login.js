@@ -3,19 +3,16 @@ import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import AuthService from "../services/auth.service";
+import Notification from './Notification'
 import './Login.css';
 
-function Login({ show, close }) {
+export default function Login(props) {
 
     let history = useHistory();
 
     const [toggler, setToggler] = useState(false);
-    const [messageRegister, setMessageRegister] = useState("");
-    const [messageLogin, setMessageLogin] = useState("");
-    const [successfulLogin, setSuccessfulLogin] = useState(null);
-    const [successfulRegister, setSuccessfulRegister] = useState(false);
 
-
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const SigninSchema = Yup.object().shape({
         email: Yup.string()
@@ -36,12 +33,12 @@ function Login({ show, close }) {
             .email("Invalid email!")
             .required("Email is required!"),
         phone: Yup.string()
+            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
             .required("Phone is required!"),
         password: Yup.string()
             .min(6, "Password is to short!")
             .max(50, "Password is to long!")
             .required("Password is required!"),
-
         password2: Yup.string()
             .when("password", {
                 is: val => (val && val.length > 0 ? true : false),
@@ -65,16 +62,22 @@ function Login({ show, close }) {
             password,
         ).then(
             response => {
-                setMessageRegister(response.data.message);
-                setSuccessfulRegister(true);
+                setNotify({
+                    isOpen: true,
+                    message: response.data.message,
+                    type: 'success'
+                });
             },
             error => {
                 const resMessage = (
                     error.response &&
                     error.response.data &&
                     error.response.data.message) || error.message || error.toString();
-                setMessageRegister(resMessage);
-                setSuccessfulRegister(false);
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                });
             }
         );
     }
@@ -87,7 +90,6 @@ function Login({ show, close }) {
             () => {
 
                 const currentUser = AuthService.getCurrentUser();
-                setSuccessfulLogin(currentUser);
                 if (currentUser.role === "ROLE_USER") {
                     history.push("/user");
                     window.location.reload();
@@ -106,7 +108,11 @@ function Login({ show, close }) {
                     error.message ||
                     error.toString();
 
-                setMessageLogin(resMessage);
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                });
             }
         )
     }
@@ -114,105 +120,95 @@ function Login({ show, close }) {
 
     return (
         <div >
+            {/*************************************************************************************Sign-in**************************************************************************************/}
+            <div className="login" style={{
+                display: toggler && 'none'
+            }}>
+                <div className="wrapperr">
+                    <div className="cardd">
 
-            { successfulLogin == null && (
-                <div>
-                    <div className="back-drop" style={{
-                        transform: show ? 'translateY(0vh)' : 'translateY(-100vh)',
-                    }} onClick={close} />
-
-                    <div className="login" style={{
-                        display: toggler && 'none'
-                    }}>
-                        <div className="wrapperr">
-                            <div className="cardd">
-                                <div className="titlee">
-                                    <h1 className="titlee title-large">Sign in</h1>
-                                </div>
-                                <div className="content">
-                                    <Formik
-                                        initialValues={
-                                            {
-                                                email: '',
-                                                password: ''
-                                            }
-                                        }
-
-                                        onSubmit={(values, { resetForm }) => {
-                                            handleLogin(values);
-                                            resetForm({ values: '' })
-                                        }}
-
-                                        validationSchema={SigninSchema}>
-
-                                        {props => (
-
-
-                                            <form onSubmit={props.handleSubmit} className="form">
-                                                <div className="form-group">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        value={props.values.email}
-                                                        className="input-field"
-                                                        placeholder="Email address"
-                                                        onChange={props.handleChange}
-                                                        onBlur={props.handleBlur}
-                                                    />
-                                                    {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
-                                                </div>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="password"
-                                                        name="password"
-                                                        className="input-field"
-                                                        placeholder="Password"
-                                                        value={props.values.password}
-                                                        onChange={props.handleChange}
-                                                        onBlur={props.handleBlur}
-                                                    />
-                                                    {props.errors.password && props.touched.password && <p className="text-danger">{props.errors.password}</p>}
-                                                </div>
-                                                <div className="form-group">
-                                                    <a href="#/" className="linktext f-pass">Forgot Password?</a>
-                                                </div>
-                                                <input
-                                                    type="submit"
-                                                    name="submit"
-                                                    className="input-submit"
-                                                    value="Login"
-                                                    disabled={props.isSubmitting}
-
-                                                />
-                                            </form>
-                                        )}
-                                    </Formik>
-
-                                    {messageLogin && <div className="alert alert-danger message" role="alert">
-                                        {messageLogin}
-                                    </div>
+                        <div className="content">
+                            <Formik
+                                initialValues={
+                                    {
+                                        email: '',
+                                        password: ''
                                     }
+                                }
 
-                                    <div className="line">
-                                        <span className="line-bar"></span>
-                                        <span className="line-text">OR</span>
-                                        <span className="line-bar"></span>
-                                    </div>
-                                    <div className="method">
-                                        <div className="method-item">
-                                            <a href="#/" className="btn-action">
-                                                <i className="icons icons-facebook fab fa-facebook"></i>
-                                                <span>Sign in with Facebook</span>
-                                            </a>
+                                onSubmit={(values, { resetForm }) => {
+                                    handleLogin(values);
+                                    resetForm({ values: '' })
+                                }}
+
+                                validationSchema={SigninSchema}>
+
+                                {props => (
+
+
+                                    <form onSubmit={props.handleSubmit} className="form">
+                                        <div className="form-group">
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={props.values.email}
+                                                className="input-field"
+                                                placeholder="Email address"
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur}
+                                            />
+                                            {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
                                         </div>
-                                    </div>
-                                    <p className="titlee title-subs">Don't have an account? <span><a href="/#" className="linktext" onClick={() => setToggler(true)}>Sign up</a></span></p>
+                                        <div className="form-group">
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                className="input-field"
+                                                placeholder="Password"
+                                                value={props.values.password}
+                                                onChange={props.handleChange}
+                                                onBlur={props.handleBlur}
+                                            />
+                                            {props.errors.password && props.touched.password && <p className="text-danger">{props.errors.password}</p>}
+                                        </div>
+                                        <div className="form-group">
+                                            <a href="#/" className="linktext f-pass text-primary">Forgot Password?</a>
+                                        </div>
+                                        <input
+                                            type="submit"
+                                            name="submit"
+                                            className="input-submit"
+                                            value="Login"
+                                            disabled={props.isSubmitting}
+
+                                        />
+                                    </form>
+                                )}
+                            </Formik>
+
+                            <div className="line">
+                                <span className="line-bar"></span>
+                                <span className="line-text">OR</span>
+                                <span className="line-bar"></span>
+                            </div>
+                            <div className="method">
+                                <div className="method-item">
+                                    <a href="#/" className="btn-action">
+                                        <i className="icons icons-facebook fab fa-facebook"></i>
+                                        <span>Sign in with Facebook</span>
+                                    </a>
                                 </div>
                             </div>
+                            <p className="titlee title-subs">Don't have an account? <span className="linktext text-primary" onClick={() => { setToggler(true); props.setTitle('Sign up') }}>Sign up</span></p>
                         </div>
                     </div>
                 </div>
-            )}
+            </div>
+
+
+
+
+            {/*************************************************************************************Register**************************************************************************************/}
 
             <div className="register" style={{
                 display: toggler === false && 'none'
@@ -220,9 +216,6 @@ function Login({ show, close }) {
             }>
                 <div className="wrapperr">
                     <div className="cardd">
-                        <div className="titlee">
-                            <h1 className="titlee title-large">Sign up</h1>
-                        </div>
                         <div className="content">
                             <Formik
 
@@ -320,18 +313,16 @@ function Login({ show, close }) {
                                 )}
                             </Formik>
 
-                            {(successfulRegister || messageRegister) && <div className={successfulRegister ? "alert alert-success message" : "alert alert-danger message"} role="alert">
-                                {messageRegister}
-                            </div>
-                            }
-
-                            <p className="titlee title-subs">Have an account? <span><a href="#/" className="linktext" onClick={() => setToggler(false)}>Sign in</a></span></p>
+                            <p className="titlee title-subs">Have an account? <span className="linktext text-primary" onClick={() => { setToggler(false); props.setTitle('Sign in'); }}>Sign in</span></p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }
-
-export default Login

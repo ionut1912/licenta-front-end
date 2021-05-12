@@ -20,6 +20,7 @@ function UserProfile(props) {
             .email("Invalid email!")
             .required("This field is required!"),
         phone: Yup.string()
+            .matches(/^[0-9]{10}$/,'Must be exactyle 10 digits')
             .required("This field is required!"),
     })
 

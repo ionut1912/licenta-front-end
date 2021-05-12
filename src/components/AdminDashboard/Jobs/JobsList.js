@@ -102,6 +102,15 @@ const filterInputs = [
     { id: '', label: '' }
 ]
 
+function format(date) {
+    return new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    }).format(new Date(date));
+}
+
+
 function JobsList(props) {
 
     const classes = useStyle();
@@ -130,7 +139,7 @@ function JobsList(props) {
                 else if (name === "location")
                     return items.filter(x => x.locatie.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "last_date")
-                    return items.filter(x => x.last_date.toLowerCase().includes(value.toLowerCase()))
+                    return items.filter(x => format(x.dataMaxima.toLowerCase()).includes(value.toLowerCase()))
 
             }
         })
@@ -204,7 +213,7 @@ function JobsList(props) {
                             <TableRow key={index}>
                                 <TableCell>{item.numeJob}</TableCell>
                                 <TableCell>{item.locatie}</TableCell>
-                                <TableCell>24/03/2021 17:00</TableCell>
+                                <TableCell>{format(item.dataMaxima)}</TableCell>
                                 <TableCell>
                                     <div className={classes.action}>
                                         <Button

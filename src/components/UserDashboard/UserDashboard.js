@@ -21,7 +21,6 @@ function UserDashboard(props) {
         UserService.getUserAplications(currentUser.id).then(
             response => {
                 setAplicariUser(response.data);
-                console.log(response.data);
             }
         );
     }, []);

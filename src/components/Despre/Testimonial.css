@@ -41,3 +41,7 @@
 .bg-yellow{
     background:#fcff44;
 }
+
+.bg-yellow p{
+    margin-bottom: 0.7rem;
+}

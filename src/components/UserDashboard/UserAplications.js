@@ -6,13 +6,14 @@ import "./UserAplications.css"
 
 function UserAplications(props) {
 
-    const [aplicariUser, setAplicariiUser] = useState(props.aplicariUser);
+    const [filter, setFilter] = useState('');
+    const [search, setSearch] = useState('');
 
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
 
     function format(date) {
-        return new Intl.DateTimeFormat("en-US", {
+        return new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -27,10 +28,14 @@ function UserAplications(props) {
             response => {
                 setCurrentItem(response.data);
                 setOpenPopupView(true);
-                console.log(response.data)
             }
         )
 
+    }
+
+    const recordsAfterFilterAndSearching = () => {
+        return props.aplicariUser.filter(x => filter === '' ? x : x.verificat === filter)
+            .filter(x => x.jobName.toLowerCase().includes(search));
     }
 
     function onChangeSearch(event) {
@@ -38,9 +43,9 @@ function UserAplications(props) {
         const search = event.target.value;
 
         if (search === "") {
-            setAplicariiUser(props.aplicariUser);
+            setSearch('');
         } else {
-            setAplicariiUser(aplicariUser.filter(job => String(job.jobName.toLowerCase()).startsWith(search.toLowerCase())));
+            setSearch(search.toLowerCase());
         }
     }
 
@@ -49,11 +54,11 @@ function UserAplications(props) {
         var value = event.target.value;
 
         if (value === "Aplicarile in curs de verificare") {
-            setAplicariiUser(props.aplicariUser.filter(aplicare => aplicare.verificat === false));
+            setFilter(false);
         } else if (value === "Aplicarile verificate") {
-            setAplicariiUser(props.aplicariUser.filter(aplicare => aplicare.verificat === true));
+            setFilter(true);
         } else {
-            setAplicariiUser(props.aplicariUser);
+            setFilter('');
         }
 
     }
@@ -78,7 +83,7 @@ function UserAplications(props) {
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
 
             <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Aplicarile mele</h1>
-            
+
             <div className="filtrare-aplicatii">
                 <select className="custom-select" id="inputGroupSelect01" onChange={onChangeSelect}>
                     <option value="Toate aplicarile">Toate aplicarile</option>
@@ -94,7 +99,7 @@ function UserAplications(props) {
                 </div>
             </div>
 
-            { aplicariUser.sort((a, b) => b.id - a.id).map((aplicare, index) => {
+            { recordsAfterFilterAndSearching().sort((a, b) => b.id - a.id).map((aplicare, index) => {
                 return (
                     <div className="card mb-3" key={index}>
                         <div className="card-body">

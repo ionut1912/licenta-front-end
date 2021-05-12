@@ -14,7 +14,7 @@
     color:#f00946;
 }
 
-.header-description h2{
+.modal-header .title-header{
     font-size: 30px;  
 }
 
@@ -30,6 +30,18 @@
     transform: translateY(-2px);
     transition: 0.25s;
     color: #7038f5d5;
+}
+
+.modal-header-login {
+    text-align: center;
+    background-color: #7579e7;
+    color: #fff;
+    padding: 20px;
+}
+
+.modal-header-login .title-header{
+    font-size: 3rem;
+    font-weight: 500;
 }
 
 /* modal-body*/
@@ -54,7 +66,6 @@
     color:#798197;
     margin:1rem 0 2rem 0;
 }
-
 
 .modal-body li{
     list-style: none;

@@ -109,7 +109,6 @@ const headCells = [
     { id: 'email', label: 'Email' },
     { id: 'telefon', label: 'Phone' },
     { id: 'jobName', label: 'Name job' },
-    { id: 'locatie', label: 'Locatie job' },
     { id: 'dataAplicarii', label: 'Data aplicarii' },
     { id: 'verificat', label: 'Verificat' },
     { id: 'cv', label: 'Download CV', disableSorting: true },
@@ -122,7 +121,6 @@ const filterInputs = [
     { id: 'email', label: 'Search by email' },
     { id: 'phone', label: 'Search by phone' },
     { id: 'numeJob', label: 'Search by job' },
-    { id: 'locatie', label: 'Search by location' },
     { id: 'dataAplicare', label: 'Search by aplication date' },
     { id: 'verificat', label: 'Search by status' },
     { id: '', label: '' },
@@ -158,8 +156,6 @@ function Aplications(props) {
                     return items.filter(x => x.telefon.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "numeJob")
                     return items.filter(x => x.jobName.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "locatie")
-                    return items.filter(x => x.locatie.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "dataAplicare")
                     return items.filter(x => x.dataAplicarii.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "verificat")
@@ -231,7 +227,7 @@ function Aplications(props) {
                         {
                             filterInputs.map((filterCell, index) => (
                                 <TableCell key={index}>
-                                    {index === 7 || index === 8 ? null : <TextField
+                                    {index === 6 || index === 7 ? null : <TextField
                                         variant="outlined"
                                         name={filterCell.id}
                                         label={filterCell.label}
@@ -251,7 +247,6 @@ function Aplications(props) {
                                 <TableCell className={classes.th}>{item.email}</TableCell>
                                 <TableCell>{item.telefon}</TableCell>
                                 <TableCell>{item.jobName}</TableCell>
-                                <TableCell>{item.locatie}</TableCell>
                                 <TableCell className={classes.th}>{item.dataAplicarii}</TableCell>
                                 <TableCell><p className={item.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle" style={{ marginRight: '10px' }}></i>{item.verificat === true ? "Verificat" : "Neverificat"}</p></TableCell>
                                 <TableCell>
