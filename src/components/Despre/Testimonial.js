@@ -30,6 +30,7 @@ export default function Testimonial({ data, filter }) {
                                         <div>
                                             <div className="name">{item.numeJob}</div>
                                             <p>Location: {item.locatie}</p>
+                                            <p>Job type: {item.jobType}</p>
                                             <p style={{color:'#f00946'}}>Data limita: {format(item.dataMaxima)}</p>
                                             <button className="btn btn-primary btn-lg " onClick={() => { setOpenPopupView(true); setCurrentItem(item); }}>See more details</button>
 

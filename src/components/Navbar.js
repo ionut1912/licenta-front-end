@@ -16,7 +16,7 @@ export default function Navbar(props) {
   const [button, setButton] = useState(true);
 
   const [openPopupView, setOpenPopupView] = useState(false);
-  const [title,setTitle]=useState('Sign in');
+  const [subTitle,setSubTitle]=useState('Sign in by entering the information below');
 
   const handleClickNavbar = () => {
     if (props.setClickForSidebar !== undefined)
@@ -133,11 +133,12 @@ export default function Navbar(props) {
           </div>
         </ul>
           <ViewPopup
-            title={title}
+            title='Welcome'
+            subTitle={subTitle}
             openPopup={openPopupView}
             setOpenPopup={setOpenPopupView}
             showLogin={true}>
-            <Login setTitle={setTitle} />
+            <Login setSubTitle={setSubTitle} />
           </ViewPopup>
       </div>
     </nav>

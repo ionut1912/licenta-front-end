@@ -7,6 +7,8 @@ function StaticInfoSection(props) {
     const validateSchema = Yup.object().shape({
         nume_job: Yup.string()
             .required("This field is required!"),
+        jobType: Yup.string()
+            .required("This field is required!"),
         locatie: Yup.string()
             .required("This field is required!"),
         descriere: Yup.string()
@@ -23,7 +25,7 @@ function StaticInfoSection(props) {
                 numeJob: values.nume_job,
                 locatie: values.locatie,
                 descriere: values.descriere,
-                dataMaxima:values.dataMaxima
+                dataMaxima: values.dataMaxima
             }
         })
         props.changeState(2);
@@ -44,7 +46,7 @@ function StaticInfoSection(props) {
                     <form onSubmit={props.handleSubmit} >
 
                         <div className="form-row">
-                            <div className="form-group col-md-12">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="inputNJ">Nume job*</label>
                                 <input type="text"
                                     name="nume_job"
@@ -55,6 +57,19 @@ function StaticInfoSection(props) {
                                     onBlur={props.handleBlur}
                                 />
                                 {props.errors.nume_job && props.touched.nume_job && <p className="text-danger">{props.errors.nume_job}</p>}
+                            </div>
+
+                            <div className="form-group col-md-6">
+                                <label htmlFor="inputNJ">Job type*</label>
+                                <input type="text"
+                                    name="jobType"
+                                    value={props.values.jobType}
+                                    className="form-control"
+                                    id="inputNJ"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                />
+                                {props.errors.jobType && props.touched.jobType && <p className="text-danger">{props.errors.jobType}</p>}
                             </div>
 
                         </div>

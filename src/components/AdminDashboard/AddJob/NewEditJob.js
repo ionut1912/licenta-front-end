@@ -18,6 +18,7 @@ function NewEditJob(props) {
 
     const [staticInfo, setStaticInfo] = useState({
         nume_job: '',
+        jobType: '',
         locatie: '',
         descriere: '',
         dataMaxima: ''
@@ -29,9 +30,10 @@ function NewEditJob(props) {
 
     const [jobInfo, setJobInfo] = useState({
         numeJob: '',
+        jobType: '',
         locatie: '',
         descriere: '',
-        dataMaxima:'',
+        dataMaxima: '',
         skills: [],
         atributePersonale: [],
         moreDetails: []
@@ -78,6 +80,7 @@ function NewEditJob(props) {
     function reset() {
         setStaticInfo({
             nume_job: '',
+            jobType: '',
             locatie: '',
             descriere: '',
             dataMaxima: ''

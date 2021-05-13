@@ -89,6 +89,7 @@ const useStyle = makeStyles(theme => ({
 
 const headCells = [
     { id: 'numeJob', label: 'Name job' },
+    { id: 'jobType', label: 'Job type' },
     { id: 'locatie', label: 'Location' },
     { id: 'last_date', label: 'Last date' },
     { id: 'actions', label: 'Actions', disableSorting: true }
@@ -97,6 +98,7 @@ const headCells = [
 
 const filterInputs = [
     { id: 'numeJob', label: 'Search by name' },
+    { id: 'jobType', label: 'Search by job type' },
     { id: 'location', label: 'Search by location' },
     { id: 'last_date', label: 'Search by last date' },
     { id: '', label: '' }
@@ -136,6 +138,8 @@ function JobsList(props) {
                     return items;
                 else if (name === "numeJob")
                     return items.filter(x => x.numeJob.toLowerCase().includes(value.toLowerCase()))
+                else if (name === "jobType")
+                    return items.filter(x => x.jobType.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "location")
                     return items.filter(x => x.locatie.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "last_date")
@@ -195,7 +199,7 @@ function JobsList(props) {
                         {
                             filterInputs.map((filterCell, index) => (
                                 <TableCell key={index}>
-                                    {index === 3 ? null : <TextField
+                                    {index === 4 ? null : <TextField
                                         variant="outlined"
                                         name={filterCell.id}
                                         label={filterCell.label}
@@ -212,6 +216,7 @@ function JobsList(props) {
                         recordsAfterPagingAndSortingJobs().map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell>{item.numeJob}</TableCell>
+                                <TableCell>{item.jobType}</TableCell>
                                 <TableCell>{item.locatie}</TableCell>
                                 <TableCell>{format(item.dataMaxima)}</TableCell>
                                 <TableCell>
@@ -254,7 +259,7 @@ function JobsList(props) {
                 subTitle={recordForView.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={false}/>
+                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={false} />
             </ViewPopup>
 
             <Notification

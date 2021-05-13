@@ -34,14 +34,22 @@
 
 .modal-header-login {
     text-align: center;
-    background-color: #7579e7;
-    color: #fff;
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
 }
 
 .modal-header-login .title-header{
     font-size: 3rem;
     font-weight: 500;
+    color: rgba(41, 39, 39, 0.952);
+    font-weight: bold;
+    font-family:  "Poppins",cursive;
+}
+
+.modal-header-login p{
+    color: rgba(41, 39, 39, 0.884);
+    font-weight: bold;
+    font-family:  "Poppins",cursive;
+    margin-bottom: 0px;
 }
 
 /* modal-body*/

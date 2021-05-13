@@ -2,15 +2,37 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import { TextField, InputAdornment, makeStyles } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import AuthService from "../services/auth.service";
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Notification from './Notification'
 import './Login.css';
 
-export default function Login(props) {
+const useStyles = makeStyles(theme => ({
+    icon: {
+        '& .MuiIconButton-root': {
+            outline: 'none'
+        }
+    },
+    input: {
+        '& .MuiOutlinedInput-root': {
+            backgroundColor: '#f1f1f1'
+        }
+    }
+}))
+
+export default function Login({ setSubTitle }) {
 
     let history = useHistory();
 
+    const classes = useStyles();
+
     const [toggler, setToggler] = useState(false);
+    
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
@@ -147,59 +169,77 @@ export default function Login(props) {
 
 
                                     <form onSubmit={props.handleSubmit} className="form">
-                                        <div className="form-group">
-                                            <input
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
                                                 type="email"
                                                 name="email"
+                                                fullWidth
+                                                className={classes.input}
+                                                label="Email address"
                                                 value={props.values.email}
-                                                className="input-field"
-                                                placeholder="Email address"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
                                             />
+
                                             {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
                                         </div>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
+                                                type={showPassword === true ? "text" : "password"}
                                                 name="password"
-                                                className="input-field"
-                                                placeholder="Password"
+                                                label="Password"
+                                                className={classes.input}
+                                                fullWidth
                                                 value={props.values.password}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        < InputAdornment position="end" className={classes.icon}>
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={() => setShowPassword(!showPassword)}
+                                                            >
+                                                                {showPassword === true ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
                                             />
                                             {props.errors.password && props.touched.password && <p className="text-danger">{props.errors.password}</p>}
                                         </div>
                                         <div className="form-group">
-                                            <a href="#/" className="linktext f-pass text-primary">Forgot Password?</a>
+                                            <a href="#/" className="linktext f-pass">Forgot Password?</a>
                                         </div>
                                         <input
                                             type="submit"
                                             name="submit"
-                                            className="input-submit"
+                                            className="btn btn-primary input-submit"
                                             value="Login"
                                             disabled={props.isSubmitting}
 
                                         />
+
+                                        <div className="line">
+                                            <span className="line-bar"></span>
+                                            <span className="line-text">OR</span>
+                                            <span className="line-bar"></span>
+                                        </div>
+                                        <div className="method">
+                                            <div className="method-item">
+                                                <a href="#/" className="btn-action">
+                                                    <i className="icons icons-facebook fab fa-facebook"></i>
+                                                    <span>Sign in with Facebook</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <p className="titlee title-subs">Don't have an account? <span className="linktext" onClick={() => { props.resetForm(); setToggler(true); setSubTitle('Sign up by entering the information below') }}>Sign up</span></p>
                                     </form>
+
                                 )}
                             </Formik>
-
-                            <div className="line">
-                                <span className="line-bar"></span>
-                                <span className="line-text">OR</span>
-                                <span className="line-bar"></span>
-                            </div>
-                            <div className="method">
-                                <div className="method-item">
-                                    <a href="#/" className="btn-action">
-                                        <i className="icons icons-facebook fab fa-facebook"></i>
-                                        <span>Sign in with Facebook</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <p className="titlee title-subs">Don't have an account? <span className="linktext text-primary" onClick={() => { setToggler(true); props.setTitle('Sign up') }}>Sign up</span></p>
                         </div>
                     </div>
                 </div>
@@ -218,7 +258,6 @@ export default function Login(props) {
                     <div className="cardd">
                         <div className="content">
                             <Formik
-
                                 initialValues={
                                     {
                                         full_name: '',
@@ -236,67 +275,98 @@ export default function Login(props) {
                                 validationSchema={SignupSchema}>
                                 {props => (
                                     <form onSubmit={props.handleSubmit} className="form">
-                                        <div className="form-group">
-                                            <input
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
                                                 type="text"
                                                 name="full_name"
+                                                fullWidth
+                                                className={classes.input}
+                                                label="Full name"
                                                 value={props.values.full_name}
-                                                className="input-field"
-                                                placeholder="Full name"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-
                                             />
                                             {props.errors.full_name && props.touched.full_name && <p className="text-danger">{props.errors.full_name}</p>}
                                         </div>
-                                        <div className="form-group">
-                                            <input
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
                                                 type="email"
                                                 name="email"
-                                                className="input-field"
-                                                placeholder="Email"
+                                                fullWidth
+                                                className={classes.input}
+                                                label="Email address"
                                                 value={props.values.email}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-
                                             />
                                             {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
                                         </div>
-                                        <div className="form-group">
-                                            <input
+
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
                                                 type="text"
                                                 name="phone"
-                                                className="input-field"
+                                                fullWidth
+                                                className={classes.input}
+                                                label="Phone number"
                                                 value={props.values.phone}
-                                                placeholder="Phone"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-
                                             />
                                             {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
                                         </div>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
+                                                type={showPassword === true ? "text" : "password"}
                                                 name="password"
-                                                className="input-field"
+                                                label="Password"
+                                                className={classes.input}
+                                                fullWidth
                                                 value={props.values.password}
-                                                placeholder="Password"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        < InputAdornment position="end" className={classes.icon}>
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={() => setShowPassword(!showPassword)}
+                                                            >
+                                                                {showPassword === true ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
                                             />
                                             {props.errors.password && props.touched.password && <p className="text-danger">{props.errors.password}</p>}
                                         </div>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
+                                        <div className="form-group-input">
+                                            <TextField
+                                                variant="outlined"
+                                                type={showPassword2 === true ? "text" : "password"}
                                                 name="password2"
+                                                label="Password confirmation"
+                                                className={classes.input}
+                                                fullWidth
                                                 value={props.values.password2}
-                                                className="input-field"
-                                                placeholder="Password confirmation"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        < InputAdornment position="end" className={classes.icon}>
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={() => setShowPassword2(!showPassword2)}
+                                                            >
+                                                                {showPassword2 === true ? <Visibility /> : <VisibilityOff />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
                                             />
                                             {props.errors.password2 && props.touched.password2 && <p className="text-danger">{props.errors.password2}</p>}
                                         </div>
@@ -304,16 +374,16 @@ export default function Login(props) {
                                         <input
                                             type="submit"
                                             name="submit"
-                                            className="input-submit"
+                                            className="btn btn-primary input-submit"
                                             value="Register"
 
                                         />
-
+                                        <p className="titlee title-subs">Have an account? <span className="linktext" onClick={() => { props.resetForm(); setToggler(false); setSubTitle('Sign in by entering the information below'); }}>Sign in</span></p>
                                     </form>
                                 )}
                             </Formik>
 
-                            <p className="titlee title-subs">Have an account? <span className="linktext text-primary" onClick={() => { setToggler(false); props.setTitle('Sign in'); }}>Sign in</span></p>
+
                         </div>
                     </div>
                 </div>

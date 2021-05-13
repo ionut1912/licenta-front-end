@@ -23,7 +23,7 @@ export default function Locations() {
     <div className={classes.map} >
       <h1 className="section-title">Locations</h1>
       <div className="container" style={{padding:'30px 0'}}>
-        <iframe className={classes.frame} src="https://www.google.com.qa/maps/d/u/0/embed?mid=1y8f94yVaPDnNB8Ve8LreG86Bq3qfvBx2" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" height="520" title="map"></iframe>
+        <iframe className={classes.frame} src="https://www.google.com.qa/maps/d/u/0/embed?mid=1y8f94yVaPDnNB8Ve8LreG86Bq3qfvBx2" height="520" title="map"></iframe>
       </div>
     </div>
   )
