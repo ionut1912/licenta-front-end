@@ -4,11 +4,9 @@ import * as IoIcons from 'react-icons/io';
 import * as FaIcons from 'react-icons/fa';
 import * as VscIcons from 'react-icons/vsc';
 import * as AiIcons from 'react-icons/ai';
-
-
-
 import './Sidebar.css';
-function Sidebar(props) {
+
+export default function Sidebar(props) {
 
   return (
     <div className="sidebar">
@@ -89,6 +87,4 @@ function Sidebar(props) {
     </div>
   )
 }
-
-export default Sidebar
 

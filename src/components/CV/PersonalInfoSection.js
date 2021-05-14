@@ -5,6 +5,7 @@ import * as Yup from "yup";
 export default function PersonalInfoSection(props) {
 
     const [openAditionalInfo, setOpenAditionalInfo] = useState(false);
+    const [buttonFormPressed, setButtonFormPressed] = useState(false);
 
     const validateSchema = Yup.object().shape({
         first_name: Yup.string()
@@ -15,20 +16,24 @@ export default function PersonalInfoSection(props) {
             .email("Invalid email!")
             .required("This field is required!"),
         phone: Yup.string()
-             .matches(/^[0-9]{10}$/,'Must be exactyle 10 digits')
+            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
             .required("This field is required!")
     })
 
-    function handleSubmit(values) {
-        props.setValid(true);
-        props.changeState(2);
-        props.changePersonalInfo(values);
 
+    function handleSubmit(values) {
+        if (buttonFormPressed === true) {
+            props.changeState(2);
+            setButtonFormPressed(false);
+        } else {
+            props.changeState(props.nextStateForm)
+        }
+
+        props.changePersonalInfo(values);
     }
 
     return (
         <div className="form-cls">
-
             <Formik
                 initialValues={
                     {
@@ -48,11 +53,9 @@ export default function PersonalInfoSection(props) {
 
                 onSubmit={(values) => {
                     handleSubmit(values);
-                
                 }}
-
+                innerRef={props.formRef}
                 validationSchema={validateSchema}>
-
                 {props => (
                     <form onSubmit={props.handleSubmit} >
 
@@ -62,28 +65,32 @@ export default function PersonalInfoSection(props) {
                                 <input type="text"
                                     name="first_name"
                                     value={props.first_name}
-                                    className="form-control"
+                                    className={props.errors.first_name && props.touched.first_name ? "form-control is-invalid" : "form-control"}
                                     id="inputfn"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    placeholder="First name" 
-                            
-                                    />
-                                {props.errors.first_name && props.touched.first_name && <p className="text-danger">{props.errors.first_name}</p>}
+                                    placeholder="First name"
+
+                                />
+                                <div className="invalid-feedback">
+                                    {props.errors.first_name && props.touched.first_name && <p >{props.errors.first_name}</p>}
+                                </div>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputln">Last name*</label>
                                 <input type="text"
                                     name="last_name"
                                     value={props.last_name}
-                                    className="form-control"
+                                    className={props.errors.last_name && props.touched.last_name ? "form-control is-invalid" : "form-control"}
                                     id="inputln"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    placeholder="Last name" 
-                               
-                                    />
-                                {props.errors.last_name && props.touched.last_name && <p className="text-danger">{props.errors.last_name}</p>}
+                                    placeholder="Last name"
+
+                                />
+                                <div className="invalid-feedback">
+                                    {props.errors.last_name && props.touched.last_name && <p >{props.errors.last_name}</p>}
+                                </div>
                             </div>
                         </div>
                         <div className="form-row">
@@ -92,14 +99,16 @@ export default function PersonalInfoSection(props) {
                                 <input type="email"
                                     name="email"
                                     value={props.email}
-                                    className="form-control"
+                                    className={props.errors.email && props.touched.email ? "form-control is-invalid" : "form-control"}
                                     id="inputEmail"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    placeholder="Email" 
-                       
-                                    />
-                                {props.errors.email && props.touched.email && <p className="text-danger">{props.errors.email}</p>}
+                                    placeholder="Email"
+
+                                />
+                                <div className="invalid-feedback">
+                                    {props.errors.email && props.touched.email && <p>{props.errors.email}</p>}
+                                </div>
                             </div>
 
                             <div className="form-group col-md-6">
@@ -107,14 +116,16 @@ export default function PersonalInfoSection(props) {
                                 <input type="text"
                                     name="phone"
                                     value={props.phone}
-                                    className="form-control"
+                                    className={props.errors.phone && props.touched.phone ? "form-control is-invalid" : "form-control"}
                                     id="inputPhone"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
-                                    placeholder="Phone" 
-                              
-                                    />
-                                {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
+                                    placeholder="Phone"
+
+                                />
+                                <div className="invalid-feedback">
+                                    {props.errors.phone && props.touched.phone && <p>{props.errors.phone}</p>}
+                                </div>
                             </div>
 
                         </div>
@@ -222,12 +233,11 @@ export default function PersonalInfoSection(props) {
                         <hr className="hr" />
 
                         <div className="btn-next">
-                            <button type="submit" name="submit" className="btn btn-primary" >Next  <i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                            <button type="submit" name="submit" className="btn btn-primary" onClick={() => setButtonFormPressed(true)}>Next  <i className="fa fa-arrow-right" aria-hidden="true"></i></button>
                         </div>
                     </form>
                 )}
             </Formik>
-
         </div>
 
     )

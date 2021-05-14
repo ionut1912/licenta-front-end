@@ -1,32 +1,32 @@
 /* modal-header*/
-.modal-header{
-    background:#1c2237;
+
+.modal-header {
+    background: #1c2237;
     padding: 0 1rem 0.5rem 1rem;
-    display:flex;
-    border:none;
+    display: flex;
+    border: none;
     flex-direction: column;
     align-items: center;
-
 }
 
-.modal-header .header-description{
-    padding: 5px 0 10px 5px ;
-    color:#f00946;
+.modal-header .header-description {
+    padding: 5px 0 10px 5px;
+    color: #f00946;
 }
 
-.modal-header .title-header{
-    font-size: 30px;  
+.modal-header .title-header {
+    font-size: 30px;
 }
 
-.close-modal{
-    font-size:25px;
-    color:#f00946;
-    padding:10px 5px 0 0;  
+.close-modal {
+    font-size: 25px;
+    color: #f00946;
+    padding: 10px 5px 0 0;
     align-self: flex-end;
     cursor: pointer;
 }
 
-.close-modal:hover{
+.close-modal:hover {
     transform: translateY(-2px);
     transition: 0.25s;
     color: #7038f5d5;
@@ -34,114 +34,112 @@
 
 .modal-header-login {
     text-align: center;
-    padding: 20px 20px 5px 20px;
+    padding: 20px;
 }
 
-.modal-header-login .title-header{
+.modal-header-login .title-header {
     font-size: 3rem;
     font-weight: 500;
     color: rgba(41, 39, 39, 0.952);
     font-weight: bold;
-    font-family:  "Poppins",cursive;
+    font-family: "Poppins", cursive;
 }
 
-.modal-header-login p{
+.modal-header-login p {
     color: rgba(41, 39, 39, 0.884);
     font-weight: bold;
-    font-family:  "Poppins",cursive;
+    font-family: "Poppins", cursive;
     margin-bottom: 0px;
 }
 
 /* modal-body*/
-.modal-content{
-    padding:1.5rem 1rem;
-    border:none
+
+.modal-content {
+    padding: 1.5rem 1rem;
+    border: none
 }
 
-.modal-body{
+.modal-body {
     margin-bottom: 2rem;
 }
 
-.modal-body h4{
-    font-size:1.8rem;
+.modal-body h4 {
+    font-size: 1.8rem;
     color: #fc1930d5;
 }
 
-.modal-body p{
-    font-size:1rem;
-    font-family:  "Poppins",cursive;
+.modal-body p {
+    font-size: 1rem;
+    font-family: "Poppins", cursive;
     font-weight: bold;
-    color:#798197;
-    margin:1rem 0 2rem 0;
+    color: #798197;
+    margin: 1rem 0 2rem 0;
 }
 
-.modal-body li{
+.modal-body li {
     list-style: none;
-    font-size:1rem;
-    font-family:  "Poppins",cursive;
+    font-size: 1rem;
+    font-family: "Poppins", cursive;
     font-weight: bold;
-    color:#798197;
+    color: #798197;
 }
 
-.modal-body li span{
+.modal-body li span {
     font-size: 1.2rem;
     margin-right: 5px;
-    color:#fc1930d5;
+    color: #fc1930d5;
 }
-
 
 /* modal- footer*/
-.modal-footer{
-    border-top:none;
+
+.modal-footer {
+    border-top: none;
 }
-.modal-footer .btn-cancel{
+
+.modal-footer .btn-cancel {
     background-color: #fc1930;
     border-color: #fc1930;
     color: #fff;
-    font-size:1rem;
+    font-size: 1rem;
     padding: 0.5rem 2rem;
-    margin-right:auto;
+    margin-right: auto;
     text-decoration: none;
 }
 
-.modal-footer .btn-apply{
+.modal-footer .btn-apply {
     background-color: #fc1930;
     border-color: #fc1930;
     color: #fff;
-    font-size:1rem;
+    font-size: 1rem;
     padding: 0.5rem 2rem;
-    margin-left:auto;
+    margin-left: auto;
     text-decoration: none;
 }
 
-.modal-footer .btn-apply:hover , .modal-footer .btn-cancel:hover{
+.modal-footer .btn-apply:hover, .modal-footer .btn-cancel:hover {
     transform: translateY(-3px);
     transition: 0.25s;
     background-color: #7038f5d5;
     border-color: #7038f5d5;
-  }
+}
 
 @media screen and (max-width: 960px) {
-    .close-modal{
+    .close-modal {
         margin-right: -10px;
     }
-    
-    .modal-footer{
-        padding:0;
+    .modal-footer {
+        padding: 0;
     }
-
-    .modal-footer .btn-apply{
+    .modal-footer .btn-apply {
         padding: 0.5rem 1rem;
     }
-    
 }
 
 @media screen and (max-width: 550px) {
-    .modal-footer .btn-cancel{
+    .modal-footer .btn-cancel {
         padding: 0.5rem 1rem;
     }
-    
-    .modal-footer .btn-apply{
-        padding: 0.5rem 0.5rem; 
+    .modal-footer .btn-apply {
+        padding: 0.5rem 0.5rem;
     }
 }

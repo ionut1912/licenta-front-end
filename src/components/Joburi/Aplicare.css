@@ -1,29 +1,30 @@
-.form-aplicare{
+.form-aplicare {
     width: 50%;
     align-self: center;
-    padding:25px;
+    padding: 25px;
     margin-bottom: 50px;
 }
 
-.form-aplicare label{
+.form-aplicare label {
     font-size: 20px;
-    color:#1c2237c0;
+    color: #1c2237c0;
 }
 
 .form-aplicare .input-file {
     display: block;
     position: relative;
     width: 175px;
-    margin:auto;
+    margin: auto;
     cursor: pointer;
     border: 0;
     height: 60px;
     border-radius: 5px;
-  }
+}
+
 .form-aplicare .input-file:hover:after {
     background: #5978f8;
-  }
-  
+}
+
 .form-aplicare .input-file:after {
     transition: all 0.5 ease;
     background: #fc1930;
@@ -36,52 +37,50 @@
     width: 100%;
     content: 'Upload CV';
     line-height: 60px;
-    
 }
 
-
-.form-aplicare .btn-submit{
+.form-aplicare .btn-submit {
     background-color: #fc1930;
     border-color: #fc1930;
     color: #fff;
-    font-size:1rem;
+    font-size: 1rem;
     padding: 0.8rem 4rem;
     margin-left: 50px;
     height: 60px;
     text-decoration: none;
 }
 
-.form-aplicare .btn-submit:hover{
-    background-color: #5978f8;;
-    border-color: #5978f8;;
+.form-aplicare .btn-submit:hover {
+    background-color: #5978f8;
+    ;
+    border-color: #5978f8;
+    ;
     transition: all 0.5 ease;
 }
 
-
 @media screen and (max-width: 860px) {
-    .form-aplicare{
+    .form-aplicare {
         width: 100%;
     }
 }
 
 @media screen and (max-width: 650px) {
-    .form-aplicare .btn-submit{
+    .form-aplicare .btn-submit {
         padding: 0.8rem 2rem;
     }
     .form-aplicare .input-file {
         width: 110px;
-      }
+    }
 }
 
 @media screen and (max-width: 550px) {
-    .form-aplicare .btn-submit{
+    .form-aplicare .btn-submit {
         padding: 0.8rem 1rem;
     }
     .form-aplicare .input-file {
         width: 80px;
-  
-      }
-    .form-aplicare .input-file:after{
-        font-size:16px;
-      }
+    }
+    .form-aplicare .input-file:after {
+        font-size: 16px;
+    }
 }

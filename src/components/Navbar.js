@@ -88,7 +88,7 @@ export default function Navbar(props) {
             <a href='/home'
               className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
-              Acasa
+             Home
               </a>
           </li>
           <li className='nav-item'>
@@ -97,7 +97,7 @@ export default function Navbar(props) {
               className={currentPath === '/about' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}
             >
-              Despre
+              About
               </a>
           </li>
           <li className='nav-item'>
@@ -105,7 +105,7 @@ export default function Navbar(props) {
               href='/jobs'
               className={currentPath === '/jobs' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
-              Joburi
+              Jobs
               </a>
           </li>
           <li className='nav-item'>

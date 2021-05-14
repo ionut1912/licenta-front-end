@@ -151,10 +151,12 @@ function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.degree}
-                                            className="form-control"
+                                            className={props.errors.degree && props.touched.degree ? "form-control is-invalid" : "form-control"}
                                             id="inputDegree"
                                             placeholder="Bachelor of Science" />
-                                        {props.errors.degree && props.touched.degree && <p className="text-danger">{props.errors.degree}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.degree && props.touched.degree && <p >{props.errors.degree}</p>}
+                                        </div>
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputCity">City</label>
@@ -175,10 +177,12 @@ function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.school}
-                                            className="form-control"
+                                            className={props.errors.school && props.touched.school ? "form-control is-invalid" : "form-control"}
                                             id="inputSchool"
                                             placeholder="UPIT University" />
-                                        {props.errors.school && props.touched.school && <p className="text-danger">{props.errors.school}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.school && props.touched.school && <p >{props.errors.school}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-row">
@@ -189,10 +193,12 @@ function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.start}
-                                            className="form-control"
+                                            className={props.errors.start && props.touched.start ? "form-control is-invalid" : "form-control"}
                                             id="inputStart"
                                             placeholder="" />
-                                        {props.errors.start && props.touched.start && <p className="text-danger">{props.errors.start}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.start && props.touched.start && <p >{props.errors.start}</p>}
+                                        </div>
                                     </div>
 
                                     <div className="form-group col-md-6">
@@ -202,9 +208,11 @@ function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.end}
-                                            className="form-control"
+                                            className={props.errors.end && props.touched.end ? "form-control is-invalid" : "form-control"}
                                             id="inputEnd" placeholder="" />
-                                        {props.errors.end && props.touched.end && <p className="text-danger">{props.errors.end}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
+                                        </div>
                                     </div>
                                 </div>
 

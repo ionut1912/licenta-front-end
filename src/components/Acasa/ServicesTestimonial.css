@@ -1,33 +1,30 @@
-.services{
-    padding:40px 0;
+.services {
+    padding: 40px 0;
     background: #fff;
-    color : #1c2237;
+    color: #1c2237;
     text-align: center;
 }
 
-.box{
-    padding:30px;
+.box {
+    padding: 30px;
 }
 
-.box img{
-    width:100px;
+.box img {
+    width: 100px;
     height: 100px;
     cursor: pointer;
 }
 
-.box .name{
-    font-size:25px;
+.box .name {
+    font-size: 25px;
     font-weight: bold;
     text-transform: none;
-    font-family:  "Poppins",cursive;
-    margin:25px 0;
-    color:#1c2237;
+    font-family: "Poppins", cursive;
+    margin: 25px 0;
+    color: #1c2237;
 }
 
-.box p{
-    font-size:15px;
-    color:#798197;
+.box p {
+    font-size: 15px;
+    color: #798197;
 }
-
-
-

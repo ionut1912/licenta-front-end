@@ -11,7 +11,7 @@ function WorkSection(props) {
         job_title: "",
         city: "",
         company: "",
-        start: "",
+        start: '',
         end: "",
         descriere: ""
     });
@@ -92,7 +92,7 @@ function WorkSection(props) {
 
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => setWorkExperience(!workExperience)}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
-                {props.works.length === 0 ? null : <span class="indicator">{props.works.length}</span>}
+                {props.works.length === 0 ? null : <span className="indicator">{props.works.length}</span>}
             </div>
 
 
@@ -155,10 +155,12 @@ function WorkSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.job_title}
-                                            className="form-control"
+                                            className={props.errors.job_title && props.touched.job_title ? "form-control is-invalid" : "form-control"}
                                             id="inputJobTitle"
                                             placeholder="" />
-                                        {props.errors.job_title && props.touched.job_title && <p className="text-danger">{props.errors.job_title}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.job_title && props.touched.job_title && <p>{props.errors.job_title}</p>}
+                                        </div>
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputCity2">City</label>
@@ -179,34 +181,40 @@ function WorkSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.company}
-                                            className="form-control"
+                                            className={props.errors.company && props.touched.company ? "form-control is-invalid" : "form-control"}
                                             id="inputCompany" placeholder="" />
-                                        {props.errors.company && props.touched.company && <p className="text-danger">{props.errors.company}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.company && props.touched.company && <p>{props.errors.company}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputStartDate">Start date*</label>
-                                        <input type="date"
+                                        <input type="month"
                                             name="start"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.start}
-                                            className="form-control"
+                                            className={props.errors.start && props.touched.start ? "form-control is-invalid" : "form-control"}
                                             id="inputStartDate" placeholder="" />
-                                        {props.errors.start && props.touched.start && <p className="text-danger">{props.errors.start}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.start && props.touched.start && <p >{props.errors.start}</p>}
+                                        </div>
                                     </div>
 
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputEndDate">End date*</label>
-                                        <input type="date"
+                                        <input type="month"
                                             name="end"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.end}
-                                            className="form-control"
-                                            id="inputEndDate" placeholder="" />
-                                        {props.errors.end && props.touched.end && <p className="text-danger">{props.errors.end}</p>}
+                                            className={props.errors.end && props.touched.end ? "form-control is-invalid" : "form-control"}
+                                            id="inputEndDate" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -224,7 +232,7 @@ function WorkSection(props) {
                                 </div>
                                 <div className="select-option">
                                     <button type="reset" onClick={() => { removeWork(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
-                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
+                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save" onClick={() => console.log(work)}></i>Save</button>
                                 </div>
                             </form>
                         )}

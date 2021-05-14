@@ -1,41 +1,38 @@
-.body-select{
-    background:#fff;
-    padding:40px 50px 20px;
+.body-select {
+  background: #fff;
+  padding: 40px 50px 20px;
 }
 
-.select{
-    margin-left:100px;
-    padding-top:30px;
-    width: 550px;
-    
+.select {
+  margin-left: 100px;
+  padding-top: 30px;
+  width: 550px;
 }
 
 @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(2rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
   }
-  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .menu {
-    animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-
-@media screen and (max-width:1500px){
-    .select{
-       margin-left:0;
-       width:450px;
-    }
+@media screen and (max-width:1500px) {
+  .select {
+    margin-left: 0;
+    width: 450px;
+  }
 }
 
-@media screen and (max-width:500px){
-    .select{
-       width:auto;
-    }
+@media screen and (max-width:500px) {
+  .select {
+    width: auto;
+  }
 }
-

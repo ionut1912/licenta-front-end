@@ -11,7 +11,7 @@ function SkillSection(props) {
         id: '',
         skill: ""
     });
-   //popup pt delete aici
+    //popup pt delete aici
     function deleteSkill(id) {
         props.setSkills(prevSkills => {
             if (props.setJobInfo !== undefined) {
@@ -45,7 +45,7 @@ function SkillSection(props) {
 
         setSkillFields(true);
     }
-   //popup pt delete aici
+    //popup pt delete aici
     function removeSkill() {
 
         setSkillFields(false);
@@ -136,12 +136,13 @@ function SkillSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.skill}
-                                            className="form-control"
+                                            className={props.errors.skill && props.touched.skill ? "form-control is-invalid" : "form-control"}
                                             id="inputSkill"
                                             placeholder="ex:Java" />
-                                        {props.errors.skill && props.touched.skill && <p className="text-danger">{props.errors.skill}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.skill && props.touched.skill && <p>{props.errors.skill}</p>}
+                                        </div>
                                     </div>
-
                                 </div>
                                 <div className="select-option">
                                     <button type="reset" onClick={() => { removeSkill(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>

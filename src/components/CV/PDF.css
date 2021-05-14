@@ -1,171 +1,163 @@
-.cv-body{
-    display:flex;
+.cv-body {
+    display: flex;
     width: 100%;
     height: 100%;
 }
 
-.personal-info img{
+.personal-info img {
     height: 150px;
     width: 150px;
-    margin:10px 0 20px 30%; 
-    padding-top:10px;
+    margin: 10px 0 20px 30%;
+    padding-top: 10px;
     border-radius: 50%;
-    border:5px solid rgb(5, 5, 5);
-    
+    border: 5px solid rgb(5, 5, 5);
 }
 
-.personal-info{
-background: #f1f1f1;
+.personal-info {
+    background: #f1f1f1;
 }
 
-.personal-info h1{
-    width: 100%; 
+.personal-info h1 {
+    width: 100%;
     margin-bottom: 40px;
-    text-align: center; 
-    color:rgb(8, 8, 8);
+    text-align: center;
+    color: rgb(8, 8, 8);
     border-top: 3px solid rgb(247, 168, 22);
     line-height: 0px;
 }
-.personal-info h1 span{
-        background:#f1f1f1; 
-        padding:0 12px; 
+
+.personal-info h1 span {
+    background: #f1f1f1;
+    padding: 0 12px;
 }
 
-
-.personal-info p{
-    font-size:20px;
-    color:rgba(8, 8, 8, 0.747);
+.personal-info p {
+    font-size: 20px;
+    color: rgba(8, 8, 8, 0.747);
     margin-bottom: 20px;
 }
 
-.personal-info .more-info{
+.personal-info .more-info {
     max-width: 400px;
-    padding-left:50px;
+    padding-left: 50px;
     padding-top: 30px;
 }
 
-
-.more-info h2{
-  margin-bottom: 30px;
+.more-info h2 {
+    margin-bottom: 30px;
 }
 
-.personal-section{ 
+.personal-section {
     max-width: 400px;
-    padding:0px 50px 50px 50px;
-
+    padding: 0px 50px 50px 50px;
 }
 
-.personal-section i{
-    margin-right:15px;
-    font-size:25px;
+.personal-section i {
+    margin-right: 15px;
+    font-size: 25px;
     color: rgb(247, 168, 22);
 }
 
-.aboutMe,.contact-section,.social-links{
-    margin-top:60px;
+.aboutMe, .contact-section, .social-links {
+    margin-top: 60px;
 }
 
-
-.experience-info{
-    margin:20px 0px 0px 50px;
+.experience-info {
+    margin: 20px 0px 0px 50px;
     display: flex;
     flex-direction: column;
 }
 
-.experience-info h1{
+.experience-info h1 {
     text-align: center;
     text-transform: uppercase;
     font-size: 55px;
-    padding:20px;
+    padding: 20px;
     font-family: cursive;
-    color:rgb(247, 168, 22);
+    color: rgb(247, 168, 22);
     margin-top: 20px;
 }
 
-.experience-info h2{
+.experience-info h2 {
     margin-bottom: 30px;
     text-align: center;
-    width: 100%; 
-    color:rgb(8, 8, 8);
+    width: 100%;
+    color: rgb(8, 8, 8);
     border-top: 3px solid rgb(247, 168, 22);
     line-height: 0px;
 }
 
-.experience-info h2 span{
-    background:#fff; 
-    padding:0 12px; 
+.experience-info h2 span {
+    background: #fff;
+    padding: 0 12px;
 }
 
-.carrer-section,.education-section, .skills-section , .languages-section, .projects-section , .hobbys-section{
-    margin-top:50px;
+.carrer-section, .education-section, .skills-section, .languages-section, .projects-section, .hobbys-section {
+    margin-top: 50px;
 }
 
-.experience-every-content{
-padding:10px 10px 10px 10px;
+.experience-every-content {
+    padding: 10px 10px 10px 10px;
 }
 
-.content-title h4{
-    color:#0275d8;
+.content-title h4 {
+    color: #0275d8;
 }
 
-.content-body{
- display:flex;
- font-size:15px;
- color:rgba(8, 8, 8, 0.801);
+.content-body {
+    display: flex;
+    font-size: 15px;
+    color: rgba(8, 8, 8, 0.801);
 }
 
-.content-body h4{
+.content-body h4 {
     margin-bottom: 15px;
-
 }
 
-.content-title{
+.content-title {
     display: flex;
     margin-bottom: 10px;
 }
-.title-comp{
+
+.title-comp {
     display: grid;
     justify-content: end;
     width: 70%;
 }
 
-
-.content-description{
- margin-left:110px;
+.content-description {
+    margin-left: 110px;
 }
 
-.skills-list,.hobbys-list{
-    padding:20px;
+.skills-list, .hobbys-list {
+    padding: 20px;
     text-align: center;
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(4, auto);
     grid-gap: 10px;
     width: 100%;
 }
 
-.skills-list li,.hobbys-section li{
+.skills-list li, .hobbys-section li {
     list-style: none;
     font-size: 20px;
-    color:#fff;
+    color: #fff;
     border: 2px solid #0275d8;
     background: #0275d8;
-
 }
 
-.languages-list  {
-
-    display:grid;
+.languages-list {
+    display: grid;
     grid-template-columns: repeat(2, auto);
     grid-gap: 10px;
-    padding:40px 10px 10px 0;
+    padding: 40px 10px 10px 0;
 }
 
 .languages-list li {
-    display:flex;
-    color:#0275d8;
+    display: flex;
+    color: #0275d8;
 }
 
 .languages-list li p {
     font-size: 25px;
-    
 }

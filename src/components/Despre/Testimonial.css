@@ -1,47 +1,47 @@
-.testimonials{
-    padding:40px 0;
+.testimonials {
+    padding: 40px 0;
     background: #fff;
-    color : #1c2237;
+    color: #1c2237;
     text-align: center;
 }
 
-.col-shadow{
+.col-shadow {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.411), 0 2px 10px rgba(0, 0, 0, 0.24);
     border-radius: 5px;
 }
 
-.testimonial{
-    background:#fff;
-    padding:30px;
+.testimonial {
+    background: #fff;
+    padding: 30px;
     height: 100%;
 }
 
-.testimonial img{
-    width:100px;
+.testimonial img {
+    width: 100px;
     height: 100px;
 }
 
-.testimonial p{
-    font-size:18px;
-    color:#2b3a63;
+.testimonial p {
+    font-size: 18px;
+    color: #2b3a63;
 }
 
-.testimonial .name{
-    font-size:25px;
-    color:rgb(96, 52, 255);
+.testimonial .name {
+    font-size: 25px;
+    color: rgb(96, 52, 255);
     text-transform: uppercase;
-    margin:20px 0;
+    margin: 20px 0;
 }
 
-.stars{
-    color:#6ab04c;
+.stars {
+    color: #6ab04c;
     margin-bottom: 20px;
 }
 
-.bg-yellow{
-    background:#fcff44;
+.bg-yellow {
+    background: #fcff44;
 }
 
-.bg-yellow p{
+.bg-yellow p {
     margin-bottom: 0.7rem;
 }

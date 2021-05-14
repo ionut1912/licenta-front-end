@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import PersonalInfoSection from './PersonalInfoSection'
 import WorkSection from './WorkSection'
 import EducationSection from './EducationSection'
@@ -11,7 +11,9 @@ import './MakeCV.css'
 
 export default function MakeCV(props) {
 
-    const [valid, setValid] = useState(false);
+    const formRef = useRef();
+
+    const [nextStateForm, setNextStateForm] = useState(1);
 
     const [stateForm, setStateForm] = useState(1);
 
@@ -28,6 +30,7 @@ export default function MakeCV(props) {
         linkedin: '',
         personalSite: ''
     });
+
     const [works, setWorks] = useState([]);
     const [educations, setEducations] = useState([]);
     const [skills, setSkills] = useState([]);
@@ -71,6 +74,12 @@ export default function MakeCV(props) {
         });
     }
 
+    const sendAndNextStep = () => {
+        if (formRef.current) {
+            formRef.current.handleSubmit();
+        }
+    }
+
     function addCVToDB() {
         console.log("test");
     }
@@ -79,10 +88,11 @@ export default function MakeCV(props) {
     return (
         <div style={{ background: '#fff', height: '100%', padding: '30px' }}>
             <div className="container">
-                <ul className="progressbar" style={{ justifyContent: "center" }}>
-                    <li className="active" onClick={() => setStateForm(1)}>Personal</li>
-                    <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { valid && setStateForm(2) }}>Experiences</li>
-                    {props.addCv === false ? <li className={stateForm === 3 ? "active" : null} onClick={() => { valid && setStateForm(3) }}>Finish</li> : null}
+            
+                <ul className="progressbar">
+                    <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
+                    <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
+                    {props.addCv === false ? <li className={stateForm === 3 ? "active" : null} onClick={() => { setNextStateForm(3); sendAndNextStep(); }}>Finish</li> : null}
                 </ul>
 
                 {/**********************************PersonalDetails********************************************************/}
@@ -93,7 +103,7 @@ export default function MakeCV(props) {
                     <h3>Personal details</h3>
                     <hr className="hr" />
 
-                    <PersonalInfoSection changeState={setStateForm} changePersonalInfo={setPersonalInfo} setValid={setValid} />
+                    <PersonalInfoSection formRef={formRef} changeState={setStateForm} changePersonalInfo={setPersonalInfo} nextStateForm={nextStateForm} />
 
                 </div>
 

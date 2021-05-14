@@ -132,10 +132,12 @@ function LanguageSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.language_name}
-                                            className="form-control"
+                                            className={props.errors.language_name && props.touched.language_name ? "form-control is-invalid" : "form-control"}
                                             id="inputLanguage"
                                             placeholder="ex:English" />
-                                        {props.errors.language_name && props.touched.language_name && <p className="text-danger">{props.errors.language_name}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.language_name && props.touched.language_name && <p>{props.errors.language_name}</p>}
+                                        </div>
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputGrad">Grad</label>

@@ -124,10 +124,12 @@ function ProjectSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.project_name}
-                                            className="form-control"
+                                            className={props.errors.project_name && props.touched.project_name ? "form-control is-invalid" : "form-control"}
                                             id="inputProject"
                                             placeholder="ex: Site pentru gestionarea unui magazin online" />
-                                        {props.errors.project_name && props.touched.project_name && <p className="text-danger">{props.errors.project_name}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.project_name && props.touched.project_name && <p>{props.errors.project_name}</p>}
+                                        </div>
                                     </div>
                                 </div>
 

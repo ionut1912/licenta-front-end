@@ -122,10 +122,12 @@ function HobbySection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.hobby_name}
-                                            className="form-control"
+                                            className={props.errors.hobby_name && props.touched.hobby_name ? "form-control is-invalid" : "form-control"}
                                             id="inputHobby"
                                             placeholder="ex:Football" />
-                                        {props.errors.hobby_name && props.touched.hobby_name && <p className="text-danger">{props.errors.hobby_name}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.hobby_name && props.touched.hobby_name && <p>{props.errors.hobby_name}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="select-option">
