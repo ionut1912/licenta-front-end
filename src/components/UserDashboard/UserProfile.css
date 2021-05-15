@@ -1,19 +1,37 @@
-.dash-on{
-    margin-left:250px;
+.dash-on {
+    margin-left: 250px;
 }
 
-.dash-content{
-    padding:30px;
+.dash-content {
+    padding: 30px;
 }
-.img-label{
-max-width: 100%;
+
+.img-label {
+    max-width: 100%;
 }
 
 .avatar {
-    width:120px;
+    width: 120px;
     height: 120px;
     border-radius: 50%;
-    margin:20px 30px 30px 10px;
+    margin: 20px 30px 30px 10px;
+}
+
+.no-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #93b4f0;
+    border-color: #93b4f0;
+    margin: 20px 30px 30px 10px;
+}
+
+.firstLetter {
+    position: relative;
+    right: 103px;
+    bottom: 4px;
+    font-size: 35px;
+    text-align: center;
 }
 
 .form-profile .input-file {
@@ -25,11 +43,11 @@ max-width: 100%;
     height: 40px;
     border-radius: 5px;
     outline: 0;
-  }
+}
 
 .form-profile .input-file:hover:after {
     background: #fc1930;
-  }
+}
 
 .form-profile .input-file:after {
     transition: 200ms all ease;
@@ -44,96 +62,88 @@ max-width: 100%;
     content: 'Upload image';
     line-height: 40px;
     border-radius: 5px;
-  }
-
-
-.input-img{
-margin-left:30px;
 }
 
-
-.form-profile{
-    margin-top:20px;
+.input-img {
+    margin-left: 30px;
 }
 
-.form-profile .form-group{
-    display:flex;
+.form-profile {
+    margin-top: 20px;
+}
+
+.form-profile .form-group {
+    display: flex;
     align-items: center;
 }
 
-.form-group p{
+.form-group p {
     margin-bottom: 0px;
 }
-.form-profile .btns{
+
+.form-profile .btns {
     display: flex;
 }
-.form-profile .btn-detalii{
-   width: 160px;
-   margin-top:20px;
-   margin-left: 0px;
+
+.form-profile .btn-detalii {
+    width: 160px;
+    margin-top: 20px;
+    margin-left: 0px;
 }
 
-.form-profile .btn-edit-send{
+.form-profile .btn-edit-send {
     width: 200px;
-    margin-top:20px;
-    margin-left:80px;
- }
-
-.activity{
-    display:flex;
-    padding-top:10px;
+    margin-top: 20px;
+    margin-left: 80px;
 }
 
-.activity-icon{
-    font-size:4rem;
+.activity {
+    display: flex;
+    padding-top: 10px;
+}
+
+.activity-icon {
+    font-size: 4rem;
     margin-right: 15px;
 }
 
-.activity-body hr{
-  margin-bottom: 15px;
+.activity-body hr {
+    margin-bottom: 15px;
 }
-
 
 @media screen and (max-width:580px) {
-    .img-label{
+    .img-label {
         max-width: 250px;
     }
-  
-     .form-profile .btn-edit-send{
-         width: 165px;
-         margin-left: 50px;
-      }
+    .form-profile .btn-edit-send {
+        width: 165px;
+        margin-left: 50px;
+    }
 }
 
-
 @media screen and (max-width:530px) {
-    .img-label{
+    .img-label {
         max-width: 220px;
     }
 }
 
 @media screen and (max-width:430px) {
-
     .form-profile .input-file {
         width: 110px;
-      }
-    
+    }
     .form-profile .input-file:after {
         font-size: 14px;
-      }
-     
-    .input-img{
-      margin-left:10px;
     }
-
-    .form-profile .btn-detalii{
+    .input-img {
+        margin-left: 10px;
+    }
+    .form-profile .btn-detalii {
         width: 150px;
-        padding:5px;
-     }
-
-    .form-profile .btn-edit-send{
+        padding: 5px;
+    }
+    .form-profile .btn-edit-send {
         width: 160px;
         margin-left: 5px;
-        padding:5px;
-     }
+        padding: 5px;
+    }
 }

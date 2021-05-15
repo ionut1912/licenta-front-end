@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function EducationSection(props) {
+export default function EducationSection(props) {
+
+    const formRef = useRef();
+
     const [educationExperience, setEducationExperience] = useState(false);
     const [educationFields, setEducationFields] = useState(false);
+
     const [education, setEducation] = useState({
         degree: "",
         city: "",
         school: "",
-        start: "",
-        end: "",
+        start: '',
+        end: '',
         descriere: ""
     });
 
@@ -58,6 +62,11 @@ function EducationSection(props) {
 
     }
 
+    const clickSectionTitle = () => {
+        setEducationExperience(!educationExperience)
+        formRef.current?.resetForm()
+    }
+
     const formSchema = Yup.object().shape({
         degree: Yup.string()
             .required("This field is required!"),
@@ -89,8 +98,8 @@ function EducationSection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setEducationExperience(!educationExperience)}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
-                {props.educations.length === 0 ? null : <span class="indicator">{props.educations.length}</span>}
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
+                {props.educations.length === 0 ? null : <span className="indicator">{props.educations.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -138,6 +147,7 @@ function EducationSection(props) {
                             resetForm({ values: '' })
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -188,7 +198,7 @@ function EducationSection(props) {
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputStart">Start date*</label>
-                                        <input type="date"
+                                        <input type="month"
                                             name="start"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
@@ -203,7 +213,7 @@ function EducationSection(props) {
 
                                     <div className="form-group col-md-6">
                                         <label htmlFor="inputEnd">End date*</label>
-                                        <input type="date"
+                                        <input type="month"
                                             name="end"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
@@ -239,7 +249,7 @@ function EducationSection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setEducationFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another education to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setEducationFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another education</span>
                 </div>
                 <hr className="hr" />
             </div>
@@ -247,4 +257,3 @@ function EducationSection(props) {
     )
 }
 
-export default EducationSection

@@ -13,6 +13,7 @@ import PrivateRouteUser from './components/PrivateRouteUser';
 import authService from './services/auth.service';
 import CVMaker from './components/pages/CVMaker';
 import './App.css';
+import ScrollTop from './components/ScrollTop';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/makeCV" component={CVMaker} />
           <Route component={NotFound} />
         </Switch>
+        <ScrollTop />
       </Router>
     </>
   );

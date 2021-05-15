@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function SkillSection(props) {
+export default function SkillSection(props) {
+
+    const formRef = useRef();
 
     const [skillExperience, setSkillExperience] = useState(false);
     const [skillFields, setSkillFields] = useState(false);
@@ -58,6 +60,12 @@ function SkillSection(props) {
 
     }
 
+    const clickSectionTitle = () => {
+        setSkillExperience(!skillExperience);
+        formRef.current?.resetForm()
+
+    }
+
     const formSchema = Yup.object().shape({
         skill: Yup.string()
             .required("This field is required!"),
@@ -79,7 +87,7 @@ function SkillSection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setSkillExperience(!skillExperience)}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
                 {props.skills.length === 0 ? null : <span className="indicator">{props.skills.length}</span>}
             </div>
 
@@ -123,6 +131,7 @@ function SkillSection(props) {
                             resetForm({ values: '' })
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -155,7 +164,7 @@ function SkillSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setSkillFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another skill to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setSkillFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another skill</span>
                 </div>
                 <hr className="hr" />
             </div>
@@ -163,4 +172,3 @@ function SkillSection(props) {
     )
 }
 
-export default SkillSection

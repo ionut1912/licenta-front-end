@@ -135,7 +135,9 @@ const PDF = (props) => {
                   return (
                     <li key={index}>
                       <p>{item.language_name}</p>
-                      <p style={{ marginLeft: "20px" }}>{item.grad}</p>
+                      <p style={{ marginLeft: "20px" }}>{item.speak}</p>
+                      <p style={{ marginLeft: "20px" }}>{item.read}</p>
+                      <p style={{ marginLeft: "20px" }}>{item.write}</p>
                     </li>
                   );
                 })}

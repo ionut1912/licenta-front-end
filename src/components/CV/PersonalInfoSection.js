@@ -21,6 +21,32 @@ export default function PersonalInfoSection(props) {
     })
 
 
+    const [baseImage, setBaseImage] = useState("");
+
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        if (file !== undefined) {
+            const base64 = await convertBase64(file);
+            setBaseImage(base64);
+        }
+    };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+
     function handleSubmit(values) {
         if (buttonFormPressed === true) {
             props.changeState(2);
@@ -59,6 +85,18 @@ export default function PersonalInfoSection(props) {
                 {props => (
                     <form onSubmit={props.handleSubmit} >
 
+                        {/* <div className="form-row">
+                            <div className="form-group col-md-2" style={{textAlign:'center',margin:'auto'}}>
+                                <div className="image-upload">
+                                    <label htmlFor="file-input" >
+                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage === '' ? "no-img-cv" : "img-cv"} alt=""/>
+                                        {baseImage === '' && <span className="addPhoto">Add photo</span>}
+                                    </label>
+                                    <input type="file" id="file-input" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
+                                </div>
+                            </div>
+                        </div> */}
+
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputfn">First name*</label>
@@ -76,6 +114,7 @@ export default function PersonalInfoSection(props) {
                                     {props.errors.first_name && props.touched.first_name && <p >{props.errors.first_name}</p>}
                                 </div>
                             </div>
+
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputln">Last name*</label>
                                 <input type="text"
@@ -166,7 +205,7 @@ export default function PersonalInfoSection(props) {
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
                             </div>
-                        </div>
+                        </div>   
 
                         <div className="additionalInfo" style={{
                             display: openAditionalInfo === false && 'none'
@@ -227,7 +266,7 @@ export default function PersonalInfoSection(props) {
                         </div>
 
                         <div className="toggler-additionalInfo">
-                            <a href="#/" className="btn-additionalInfo" onClick={() => setOpenAditionalInfo(!openAditionalInfo)}><i className={openAditionalInfo === false ? "fa fa-plus-circle" : "fa fa-minus-circle"} aria-hidden="true"></i> Additional information</a>
+                            <span className="btn-additionalInfo" onClick={() => setOpenAditionalInfo(!openAditionalInfo)}><i className={openAditionalInfo === false ? "fa fa-plus-circle" : "fa fa-minus-circle"} aria-hidden="true"></i> Additional information</span>
                         </div>
 
                         <hr className="hr" />

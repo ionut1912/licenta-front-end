@@ -5,6 +5,33 @@
   font-family: 'PT Sans', sans-serif;
 }
 
+textarea {
+  max-height: 150px;
+}
+
+.buttonScrollTop {
+  position: fixed;
+  right: 1.5%;
+  padding-top: 9px;
+  bottom: 40px;
+  text-align: center;
+  z-index: 10;
+  cursor: pointer;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  background-color: #282ECB;
+  border-radius: 100%;
+  color: #fff;
+}
+
+.buttonScroll:hover {
+  transform: translateY(-2px);
+  transition: 0.25s;
+  background-color: #7038f5d5;
+  border-color: #7038f5d5;
+}
+
 .btn-primary, .btn-danger {
   border: 1px solid transparent;
   padding: .7rem 1.3rem;

@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function HobbySection(props) {
+export default function HobbySection(props) {
+
+    const formRef = useRef();
 
     const [hobbyExperience, setHobbyExperience] = useState(false);
     const [hobbyFields, setHobbyFields] = useState(false);
@@ -44,6 +46,12 @@ function HobbySection(props) {
 
     }
 
+    const clickSectionTitle = () => {
+        setHobbyExperience(!hobbyExperience);
+        formRef.current?.resetForm()
+
+    }
+
     const formSchema = Yup.object().shape({
         hobby_name: Yup.string()
             .required("This field is required!"),
@@ -65,8 +73,8 @@ function HobbySection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setHobbyExperience(!hobbyExperience)}><i className="fas fa-paint-brush icon text-dark"></i>Hobbys</h3>
-                {props.hobbys.length === 0 ? null : <span class="indicator">{props.hobbys.length}</span>}
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-paint-brush icon text-dark"></i>Hobbys</h3>
+                {props.hobbys.length === 0 ? null : <span className="indicator">{props.hobbys.length}</span>}
             </div>
 
 
@@ -108,7 +116,8 @@ function HobbySection(props) {
                             handleSubmit(values);
                             resetForm({ values: '' })
                         }}
-
+                        
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -140,12 +149,11 @@ function HobbySection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setHobbyFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another hobby to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setHobbyFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another hobby</span>
                 </div>
                 <hr className="hr" />
             </div>
-        </div>
+        </div >
     )
 }
 
-export default HobbySection

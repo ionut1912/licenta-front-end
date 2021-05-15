@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function WorkSection(props) {
+export default function WorkSection(props) {
+
+    const formRef = useRef();
 
     const [workExperience, setWorkExperience] = useState(false);
     const [workFields, setWorkFields] = useState(false);
@@ -59,6 +61,12 @@ function WorkSection(props) {
 
     }
 
+    const clickSectionTitle = () => {
+        setWorkExperience(!workExperience)
+        formRef.current?.resetForm()
+
+    }
+
     const formSchema = Yup.object().shape({
         job_title: Yup.string()
             .required("This field is required!"),
@@ -91,7 +99,7 @@ function WorkSection(props) {
         <div className="form-cls">
 
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setWorkExperience(!workExperience)}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
                 {props.works.length === 0 ? null : <span className="indicator">{props.works.length}</span>}
             </div>
 
@@ -142,6 +150,7 @@ function WorkSection(props) {
                             resetForm({ values: '' })
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -240,7 +249,7 @@ function WorkSection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setWorkFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another work to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setWorkFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another work</span>
                 </div>
                 <hr className="hr" />
             </div>
@@ -249,4 +258,3 @@ function WorkSection(props) {
     )
 }
 
-export default WorkSection

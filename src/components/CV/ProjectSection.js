@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function ProjectSection(props) {
+export default function ProjectSection(props) {
+
+    const formRef = useRef();
 
     const [projectExperience, setProjectExperience] = useState(false);
     const [projectFields, setProjectFields] = useState(false);
@@ -47,6 +49,12 @@ function ProjectSection(props) {
 
     }
 
+    const clickSectionTitle = () => {
+        setProjectExperience(!projectExperience)
+        formRef.current?.resetForm()
+
+    }
+
     const formSchema = Yup.object().shape({
         project_name: Yup.string()
             .required("This field is required!"),
@@ -68,8 +76,8 @@ function ProjectSection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setProjectExperience(!projectExperience)} ><i className="fa fa-file icon text-dark "></i> Projects</h3>
-                {props.projects.length === 0 ? null : <span class="indicator">{props.projects.length}</span>}
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()} ><i className="fa fa-file icon text-dark "></i> Projects</h3>
+                {props.projects.length === 0 ? null : <span className="indicator">{props.projects.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -112,6 +120,7 @@ function ProjectSection(props) {
                             resetForm({ values: '' })
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -156,7 +165,7 @@ function ProjectSection(props) {
                 </div>
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setProjectFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another project to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setProjectFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another project</span>
                 </div>
                 <hr className="hr" />
             </div>
@@ -164,4 +173,3 @@ function ProjectSection(props) {
     )
 }
 
-export default ProjectSection

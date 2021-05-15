@@ -20,7 +20,7 @@ function UserProfile(props) {
             .email("Invalid email!")
             .required("This field is required!"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/,'Must be exactyle 10 digits')
+            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
             .required("This field is required!"),
     })
 
@@ -54,7 +54,7 @@ function UserProfile(props) {
 
     const uploadImage = async (e) => {
         const file = e.target.files[0];
-        if (file.name !== null) {
+        if (file !== undefined) {
             setFileChosen(file.name);
             const base64 = await convertBase64(file);
             setBaseImage(base64);
@@ -93,7 +93,6 @@ function UserProfile(props) {
 
                 onSubmit={(values) => {
                     handleSubmit(values);
-
                 }}
 
                 validationSchema={validateSchema}>
@@ -103,7 +102,9 @@ function UserProfile(props) {
                     <form className="form-profile" onSubmit={props.handleSubmit}>
                         <div className="form-group">
                             {edit === false ? <label className="col-sm-2 col-form-label img-label" style={{ alignSelf: 'center' }}>Profile picture:</label> : null}
-                            <img src={baseImage !== "" ? baseImage : props.values.img} className="avatar" alt="" />
+                           
+                            <img src={baseImage !== "" ? baseImage : props.values.img} className={props.values.img === null && baseImage === "" ? "no-avatar " : "avatar"} alt="" />
+                            {props.values.img === null && baseImage === '' && <span className="firstLetter">{props.values.full_name[0]}</span>}
                            
                             {edit === true ? <div style={{ display: 'flex' }}>
                                 <input type="file" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />

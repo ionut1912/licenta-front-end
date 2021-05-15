@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 
-function LanguageSection(props) {
+export default function LanguageSection(props) {
+
+    const formRef = useRef();
 
     const [languageExperience, setLanguageExperience] = useState(false);
     const [languageFields, setLanguageFields] = useState(false);
     const [language, setLanguage] = useState({
         language_name: "",
-        grad: ""
+        speak: "",
+        read: "",
+        write: ""
     });
 
     function deleteLanguage(id) {
@@ -28,7 +32,9 @@ function LanguageSection(props) {
 
         setLanguage({
             language_name: language1[0].language_name,
-            grad: language1[0].grad
+            speak: language1[0].speak,
+            read: language1[0].read,
+            write: language1[0].write
         })
 
         deleteLanguage(id);
@@ -44,30 +50,43 @@ function LanguageSection(props) {
 
         setLanguage({
             language_name: "",
-            grad: ""
+            speak: "",
+            read: "",
+            write: ""
         })
+
+    }
+
+    const clickSectionTitle = () => {
+        setLanguageExperience(!languageExperience)
+        formRef.current?.resetForm()
 
     }
 
     const formSchema = Yup.object().shape({
         language_name: Yup.string()
             .required("This field is required!"),
+        speak: Yup.string()
+            .required("This field is required!"),
+        read: Yup.string()
+            .required("This field is required!"),
+        write: Yup.string()
+            .required("This field is required!")
 
 
     })
 
     function handleSubmit(values) {
-        console.log(values);
         props.addLanguage(values);
 
         setLanguageFields(false);
 
         setLanguage({
             language_name: "",
-            grad: ""
+            speak: "",
+            read: "",
+            write: ""
         })
-
-
 
     }
 
@@ -75,8 +94,8 @@ function LanguageSection(props) {
         <div className="form-cls">
 
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setLanguageExperience(!languageExperience)}><i className="fas fa-globe icon text-dark"></i>Languages</h3>
-                {props.languages.length === 0 ? null : <span class="indicator">{props.languages.length}</span>}
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-globe icon text-dark"></i>Languages</h3>
+                {props.languages.length === 0 ? null : <span className="indicator">{props.languages.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -109,7 +128,9 @@ function LanguageSection(props) {
                         initialValues={
                             {
                                 language_name: language.language_name,
-                                grad: language.grad
+                                speak: language.speak,
+                                read: language.read,
+                                write: language.write
                             }
                         }
 
@@ -120,6 +141,7 @@ function LanguageSection(props) {
                             resetForm({ values: '' });
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -140,22 +162,68 @@ function LanguageSection(props) {
                                         </div>
                                     </div>
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputGrad">Grad</label>
+                                        <label htmlFor="inputGrad">Speech level</label>
                                         <select id="inputGrad"
-                                            name="grad"
+                                            name="speak"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
-                                            value={props.values.grad}
-                                            className="form-control">
-                                            <option value="Choose">Choose</option>
-                                            <option value="A1">A1</option>
-                                            <option value="A2">A2</option>
-                                            <option value="B1">B1</option>
-                                            <option value="B2">B2</option>
-                                            <option value="C1">C1</option>
-                                            <option value="C2">C2</option>
+                                            value={props.values.speak}
+                                            className={props.errors.speak && props.touched.speak ? "form-control is-invalid" : "form-control"}>
+                                            <option value="">Choose</option>
+                                            <option value="A1">A1 - Utilizator de baza</option>
+                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
+                                            <option value="B1">B1 - Utilizator independent</option>
+                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
+                                            <option value="C1">C1 - Utilizator experimentat</option>
+                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
                                         </select>
-                                        {props.errors.grad && props.touched.grad && <p className="text-danger">{props.errors.grad}</p>}
+                                        <div className="invalid-feedback">
+                                            {props.errors.speak && props.touched.speak && <p>{props.errors.speak}</p>}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputGrad">Read level</label>
+                                        <select id="inputGrad"
+                                            name="read"
+                                            onChange={props.handleChange}
+                                            onBlur={props.handleBlur}
+                                            value={props.values.read}
+                                            className={props.errors.read && props.touched.read ? "form-control is-invalid" : "form-control"}>
+                                            <option value="">Choose</option>
+                                            <option value="A1">A1 - Utilizator de baza</option>
+                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
+                                            <option value="B1">B1 - Utilizator independent</option>
+                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
+                                            <option value="C1">C1 - Utilizator experimentat</option>
+                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
+                                        </select>
+                                        <div className="invalid-feedback">
+                                            {props.errors.read && props.touched.read && <p>{props.errors.read}</p>}
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="inputGrad">Write level</label>
+                                        <select id="inputGrad"
+                                            name="write"
+                                            onChange={props.handleChange}
+                                            onBlur={props.handleBlur}
+                                            value={props.values.write}
+                                            className={props.errors.write && props.touched.write ? "form-control is-invalid" : "form-control"}>
+                                            <option value="">Choose</option>
+                                            <option value="A1">A1 - Utilizator de baza</option>
+                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
+                                            <option value="B1">B1 - Utilizator independent</option>
+                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
+                                            <option value="C1">C1 - Utilizator experimentat</option>
+                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
+                                        </select>
+                                        <div className="invalid-feedback">
+                                            {props.errors.write && props.touched.write && <p>{props.errors.write}</p>}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -170,7 +238,7 @@ function LanguageSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-additionalInfo" onClick={() => { setLanguageFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another language</a>
+                    <span className="btn-additionalInfo" onClick={() => { setLanguageFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another language</span>
                 </div>
                 <hr className="hr" />
             </div>
@@ -179,4 +247,3 @@ function LanguageSection(props) {
     )
 }
 
-export default LanguageSection

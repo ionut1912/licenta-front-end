@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import PersonalInfoSection from './PersonalInfoSection'
 import WorkSection from './WorkSection'
+import PersonalDescription from './PersonalDescription'
 import EducationSection from './EducationSection'
 import SkillSection from './SkillSection'
 import LanguageSection from './LanguageSection'
@@ -8,6 +9,7 @@ import HobbySection from './HobbySection'
 import ProjectSection from './ProjectSection'
 import PDF from './PDF'
 import './MakeCV.css'
+
 
 export default function MakeCV(props) {
 
@@ -30,6 +32,8 @@ export default function MakeCV(props) {
         linkedin: '',
         personalSite: ''
     });
+
+    const [personalDescription, setPersonalDescription] = useState({ descriere: '' })
 
     const [works, setWorks] = useState([]);
     const [educations, setEducations] = useState([]);
@@ -86,10 +90,9 @@ export default function MakeCV(props) {
 
 
     return (
-        <div style={{ background: '#fff', height: '100%', padding: '30px' }}>
+        <div style={{ height: '100%', padding: '30px' }}>
             <div className="container">
-            
-                <ul className="progressbar">
+                <ul className="progressbar" style={{ justifyContent: "center" }}>
                     <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
                     <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
                     {props.addCv === false ? <li className={stateForm === 3 ? "active" : null} onClick={() => { setNextStateForm(3); sendAndNextStep(); }}>Finish</li> : null}
@@ -115,7 +118,7 @@ export default function MakeCV(props) {
 
                     <h3>Experiences</h3>
                     <hr className="hr" />
-
+                    <PersonalDescription setDescription={setPersonalDescription} />
                     <WorkSection works={works} addWork={addWork} setWorks={setWorks} />
                     <EducationSection educations={educations} addEducation={addEducation} setEducations={setEducations} />
                     <SkillSection skills={skills} addSkill={addSkill} setSkills={setSkills} />
@@ -140,7 +143,7 @@ export default function MakeCV(props) {
                 <div className="finish" style={{
                     display: stateForm !== 3 && 'none'
                 }}>
-                    <PDF personalInfo={personalInfo} works={works} educations={educations} skills={skills} languages={languages} hobbys={hobbys} projects={projects} />
+                    <PDF personalInfo={personalInfo} personalDescription={personalDescription} works={works} educations={educations} skills={skills} languages={languages} hobbys={hobbys} projects={projects} />
 
                     {/* 
                     <div className="two-btn">
