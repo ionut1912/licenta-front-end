@@ -47,14 +47,14 @@ export default function PersonalDescription(props) {
                         <form onSubmit={props.handleSubmit} >
                             <div className="form-row">
                                 <div className="form-group col-md-12">
-                                    <label htmlFor="inputDescriere">Description</label>
+                                    <label htmlFor="inputDescrierePersonala">Description</label>
                                     <textarea
                                         name="descriere"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                         value={props.values.descriere}
                                         className="form-control"
-                                        id="inputDescriere"
+                                        id="inputDescrierePersonala"
                                         placeholder="" />
                                 </div>
                             </div>

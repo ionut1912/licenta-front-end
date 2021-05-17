@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar';
 import UserProfile from './UserProfile';
 import UserAplications from './UserAplications';
 
-function UserDashboard(props) {
+export default function UserDashboard(props) {
 
     const [state, setState] = useState(1);
     const [aplicariUser, setAplicariUser] = useState([]);
@@ -36,5 +36,4 @@ function UserDashboard(props) {
     )
 }
 
-export default UserDashboard
 

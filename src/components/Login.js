@@ -178,6 +178,7 @@ export default function Login({ setSubTitle }) {
                                                 className={classes.input}
                                                 label="Email address"
                                                 value={props.values.email}
+                                                autoComplete="current-email"
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
                                             />
@@ -195,6 +196,7 @@ export default function Login({ setSubTitle }) {
                                                 value={props.values.password}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
+                                                autoComplete="current-password"
                                                 InputProps={{
                                                     endAdornment: (
                                                         < InputAdornment position="end" className={classes.icon}>
@@ -297,6 +299,7 @@ export default function Login({ setSubTitle }) {
                                                 fullWidth
                                                 className={classes.input}
                                                 label="Email address"
+                                                autoComplete="new-email"
                                                 value={props.values.email}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
@@ -312,6 +315,7 @@ export default function Login({ setSubTitle }) {
                                                 fullWidth
                                                 className={classes.input}
                                                 label="Phone number"
+                                                autoComplete="new-phone"
                                                 value={props.values.phone}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
@@ -329,6 +333,7 @@ export default function Login({ setSubTitle }) {
                                                 value={props.values.password}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
+                                                autoComplete="new-password"
                                                 InputProps={{
                                                     endAdornment: (
                                                         < InputAdornment position="end" className={classes.icon}>
@@ -355,6 +360,7 @@ export default function Login({ setSubTitle }) {
                                                 value={props.values.password2}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
+                                                autoComplete="new-password"
                                                 InputProps={{
                                                     endAdornment: (
                                                         < InputAdornment position="end" className={classes.icon}>

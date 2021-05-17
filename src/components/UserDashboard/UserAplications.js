@@ -4,7 +4,7 @@ import JobView from '../Joburi/JobView';
 import JobService from '../../services/job.service';
 import "./UserAplications.css"
 
-function UserAplications(props) {
+export default function UserAplications(props) {
 
     const [filter, setFilter] = useState('');
     const [search, setSearch] = useState('');
@@ -134,4 +134,3 @@ function UserAplications(props) {
     )
 }
 
-export default UserAplications

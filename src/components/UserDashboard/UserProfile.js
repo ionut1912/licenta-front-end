@@ -6,7 +6,7 @@ import UserService from '../../services/user.service';
 import AuthService from '../../services/auth.service'
 import "./UserProfile.css"
 
-function UserProfile(props) {
+export default function UserProfile(props) {
 
     const [edit, setEdit] = useState(false);
     const [fileChoosen, setFileChosen] = useState('No file choosen');
@@ -102,16 +102,17 @@ function UserProfile(props) {
                     <form className="form-profile" onSubmit={props.handleSubmit}>
                         <div className="form-group">
                             {edit === false ? <label className="col-sm-2 col-form-label img-label" style={{ alignSelf: 'center' }}>Profile picture:</label> : null}
-                           
-                            <img src={baseImage !== "" ? baseImage : props.values.img} className={props.values.img === null && baseImage === "" ? "no-avatar " : "avatar"} alt="" />
-                            {props.values.img === null && baseImage === '' && <span className="firstLetter">{props.values.full_name[0]}</span>}
-                           
+
+                            <div className={props.values.img === null && baseImage === '' ? "profil-img" : null}>
+                                <img src={baseImage !== "" ? baseImage : props.values.img} className={props.values.img === null && baseImage === "" ? null : "avatar"} alt="" />
+                                {props.values.img === null && baseImage === '' && <span className="firstLetter">{props.values.full_name[0]}</span>}
+                            </div>
+
                             {edit === true ? <div style={{ display: 'flex' }}>
                                 <input type="file" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
                                 <p className="file-name text-primary">{fileChoosen}</p>
                             </div> : null}
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
                             <div className=" col-md-6 col-sm-8">
@@ -169,6 +170,7 @@ function UserProfile(props) {
                             <button type="button" className="btn btn-outline-primary btn-detalii"
                                 onClick={() => {
                                     setBaseImage("");
+                                    setFileChosen("No file choosen");
                                     setEdit(false);
                                     props.setFieldValue('id', currentUser.id);
                                     props.setFieldValue('img', currentUser.img);
@@ -203,4 +205,3 @@ function UserProfile(props) {
     )
 }
 
-export default UserProfile

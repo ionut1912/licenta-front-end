@@ -162,8 +162,8 @@ export default function LanguageSection(props) {
                                         </div>
                                     </div>
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputGrad">Speech level</label>
-                                        <select id="inputGrad"
+                                        <label htmlFor="inputSpeech">Speech level</label>
+                                        <select id="inputSpeech"
                                             name="speak"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
@@ -185,8 +185,8 @@ export default function LanguageSection(props) {
 
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputGrad">Read level</label>
-                                        <select id="inputGrad"
+                                        <label htmlFor="inputRead">Read level</label>
+                                        <select id="inputRead"
                                             name="read"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
@@ -206,8 +206,8 @@ export default function LanguageSection(props) {
                                     </div>
 
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputGrad">Write level</label>
-                                        <select id="inputGrad"
+                                        <label htmlFor="inputWrite">Write level</label>
+                                        <select id="inputWrite"
                                             name="write"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}

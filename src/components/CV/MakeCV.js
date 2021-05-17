@@ -20,6 +20,7 @@ export default function MakeCV(props) {
     const [stateForm, setStateForm] = useState(1);
 
     const [personalInfo, setPersonalInfo] = useState({
+        img_cv: '',
         first_name: '',
         last_name: '',
         email: '',

@@ -22,7 +22,7 @@ export default function ScrollTop() {
     window.addEventListener('scroll', toggleVisible);
 
     return (
-        <i class="fas fa-arrow-up buttonScrollTop" onClick={scrollToTop}
+        <i className="fas fa-arrow-up buttonScrollTop" onClick={scrollToTop}
             style={visible === true ? null : { display: 'none' }}></i>
     ) 
 }

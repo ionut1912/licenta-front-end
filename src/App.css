@@ -7,6 +7,7 @@
 
 textarea {
   max-height: 150px;
+  min-height: 75px;
 }
 
 .buttonScrollTop {
@@ -25,11 +26,11 @@ textarea {
   color: #fff;
 }
 
-.buttonScroll:hover {
+.buttonScrollTop:hover {
   transform: translateY(-2px);
   transition: 0.25s;
-  background-color: #7038f5d5;
-  border-color: #7038f5d5;
+  background-color: #fc1930d5;
+  border-color: #fc1930d5;
 }
 
 .btn-primary, .btn-danger {

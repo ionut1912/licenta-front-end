@@ -48,6 +48,9 @@ export default function PersonalInfoSection(props) {
 
 
     function handleSubmit(values) {
+        if (baseImage !== "") {
+            values.img_cv = baseImage;
+        }
         if (buttonFormPressed === true) {
             props.changeState(2);
             setButtonFormPressed(false);
@@ -85,53 +88,58 @@ export default function PersonalInfoSection(props) {
                 {props => (
                     <form onSubmit={props.handleSubmit} >
 
-                        {/* <div className="form-row">
-                            <div className="form-group col-md-2" style={{textAlign:'center',margin:'auto'}}>
+                        <div className="row-img-cv">
+                            <div className="left-img" style={baseImage === '' ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
                                 <div className="image-upload">
                                     <label htmlFor="file-input" >
-                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage === '' ? "no-img-cv" : "img-cv"} alt=""/>
-                                        {baseImage === '' && <span className="addPhoto">Add photo</span>}
+                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' ? "img-cv" : null} alt="" />
+                                        {baseImage === '' && <div>
+                                            <i className="fas fa-camera addPhoto" style={{ fontSize: '40px' }} />
+                                            <br />
+                                            <span className="addPhoto">Add photo</span>
+                                        </div>}
                                     </label>
                                     <input type="file" id="file-input" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
                                 </div>
+
                             </div>
-                        </div> */}
 
-                        <div className="form-row">
-                            <div className="form-group col-md-6">
-                                <label htmlFor="inputfn">First name*</label>
-                                <input type="text"
-                                    name="first_name"
-                                    value={props.first_name}
-                                    className={props.errors.first_name && props.touched.first_name ? "form-control is-invalid" : "form-control"}
-                                    id="inputfn"
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                    placeholder="First name"
-
-                                />
-                                <div className="invalid-feedback">
-                                    {props.errors.first_name && props.touched.first_name && <p >{props.errors.first_name}</p>}
+                            <div className="form-row">
+                                <div className="form-group col-md-12">
+                                    <label htmlFor="inputfn" className="group-margin-left">First name*</label>
+                                    <input type="text"
+                                        name="first_name"
+                                        value={props.first_name}
+                                        className={props.errors.first_name && props.touched.first_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left"}
+                                        id="inputfn"
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        placeholder="First name"
+                                    />
+                                    <div className="invalid-feedback">
+                                        {props.errors.first_name && props.touched.first_name && <p >{props.errors.first_name}</p>}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="form-group col-md-6">
-                                <label htmlFor="inputln">Last name*</label>
-                                <input type="text"
-                                    name="last_name"
-                                    value={props.last_name}
-                                    className={props.errors.last_name && props.touched.last_name ? "form-control is-invalid" : "form-control"}
-                                    id="inputln"
-                                    onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                    placeholder="Last name"
+                                <div className="form-group col-md-12">
+                                    <label htmlFor="inputln" className="group-margin-left">Last name*</label>
+                                    <input type="text"
+                                        name="last_name"
+                                        value={props.last_name}
+                                        className={props.errors.last_name && props.touched.last_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left"}
+                                        id="inputln"
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        placeholder="Last name"
 
-                                />
-                                <div className="invalid-feedback">
-                                    {props.errors.last_name && props.touched.last_name && <p >{props.errors.last_name}</p>}
+                                    />
+                                    <div className="invalid-feedback">
+                                        {props.errors.last_name && props.touched.last_name && <p >{props.errors.last_name}</p>}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputEmail">Email address*</label>
@@ -205,7 +213,7 @@ export default function PersonalInfoSection(props) {
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
                             </div>
-                        </div>   
+                        </div>
 
                         <div className="additionalInfo" style={{
                             display: openAditionalInfo === false && 'none'

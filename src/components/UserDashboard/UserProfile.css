@@ -10,6 +10,17 @@
     max-width: 100%;
 }
 
+.profil-img {
+    display: inline;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 20px 30px 30px 10px;
+    background-color: #93b4f0;
+    border-color: #93b4f0;
+    text-align: center;
+}
+
 .avatar {
     width: 120px;
     height: 120px;
@@ -17,21 +28,10 @@
     margin: 20px 30px 30px 10px;
 }
 
-.no-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #93b4f0;
-    border-color: #93b4f0;
-    margin: 20px 30px 30px 10px;
-}
-
 .firstLetter {
     position: relative;
-    right: 103px;
-    bottom: 4px;
+    top: 37px;
     font-size: 35px;
-    text-align: center;
 }
 
 .form-profile .input-file {

@@ -2,7 +2,7 @@ import React from 'react';
 import Pdf from 'react-to-pdf';
 import './PDF.css'
 
-const ref=React.createRef();
+const ref = React.createRef();
 
 const PDF = (props) => {
 
@@ -12,9 +12,9 @@ const PDF = (props) => {
         <div className="personal-info">
 
           <div style={{ maxWidth: "400px" }}>
-            <img src="./images/cap.png" alt="" />
+            <img src={props.personalInfo.img_cv} alt="" />
           </div>
- 
+
           <div className="more-info">
             {props.personalInfo.dateOfBirth && <p>Data nasterii: {props.personalInfo.dateOfBirth}</p>}
             {props.personalInfo.nationality && <p>Nationality: {props.personalInfo.nationality}</p>}
@@ -57,7 +57,7 @@ const PDF = (props) => {
         <div className="experience-info">
 
           <h1>{props.personalInfo.first_name} {props.personalInfo.last_name} </h1>
-         
+
 
           {props.works.length !== 0 &&
             <div className="carrer-section">

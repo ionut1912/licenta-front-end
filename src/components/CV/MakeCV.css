@@ -85,27 +85,46 @@
     color: #fff;
 }
 
+.row-img-cv {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.left-img {
+    float: left;
+    display: inline;
+    margin-right: 30px;
+    height: 182px;
+    width: 182px;
+    margin-top: 25px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .image-upload>input {
     display: none;
 }
 
+.file-input {
+    cursor: pointer;
+}
+
 .img-cv {
-    width: 150px;
-    height: 140px;
+    height: 182px;
+    width: 182px;
+    border-radius: 3px;
 }
 
-.no-img-cv {
-    width: 150px;
-    height: 140px;
-    background-color: #e3e7ee;
-    border-radius: 5px dashed #1a6bf8;
-}
-
-.addPhoto{
+.addPhoto {
     position: relative;
+    color: #1c2237c0;
     font-size: 22px;
-    bottom: 85px;
-    left: 24px;
+    top: 12px;
+}
+
+.group-margin-left {
+    margin-left: 5px;
 }
 
 .personalDetails, .experience, .finish, .addJob {
@@ -130,6 +149,7 @@
 .form-cls label {
     font-size: 20px;
     color: #1c2237c0;
+    cursor: pointer;
 }
 
 .form-cls h3 {
@@ -242,6 +262,20 @@
     }
     .progressbar li {
         font-size: 20px;
+    }
+    .left-img {
+        height: 152px;
+        width: 152px;
+        margin-top: 40px;
+        margin-right: 15px;
+    }
+    .img-cv {
+        height: 152px;
+        width: 152px;
+        border-radius: 3px;
+    }
+    .addPhoto {
+        top: 0px;
     }
     .additionalInfo {
         padding: 10px 20px;
