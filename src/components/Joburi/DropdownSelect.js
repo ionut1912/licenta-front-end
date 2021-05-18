@@ -30,7 +30,27 @@ export default function DropdownSelect(props) {
      }
 
      return (
-          <div className="body-select">
+          <div className="body-select" style={{ display: 'flex' }}>
+               <Select
+                    onChange={handleChange}
+                    options={options}
+                    styles={customStyles}
+                    placeholder='Select location to see available jobs'
+                    className="select"
+                    components={{
+                         Menu: (props) => <components.Menu {...props} className="menu" />
+                    }}
+               />
+               <Select
+                    onChange={handleChange}
+                    options={options}
+                    styles={customStyles}
+                    placeholder='Select location to see available jobs'
+                    className="select"
+                    components={{
+                         Menu: (props) => <components.Menu {...props} className="menu" />
+                    }}
+               />
                <Select
                     onChange={handleChange}
                     options={options}

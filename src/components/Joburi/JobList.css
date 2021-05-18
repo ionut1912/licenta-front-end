@@ -1,0 +1,46 @@
+.container-fluid {
+    padding: 20px 100px 50px 100px;
+}
+
+.container-fluid .text-danger {
+    padding: 0;
+}
+
+.container-fluid .card {
+    max-width: 23rem;
+    height: 100%;
+}
+
+.container-fluid .text-info {
+    padding-bottom: 10px;
+}
+
+.badge {
+    padding: 0.8em;
+    font-size: 15px;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.hl {
+    margin: 1rem auto 1rem auto;
+    width: 35%;
+    border-top: 1.5px solid rgba(0, 0, 0, 0.329);
+}
+
+.footer-text {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.footer-text:hover {
+    transform: translateY(-2px);
+    transition: 0.25s;
+    color: #17a2b8;
+}
+
+@media screen and (max-width:1394px) {
+    .container-fluid {
+        padding: 20px 20px 50px 20px;
+    }
+}

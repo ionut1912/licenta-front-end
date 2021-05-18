@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Testimonial from '../Despre/Testimonial'
 import DropdownSelect from '../Joburi/DropdownSelect'
 import JobService from '../../services/job.service';
+import JobList from '../Joburi/JobList'
 import Footer from '../Footer';
 import FlexDinamicInfo from '../FlexDinamicInfo';
 import { MakeCVInfoData } from '../Joburi/MakeCVInfoData';
@@ -28,7 +28,7 @@ function Jobs() {
         <div>
             <FlexDinamicInfo {...MakeCVInfoData} />
             <DropdownSelect setFilter={setFilter} />
-            <Testimonial data={jobs} filter={filter} />
+            <JobList data={jobs} filter={filter} />
             <Footer />
         </div>
     )
