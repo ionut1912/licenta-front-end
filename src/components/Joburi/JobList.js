@@ -16,13 +16,18 @@ export default function JobList({ data, filter }) {
         }).format(new Date(date));
     }
 
+    function jobsAfterFilteringAndSearching() {
+        return data.filter(element => filter.search === "" ? data : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
+            .filter(element => filter.location === "All" ? data : filter.location.toLowerCase().includes(element.locatie.toLowerCase()))
+            .filter(element => filter.category === "All" ? data : filter.category.toLowerCase().includes(element.jobCategory.toLowerCase()))
+            .filter(element => filter.type === "All" ? data : filter.type.toLowerCase().includes(element.jobType.toLowerCase()))
+    }
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center" >
 
-                {data.filter(element => {
-                    return (filter === undefined ? element : (filter === "All" ? data : filter.toLowerCase().startsWith(element.locatie.toLowerCase())))
-                }).map((item, index) => {
+                {jobsAfterFilteringAndSearching().map((item, index) => {
                     return (
                         <div key={index} style={{ padding: '20px' }}>
                             <div className="card col-shadow py-2 mb-3">

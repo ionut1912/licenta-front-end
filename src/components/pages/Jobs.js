@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import DropdownSelect from '../Joburi/DropdownSelect'
+import Filters from '../Joburi/Filters'
 import JobService from '../../services/job.service';
 import JobList from '../Joburi/JobList'
 import Footer from '../Footer';
@@ -11,7 +11,12 @@ function Jobs() {
 
     const [jobs, setJobs] = useState([]);
 
-    const [filter, setFilter] = useState("All");
+    const [filter, setFilter] = useState({
+        location: "All",
+        category: "All",
+        type: "All",
+        search: "",
+    });
 
     function loadData() {
 
@@ -27,7 +32,7 @@ function Jobs() {
     return (
         <div>
             <FlexDinamicInfo {...MakeCVInfoData} />
-            <DropdownSelect setFilter={setFilter} />
+            <Filters setFilter={setFilter} />
             <JobList data={jobs} filter={filter} />
             <Footer />
         </div>
