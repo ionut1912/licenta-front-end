@@ -93,11 +93,13 @@ export default function MakeCV(props) {
     return (
         <div style={{ height: '100%', padding: '30px' }}>
             <div className="container">
-                <ul className="progressbar" style={{ justifyContent: "center" }}>
-                    <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
-                    <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
-                    {props.addCv === false ? <li className={stateForm === 3 ? "active" : null} onClick={() => { setNextStateForm(3); sendAndNextStep(); }}>Finish</li> : null}
-                </ul>
+                {props.addCv === true ? null : (
+                    <ul className="progressbar" style={{ justifyContent: "center" }}>
+                        <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
+                        <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
+                        <li className={stateForm === 3 ? "active" : null} onClick={() => { setNextStateForm(3); sendAndNextStep(); }}>Finish</li>
+                    </ul>
+                )}
 
                 {/**********************************PersonalDetails********************************************************/}
 

@@ -127,7 +127,7 @@ export default function Filters(props) {
                               <input type="text" className="form-control" id="search" onChange={onChangeSearch} placeholder="Search job by title" />
                          </div>
                     </div>
-                    <button className="btn btn-primary" onClick={() => resetFilters()}> Reset filters</button>
+                    {/* <button className="btn btn-primary" onClick={() => resetFilters()}> Reset filters</button> */}
                </div>
           </div>
      )

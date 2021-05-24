@@ -193,7 +193,7 @@ export default function UsersList(props) {
     }
 
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} style={{ background: "#d7dcf893" }}>
+        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
             <Table className={classes.table}>
                 <TblHead />
                 <TableHead className={classes.filterHead}>

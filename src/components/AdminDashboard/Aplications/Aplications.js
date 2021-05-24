@@ -210,7 +210,7 @@ function Aplications(props) {
 
 
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} style={{ background: "#d7dcf893" }}>
+        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
             <Toolbar>
                 <Button
                     variant="outlined"
