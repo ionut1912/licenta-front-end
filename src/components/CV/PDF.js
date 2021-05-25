@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { PDFExport } from '@progress/kendo-react-pdf';
-import { Icon, makeStyles } from '@material-ui/core';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -9,25 +8,10 @@ import LanguageIcon from '@material-ui/icons/Language';
 import './PDF.css'
 
 
-const useStyle = makeStyles(theme => ({
-  leftSide: {
-    textAlign: 'end',
-    width: '180px'
-  },
-
-  rightSide: {
-    width: '300px',
-    marginLeft: 'auto',
-    '& .MuiIcon-root': {
-      fontSize: '10px'
-    }
-  }
-}))
-
 const PDF = (props) => {
 
-  const styles = useStyle();
   const pdfExportComponent = useRef(null);
+
   const handleExportWithComponent = (event) => {
     pdfExportComponent.current.save();
   }
@@ -41,219 +25,191 @@ const PDF = (props) => {
           <hr className="hr" />
 
           <div className="personal-info">
-            <div className={styles.leftSide}>
+            <div className="left-side">
               <h6>Personal informations</h6>
-              <img src={props.personalInfo.img_cv} alt="" />
+              {props.personalInfo.img_cv === '' ? null : <img src={props.personalInfo.img_cv} />}
             </div>
 
-            <div className={styles.rightSide}>
-              <h6 style={{ textTransform: 'none' }}>Matei Alexandru</h6>
-              <p><Icon><EmailIcon className="icon" /></Icon>mateialexandru199@gmail.com</p>
-              <p><PhoneIcon className="icon" />0753576489</p>
+            <div className="right-side">
+              <h6 style={{ textTransform: 'none' }}>{props.personalInfo.first_name + " " + props.personalInfo.last_name}</h6>
+              <p><EmailIcon className="icon" />{props.personalInfo.email}</p>
+              <p><PhoneIcon className="icon" />{props.personalInfo.phone}</p>
               <div className="info-row">
-                <p><LocationOnIcon className="icon" />Pitesti</p>
-                <span class="delimitator">|</span>
-                <p> Jud. Arges, Comuna Slobozia, Str. Ion Creanga, nr. 27</p>
+                {props.personalInfo.city === '' && props.personalInfo.address === '' ? null : < LocationOnIcon className="icon" />}
+                {props.personalInfo.city === '' ? null : <p>{props.personalInfo.city}</p>}
+                {props.personalInfo.city === '' || props.personalInfo.address === '' ? null : <span className="delimitator">|</span>}
+                {props.personalInfo.address === '' ? null : <p>{props.personalInfo.address}</p>}
               </div>
-              <p><LinkedInIcon className="icon" /> mateialexandru@7</p>
-              <p><LanguageIcon className="icon" /> www.matei.ro</p>
+              {props.personalInfo.linkedin === '' ? null : <p><LinkedInIcon className="icon" />{props.personalInfo.linkedin}</p>}
+              {props.personalInfo.personalSite === '' ? null : <p><LanguageIcon className="icon" />{props.personalInfo.personalSite}</p>}
               <div className="info-row">
-                <p><span className="label">Nationalitate: </span>Roman</p>
-                <span class="delimitator">|</span>
-                <p><span className="label">Data nasterii: </span>02/08/1998</p>
-                <span class="delimitator">|</span>
-                <p><span className="label">Drive licence: </span>B</p>
+                {props.personalInfo.nationality === '' ? null : <p><span className="label">Nationalitate: </span>{props.personalInfo.nationality}</p>}
+                {props.personalInfo.nationality === '' ? null : <span className="delimitator">|</span>}
+                {props.personalInfo.dateOfBirth === '' ? null : <p><span className="label">Data nasterii: </span>{props.personalInfo.dateOfBirth}</p>}
+                {props.personalInfo.drivingLicence === '' || props.personalInfo.dateOfBirth === '' ? null : <span className="delimitator">|</span>}
+                {props.personalInfo.drivingLicence === '' ? null : <p><span className="label">Drive licence: </span>{props.personalInfo.drivingLicence}</p>}
               </div>
             </div>
           </div>
 
-          <div className="personal-description">
-            <div className={styles.leftSide}>
-              <h6>Personal description</h6>
+          {props.personalDescription.descriere === '' ? null :
+            <div className="personal-description">
+              <div className="left-side">
+                <h6>Personal description</h6>
+              </div>
+              <p className="right-side">{props.personalDescription.descriere}</p>
             </div>
-            <p className={styles.rightSide}>
-              Greu de vorrrrrbit cand e vorba de mine...Daca ar fi sa incep cu ceva as incepe cu faptul ca-mi placesa mi se zica pe al doilea nume,Simona.Iubesc vara si o voi zice in toate descrierile personale.Iubesc caldura,zilele lungi si absolut tot ce tine de ea. Sunt optimista pana in ultimainstanta,sociala mai tot timpul si ca multi de varsta mea dependenta de fenomenul "hi5" simessenger. Arrrrrr fi atatea de zis...Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-          </div>
+          }
 
-          <div className="title-category">
-            <h6 className={styles.leftSide}>Work experience</h6>
-            <span className={styles.rightSide}></span>
-          </div>
+          {props.works.length === 0 ? null :
+            <div className="works">
+              <div className="title-category">
+                <h6 className="left-side">Work experience</h6>
+                <span className="right-side"></span>
+              </div>
 
-          <div className="work-experience">
-            <div className={styles.leftSide}>
-              <p className="date-info">Mar 2012 - Ian 2017</p>
+              {props.works.map((item, index) => {
+                return (
+                  <div className="work-experience" key={index}>
+                    <div className="left-side">
+                      <p className="date-info">{item.start} - {item.end}</p>
+                    </div>
+                    <div className="right-side">
+                      <p className="title-work">{item.job_title}</p>
+                      <p>{item.company}</p>
+                      <p>{item.city}</p>
+                      <p>{item.descriere}</p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className={styles.rightSide}>
-              <p className="title-work">React developer</p>
-              <p>Endava</p>
-              <p>Pitesti</p>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          }
 
-          <div className="work-experience">
-            <div className={styles.leftSide}>
-              <p className="date-info">Mar 2012 - Ian 2017</p>
-            </div>
-            <div className={styles.rightSide}>
-              <p className="title-work">React developer</p>
-              <p>Endava</p>
-              <p>Pitesti</p>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          {props.educations.length === 0 ? null :
+            <div className="educations">
+              <div className="title-category">
+                <h6 className="left-side">Education and qualifications</h6>
+                <span className="right-side"></span>
+              </div>
 
-          <div className="work-experience">
-            <div className={styles.leftSide}>
-              <p className="date-info">Mar 2012 - Ian 2017</p>
+              {props.educations.map((item, index) => {
+                return (
+                  <div className="education-experience" key={index}>
+                    <div className="left-side">
+                      <p className="date-info">{item.start} - {item.end}</p>
+                    </div>
+                    <div className="right-side">
+                      <p className="title-degree">{item.degree}</p>
+                      <p>{item.school}</p>
+                      <p>{item.city}</p>
+                      <p>{item.descriere}</p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className={styles.rightSide}>
-              <p className="title-work">React developer</p>
-              <p>Endava</p>
-              <p>Pitesti</p>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          }
 
-          <div className="title-category">
-            <h6 className={styles.leftSide}>Education and qualifications</h6>
-            <span className={styles.rightSide}></span>
-          </div>
+          {props.languages.length === 0 ? null :
+            <div className="languages-sec">
+              <div className="title-category">
+                <h6 className="left-side">Languages</h6>
+                <span className="right-side"></span>
+              </div>
 
+              <div className="right-side">
+                <ul className="language-classifer">
+                  <li>Speech</li>
+                  <li>Read</li>
+                  <li>Write</li>
+                </ul>
+              </div>
 
-          <div className="education-experience">
-            <div className={styles.leftSide}>
-              <p className="date-info">Mar 2012 - Ian 2017</p>
+              {props.languages.map((item, index) => {
+                return (
+                  <div className="languages" key={index}>
+                    <div className="left-side">
+                      <p className="name-language">{item.language_name}</p>
+                    </div>
+                    <div className="right-side">
+                      <ul className="language-classifer">
+                        <li>{item.speak}</li>
+                        <li>{item.read}</li>
+                        <li>{item.write}</li>
+                      </ul>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className={styles.rightSide}>
-              <p className="title-degree">Diploma de licenta</p>
-              <p>Upit</p>
-              <p>Pitesti</p>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          }
 
-          <div className="education-experience">
-            <div className={styles.leftSide}>
-              <p className="date-info">Mar 2012 - Ian 2017</p>
-            </div>
-            <div className={styles.rightSide}>
-              <p className="title-degree">Diploma de licenta</p>
-              <p>Upit</p>
-              <p>Pitesti</p>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          {props.skills.length === 0 ? null :
+            <div className="skills-sec">
+              <div className="title-category skill-title">
+                <h6 className="left-side">Digital skills</h6>
+                <span className="right-side"></span>
+              </div>
 
-          <div className="title-category">
-            <h6 className={styles.leftSide}>Languages</h6>
-            <span className={styles.rightSide}></span>
-          </div>
+              <div className="skills">
+                <div className="right-side">
+                  <ul className="skills-list">
+                    {props.skills.map((item, index) => {
+                      return (
+                        <li key={index}>{item.skill}</li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          }
 
+          {props.hobbys.length === 0 ? null :
+            <div className="hobbys-sec">
+              <div className="title-category">
+                <h6 className="left-side">Hobby</h6>
+                <span className="right-side"></span>
+              </div>
 
-          <div className={styles.rightSide}>
-            <ul className="language-classifer">
-              <li>Speech</li>
-              <li>Read</li>
-              <li>Write</li>
-            </ul>
-          </div>
+              <div className="hobbys">
+                <div className="right-side">
+                  <ul className="hobbys-list">
+                    {props.hobbys.map((item, index) => {
+                      return (
+                        <li key={index}>{item.hobby_name}</li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          }
+          {props.projects.length === 0 ? null :
+            <div className="projects-sec">
+              <div className="title-category">
+                <h6 className="left-side">Projects</h6>
+                <span className="right-side"></span>
+              </div>
 
-          <div className="languages">
-            <div className={styles.leftSide}>
-              <p className="date-info">English</p>
+              {props.projects.map((item, index) => {
+                return (
+                  <div className="projects" key={index}>
+                    <div className="left-side">
+                      <p className="name-project">{item.project_name}</p>
+                    </div>
+                    <div className="right-side">
+                      <p>{item.descrire}</p>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <div className={styles.rightSide}>
-              <ul className="language-classifer">
-                <li>B1</li>
-                <li>C2</li>
-                <li>B2</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="languages">
-            <div className={styles.leftSide}>
-              <p className="date-info">Franch</p>
-            </div>
-            <div className={styles.rightSide}>
-              <ul className="language-classifer">
-                <li>A2</li>
-                <li>A1</li>
-                <li>B1</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="title-category skill-title">
-            <h6 className={styles.leftSide}>Digital skills</h6>
-            <span className={styles.rightSide}></span>
-          </div>
-
-          <div className="skills">
-            <div className={styles.rightSide}>
-              <ul className="skills-list">
-                <li>Java</li>
-                <li>Word</li>
-                <li>React</li>
-                <li>React</li>
-                <li>React</li>
-                <li>React</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="title-category">
-            <h6 className={styles.leftSide}>Hobby</h6>
-            <span className={styles.rightSide}></span>
-          </div>
-
-          <div className="hobbys">
-            <div className={styles.rightSide}>
-              <ul className="hobbys-list">
-                <li>Serials</li>
-                <li>Go out with friends</li>
-                <li>Footbal</li>
-                <li>Dance</li>
-                <li>Watch youtube</li>
-                <li>FIFA</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="title-category">
-            <h6 className={styles.leftSide}>Projects</h6>
-            <span className={styles.rightSide}></span>
-          </div>
-
-          <div className="projects">
-            <div className={styles.leftSide}>
-              <p className="date-info">Wizz air application</p>
-            </div>
-            <div className={styles.rightSide}>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
-          <div className="projects">
-            <div className={styles.leftSide}>
-              <p className="date-info">Wizz air application</p>
-            </div>
-            <div className={styles.rightSide}>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
-          <div className="projects">
-            <div className={styles.leftSide}>
-              <p className="date-info">Wizz air application</p>
-            </div>
-            <div className={styles.rightSide}>
-              <p>Eu sunt 2 persoane intr-una fiind zodia Gemeni, suntschimbatoare si de multe ori mi se spune ca sunt de neinteles. Nu-mi place niciodata solutia demijloc,tind mereu spre o extrema sau alta ,datorita dualitatii personalitatii mele.</p>
-            </div>
-          </div>
+          }
         </div>
       </PDFExport>
-      <button className="btn btn-primary" style={{ marginLeft: "40%", marginTop: "50px" }} onClick={handleExportWithComponent}>Export</button>
+      <button className="btn btn-primary" style={{ margin: '50px 0 20px 36%' }} onClick={handleExportWithComponent}>Export</button>
     </div>
   )
 }

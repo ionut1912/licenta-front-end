@@ -54,6 +54,8 @@ export default function PersonalInfoSection(props) {
     function handleSubmit(values) {
         if (baseImage !== "") {
             values.img_cv = baseImage;
+        } else {
+            values.img_cv = "";
         }
         if (buttonFormPressed === true) {
             props.changeState(2);

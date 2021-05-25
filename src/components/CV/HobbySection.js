@@ -48,6 +48,7 @@ export default function HobbySection(props) {
 
     const clickSectionTitle = () => {
         setHobbyExperience(!hobbyExperience);
+        setHobbyFields(false);
         formRef.current?.resetForm()
 
     }

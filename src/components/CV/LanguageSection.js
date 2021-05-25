@@ -58,7 +58,8 @@ export default function LanguageSection(props) {
     }
 
     const clickSectionTitle = () => {
-        setLanguageExperience(!languageExperience)
+        setLanguageExperience(!languageExperience);
+        setLanguageFields(false);
         formRef.current?.resetForm()
 
     }

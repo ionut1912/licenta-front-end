@@ -62,6 +62,7 @@ export default function SkillSection(props) {
 
     const clickSectionTitle = () => {
         setSkillExperience(!skillExperience);
+        setSkillFields(false);
         formRef.current?.resetForm()
 
     }

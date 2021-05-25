@@ -63,7 +63,8 @@ export default function EducationSection(props) {
     }
 
     const clickSectionTitle = () => {
-        setEducationExperience(!educationExperience)
+        setEducationExperience(!educationExperience);
+        setEducationFields(false);
         formRef.current?.resetForm()
     }
 

@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import Notification from '../Notification'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
 export default function PersonalDescription(props) {
 
     const [personalDescription, setPersonalDescription] = useState(false);
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+
 
     const formSchema = Yup.object().shape({
         descriere: Yup.string()
@@ -17,6 +21,11 @@ export default function PersonalDescription(props) {
 
     function handleSubmit(values) {
         props.setDescription(values);
+        setNotify({
+            isOpen: true,
+            message: 'Description added!',
+            type: 'success'
+        });
     }
 
     return (
@@ -66,7 +75,10 @@ export default function PersonalDescription(props) {
                         </form>
                     )}
                 </Formik>
-
+                <Notification
+                    notify={notify}
+                    setNotify={setNotify}
+                />
                 <hr className="hr" />
             </div>
         </div>

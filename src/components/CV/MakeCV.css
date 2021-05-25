@@ -1,7 +1,7 @@
 .progressbar {
     text-align: center;
     counter-reset: step;
-    margin: 40px;
+    margin: 10px;
     display: flex;
 }
 
@@ -11,7 +11,6 @@
     padding: 20px;
     width: 33.33%;
     position: relative;
-    cursor: pointer;
     color: #1c2237c0;
 }
 
@@ -20,6 +19,7 @@
     counter-increment: step;
     width: 45px;
     display: block;
+    cursor: pointer;
     border: 4px solid #00aeff81;
     margin: 0 auto 10px auto;
     border-radius: 100%;

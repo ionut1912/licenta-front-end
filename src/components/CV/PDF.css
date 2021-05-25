@@ -1,7 +1,30 @@
 .cv-body {
-    max-width: 580px;
-    margin: 0 25px 0 25px;
+    max-width: 595px;
+    margin: 0 35px 0 35px;
+    z-index: 1;
 }
+
+.left-side{
+    width:155px;
+    text-align: end;
+}
+
+.right-side{
+    width:310px;
+    margin-left: auto
+}
+
+
+.left-side-download{
+    width:155px;
+    text-align: end;
+}
+
+.right-side-download{
+    width:310px;
+    margin-left: auto
+}
+
 
 .cv-body p {
     font-size: 10px;
@@ -15,14 +38,19 @@
     color: #0275d8;
 }
 
+.btn-export{
+ margin: 50px 0 20px 36%
+}
+
 .heading-cv {
     color: #0275d8;
     margin-bottom: 10px;
 }
 
-.personal-info, .personal-description, .work-experience, .education-experience,.projects {
+.personal-info, .personal-description, .work-experience, .education-experience, .projects {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding-right: 10px;
 }
 
 .title-category {
@@ -30,12 +58,20 @@
     margin-bottom: 5px;
 }
 
+.title-category span {
+    content: "";
+    border-top: 1px solid #0275d8;
+    margin-top: 10px;
+    width: 320px;
+    height: 1px;
+    position: relative;
+}
+
 /* personal info style*/
 
 .personal-info img {
     height: 100px;
     width: 100px;
-    margin-bottom: 10px;
 }
 
 .personal-info .icon {
@@ -46,6 +82,7 @@
 
 .personal-info .info-row {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .personal-info .label {
@@ -58,10 +95,10 @@
     font-size: 10px;
 }
 
-/* work& education style*/
+/* work & education style*/
 
-.work-experience .title-work, .education-experience .title-work {
-    font-size: 11px;
+.work-experience .title-work, .education-experience .title-degree {
+    font-size: 12px;
     margin-bottom: 0.1rem;
     color: #074a85;
 }
@@ -70,16 +107,9 @@
     margin-bottom: 0.1rem;
 }
 
-.date-info {
+.work-experience .date-info, .education-experience .date-info {
     color: #074a85;
-}
-
-.title-category span {
-    content: "";
-    border-top: 1px solid #0275d8;
-    margin-top: 10px;
-    height: 1px;
-    position: relative;
+    font-size: 12px;
 }
 
 /* languages style*/
@@ -90,6 +120,9 @@
 
 .language-classifer {
     display: flex;
+    position: relative;
+    right: 10px;
+    width: 320px;
     font-size: 10px;
     border-top: 1px solid rgb(177, 171, 171);
     border-bottom: 1px solid rgb(177, 171, 171);
@@ -116,6 +149,10 @@
     border: none;
 }
 
+.name-language, .name-project {
+    color: #074a85;
+}
+
 /* skills and hobby style*/
 
 .skill-title {
@@ -124,21 +161,137 @@
 
 .skills-list, .hobbys-list {
     text-align: center;
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    right: 10px;
+    margin-bottom: 0px;
 }
 
-.skills-list li {
+.skills-list li, .hobbys-list li {
     list-style: none;
+    flex: auto;
+    max-width: auto;
     font-size: 10px;
     color: #fff;
+    margin: 5px;
+    padding: 3px 10px 3px 10px;
     background-color: #0275d8;
 }
 
-.hobbys-list li {
-    list-style: none;
-    font-size: 10px;
-    color: #fff;
-    background-color: #0275d8;
+@media screen and (max-width:740px) {
+    .title-category span {
+        width: 270px;
+    }
+
+    .language-classifer {
+        width: 270px;
+    }
+
+    .left-side{
+        width: 135px;
+    }
+    
+    .right-side{
+        width: 260px;
+    }
+
+}
+
+
+@media screen and (max-width:642px) {
+    .title-category span {
+        width: 210px;
+    }
+
+    .language-classifer {
+        width: 210px;
+    }
+
+    .language-classifer li {
+        margin: auto;
+        padding: 1px 20px 1px 20px;
+        justify-content: center;
+    }
+
+    .btn-export{
+        margin: 50px 0 20px 30%;
+    }
+
+    .left-side{
+        width: 100px;
+    }
+    
+    .right-side{
+        width: 200px;
+    }
+    
+}
+
+@media screen and (max-width:531px) {
+    .cv-body p {
+        font-size: 9px;
+    }
+    
+    .title-category span {
+        width: 160px;
+    }
+
+    .personal-info img {
+        height: 120px;
+        width: 80px;
+    }
+
+    .personal-info .icon {
+        font-size: 9px;
+        margin-right: 2px;
+    }
+    .language-classifer {
+        width: 160px;
+    }
+
+    .language-classifer li {
+        padding: 1px 10px 1px 10px;
+    }
+
+    .btn-export{
+        margin: 50px 0 20px 25%;
+    }
+
+    .left-side{
+        width: 60px;
+    }
+    
+    .right-side{
+        width: 150px;
+    }
+    
+}
+
+@media screen and (max-width:452px) {
+    .title-category span {
+        width: 110px;
+    }
+    .language-classifer {
+        width: 110px;
+    }
+
+    .language-classifer li {
+        padding: 1px 5px 1px 5px;
+ 
+    }
+
+    .btn-export{
+        margin: 50px 0 20px 17%;
+        width: 20px;
+    }
+
+    .left-side{
+        width: 40px;
+    }
+    
+    .right-side{
+        width: 100px;
+    }
+    
 }

@@ -63,6 +63,7 @@ export default function WorkSection(props) {
 
     const clickSectionTitle = () => {
         setWorkExperience(!workExperience)
+        setWorkFields(false);
         formRef.current?.resetForm()
 
     }

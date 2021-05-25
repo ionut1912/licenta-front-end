@@ -7,6 +7,7 @@ import SkillSection from './SkillSection'
 import LanguageSection from './LanguageSection'
 import HobbySection from './HobbySection'
 import ProjectSection from './ProjectSection'
+import ViewPopup from '../ViewPopup'
 import PDF from './PDF'
 import './MakeCV.css'
 
@@ -18,6 +19,8 @@ export default function MakeCV(props) {
     const [nextStateForm, setNextStateForm] = useState(1);
 
     const [stateForm, setStateForm] = useState(1);
+
+    const [openPopupView, setOpenPopupView] = useState(false);
 
     const [personalInfo, setPersonalInfo] = useState({
         img_cv: '',
@@ -91,13 +94,12 @@ export default function MakeCV(props) {
 
 
     return (
-        <div style={{ height: '100%', padding: '30px' }}>
-            <div className="container">
+        <div style={{ padding: '30px' }}>
+            <div className="container" style={stateForm === 3 ? { maxWidth: '720px' } : null}>
                 {props.addCv === true ? null : (
                     <ul className="progressbar" style={{ justifyContent: "center" }}>
                         <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
-                        <li className={(stateForm === 2 || stateForm === 3) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
-                        <li className={stateForm === 3 ? "active" : null} onClick={() => { setNextStateForm(3); sendAndNextStep(); }}>Finish</li>
+                        <li className={(stateForm === 2) ? "active" : null} onClick={() => { setNextStateForm(2); sendAndNextStep(); }}>Experiences</li>
                     </ul>
                 )}
 
@@ -136,27 +138,17 @@ export default function MakeCV(props) {
                         {props.addCv === true ? (
                             <button type="submit" className="btn btn-primary" onClick={() => addCVToDB()}>Add CV</button>
                         ) : (
-                            <button type="submit" className="btn btn-primary" onClick={() => setStateForm(3)}>Next <i className="fa fa-arrow-right" aria-hidden="true"></i></button>
+                            <button type="submit" className="btn btn-primary" onClick={() => setOpenPopupView(true)}>Finish </button>
                         )}
                     </div>
                 </div>
 
-                {/**********************************Finish form********************************************************/}
-
-                <div className="finish" style={{
-                    display: stateForm !== 3 && 'none'
-                }}>
+                <ViewPopup
+                    cvMode={true}
+                    openPopup={openPopupView}
+                    setOpenPopup={setOpenPopupView}>
                     <PDF personalInfo={personalInfo} personalDescription={personalDescription} works={works} educations={educations} skills={skills} languages={languages} hobbys={hobbys} projects={projects} />
-
-                    {/* 
-                    <div className="two-btn">
-                        <button className="btn btn-primary btn-prev" onClick={() => setStateForm(2)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
-
-                        <button type="submit" className="btn btn-primary">Export pdf</button>
-                    </div> */}
-
-                </div>
-
+                </ViewPopup>
 
             </div>
         </div>

@@ -50,7 +50,8 @@ export default function ProjectSection(props) {
     }
 
     const clickSectionTitle = () => {
-        setProjectExperience(!projectExperience)
+        setProjectExperience(!projectExperience);
+        setProjectFields(false);
         formRef.current?.resetForm()
 
     }
