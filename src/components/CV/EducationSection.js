@@ -73,10 +73,11 @@ export default function EducationSection(props) {
             .required("This field is required!"),
         school: Yup.string()
             .required("This field is required!"),
-        start: Yup.string()
+        start: Yup.date()
             .required("This field is required!"),
-        end: Yup.string()
+        end: Yup.date()
             .required("This field is required!")
+            .min(Yup.ref('start'), "End date can't be before start date!")
     })
 
     function handleSubmit(values) {
