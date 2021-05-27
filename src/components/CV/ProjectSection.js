@@ -1,4 +1,5 @@
-import React, { useState,useRef } from 'react'
+import React, { useState, useRef } from 'react'
+import Notification from '../Notification'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
@@ -6,6 +7,8 @@ import * as Yup from "yup";
 export default function ProjectSection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [projectExperience, setProjectExperience] = useState(false);
     const [projectFields, setProjectFields] = useState(false);
@@ -72,6 +75,7 @@ export default function ProjectSection(props) {
             descrire: ""
         })
 
+
     }
 
     return (
@@ -117,8 +121,18 @@ export default function ProjectSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
+                            const duplicateProject = props.projects.filter((item) => item.project_name === values.project_name)
+
+                            if (duplicateProject.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This project already added!",
+                                    type: 'error'
+                                });
                         }}
 
                         innerRef={formRef}
@@ -170,6 +184,11 @@ export default function ProjectSection(props) {
                 </div>
                 <hr className="hr" />
             </div>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

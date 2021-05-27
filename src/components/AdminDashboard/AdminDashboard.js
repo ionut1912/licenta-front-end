@@ -18,7 +18,7 @@ function AdminDashboard(props) {
 
     return (
         <div>
-            <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} gradUser={currentUserGrad} />
+            <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} gradUser={currentUserGrad} setItemForEdit={setItemForEdit} />
             {state === 1 ? <Statistics sideState={props.showSidebar} /> : null}
             {state === 2 ? <UsersList sideState={props.showSidebar} /> : null}
             {state === 3 ? <JobsList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} /> : null}

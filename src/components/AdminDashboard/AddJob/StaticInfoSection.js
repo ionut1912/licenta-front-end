@@ -1,8 +1,9 @@
 import React from 'react'
+import { locations, types, categories } from '../../Joburi/JobEnums';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
-function StaticInfoSection(props) {
+export default function StaticInfoSection(props) {
 
     const validateSchema = Yup.object().shape({
         nume_job: Yup.string()
@@ -10,6 +11,8 @@ function StaticInfoSection(props) {
         jobType: Yup.string()
             .required("This field is required!"),
         locatie: Yup.string()
+            .required("This field is required!"),
+        jobCategory: Yup.string()
             .required("This field is required!"),
         descriere: Yup.string()
             .required("This field is required!"),
@@ -23,7 +26,9 @@ function StaticInfoSection(props) {
             return {
                 ...prevInfo,
                 numeJob: values.nume_job,
+                jobType: values.jobType,
                 locatie: values.locatie,
+                jobCategory: values.jobCategory,
                 descriere: values.descriere,
                 dataMaxima: values.dataMaxima
             }
@@ -51,7 +56,7 @@ function StaticInfoSection(props) {
                                 <input type="text"
                                     name="nume_job"
                                     value={props.values.nume_job}
-                                    className="form-control"
+                                    className={props.errors.nume_job && props.touched.nume_job ? "form-control is-invalid" : "form-control"}
                                     id="inputNJ"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -61,39 +66,70 @@ function StaticInfoSection(props) {
 
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputNJ">Job type*</label>
-                                <input type="text"
+                                <select
                                     name="jobType"
                                     value={props.values.jobType}
-                                    className="form-control"
+                                    className={props.errors.jobType && props.touched.jobType ? "form-control is-invalid" : "form-control"}
                                     id="inputNJ"
                                     onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                />
+                                    onBlur={props.handleBlur}>
+                                    {types.map((item, index) => {
+                                        return (
+                                            index === 0 ? <option key={index} value="">Choose</option> :
+                                                <option key={index} value={item.value}>{item.label}</option>
+                                        )
+                                    })}
+                                </select>
+
                                 {props.errors.jobType && props.touched.jobType && <p className="text-danger">{props.errors.jobType}</p>}
                             </div>
 
                         </div>
                         <div className="form-row">
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-4">
                                 <label htmlFor="inputLocatie">Locatie*</label>
-                                <input type="text"
+                                <select
                                     name="locatie"
                                     value={props.values.locatie}
-                                    className="form-control"
+                                    className={props.errors.locatie && props.touched.locatie ? "form-control is-invalid" : "form-control"}
                                     id="inputLocatie"
                                     onChange={props.handleChange}
-                                    onBlur={props.handleBlur}
-                                />
+                                    onBlur={props.handleBlur}>
+                                    {locations.map((item, index) => {
+                                        return (
+                                            index === 0 ? <option key={index} value="">Choose</option> :
+                                                <option key={index} value={item.value}>{item.label}</option>
+                                        )
+                                    })}
+                                </select>
                                 {props.errors.locatie && props.touched.locatie && <p className="text-danger">{props.errors.locatie}</p>}
                             </div>
+                            <div className="form-group col-md-4">
+                                <label htmlFor="inputCategory">Job category*</label>
+                                <select
+                                    name="jobCategory"
+                                    value={props.values.jobCategory}
+                                    className={props.errors.jobCategory && props.touched.jobCategory ? "form-control is-invalid" : "form-control"}
+                                    id="inputCategory"
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}>
+                                    {categories.map((item, index) => {
+                                        return (
+                                            index === 0 ? <option key={index} value="">Choose</option> :
+                                                <option key={index} value={item.value}>{item.label}</option>
+                                        )
+                                    })}
+                                </select>
+                                {props.errors.jobCategory && props.touched.jobCategory && <p className="text-danger">{props.errors.jobCategory}</p>}
+                            </div>
 
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-4">
                                 <label htmlFor="inputDate">Last date*</label>
                                 <input type="date"
                                     name="dataMaxima"
                                     value={props.values.dataMaxima}
                                     data-date-format="dd-mm-yyyy"
-                                    className="form-control"
+                                    className={props.errors.dataMaxima && props.touched.dataMaxima ? "form-control is-invalid" : "form-control"}
                                     id="inputDate"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
@@ -107,16 +143,17 @@ function StaticInfoSection(props) {
 
                         <div className="form-row">
                             <div className="form-group col-md-12">
-                                <label htmlFor="inputDescriere">Descriere</label>
+                                <label htmlFor="inputDescriere">Descriere*</label>
                                 <textarea
                                     name="descriere"
                                     value={props.values.descriere}
-                                    className="form-control"
+                                    className={props.errors.descriere && props.touched.descriere ? "form-control is-invalid" : "form-control"}
                                     id="inputDescriere"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
+                                {props.errors.descriere && props.touched.descriere && <p className="text-danger">{props.errors.descriere}</p>}
                             </div>
-                            {props.errors.descriere && props.touched.descriere && <p className="text-danger">{props.errors.descriere}</p>}
+
                         </div>
 
                         <div className="btn-next">
@@ -130,4 +167,4 @@ function StaticInfoSection(props) {
     )
 }
 
-export default StaticInfoSection
+

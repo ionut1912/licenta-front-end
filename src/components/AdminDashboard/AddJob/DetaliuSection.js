@@ -1,16 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import Notification from '../../Notification'
 import { Formik } from 'formik';
 import Row from '../../CV/Row'
 import * as Yup from "yup";
 
-function DetaliuSection(props) {
+export default function DetaliuSection(props) {
+
+    const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+
     const [detaliuExperience, setDetaliuExperience] = useState(false);
     const [detaliuFields, setDetaliuFields] = useState(false);
     const [detaliu, setDetaliu] = useState({
         id: '',
         detaliu: ""
     });
-   //popup pt delete aici
+    //popup pt delete aici
     function deleteDetaliu(id) {
         props.setDetalii(prevDetalii => {
             props.setJobInfo(prevInfo => {
@@ -42,7 +48,7 @@ function DetaliuSection(props) {
 
         setDetaliuFields(true);
     }
-   //popup pt delete aici
+    //popup pt delete aici
     function removeDetaliu() {
 
         setDetaliuFields(false);
@@ -52,6 +58,13 @@ function DetaliuSection(props) {
             detaliu: ""
         })
 
+
+    }
+
+    const clickSectionTitle = () => {
+        setDetaliuExperience(!detaliuExperience)
+        setDetaliuFields(false);
+        formRef.current?.resetForm()
 
     }
 
@@ -75,7 +88,7 @@ function DetaliuSection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setDetaliuExperience(!detaliuExperience)}><i className="fas fa-mouse icon text-dark"></i> Details</h3>
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Details</h3>
                 {props.detalii.length === 0 ? null : <span className="indicator">{props.detalii.length}</span>}
             </div>
 
@@ -115,10 +128,21 @@ function DetaliuSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
+                            const duplicateDetail = props.detalii.filter((item) => item.detaliu === values.detaliu)
+
+                            if (duplicateDetail.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This detail already added!",
+                                    type: 'error'
+                                });
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -132,7 +156,7 @@ function DetaliuSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.detaliu}
-                                            className="form-control"
+                                            className={props.errors.detaliu && props.touched.detaliu ? "form-control is-invalid" : "form-control"}
                                             id="inputDetaliu"
                                         />
                                         {props.errors.detaliu && props.touched.detaliu && <p className="text-danger">{props.errors.detaliu}</p>}
@@ -150,12 +174,16 @@ function DetaliuSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setDetaliuFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another detaliu to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setDetaliuFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another detaliu</span>
                 </div>
                 <hr className="hr" />
             </div>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }
 
-export default DetaliuSection

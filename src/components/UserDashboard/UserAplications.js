@@ -99,7 +99,7 @@ export default function UserAplications(props) {
                 </div>
             </div>
 
-            { recordsAfterFilterAndSearching().sort((a, b) => b.id - a.id).map((aplicare, index) => {
+            {recordsAfterFilterAndSearching().sort((a, b) => b.id - a.id).map((aplicare, index) => {
                 return (
                     <div className="card mb-3" key={index}>
                         <div className="card-body">

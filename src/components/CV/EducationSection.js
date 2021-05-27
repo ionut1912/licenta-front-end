@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
+import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
 
 export default function EducationSection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [educationExperience, setEducationExperience] = useState(false);
     const [educationFields, setEducationFields] = useState(false);
@@ -145,9 +148,20 @@ export default function EducationSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
-                        }}
+                            const duplicateEducation = props.educations.filter((item) => item.degree === values.degree)
+
+                            if (duplicateEducation.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This education experience already added!",
+                                    type: 'error'
+                                });
+                        }
+                        }
 
                         innerRef={formRef}
                         validationSchema={formSchema}>
@@ -255,6 +269,11 @@ export default function EducationSection(props) {
                 </div>
                 <hr className="hr" />
             </div>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

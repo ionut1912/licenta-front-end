@@ -157,6 +157,10 @@ function JobsList(props) {
 
     useEffect(() => {
         getData();
+        
+        return function cleanup() {
+            setRecords([]);
+        }
     }, [])
 
 

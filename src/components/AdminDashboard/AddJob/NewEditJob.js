@@ -6,9 +6,10 @@ import StaticInfoSection from './StaticInfoSection';
 import JobView from '../../Joburi/JobView'
 import ViewPopup from '../../ViewPopup'
 import Notification from '../../Notification'
+import '../../CV/MakeCV.css'
 
 
-function NewEditJob(props) {
+export default function NewEditJob(props) {
 
     const [stateForm, setStateForm] = useState(1);
     const [openPopupView, setOpenPopupView] = useState(false);
@@ -20,6 +21,7 @@ function NewEditJob(props) {
         nume_job: '',
         jobType: '',
         locatie: '',
+        jobCategory: '',
         descriere: '',
         dataMaxima: ''
     });
@@ -32,6 +34,7 @@ function NewEditJob(props) {
         numeJob: '',
         jobType: '',
         locatie: '',
+        jobCategory: '',
         descriere: '',
         dataMaxima: '',
         skills: [],
@@ -82,6 +85,7 @@ function NewEditJob(props) {
             nume_job: '',
             jobType: '',
             locatie: '',
+            jobCategory: '',
             descriere: '',
             dataMaxima: ''
         });
@@ -92,42 +96,56 @@ function NewEditJob(props) {
     }
 
     function handleSubmit() {
-        console.log(jobInfo);
         setRecordForView(jobInfo);
         setOpenPopupView(true);
     }
 
+
+    function format(date) {
+        return new Intl.DateTimeFormat("fr-CA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).format(new Date(date));
+    }
+
     function setData(values) {
-        if (values !== '') {
 
-            setEditJob(true);
+        setEditJob(true);
 
-            setStaticInfo({
-                nume_job: values.numeJob,
-                locatie: values.locatie,
-                descriere: values.descriere,
-                last_date: ''
-            });
+        setStaticInfo({
+            nume_job: values.numeJob,
+            jobType: values.jobType,
+            locatie: values.locatie,
+            jobCategory: values.jobCategory,
+            descriere: values.descriere,
+            dataMaxima: format(values.dataMaxima)
+        });
 
-            setSkills(values.skills);
-            setDetalii(values.moreDetails);
-            setAtributePersonale(values.atributePersonale);
 
-            setJobInfo({
-                id: values.id,
-                numeJob: values.numeJob,
-                locatie: values.locatie,
-                descriere: values.descriere,
-                skills: values.skills,
-                atributePersonale: values.atributePersonale,
-                moreDetails: values.moreDetails
-            })
-        }
+        setSkills(values.skills);
+        setDetalii(values.moreDetails);
+        setAtributePersonale(values.atributePersonale);
+
+        setJobInfo({
+            id: values.id,
+            numeJob: values.numeJob,
+            jobType: values.jobType,
+            locatie: values.locatie,
+            jobCategory: values.jobCategory,
+            descriere: values.descriere,
+            dataMaxima: values.dataMaxima,
+            dataAdaugare: format(values.dataAdaugare),
+            skills: values.skills,
+            atributePersonale: values.atributePersonale,
+            moreDetails: values.moreDetails
+        })
 
     }
 
     useEffect(() => {
-        setData(props.itemForEdit)
+        if (props.itemForEdit !== '')
+            setData(props.itemForEdit)
     }, [])
 
     return (
@@ -161,7 +179,7 @@ function NewEditJob(props) {
                 subTitle={recordForView.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} />
+                <JobView recordForView={recordForView} setRecordForView={setRecordForView} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} />
             </ViewPopup>
 
             <Notification
@@ -172,4 +190,3 @@ function NewEditJob(props) {
     )
 }
 
-export default NewEditJob

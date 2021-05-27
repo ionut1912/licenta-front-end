@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
+import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
 
 export default function HobbySection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [hobbyExperience, setHobbyExperience] = useState(false);
     const [hobbyFields, setHobbyFields] = useState(false);
@@ -114,10 +117,21 @@ export default function HobbySection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
-                        }}
-                        
+                            const duplicateHobby = props.hobbys.filter((item) => item.hobby_name === values.hobby_name)
+
+                            if (duplicateHobby.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "The hobby already added!",
+                                    type: 'error'
+                                });
+                        }
+                        }
+
                         innerRef={formRef}
                         validationSchema={formSchema}>
 
@@ -154,7 +168,12 @@ export default function HobbySection(props) {
                 </div>
                 <hr className="hr" />
             </div>
-        </div >
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+        </div>
     )
 }
 

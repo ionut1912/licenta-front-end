@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import Notification from '../Notification'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
@@ -6,6 +7,8 @@ import * as Yup from "yup";
 export default function SkillSection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [skillExperience, setSkillExperience] = useState(false);
     const [skillFields, setSkillFields] = useState(false);
@@ -73,7 +76,6 @@ export default function SkillSection(props) {
     })
 
     function handleSubmit(values) {
-
         props.addSkill(values);
 
         setSkillFields(false);
@@ -82,7 +84,6 @@ export default function SkillSection(props) {
             id: '',
             skill: ""
         })
-
     }
 
     return (
@@ -128,8 +129,18 @@ export default function SkillSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
+                            const duplicateSkill = props.skills.filter((item) => item.skill === values.skill)
+
+                            if (duplicateSkill.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This skill experience already added!",
+                                    type: 'error'
+                                });
                         }}
 
                         innerRef={formRef}
@@ -169,6 +180,11 @@ export default function SkillSection(props) {
                 </div>
                 <hr className="hr" />
             </div>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

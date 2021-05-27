@@ -30,49 +30,49 @@ export default function Sidebar(props) {
           </ul>
         ) : (
           <ul className='nav-menu-items' >
-            <li className="nav-text" onClick={() => props.setState(1)}>
+            <li className="nav-text" onClick={() => { props.setState(1); props.setItemForEdit(''); }}>
               <p className={props.state === 1 ? "selected" : null}>
                 <VscIcons.VscGraph />
                 <span>Statistics</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(2)}>
+            <li className="nav-text" onClick={() => { props.setState(2); props.setItemForEdit(''); }}>
               <p className={props.state === 2 ? "selected" : null}>
                 <FaIcons.FaUsersCog />
                 <span>Users</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(3)}>
+            <li className="nav-text" onClick={() => { props.setState(3); props.setItemForEdit(''); }}>
               <p className={props.state === 3 ? "selected" : null}>
                 <i className="fas fa-briefcase"></i>
                 <span>Jobs</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(4)}>
+            <li className="nav-text" onClick={() => { props.setState(4); }}>
               <p className={props.state === 4 ? "selected" : null}>
                 <i className="fas fa-briefcase"></i>
                 <span>Add job</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(5)}>
+            <li className="nav-text" onClick={() => { props.setState(5); props.setItemForEdit(''); }}>
               <p className={props.state === 5 ? "selected" : null}>
                 <IoIcons.IoIosPaper />
                 <span>Aplications</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(6)}>
+            <li className="nav-text" onClick={() => { props.setState(6); props.setItemForEdit(''); }}>
               <p className={props.state === 6 ? "selected" : null}>
                 <FaIcons.FaAddressCard />
                 <span>All CV</span>
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => props.setState(7)}>
+            <li className="nav-text" onClick={() => { props.setState(7); props.setItemForEdit(''); }}>
               <p className={props.state === 7 ? "selected" : null}>
                 <AiIcons.AiOutlineFileAdd />
                 <span>Add CV</span>

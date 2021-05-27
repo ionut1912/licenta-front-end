@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react'
-import { Formik } from 'formik';
+import Notification from '../Notification'
 import Row from './Row'
+import { Formik } from 'formik';
 import * as Yup from "yup";
 
 export default function WorkSection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [workExperience, setWorkExperience] = useState(false);
     const [workFields, setWorkFields] = useState(false);
@@ -81,7 +84,6 @@ export default function WorkSection(props) {
     })
 
     function handleSubmit(values) {
-
         props.addWork(values);
 
         setWorkFields(false);
@@ -148,9 +150,19 @@ export default function WorkSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
-                        }}
+                            const duplicateWork = props.works.filter((item) => item.job_title === values.job_title)
+
+                            if (duplicateWork.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            } else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This work experience already added!",
+                                    type: 'error'
+                                });
+                        }
+                        }
 
                         innerRef={formRef}
                         validationSchema={formSchema}>
@@ -256,7 +268,11 @@ export default function WorkSection(props) {
                 <hr className="hr" />
             </div>
 
-        </div>
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+        </div >
     )
 }
 

@@ -144,6 +144,10 @@
     border: none;
 }
 
+.languages .language-classifer:last-child {
+    margin-bottom: 5px;
+}
+
 .name-language, .name-project {
     color: #074a85;
 }
@@ -216,7 +220,7 @@
     .cv-body .title-category span {
         width: 160px;
     }
-    .cv-body .personal-info .img {
+    .cv-body .personal-info img {
         height: 120px;
         width: 80px;
     }
@@ -238,7 +242,7 @@
     }
 }
 
-@media screen and (max-width:452px) {
+@media screen and (max-width:42px) {
     .cv-body .title-category span {
         width: 110px;
     }

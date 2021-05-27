@@ -1,4 +1,5 @@
 import React from 'react';
+import { locations, types, categories } from './JobEnums';
 import './Filters.css'
 
 export default function Filters(props) {
@@ -48,37 +49,14 @@ export default function Filters(props) {
           });
      }
 
-     const resetFilters = () => {
-          props.setFilter({
-               location: "All",
-               category: "All",
-               type: "All",
-               search: "",
-          })
-     }
-
-     const locations = [
-          { value: 'All', label: 'All' },
-          { value: 'Bucuresti', label: 'Bucuresti,Romania' },
-          { value: 'Galati', label: 'Galati,Romania' },
-          { value: 'Chisinau', label: 'Chisinau,Republica Moldova' },
-          { value: 'Durres', label: 'Durres,Albania' },
-          { value: 'Limassol', label: 'Limassol,Cipru' }
-     ];
-
-     const categories = [
-          { value: 'All', label: 'All' },
-          { value: 'Development', label: 'Development' },
-          { value: 'Architect', label: 'Architect' },
-          { value: 'Front-end', label: 'Front-end' }
-
-     ];
-
-     const types = [
-          { value: 'All', label: 'All' },
-          { value: 'FULL_TIME', label: 'full-time' },
-          { value: 'PART_TIME', label: 'part-time' }
-     ];
+     // const resetFilters = () => {
+     //      props.setFilter({
+     //           location: "All",
+     //           category: "All",
+     //           type: "All",
+     //           search: "",
+     //      })
+     // }
 
 
      return (

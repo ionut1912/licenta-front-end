@@ -19,8 +19,8 @@ function Row(props) {
                 </div>
 
                 <div className="actions">
-                    <span className="edit text-primary" onClick={handleClickEdit}><i className="fas fa-pencil-alt"></i></span>
-                    <span className="text-primary" onClick={handleClickDelete}><i className="fas fa-trash-alt"></i></span>
+                    <span className="edit" onClick={handleClickEdit}><i className="fas fa-pencil-alt"></i></span>
+                    <span className="delete" onClick={handleClickDelete}><i className="fas fa-trash-alt"></i></span>
                 </div>
 
             </div>

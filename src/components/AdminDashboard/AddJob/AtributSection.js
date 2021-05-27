@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import Notification from '../../Notification'
 import { Formik } from 'formik';
 import Row from '../../CV/Row'
 import * as Yup from "yup";
 
+export default function AtributSection(props) {
 
-function AtributSection(props) {
+    const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [atributExperience, setAtributExperience] = useState(false);
     const [atributFields, setAtributFields] = useState(false);
@@ -49,12 +53,17 @@ function AtributSection(props) {
     function removeAtribut() {
 
         setAtributFields(false);
-//popup pt delete aici
+        //popup pt delete aici
         setAtribut({
             id: '',
             atribut: ""
         })
+    }
 
+    const clickSectionTitle = () => {
+        setAtributExperience(!atributExperience)
+        setAtributFields(false);
+        formRef.current?.resetForm()
 
     }
 
@@ -78,7 +87,7 @@ function AtributSection(props) {
     return (
         <div className="form-cls">
             <div className="position-relative">
-                <h3 className="text-secondary" onClick={() => setAtributExperience(!atributExperience)}><i className="fas fa-mouse icon text-dark"></i> Atributes</h3>
+                <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Atributes</h3>
                 {props.atributePersonale.length === 0 ? null : <span className="indicator">{props.atributePersonale.length}</span>}
             </div>
 
@@ -118,10 +127,21 @@ function AtributSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' })
+                            const duplicateAtribut = props.atributePersonale.filter((item) => item.atribut === values.atribut)
+
+                            if (duplicateAtribut.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' })
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This atribut experience already added!",
+                                    type: 'error'
+                                });
                         }}
 
+                        innerRef={formRef}
                         validationSchema={formSchema}>
 
                         {props => (
@@ -135,7 +155,7 @@ function AtributSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.atribut}
-                                            className="form-control"
+                                            className={props.errors.atribut && props.touched.atribut ? "form-control is-invalid" : "form-control"}
                                             id="inputAtribut"
                                         />
                                         {props.errors.atribut && props.touched.atribut && <p className="text-danger">{props.errors.atribut}</p>}
@@ -153,12 +173,16 @@ function AtributSection(props) {
 
 
                 <div className="toggler-additionalInfo">
-                    <a href="#/" className="btn-moreInfo" onClick={() => { setAtributFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another atribut to experience</a>
+                    <span className="btn-moreInfo" onClick={() => { setAtributFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another atribut</span>
                 </div>
                 <hr className="hr" />
             </div>
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }
 
-export default AtributSection
+

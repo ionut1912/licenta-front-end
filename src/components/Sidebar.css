@@ -23,6 +23,7 @@
   padding: 8px 0px 8px 16px;
   list-style: none;
   height: 65px;
+  cursor: pointer;
 }
 
 .sidebar .nav-text p {

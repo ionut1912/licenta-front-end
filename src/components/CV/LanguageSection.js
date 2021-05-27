@@ -1,11 +1,24 @@
 import React, { useState, useRef } from 'react'
 import { Formik } from 'formik';
+import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
 
 export default function LanguageSection(props) {
 
     const formRef = useRef();
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+
+    const languageQualifier = [
+        { value: '', label: 'Choose' },
+        { value: 'A1', label: 'A1 - Utilizator de baza' },
+        { value: 'A2', label: 'A2 - Utilizator de baza spre independent' },
+        { value: 'B1', label: 'B1 - Utilizator independent' },
+        { value: 'B2', label: 'B2 - Utilizator independent spre experimentat' },
+        { value: 'C1', label: 'C1 - Utilizator experimentat' },
+        { value: 'C2', label: 'C2 - Utilizator experimentat spre nativ' }
+    ];
 
     const [languageExperience, setLanguageExperience] = useState(false);
     const [languageFields, setLanguageFields] = useState(false);
@@ -138,9 +151,22 @@ export default function LanguageSection(props) {
 
 
                         onSubmit={(values, { resetForm }) => {
-                            handleSubmit(values);
-                            resetForm({ values: '' });
-                        }}
+
+                            const duplicateLanguage = props.languages.filter((item) => item.language_name === values.language_name)
+
+                            if (duplicateLanguage.length === 0) {
+                                handleSubmit(values);
+                                resetForm({ values: '' });
+                            }
+                            else
+                                setNotify({
+                                    isOpen: true,
+                                    message: "This language experience already added!",
+                                    type: 'error'
+                                });
+                        }
+
+                        }
 
                         innerRef={formRef}
                         validationSchema={formSchema}>
@@ -170,13 +196,11 @@ export default function LanguageSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.speak}
                                             className={props.errors.speak && props.touched.speak ? "form-control is-invalid" : "form-control"}>
-                                            <option value="">Choose</option>
-                                            <option value="A1">A1 - Utilizator de baza</option>
-                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
-                                            <option value="B1">B1 - Utilizator independent</option>
-                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
-                                            <option value="C1">C1 - Utilizator experimentat</option>
-                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
+                                            {languageQualifier.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.value}>{item.label}</option>
+                                                )
+                                            })}
                                         </select>
                                         <div className="invalid-feedback">
                                             {props.errors.speak && props.touched.speak && <p>{props.errors.speak}</p>}
@@ -193,13 +217,11 @@ export default function LanguageSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.read}
                                             className={props.errors.read && props.touched.read ? "form-control is-invalid" : "form-control"}>
-                                            <option value="">Choose</option>
-                                            <option value="A1">A1 - Utilizator de baza</option>
-                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
-                                            <option value="B1">B1 - Utilizator independent</option>
-                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
-                                            <option value="C1">C1 - Utilizator experimentat</option>
-                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
+                                            {languageQualifier.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.value}>{item.label}</option>
+                                                )
+                                            })}
                                         </select>
                                         <div className="invalid-feedback">
                                             {props.errors.read && props.touched.read && <p>{props.errors.read}</p>}
@@ -214,13 +236,11 @@ export default function LanguageSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.write}
                                             className={props.errors.write && props.touched.write ? "form-control is-invalid" : "form-control"}>
-                                            <option value="">Choose</option>
-                                            <option value="A1">A1 - Utilizator de baza</option>
-                                            <option value="A2">A2 - Utilizator de baza spre independent</option>
-                                            <option value="B1">B1 - Utilizator independent</option>
-                                            <option value="B2">B2 - Utilizator independent spre experimentat</option>
-                                            <option value="C1">C1 - Utilizator experimentat</option>
-                                            <option value="C2">C2 - Utilizator experimentat spre nativ</option>
+                                            {languageQualifier.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.value}>{item.label}</option>
+                                                )
+                                            })}
                                         </select>
                                         <div className="invalid-feedback">
                                             {props.errors.write && props.touched.write && <p>{props.errors.write}</p>}
@@ -244,6 +264,10 @@ export default function LanguageSection(props) {
                 <hr className="hr" />
             </div>
 
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

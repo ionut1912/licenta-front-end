@@ -52,7 +52,7 @@ export default function JobList({ data, filter }) {
                                     </p>
                                     <div className="d-flex row mb-0">
                                         <div className="mr-1 ml-1">
-                                            <p className="text-muted">{item.descriere.substring(0, 150)}... </p>
+                                            <p className="text-muted">{item.descriere.substring(0, 150)}{item.descriere.length >= 150 ? "..." : null}</p>
                                         </div>
                                     </div>
                                     <p className="card-text text-danger"><i className="fas fa-calendar-alt" /> {format(item.dataAdaugare)} - {format(item.dataMaxima)}</p>

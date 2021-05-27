@@ -31,3 +31,14 @@
 .actions .edit {
     margin-right: 20px;
 }
+
+.actions .edit, .actions .delete {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.actions .edit:hover, .actions .delete:hover {
+    transform: translateY(-2px);
+    transition: 0.25s;
+    color: #fc1930d5;
+}
