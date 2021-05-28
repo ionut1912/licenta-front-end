@@ -15,7 +15,7 @@ export default function JobView(props) {
 
     function addEditJob() {
 
-        if(props.editJob===false){
+        if (props.editJob === false) {
             jobService.addJob(props.recordForView).then(
                 response => {
                     props.setNotify({
@@ -35,7 +35,7 @@ export default function JobView(props) {
                     close();
                 }
             )
-        }else{
+        } else {
             jobService.updateJob(props.recordForView).then(
                 response => {
                     props.setNotify({
@@ -44,6 +44,7 @@ export default function JobView(props) {
                         type: 'success'
                     });
                     props.reset();
+                    props.setEditJob(false);
                     close();
                 },
                 error => {
@@ -56,7 +57,7 @@ export default function JobView(props) {
                 }
             )
         }
-       
+
     }
     return (
         <div className="modal-content">
@@ -116,7 +117,7 @@ export default function JobView(props) {
             {props.buttonsAddJob !== false ? (
                 <div className="modal-footer">
                     <button className="btn btn-cancel" onClick={close}>Close</button>
-                    <button className="btn btn-apply" onClick={addEditJob} >Add job</button>
+                    <button className="btn btn-apply" onClick={addEditJob} >{props.editJob === false ? "Add job" : "Update job"}</button>
                 </div>
             ) : null}
         </div>

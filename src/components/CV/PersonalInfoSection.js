@@ -54,9 +54,12 @@ export default function PersonalInfoSection(props) {
     function handleSubmit(values) {
         if (baseImage !== "") {
             values.img_cv = baseImage;
+        } else if (values.img !== null) {
+            values.img_cv = values.img;
         } else {
-            values.img_cv = "";
+            values.img_cv = '';
         }
+
         if (buttonFormPressed === true) {
             props.changeState(2);
             setButtonFormPressed(false);
@@ -87,6 +90,7 @@ export default function PersonalInfoSection(props) {
                         }
                         :
                         {
+                            img: currentUser.img,
                             first_name: firstNameEnd === -1 ? currentUser.full_name : currentUser.full_name.substring(0, firstNameEnd),
                             last_name: firstNameEnd === -1 ? '' : currentUser.full_name.substring(firstNameEnd + 1, fullNameLength),
                             email: currentUser.email,
@@ -110,11 +114,11 @@ export default function PersonalInfoSection(props) {
                     <form onSubmit={props.handleSubmit} >
 
                         <div className="row-img-cv">
-                            <div className="left-img" style={baseImage === '' ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
+                            <div className="left-img" style={baseImage === '' && props.values.img === null ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
                                 <div className="image-upload">
                                     <label htmlFor="file-input" >
-                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' ? "img-cv" : null} alt="" />
-                                        {baseImage === '' && <div>
+                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' || props.values.img !== null ? "img-cv" : null} alt="" />
+                                        {baseImage === '' && props.values.img === null && <div>
                                             <i className="fas fa-camera addPhoto" style={{ fontSize: '40px' }} />
                                             <br />
                                             <span className="addPhoto">Add photo</span>

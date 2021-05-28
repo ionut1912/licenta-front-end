@@ -150,6 +150,7 @@ export default function NewEditJob(props) {
 
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
+
             <div className="container">
                 <div className="addJob" >
                     <h3>Job information</h3>
@@ -163,9 +164,9 @@ export default function NewEditJob(props) {
                     <div style={{
                         display: stateForm !== 2 && 'none'
                     }}>
-                        <SkillSection skills={skills} addSkill={addSkill} setSkills={setSkills} setJobInfo={setJobInfo} />
-                        <AtributSection atributePersonale={atributePersonale} setAtributePersonale={setAtributePersonale} addAtributPersonal={addAtributPersonal} setJobInfo={setJobInfo} />
-                        <DetaliuSection detalii={detalii} setDetalii={setDetalii} addDetaliu={addDetaliu} setJobInfo={setJobInfo} />
+                        <SkillSection skills={skills} addSkill={addSkill} setSkills={setSkills} setJobInfo={setJobInfo} editJob={editJob} />
+                        <AtributSection atributePersonale={atributePersonale} setAtributePersonale={setAtributePersonale} addAtributPersonal={addAtributPersonal} setJobInfo={setJobInfo} editJob={editJob} />
+                        <DetaliuSection detalii={detalii} setDetalii={setDetalii} addDetaliu={addDetaliu} setJobInfo={setJobInfo} editJob={editJob} />
                         <div className="two-btn">
                             <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
                             <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Finish</button>
@@ -179,7 +180,7 @@ export default function NewEditJob(props) {
                 subTitle={recordForView.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={recordForView} setRecordForView={setRecordForView} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} />
+                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} setEditJob={setEditJob} />
             </ViewPopup>
 
             <Notification

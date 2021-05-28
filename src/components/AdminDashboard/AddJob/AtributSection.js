@@ -1,14 +1,17 @@
 import React, { useState, useRef } from 'react'
 import Notification from '../../Notification'
+import ConfirmDialog from '../ConfirmDialog';
 import { Formik } from 'formik';
 import Row from '../../CV/Row'
 import * as Yup from "yup";
+import jobService from '../../../services/job.service';
 
 export default function AtributSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [atributExperience, setAtributExperience] = useState(false);
     const [atributFields, setAtributFields] = useState(false);
@@ -17,7 +20,6 @@ export default function AtributSection(props) {
         atribut: ""
     });
 
-    //popup pt delete aici
     function deleteAtribut(id) {
         props.setAtributePersonale(prevAtributs => {
             props.setJobInfo(prevInfo => {
@@ -31,7 +33,57 @@ export default function AtributSection(props) {
             return prevAtributs.filter((atributItem, index) => {
                 return index !== id;
             });
-        });
+        })
+
+    }
+
+    function deleteAtributPermanent(id) {
+
+        const atributForDelete = props.atributePersonale.filter((item, index) => {
+            return index === id ? item : null
+        })
+
+        props.setAtributePersonale(prevAtributs => {
+            props.setJobInfo(prevInfo => {
+                return {
+                    ...prevInfo,
+                    atributePersonale: prevAtributs.filter((atributItem, index) => {
+                        return index !== id;
+                    })
+                }
+            })
+            return prevAtributs.filter((atributItem, index) => {
+                return index !== id;
+            });
+        })
+
+        jobService.deleteAtributPersonal(atributForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+
     }
 
     function editAtribut(id) {
@@ -50,14 +102,57 @@ export default function AtributSection(props) {
         setAtributFields(true);
     }
 
-    function removeAtribut() {
+    function cleanAndRemoveAtributPermanent() {
 
         setAtributFields(false);
-        //popup pt delete aici
         setAtribut({
             id: '',
             atribut: ""
         })
+        jobService.deleteAtributPersonal(atribut.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function removeAtribut() {
+        if (props.editJob && atribut.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveAtributPermanent()
+            })
+        else {
+            setAtributFields(false);
+            setAtribut({
+                id: '',
+                atribut: ""
+            })
+        }
+
     }
 
     const clickSectionTitle = () => {
@@ -105,7 +200,9 @@ export default function AtributSection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.atribut}
-                                        onDelete={deleteAtribut}
+                                        deletePermanent={props.editJob && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editJob && rowItem.id !== '' ? deleteAtributPermanent : deleteAtribut}
                                         onEdit={atribut.atribut !== "" ? (() => { }) : editAtribut}
                                     />);
                             })}
@@ -180,6 +277,10 @@ export default function AtributSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )

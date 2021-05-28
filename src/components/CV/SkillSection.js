@@ -1,14 +1,17 @@
 import React, { useState, useRef } from 'react'
 import Notification from '../Notification'
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
+import jobService from '../../services/job.service'
 
 export default function SkillSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [skillExperience, setSkillExperience] = useState(false);
     const [skillFields, setSkillFields] = useState(false);
@@ -16,7 +19,7 @@ export default function SkillSection(props) {
         id: '',
         skill: ""
     });
-    //popup pt delete aici
+
     function deleteSkill(id) {
         props.setSkills(prevSkills => {
             if (props.setJobInfo !== undefined) {
@@ -35,6 +38,56 @@ export default function SkillSection(props) {
         });
     }
 
+    function deleteSkillPermanent(id) {
+
+        const skillForDelete = props.skills.filter((item, index) => {
+            return index === id ? item : null
+        })
+
+        props.setSkills(prevSkills => {
+            if (props.setJobInfo !== undefined) {
+                props.setJobInfo(prevInfo => {
+                    return {
+                        ...prevInfo,
+                        skills: prevSkills.filter((skillItem, index) => {
+                            return index !== id;
+                        })
+                    }
+                })
+            }
+            return prevSkills.filter((skillItem, index) => {
+                return index !== id;
+            });
+        });
+
+        jobService.deleteSkill(skillForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
     function editSkill(id) {
 
         const skill1 = props.skills.filter((skillItem, index) => {
@@ -50,16 +103,57 @@ export default function SkillSection(props) {
 
         setSkillFields(true);
     }
-    //popup pt delete aici
-    function removeSkill() {
 
+
+    function cleanAndRemoveSkillPermanent() {
         setSkillFields(false);
-
         setSkill({
             id: '',
             skill: ""
         })
 
+        jobService.deleteSkill(skill.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+    function removeSkill() {
+        if (props.editJob && skill.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveSkillPermanent()
+            })
+        else {
+            setSkillFields(false);
+            setSkill({
+                id: '',
+                skill: ""
+            })
+        }
 
     }
 
@@ -107,7 +201,9 @@ export default function SkillSection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.skill}
-                                        onDelete={deleteSkill}
+                                        deletePermanent={props.editJob && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editJob && rowItem.id !== '' ? deleteSkillPermanent : deleteSkill}
                                         onEdit={skill.skill !== "" ? (() => { }) : editSkill}
                                     />);
                             })}
@@ -184,6 +280,10 @@ export default function SkillSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )

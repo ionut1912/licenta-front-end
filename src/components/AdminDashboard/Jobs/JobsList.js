@@ -270,10 +270,6 @@ function JobsList(props) {
                 notify={notify}
                 setNotify={setNotify}
             />
-            <ConfirmDialog
-                confirmDialog={confirmDialog}
-                setConfirmDialog={setConfirmDialog}
-            />
         </div>
 
     )

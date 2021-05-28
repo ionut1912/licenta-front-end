@@ -1,14 +1,17 @@
 import React, { useState, useRef } from 'react'
 import Notification from '../../Notification'
+import ConfirmDialog from '../ConfirmDialog';
 import { Formik } from 'formik';
 import Row from '../../CV/Row'
 import * as Yup from "yup";
+import jobService from '../../../services/job.service';
 
 export default function DetaliuSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [detaliuExperience, setDetaliuExperience] = useState(false);
     const [detaliuFields, setDetaliuFields] = useState(false);
@@ -16,7 +19,7 @@ export default function DetaliuSection(props) {
         id: '',
         detaliu: ""
     });
-    //popup pt delete aici
+
     function deleteDetaliu(id) {
         props.setDetalii(prevDetalii => {
             props.setJobInfo(prevInfo => {
@@ -31,6 +34,54 @@ export default function DetaliuSection(props) {
                 return index !== id;
             });
         });
+    }
+
+    function deleteDetaliuPermanent(id) {
+
+        const detaliuForDelete = props.detalii.filter((item, index) => {
+            return index === id ? item : null
+        })
+
+        props.setDetalii(prevDetalii => {
+            props.setJobInfo(prevInfo => {
+                return {
+                    ...prevInfo,
+                    moreDetails: prevDetalii.filter((detaliuItem, index) => {
+                        return index !== id;
+                    })
+                }
+            })
+            return prevDetalii.filter((detaliuItem, index) => {
+                return index !== id;
+            });
+        });
+
+        jobService.deleteDetaliu(detaliuForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
     }
 
     function editDetaliu(id) {
@@ -48,16 +99,59 @@ export default function DetaliuSection(props) {
 
         setDetaliuFields(true);
     }
-    //popup pt delete aici
-    function removeDetaliu() {
+
+    function cleanAndRemoveDetailPermanent() {
 
         setDetaliuFields(false);
-
         setDetaliu({
             id: '',
             detaliu: ""
         })
 
+        jobService.deleteDetaliu(detaliu.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function removeDetaliu() {
+
+        if (props.editJob && detaliu.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveDetailPermanent()
+            })
+        else {
+            setDetaliuFields(false);
+            setDetaliu({
+                id: '',
+                detaliu: ""
+            })
+        }
 
     }
 
@@ -106,7 +200,9 @@ export default function DetaliuSection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.detaliu}
-                                        onDelete={deleteDetaliu}
+                                        deletePermanent={props.editJob && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editJob && rowItem.id !== '' ? deleteDetaliuPermanent : deleteDetaliu}
                                         onEdit={detaliu.detaliu !== "" ? (() => { }) : editDetaliu}
                                     />);
                             })}
@@ -182,6 +278,10 @@ export default function DetaliuSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )
