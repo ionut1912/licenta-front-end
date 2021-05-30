@@ -248,11 +248,6 @@ select.form-control:not([size]):not([multiple]) {
     font-size: 22px;
 }
 
-@media screen and (max-width: 1200px) {
-    .additionalInfo {
-        padding: 10px 50px;
-    }
-}
 
 @media screen and (max-width: 1000px) {
     .btn-moreInfo {
@@ -281,9 +276,7 @@ select.form-control:not([size]):not([multiple]) {
     .addPhoto {
         top: 0px;
     }
-    .additionalInfo {
-        padding: 10px 20px;
-    }
+
     .btn-additionalInfo {
         padding: 10px 50px;
     }
@@ -298,9 +291,6 @@ select.form-control:not([size]):not([multiple]) {
     }
     .progressbar li:after {
         top: 30px;
-    }
-    .additionalInfo {
-        padding: 10px 20px;
     }
     .btn-additionalInfo {
         padding: 10px 50px;

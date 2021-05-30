@@ -8,6 +8,8 @@ export default function PersonalInfoSection(props) {
     const [openAditionalInfo, setOpenAditionalInfo] = useState(false);
     const [buttonFormPressed, setButtonFormPressed] = useState(false);
 
+    const addCv = props.addCv;
+
     const currentUser = UserService.getCurrentUser();
     const firstNameEnd = currentUser !== null && currentUser.full_name.indexOf(" ");
     const fullNameLength = currentUser !== null && currentUser.full_name.length;
@@ -74,7 +76,7 @@ export default function PersonalInfoSection(props) {
         <div className="form-cls">
             <Formik
                 initialValues={
-                    currentUser === null ?
+                    currentUser === null || addCv === true ?
                         {
                             first_name: '',
                             last_name: '',
@@ -113,24 +115,25 @@ export default function PersonalInfoSection(props) {
                 {props => (
                     <form onSubmit={props.handleSubmit} >
 
-                        <div className="row-img-cv">
-                            <div className="left-img" style={baseImage === '' && props.values.img === null ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
-                                <div className="image-upload">
-                                    <label htmlFor="file-input" >
-                                        <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' || props.values.img !== null ? "img-cv" : null} alt="" />
-                                        {baseImage === '' && props.values.img === null && <div>
-                                            <i className="fas fa-camera addPhoto" style={{ fontSize: '40px' }} />
-                                            <br />
-                                            <span className="addPhoto">Add photo</span>
-                                        </div>}
-                                    </label>
-                                    <input type="file" id="file-input" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
+                        <div className={addCv === true ? null : "row-img-cv"} >
+                            {addCv === true ? null :
+                                <div className="left-img" style={baseImage === '' && props.values.img === null ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
+                                    <div className="image-upload">
+                                        <label htmlFor="file-input" >
+                                            <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' || props.values.img !== null ? "img-cv" : null} alt="" />
+                                            {baseImage === '' && props.values.img === null && <div>
+                                                <i className="fas fa-camera addPhoto" style={{ fontSize: '40px' }} />
+                                                <br />
+                                                <span className="addPhoto">Add photo</span>
+                                            </div>}
+                                        </label>
+                                        <input type="file" id="file-input" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
+                                    </div>
+
                                 </div>
-
-                            </div>
-
+                            }
                             <div className="form-row">
-                                <div className="form-group col-md-12">
+                                <div className={addCv === true ? "form-group col-md-6" : "form-group col-md-12"} >
                                     <label htmlFor="inputfn" className="group-margin-left">First name*</label>
                                     <input type="text"
                                         name="first_name"
@@ -146,7 +149,7 @@ export default function PersonalInfoSection(props) {
                                     </div>
                                 </div>
 
-                                <div className="form-group col-md-12">
+                                <div className={addCv === true ? "form-group col-md-6" : "form-group col-md-12"}>
                                     <label htmlFor="inputln" className="group-margin-left">Last name*</label>
                                     <input type="text"
                                         name="last_name"

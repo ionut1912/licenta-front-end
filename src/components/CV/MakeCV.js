@@ -111,7 +111,7 @@ export default function MakeCV(props) {
                     <h3>Personal details</h3>
                     <hr className="hr" />
 
-                    <PersonalInfoSection formRef={formRef} changeState={setStateForm} changePersonalInfo={setPersonalInfo} nextStateForm={nextStateForm} />
+                    <PersonalInfoSection formRef={formRef} changeState={setStateForm} changePersonalInfo={setPersonalInfo} nextStateForm={nextStateForm} addCv={props.addCv} />
 
                 </div>
 
