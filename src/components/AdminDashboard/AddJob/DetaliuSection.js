@@ -21,40 +21,30 @@ export default function DetaliuSection(props) {
     });
 
     function deleteDetaliu(id) {
-        props.setDetalii(prevDetalii => {
-            props.setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    moreDetails: prevDetalii.filter((detaliuItem, index) => {
-                        return index !== id;
-                    })
-                }
-            })
-            return prevDetalii.filter((detaliuItem, index) => {
-                return index !== id;
-            });
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                moreDetails: prevInfo.moreDetails.filter((detaliuItem, index) => {
+                    return index !== id;
+                })
+            }
         });
     }
 
     function deleteDetaliuPermanent(id) {
 
-        const detaliuForDelete = props.detalii.filter((item, index) => {
+        const detaliuForDelete = props.jobInfo.moreDetails.filter((item, index) => {
             return index === id ? item : null
         })
 
-        props.setDetalii(prevDetalii => {
-            props.setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    moreDetails: prevDetalii.filter((detaliuItem, index) => {
-                        return index !== id;
-                    })
-                }
-            })
-            return prevDetalii.filter((detaliuItem, index) => {
-                return index !== id;
-            });
-        });
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                moreDetails: prevInfo.moreDetails.filter((detaliuItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
 
         jobService.deleteDetaliu(detaliuForDelete[0].id).then(
             () => {
@@ -86,7 +76,7 @@ export default function DetaliuSection(props) {
 
     function editDetaliu(id) {
 
-        const detaliu1 = props.detalii.filter((detaliuItem, index) => {
+        const detaliu1 = props.jobInfo.moreDetails.filter((detaliuItem, index) => {
             return index === id;
         });
 
@@ -103,10 +93,6 @@ export default function DetaliuSection(props) {
     function cleanAndRemoveDetailPermanent() {
 
         setDetaliuFields(false);
-        setDetaliu({
-            id: '',
-            detaliu: ""
-        })
 
         jobService.deleteDetaliu(detaliu.id).then(
             () => {
@@ -134,6 +120,11 @@ export default function DetaliuSection(props) {
                 })
             }
         )
+
+        setDetaliu({
+            id: '',
+            detaliu: ""
+        })
     }
 
     function removeDetaliu() {
@@ -183,7 +174,7 @@ export default function DetaliuSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Details</h3>
-                {props.detalii.length === 0 ? null : <span className="indicator">{props.detalii.length}</span>}
+                {props.jobInfo.moreDetails.length === 0 ? null : <span className="indicator">{props.jobInfo.moreDetails.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -192,9 +183,9 @@ export default function DetaliuSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.detalii.length === 0 ? null : (
+                    {props.jobInfo.moreDetails.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.detalii.map((rowItem, index) => {
+                            {props.jobInfo.moreDetails.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -224,7 +215,7 @@ export default function DetaliuSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateDetail = props.detalii.filter((item) => item.detaliu === values.detaliu)
+                            const duplicateDetail = props.jobInfo.moreDetails.filter((item) => item.detaliu === values.detaliu)
 
                             if (duplicateDetail.length === 0) {
                                 handleSubmit(values);

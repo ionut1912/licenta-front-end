@@ -17,19 +17,6 @@ export default function NewEditJob(props) {
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [editJob, setEditJob] = useState(false);
 
-    const [staticInfo, setStaticInfo] = useState({
-        nume_job: '',
-        jobType: '',
-        locatie: '',
-        jobCategory: '',
-        descriere: '',
-        dataMaxima: ''
-    });
-
-    const [detalii, setDetalii] = useState([]);
-    const [atributePersonale, setAtributePersonale] = useState([]);
-    const [skills, setSkills] = useState([]);
-
     const [jobInfo, setJobInfo] = useState({
         numeJob: '',
         jobType: '',
@@ -43,59 +30,49 @@ export default function NewEditJob(props) {
     })
 
     function addDetaliu(newDetaliu) {
-        setDetalii(prevDetails => {
-            setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    moreDetails: [...prevDetails, newDetaliu]
-                }
-            })
-            return [...prevDetails, newDetaliu];
-        });
-
-
+        setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                moreDetails: [...prevInfo.moreDetails, newDetaliu]
+            }
+        })
     }
 
     function addAtributPersonal(newAtribute) {
-        setAtributePersonale(prevAtributes => {
-            setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    atributePersonale: [...prevAtributes, newAtribute]
-                }
-            })
-            return [...prevAtributes, newAtribute];
-        });
+        setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                atributePersonale: [...prevInfo.atributePersonale, newAtribute]
+            }
+        })
     }
 
     function addSkill(newSkill) {
-        setSkills(prevSkills => {
-            setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    skills: [...prevSkills, newSkill]
-                }
-            })
-            return [...prevSkills, newSkill];
-        });
+        setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                skills: [...prevInfo.skills, newSkill]
+            }
+        })
     }
 
     function reset() {
-        setStaticInfo({
-            nume_job: '',
+        setJobInfo({
+            numeJob: '',
             jobType: '',
             locatie: '',
             jobCategory: '',
             descriere: '',
-            dataMaxima: ''
-        });
-        setDetalii([]);
-        setAtributePersonale([]);
-        setSkills([]);
+            dataMaxima: '',
+            skills: [],
+            atributePersonale: [],
+            moreDetails: []
+        })
         setStateForm(1);
     }
 
     function handleSubmit() {
+        console.log(jobInfo);
         setRecordForView(jobInfo);
         setOpenPopupView(true);
     }
@@ -113,20 +90,6 @@ export default function NewEditJob(props) {
 
         setEditJob(true);
 
-        setStaticInfo({
-            nume_job: values.numeJob,
-            jobType: values.jobType,
-            locatie: values.locatie,
-            jobCategory: values.jobCategory,
-            descriere: values.descriere,
-            dataMaxima: format(values.dataMaxima)
-        });
-
-
-        setSkills(values.skills);
-        setDetalii(values.moreDetails);
-        setAtributePersonale(values.atributePersonale);
-
         setJobInfo({
             id: values.id,
             numeJob: values.numeJob,
@@ -134,7 +97,7 @@ export default function NewEditJob(props) {
             locatie: values.locatie,
             jobCategory: values.jobCategory,
             descriere: values.descriere,
-            dataMaxima: values.dataMaxima,
+            dataMaxima: format(values.dataMaxima),
             dataAdaugare: format(values.dataAdaugare),
             skills: values.skills,
             atributePersonale: values.atributePersonale,
@@ -158,15 +121,15 @@ export default function NewEditJob(props) {
                     <div style={{
                         display: stateForm !== 1 && 'none'
                     }}>
-                        <StaticInfoSection changeState={setStateForm} staticInfo={staticInfo} setStaticInfo={setStaticInfo} setJobInfo={setJobInfo} />
+                        <StaticInfoSection changeState={setStateForm} jobInfo={jobInfo} setJobInfo={setJobInfo} />
                     </div>
 
                     <div style={{
                         display: stateForm !== 2 && 'none'
                     }}>
-                        <SkillSection skills={skills} addSkill={addSkill} setSkills={setSkills} setJobInfo={setJobInfo} editJob={editJob} />
-                        <AtributSection atributePersonale={atributePersonale} setAtributePersonale={setAtributePersonale} addAtributPersonal={addAtributPersonal} setJobInfo={setJobInfo} editJob={editJob} />
-                        <DetaliuSection detalii={detalii} setDetalii={setDetalii} addDetaliu={addDetaliu} setJobInfo={setJobInfo} editJob={editJob} />
+                        <SkillSection data={jobInfo} setData={setJobInfo} addSkill={addSkill} editJob={editJob} />
+                        <AtributSection jobInfo={jobInfo} setJobInfo={setJobInfo} addAtributPersonal={addAtributPersonal} editJob={editJob} forJob={true} />
+                        <DetaliuSection jobInfo={jobInfo} setJobInfo={setJobInfo} addDetaliu={addDetaliu} editJob={editJob} />
                         <div className="two-btn">
                             <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
                             <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Finish</button>

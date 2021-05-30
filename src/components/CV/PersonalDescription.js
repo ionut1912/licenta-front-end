@@ -16,11 +16,27 @@ export default function PersonalDescription(props) {
     })
 
     function removeDescription() {
-        props.setDescription({ descriere: '' });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                personalDescription: { descriere: '' }
+            }
+        });
+
+        setNotify({
+            isOpen: true,
+            message: 'Description deleted!',
+            type: 'success'
+        });
     }
 
     function handleSubmit(values) {
-        props.setDescription(values);
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                personalDescription: values
+            }
+        });
         setNotify({
             isOpen: true,
             message: 'Description added!',

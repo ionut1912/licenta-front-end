@@ -52,7 +52,6 @@ export default function PersonalInfoSection(props) {
         });
     };
 
-
     function handleSubmit(values) {
         if (baseImage !== "") {
             values.img_cv = baseImage;
@@ -69,7 +68,41 @@ export default function PersonalInfoSection(props) {
             props.changeState(props.nextStateForm)
         }
 
-        props.changePersonalInfo(values);
+        if (addCv === true)
+            props.setCv(prevInfo => {
+                return {
+                    ...prevInfo,
+                    first_name: values.first_name,
+                    last_name: values.last_name,
+                    email: values.email,
+                    phone: values.phone,
+                    city: values.city,
+                    nationality: values.nationality,
+                    address: values.address,
+                    dateOfBirth: values.dateOfBirth,
+                    drivingLicence: values.drivingLicence,
+                    linkedin: values.linkedin,
+                    personalSite: values.personalSite
+                }
+            });
+        else
+            props.setCv(prevInfo => {
+                return {
+                    ...prevInfo,
+                    img_cv: values.img_cv,
+                    first_name: values.first_name,
+                    last_name: values.last_name,
+                    email: values.email,
+                    phone: values.phone,
+                    city: values.city,
+                    nationality: values.nationality,
+                    address: values.address,
+                    dateOfBirth: values.dateOfBirth,
+                    drivingLicence: values.drivingLicence,
+                    linkedin: values.linkedin,
+                    personalSite: values.personalSite
+                }
+            });
     }
 
     return (
@@ -313,7 +346,7 @@ export default function PersonalInfoSection(props) {
                     </form>
                 )}
             </Formik>
-        </div >
+        </div>
 
     )
 }

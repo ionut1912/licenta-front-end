@@ -9,6 +9,7 @@ import HobbySection from './HobbySection'
 import ProjectSection from './ProjectSection'
 import ViewPopup from '../ViewPopup'
 import PDF from './PDF'
+import cvService from '../../services/cv-service'
 import './MakeCV.css'
 
 
@@ -17,13 +18,10 @@ export default function MakeCV(props) {
     const formRef = useRef();
 
     const [nextStateForm, setNextStateForm] = useState(1);
-
     const [stateForm, setStateForm] = useState(1);
-
     const [openPopupView, setOpenPopupView] = useState(false);
 
-    const [personalInfo, setPersonalInfo] = useState({
-        img_cv: '',
+    const [cv, setCv] = useState({
         first_name: '',
         last_name: '',
         email: '',
@@ -34,51 +32,67 @@ export default function MakeCV(props) {
         dateOfBirth: '',
         drivingLicence: '',
         linkedin: '',
-        personalSite: ''
+        personalSite: '',
+        personalDescription: { descriere: '' },
+        works: [],
+        educations: [],
+        skills: [],
+        languages: [],
+        hobbys: [],
+        projects: []
     });
 
-    const [personalDescription, setPersonalDescription] = useState({ descriere: '' })
-
-    const [works, setWorks] = useState([]);
-    const [educations, setEducations] = useState([]);
-    const [skills, setSkills] = useState([]);
-    const [languages, setLanguages] = useState([]);
-    const [hobbys, setHobbys] = useState([]);
-    const [projects, setProjects] = useState([]);
-
     function addWork(newWork) {
-        setWorks(prevWorks => {
-            return [...prevWorks, newWork];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                works: [...prevInfo.works, newWork]
+            }
         });
     }
 
     function addEducation(newEducation) {
-        setEducations(prevEducations => {
-            return [...prevEducations, newEducation];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                educations: [...prevInfo.educations, newEducation]
+            }
         });
     }
 
     function addSkill(newSkill) {
-        setSkills(prevSkills => {
-            return [...prevSkills, newSkill];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                skills: [...prevInfo.skills, newSkill]
+            }
         });
     }
 
     function addLanguage(newLanguage) {
-        setLanguages(prevLanguages => {
-            return [...prevLanguages, newLanguage];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                languages: [...prevInfo.languages, newLanguage]
+            }
         });
     }
 
     function addHobby(newHobby) {
-        setHobbys(prevHobbys => {
-            return [...prevHobbys, newHobby];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                hobbys: [...prevInfo.hobbys, newHobby]
+            }
         });
     }
 
     function addProject(newProject) {
-        setProjects(prevProjects => {
-            return [...prevProjects, newProject];
+        setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                projects: [...prevInfo.projects, newProject]
+            }
         });
     }
 
@@ -88,14 +102,16 @@ export default function MakeCV(props) {
         }
     }
 
-    function addCVToDB() {
-        console.log("test");
+    function addCVToDB(theCv) {
+        cvService.addCv(theCv).then(
+            response => console.log(response)
+        )
     }
 
 
     return (
         <div style={{ padding: '30px' }}>
-            <div className="container" style={stateForm === 3 ? { maxWidth: '720px' } : null}>
+            <div className="container">
                 {props.addCv === true ? null : (
                     <ul className="progressbar" style={{ justifyContent: "center" }}>
                         <li className="active" onClick={() => { setStateForm(1); setNextStateForm(1); }}>Personal</li>
@@ -111,7 +127,7 @@ export default function MakeCV(props) {
                     <h3>Personal details</h3>
                     <hr className="hr" />
 
-                    <PersonalInfoSection formRef={formRef} changeState={setStateForm} changePersonalInfo={setPersonalInfo} nextStateForm={nextStateForm} addCv={props.addCv} />
+                    <PersonalInfoSection formRef={formRef} changeState={setStateForm} setCv={setCv} nextStateForm={nextStateForm} addCv={props.addCv} />
 
                 </div>
 
@@ -123,20 +139,20 @@ export default function MakeCV(props) {
 
                     <h3>Experiences</h3>
                     <hr className="hr" />
-                    <PersonalDescription setDescription={setPersonalDescription} />
-                    <WorkSection works={works} addWork={addWork} setWorks={setWorks} />
-                    <EducationSection educations={educations} addEducation={addEducation} setEducations={setEducations} />
-                    <SkillSection skills={skills} addSkill={addSkill} setSkills={setSkills} />
-                    <LanguageSection languages={languages} addLanguage={addLanguage} setLanguages={setLanguages} />
-                    <HobbySection hobbys={hobbys} addHobby={addHobby} setHobbys={setHobbys} />
-                    <ProjectSection projects={projects} addProject={addProject} setProjects={setProjects} />
+                    <PersonalDescription setCv={setCv} addCv={props.addCv} />
+                    <WorkSection cv={cv} setCv={setCv} addWork={addWork} addCv={props.addCv} />
+                    <EducationSection cv={cv} setCv={setCv} addEducation={addEducation} addCv={props.addCv} />
+                    <SkillSection data={cv} setData={setCv} addSkill={addSkill} addCv={props.addCv} />
+                    <LanguageSection cv={cv} setCv={setCv} addLanguage={addLanguage} addCv={props.addCv} />
+                    <HobbySection cv={cv} setCv={setCv} addHobby={addHobby} addCv={props.addCv} />
+                    <ProjectSection cv={cv} setCv={setCv} addProject={addProject} addCv={props.addCv} />
 
 
                     <div className="two-btn">
                         <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
 
                         {props.addCv === true ? (
-                            <button type="submit" className="btn btn-primary" onClick={() => addCVToDB()}>Add CV</button>
+                            <button type="submit" className="btn btn-primary" onClick={() => addCVToDB(cv)}>Add CV</button>
                         ) : (
                             <button type="submit" className="btn btn-primary" onClick={() => setOpenPopupView(true)}>Finish </button>
                         )}
@@ -147,7 +163,7 @@ export default function MakeCV(props) {
                     cvMode={true}
                     openPopup={openPopupView}
                     setOpenPopup={setOpenPopupView}>
-                    <PDF personalInfo={personalInfo} personalDescription={personalDescription} works={works} educations={educations} skills={skills} languages={languages} hobbys={hobbys} projects={projects} />
+                    <PDF cv={cv} />
                 </ViewPopup>
 
             </div>

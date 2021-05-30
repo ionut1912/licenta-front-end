@@ -30,16 +30,19 @@ export default function LanguageSection(props) {
     });
 
     function deleteLanguage(id) {
-        props.setLanguages(prevLanguages => {
-            return prevLanguages.filter((languageItem, index) => {
-                return index !== id;
-            });
-        });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                languages: prevInfo.languages.filter((languageItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
     }
 
     function editLanguage(id) {
 
-        const language1 = props.languages.filter((languageItem, index) => {
+        const language1 = props.cv.languages.filter((languageItem, index) => {
             return index === id;
         });
 
@@ -109,7 +112,7 @@ export default function LanguageSection(props) {
 
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-globe icon text-dark"></i>Languages</h3>
-                {props.languages.length === 0 ? null : <span className="indicator">{props.languages.length}</span>}
+                {props.cv.languages.length === 0 ? null : <span className="indicator">{props.cv.languages.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -117,9 +120,9 @@ export default function LanguageSection(props) {
                 display: languageExperience === false && 'none'
             }}>
                 <div className="form-row">
-                    {props.languages.length === 0 ? null : (
+                    {props.cv.languages.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.languages.map((rowItem, index) => {
+                            {props.cv.languages.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -148,11 +151,9 @@ export default function LanguageSection(props) {
                             }
                         }
 
-
-
                         onSubmit={(values, { resetForm }) => {
 
-                            const duplicateLanguage = props.languages.filter((item) => item.language_name === values.language_name)
+                            const duplicateLanguage = props.cv.languages.filter((item) => item.language_name === values.language_name)
 
                             if (duplicateLanguage.length === 0) {
                                 handleSubmit(values);
@@ -165,7 +166,6 @@ export default function LanguageSection(props) {
                                     type: 'error'
                                 });
                         }
-
                         }
 
                         innerRef={formRef}

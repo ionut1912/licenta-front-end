@@ -22,16 +22,19 @@ export default function WorkSection(props) {
     });
 
     function deleteWork(id) {
-        props.setWorks(prevWorks => {
-            return prevWorks.filter((workItem, index) => {
-                return index !== id;
-            });
-        });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                works: prevInfo.works.filter((workItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
     }
 
     function editWork(id) {
 
-        const work1 = props.works.filter((workItem, index) => {
+        const work1 = props.cv.works.filter((workItem, index) => {
             return index === id;
         });
 
@@ -104,7 +107,7 @@ export default function WorkSection(props) {
 
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fa fa-briefcase icon text-dark"></i>Work experience</h3>
-                {props.works.length === 0 ? null : <span className="indicator">{props.works.length}</span>}
+                {props.cv.works.length === 0 ? null : <span className="indicator">{props.cv.works.length}</span>}
             </div>
 
 
@@ -114,9 +117,9 @@ export default function WorkSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.works.length === 0 ? null : (
+                    {props.cv.works.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.works.map((rowItem, index) => {
+                            {props.cv.works.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -150,7 +153,7 @@ export default function WorkSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateWork = props.works.filter((item) => item.job_title === values.job_title)
+                            const duplicateWork = props.cv.works.filter((item) => item.job_title === values.job_title)
 
                             if (duplicateWork.length === 0) {
                                 handleSubmit(values);
@@ -255,7 +258,7 @@ export default function WorkSection(props) {
                                 </div>
                                 <div className="select-option">
                                     <button type="reset" onClick={() => { removeWork(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
-                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save" onClick={() => console.log(work)}></i>Save</button>
+                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>
                         )}
@@ -272,7 +275,7 @@ export default function WorkSection(props) {
                 notify={notify}
                 setNotify={setNotify}
             />
-        </div >
+        </div>
     )
 }
 

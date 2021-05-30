@@ -17,48 +17,48 @@ const PDFView = ({ props }) => {
                 <div className="personal-info">
                     <div className="left-side">
                         <h6>Personal informations</h6>
-                        {props.personalInfo.img_cv === '' ? null : <img src={props.personalInfo.img_cv} alt="" />}
+                        {props.cv.img_cv === '' ? null : <img src={props.cv.img_cv} alt="" />}
                     </div>
 
                     <div className="right-side">
-                        <h6 style={{ textTransform: 'none' }}>{props.personalInfo.first_name + " " + props.personalInfo.last_name}</h6>
-                        <p><EmailIcon className="icon" />{props.personalInfo.email}</p>
-                        <p><PhoneIcon className="icon" />{props.personalInfo.phone}</p>
+                        <h6 style={{ textTransform: 'none' }}>{props.cv.first_name + " " + props.cv.last_name}</h6>
+                        <p><EmailIcon className="icon" />{props.cv.email}</p>
+                        <p><PhoneIcon className="icon" />{props.cv.phone}</p>
                         <div className="info-row">
-                            {props.personalInfo.city === '' && props.personalInfo.address === '' ? null : < LocationOnIcon className="icon" />}
-                            {props.personalInfo.city === '' ? null : <p>{props.personalInfo.city}</p>}
-                            {props.personalInfo.city === '' || props.personalInfo.address === '' ? null : <span className="delimitator">|</span>}
-                            {props.personalInfo.address === '' ? null : <p>{props.personalInfo.address}</p>}
+                            {props.cv.city === '' && props.cv.address === '' ? null : < LocationOnIcon className="icon" />}
+                            {props.cv.city === '' ? null : <p>{props.cv.city}</p>}
+                            {props.cv.city === '' || props.cv.address === '' ? null : <span className="delimitator">|</span>}
+                            {props.cv.address === '' ? null : <p>{props.cv.address}</p>}
                         </div>
-                        {props.personalInfo.linkedin === '' ? null : <p><LinkedInIcon className="icon" />{props.personalInfo.linkedin}</p>}
-                        {props.personalInfo.personalSite === '' ? null : <p><LanguageIcon className="icon" />{props.personalInfo.personalSite}</p>}
+                        {props.cv.linkedin === '' ? null : <p><LinkedInIcon className="icon" />{props.cv.linkedin}</p>}
+                        {props.cv.personalSite === '' ? null : <p><LanguageIcon className="icon" />{props.cv.personalSite}</p>}
                         <div className="info-row">
-                            {props.personalInfo.nationality === '' ? null : <p><span className="label">Nationalitate: </span>{props.personalInfo.nationality}</p>}
-                            {props.personalInfo.nationality === '' ? null : <span className="delimitator">|</span>}
-                            {props.personalInfo.dateOfBirth === '' ? null : <p><span className="label">Data nasterii: </span>{props.personalInfo.dateOfBirth}</p>}
-                            {props.personalInfo.drivingLicence === '' || props.personalInfo.dateOfBirth === '' ? null : <span className="delimitator">|</span>}
-                            {props.personalInfo.drivingLicence === '' ? null : <p><span className="label">Drive licence: </span>{props.personalInfo.drivingLicence}</p>}
+                            {props.cv.nationality === '' ? null : <p><span className="label">Nationalitate: </span>{props.cv.nationality}</p>}
+                            {props.cv.nationality === '' ? null : <span className="delimitator">|</span>}
+                            {props.cv.dateOfBirth === '' ? null : <p><span className="label">Data nasterii: </span>{props.cv.dateOfBirth}</p>}
+                            {props.cv.drivingLicence === '' || props.cv.dateOfBirth === '' ? null : <span className="delimitator">|</span>}
+                            {props.cv.drivingLicence === '' ? null : <p><span className="label">Drive licence: </span>{props.cv.drivingLicence}</p>}
                         </div>
                     </div>
                 </div>
 
-                {props.personalDescription.descriere === '' ? null :
+                {props.cv.personalDescription.descriere === '' ? null :
                     <div className="personal-description">
                         <div className="left-side">
                             <h6>Personal description</h6>
                         </div>
-                        <p className="right-side">{props.personalDescription.descriere}</p>
+                        <p className="right-side">{props.cv.personalDescription.descriere}</p>
                     </div>
                 }
 
-                {props.works.length === 0 ? null :
+                {props.cv.works.length === 0 ? null :
                     <div className="works">
                         <div className="title-category">
                             <h6 className="left-side">Work experience</h6>
                             <span className="right-side"></span>
                         </div>
 
-                        {props.works.map((item, index) => {
+                        {props.cv.works.map((item, index) => {
                             return (
                                 <div className="work-experience" key={index}>
                                     <div className="left-side">
@@ -76,14 +76,14 @@ const PDFView = ({ props }) => {
                     </div>
                 }
 
-                {props.educations.length === 0 ? null :
+                {props.cv.educations.length === 0 ? null :
                     <div className="educations">
                         <div className="title-category">
                             <h6 className="left-side">Education and qualifications</h6>
                             <span className="right-side"></span>
                         </div>
 
-                        {props.educations.map((item, index) => {
+                        {props.cv.educations.map((item, index) => {
                             return (
                                 <div className="education-experience" key={index}>
                                     <div className="left-side">
@@ -101,7 +101,7 @@ const PDFView = ({ props }) => {
                     </div>
                 }
 
-                {props.languages.length === 0 ? null :
+                {props.cv.languages.length === 0 ? null :
                     <div className="languages-sec">
                         <div className="title-category">
                             <h6 className="left-side">Languages</h6>
@@ -116,7 +116,7 @@ const PDFView = ({ props }) => {
                             </ul>
                         </div>
 
-                        {props.languages.map((item, index) => {
+                        {props.cv.languages.map((item, index) => {
                             return (
                                 <div className="languages" key={index}>
                                     <div className="left-side">
@@ -135,7 +135,7 @@ const PDFView = ({ props }) => {
                     </div>
                 }
 
-                {props.skills.length === 0 ? null :
+                {props.cv.skills.length === 0 ? null :
                     <div className="skills-sec">
                         <div className="title-category skill-title">
                             <h6 className="left-side">Digital skills</h6>
@@ -145,7 +145,7 @@ const PDFView = ({ props }) => {
                         <div className="skills">
                             <div className="right-side">
                                 <ul className="skills-list">
-                                    {props.skills.map((item, index) => {
+                                    {props.cv.skills.map((item, index) => {
                                         return (
                                             <li key={index}>{item.skill}</li>
                                         )
@@ -156,7 +156,7 @@ const PDFView = ({ props }) => {
                     </div>
                 }
 
-                {props.hobbys.length === 0 ? null :
+                {props.cv.hobbys.length === 0 ? null :
                     <div className="hobbys-sec">
                         <div className="title-category">
                             <h6 className="left-side">Hobby</h6>
@@ -166,7 +166,7 @@ const PDFView = ({ props }) => {
                         <div className="hobbys">
                             <div className="right-side">
                                 <ul className="hobbys-list">
-                                    {props.hobbys.map((item, index) => {
+                                    {props.cv.hobbys.map((item, index) => {
                                         return (
                                             <li key={index}>{item.hobby_name}</li>
                                         )
@@ -176,14 +176,14 @@ const PDFView = ({ props }) => {
                         </div>
                     </div>
                 }
-                {props.projects.length === 0 ? null :
+                {props.cv.projects.length === 0 ? null :
                     <div className="projects-sec">
                         <div className="title-category">
                             <h6 className="left-side">Projects</h6>
                             <span className="right-side"></span>
                         </div>
 
-                        {props.projects.map((item, index) => {
+                        {props.cv.projects.map((item, index) => {
                             return (
                                 <div className="projects" key={index}>
                                     <div className="left-side">

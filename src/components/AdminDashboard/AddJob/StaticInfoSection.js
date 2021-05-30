@@ -6,7 +6,7 @@ import * as Yup from "yup";
 export default function StaticInfoSection(props) {
 
     const validateSchema = Yup.object().shape({
-        nume_job: Yup.string()
+        numeJob: Yup.string()
             .required("This field is required!"),
         jobType: Yup.string()
             .required("This field is required!"),
@@ -21,11 +21,10 @@ export default function StaticInfoSection(props) {
     })
 
     function handleSubmit(values) {
-        props.setStaticInfo(values);
         props.setJobInfo(prevInfo => {
             return {
                 ...prevInfo,
-                numeJob: values.nume_job,
+                numeJob: values.numeJob,
                 jobType: values.jobType,
                 locatie: values.locatie,
                 jobCategory: values.jobCategory,
@@ -39,7 +38,14 @@ export default function StaticInfoSection(props) {
         <div className="form-cls">
             <Formik
                 enableReinitialize={true}
-                initialValues={props.staticInfo}
+                initialValues={{
+                    numeJob: props.jobInfo.numeJob,
+                    jobType: props.jobInfo.jobType,
+                    locatie: props.jobInfo.locatie,
+                    jobCategory: props.jobInfo.jobCategory,
+                    descriere: props.jobInfo.descriere,
+                    dataMaxima: props.jobInfo.dataMaxima
+                }}
 
                 onSubmit={(values) => {
                     handleSubmit(values);
@@ -54,14 +60,14 @@ export default function StaticInfoSection(props) {
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputNJ">Nume job*</label>
                                 <input type="text"
-                                    name="nume_job"
-                                    value={props.values.nume_job}
-                                    className={props.errors.nume_job && props.touched.nume_job ? "form-control is-invalid" : "form-control"}
+                                    name="numeJob"
+                                    value={props.values.numeJob}
+                                    className={props.errors.numeJob && props.touched.numeJob ? "form-control is-invalid" : "form-control"}
                                     id="inputNJ"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                 />
-                                {props.errors.nume_job && props.touched.nume_job && <p className="text-danger">{props.errors.nume_job}</p>}
+                                {props.errors.numeJob && props.touched.numeJob && <p className="text-danger">{props.errors.numeJob}</p>}
                             </div>
 
                             <div className="form-group col-md-6">

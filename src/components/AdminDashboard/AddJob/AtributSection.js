@@ -21,40 +21,29 @@ export default function AtributSection(props) {
     });
 
     function deleteAtribut(id) {
-        props.setAtributePersonale(prevAtributs => {
-            props.setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    atributePersonale: prevAtributs.filter((atributItem, index) => {
-                        return index !== id;
-                    })
-                }
-            })
-            return prevAtributs.filter((atributItem, index) => {
-                return index !== id;
-            });
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                atributePersonale: prevInfo.atributePersonale.filter((atributItem, index) => {
+                    return index !== id;
+                })
+            }
         })
-
     }
 
     function deleteAtributPermanent(id) {
 
-        const atributForDelete = props.atributePersonale.filter((item, index) => {
+        const atributForDelete = props.jobInfo.atributePersonale.filter((item, index) => {
             return index === id ? item : null
         })
 
-        props.setAtributePersonale(prevAtributs => {
-            props.setJobInfo(prevInfo => {
-                return {
-                    ...prevInfo,
-                    atributePersonale: prevAtributs.filter((atributItem, index) => {
-                        return index !== id;
-                    })
-                }
-            })
-            return prevAtributs.filter((atributItem, index) => {
-                return index !== id;
-            });
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                atributePersonale: prevInfo.atributePersonale.filter((atributItem, index) => {
+                    return index !== id;
+                })
+            }
         })
 
         jobService.deleteAtributPersonal(atributForDelete[0].id).then(
@@ -88,7 +77,7 @@ export default function AtributSection(props) {
 
     function editAtribut(id) {
 
-        const atribut1 = props.atributePersonale.filter((atributItem, index) => {
+        const atribut1 = props.jobInfo.atributePersonale.filter((atributItem, index) => {
             return index === id;
         });
 
@@ -183,7 +172,7 @@ export default function AtributSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Atributes</h3>
-                {props.atributePersonale.length === 0 ? null : <span className="indicator">{props.atributePersonale.length}</span>}
+                {props.jobInfo.atributePersonale.length === 0 ? null : <span className="indicator">{props.jobInfo.atributePersonale.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -192,9 +181,9 @@ export default function AtributSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.atributePersonale.length === 0 ? null : (
+                    {props.jobInfo.atributePersonale.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.atributePersonale.map((rowItem, index) => {
+                            {props.jobInfo.atributePersonale.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -224,7 +213,7 @@ export default function AtributSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateAtribut = props.atributePersonale.filter((item) => item.atribut === values.atribut)
+                            const duplicateAtribut = props.jobInfo.atributePersonale.filter((item) => item.atribut === values.atribut)
 
                             if (duplicateAtribut.length === 0) {
                                 handleSubmit(values);

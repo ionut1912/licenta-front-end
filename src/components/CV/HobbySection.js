@@ -17,16 +17,19 @@ export default function HobbySection(props) {
     });
 
     function deleteHobby(id) {
-        props.setHobbys(prevHobbys => {
-            return prevHobbys.filter((hobbyItem, index) => {
-                return index !== id;
-            });
-        });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                hobbys: prevInfo.hobbys.filter((hobbyItem, index) => {
+                    return index !== id;
+                }
+            )};
+        })
     }
 
     function editHobby(id) {
 
-        const hobby1 = props.hobbys.filter((hobbyItem, index) => {
+        const hobby1 = props.cv.hobbys.filter((hobbyItem, index) => {
             return index === id;
         });
 
@@ -78,7 +81,7 @@ export default function HobbySection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-paint-brush icon text-dark"></i>Hobbys</h3>
-                {props.hobbys.length === 0 ? null : <span className="indicator">{props.hobbys.length}</span>}
+                {props.cv.hobbys.length === 0 ? null : <span className="indicator">{props.cv.hobbys.length}</span>}
             </div>
 
 
@@ -88,9 +91,9 @@ export default function HobbySection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.hobbys.length === 0 ? null : (
+                    {props.cv.hobbys.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.hobbys.map((rowItem, index) => {
+                            {props.cv.hobbys.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -117,7 +120,7 @@ export default function HobbySection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateHobby = props.hobbys.filter((item) => item.hobby_name === values.hobby_name)
+                            const duplicateHobby = props.cv.hobbys.filter((item) => item.hobby_name === values.hobby_name)
 
                             if (duplicateHobby.length === 0) {
                                 handleSubmit(values);

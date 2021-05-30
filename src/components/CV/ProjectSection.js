@@ -18,16 +18,19 @@ export default function ProjectSection(props) {
     });
 
     function deleteProject(id) {
-        props.setProjects(prevProjects => {
-            return prevProjects.filter((projectItem, index) => {
-                return index !== id;
-            });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                projects: prevInfo.projects.filter((projectItem, index) => {
+                    return index !== id;
+                })
+            };
         });
     }
 
     function editProject(id) {
 
-        const project1 = props.projects.filter((projectItem, index) => {
+        const project1 = props.cv.projects.filter((projectItem, index) => {
             return index === id;
         });
 
@@ -82,7 +85,7 @@ export default function ProjectSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()} ><i className="fa fa-file icon text-dark "></i> Projects</h3>
-                {props.projects.length === 0 ? null : <span className="indicator">{props.projects.length}</span>}
+                {props.cv.projects.length === 0 ? null : <span className="indicator">{props.cv.projects.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -91,9 +94,9 @@ export default function ProjectSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.projects.length === 0 ? null : (
+                    {props.cv.projects.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.projects.map((rowItem, index) => {
+                            {props.cv.projects.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -121,7 +124,7 @@ export default function ProjectSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateProject = props.projects.filter((item) => item.project_name === values.project_name)
+                            const duplicateProject = props.cv.projects.filter((item) => item.project_name === values.project_name)
 
                             if (duplicateProject.length === 0) {
                                 handleSubmit(values);

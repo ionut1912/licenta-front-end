@@ -92,6 +92,12 @@ textarea {
   cursor: pointer;
 }
 
+.carousel-indicators li:hover {
+  transform: translateY(-2px);
+  transition: 0.25s;
+  background-color: #fc1930d5;
+}
+
 .right-arrow {
   position: absolute;
   top: 40%;

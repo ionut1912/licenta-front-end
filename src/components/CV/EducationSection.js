@@ -23,16 +23,19 @@ export default function EducationSection(props) {
     });
 
     function deleteEducation(id) {
-        props.setEducations(prevEducations => {
-            return prevEducations.filter((educationItem, index) => {
-                return index !== id;
-            });
-        });
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                educations: prevInfo.educations.filter((educationItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
     }
 
     function editEducation(id) {
 
-        const education1 = props.educations.filter((educationItem, index) => {
+        const education1 = props.cv.educations.filter((educationItem, index) => {
             return index === id;
         });
 
@@ -104,7 +107,7 @@ export default function EducationSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
-                {props.educations.length === 0 ? null : <span className="indicator">{props.educations.length}</span>}
+                {props.cv.educations.length === 0 ? null : <span className="indicator">{props.cv.educations.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -113,9 +116,9 @@ export default function EducationSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.educations.length === 0 ? null : (
+                    {props.cv.educations.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.educations.map((rowItem, index) => {
+                            {props.cv.educations.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -148,7 +151,7 @@ export default function EducationSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateEducation = props.educations.filter((item) => item.degree === values.degree)
+                            const duplicateEducation = props.cv.educations.filter((item) => item.degree === values.degree)
 
                             if (duplicateEducation.length === 0) {
                                 handleSubmit(values);

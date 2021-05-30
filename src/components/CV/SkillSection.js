@@ -21,44 +21,30 @@ export default function SkillSection(props) {
     });
 
     function deleteSkill(id) {
-        props.setSkills(prevSkills => {
-            if (props.setJobInfo !== undefined) {
-                props.setJobInfo(prevInfo => {
-                    return {
-                        ...prevInfo,
-                        skills: prevSkills.filter((skillItem, index) => {
-                            return index !== id;
-                        })
-                    }
+        props.setData(prevInfo => {
+            return {
+                ...prevInfo,
+                skills: prevInfo.skills.filter((skillItem, index) => {
+                    return index !== id;
                 })
             }
-            return prevSkills.filter((skillItem, index) => {
-                return index !== id;
-            });
-        });
+        })
     }
 
     function deleteSkillPermanent(id) {
 
-        const skillForDelete = props.skills.filter((item, index) => {
+        const skillForDelete = props.data.skills.filter((item, index) => {
             return index === id ? item : null
         })
 
-        props.setSkills(prevSkills => {
-            if (props.setJobInfo !== undefined) {
-                props.setJobInfo(prevInfo => {
-                    return {
-                        ...prevInfo,
-                        skills: prevSkills.filter((skillItem, index) => {
-                            return index !== id;
-                        })
-                    }
+        props.setData(prevInfo => {
+            return {
+                ...prevInfo,
+                skills: prevInfo.skills.filter((skillItem, index) => {
+                    return index !== id;
                 })
             }
-            return prevSkills.filter((skillItem, index) => {
-                return index !== id;
-            });
-        });
+        })
 
         jobService.deleteSkill(skillForDelete[0].id).then(
             () => {
@@ -90,7 +76,7 @@ export default function SkillSection(props) {
 
     function editSkill(id) {
 
-        const skill1 = props.skills.filter((skillItem, index) => {
+        const skill1 = props.data.skills.filter((skillItem, index) => {
             return index === id;
         });
 
@@ -139,6 +125,7 @@ export default function SkillSection(props) {
             }
         )
     }
+
     function removeSkill() {
         if (props.editJob && skill.id !== '')
             setConfirmDialog({
@@ -184,7 +171,7 @@ export default function SkillSection(props) {
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-mouse icon text-dark"></i> Skills</h3>
-                {props.skills.length === 0 ? null : <span className="indicator">{props.skills.length}</span>}
+                {props.data.skills.length === 0 ? null : <span className="indicator">{props.data.skills.length}</span>}
             </div>
 
             <hr className="hr" />
@@ -193,9 +180,9 @@ export default function SkillSection(props) {
             }}>
 
                 <div className="form-row">
-                    {props.skills.length === 0 ? null : (
+                    {props.data.skills.length === 0 ? null : (
                         <div className="form-group col-md-12">
-                            {props.skills.map((rowItem, index) => {
+                            {props.data.skills.map((rowItem, index) => {
                                 return (
                                     <Row
                                         key={index}
@@ -225,7 +212,7 @@ export default function SkillSection(props) {
                         }
 
                         onSubmit={(values, { resetForm }) => {
-                            const duplicateSkill = props.skills.filter((item) => item.skill === values.skill)
+                            const duplicateSkill = props.data.skills.filter((item) => item.skill === values.skill)
 
                             if (duplicateSkill.length === 0) {
                                 handleSubmit(values);
