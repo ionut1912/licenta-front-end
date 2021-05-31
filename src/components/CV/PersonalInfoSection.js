@@ -108,20 +108,21 @@ export default function PersonalInfoSection(props) {
     return (
         <div className="form-cls">
             <Formik
+                enableReinitialize={true}
                 initialValues={
                     currentUser === null || addCv === true ?
                         {
-                            first_name: '',
-                            last_name: '',
-                            email: '',
-                            phone: '',
-                            city: '',
-                            nationality: '',
-                            address: '',
-                            dateOfBirth: '',
-                            drivingLicence: '',
-                            linkedin: '',
-                            personalSite: ''
+                            first_name: props.cv.first_name,
+                            last_name: props.cv.last_name,
+                            email: props.cv.email,
+                            phone: props.cv.phone,
+                            city: props.cv.city,
+                            nationality: props.cv.nationality,
+                            address: props.cv.address,
+                            dateOfBirth: props.cv.dateOfBirth,
+                            drivingLicence: props.cv.drivingLicence,
+                            linkedin: props.cv.linkedin,
+                            personalSite: props.cv.personalSite
                         }
                         :
                         {
@@ -147,7 +148,6 @@ export default function PersonalInfoSection(props) {
                 validationSchema={validateSchema}>
                 {props => (
                     <form onSubmit={props.handleSubmit} >
-
                         <div className={addCv === true ? null : "row-img-cv"} >
                             {addCv === true ? null :
                                 <div className="left-img" style={baseImage === '' && props.values.img === null ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>

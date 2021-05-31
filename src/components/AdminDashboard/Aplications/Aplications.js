@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField, Toolbar } from '@material-ui/core';
+import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField } from '@material-ui/core';
 import useTable from '../useTable'
 import Button from '../Button'
-import AddIcon from '@material-ui/icons/Add';
 import aplicariiService from '../../../services/aplicareJob.serivce';
 import CloseIcon from '@material-ui/icons/Close';
 import Notification from '../../Notification'
@@ -215,15 +214,7 @@ function Aplications(props) {
 
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
-            <Toolbar>
-                <Button
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    className={classes.newBtn}
-                    onClick={() => props.setState(7)}
-                    text="Add new CV"
-                />
-            </Toolbar>
+
             <Table className={classes.table}>
                 <TblHead />
                 <TableHead className={classes.filterHead}>

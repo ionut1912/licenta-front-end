@@ -89,6 +89,7 @@ const useStyle = makeStyles(theme => ({
 
 const headCells = [
     { id: 'numeJob', label: 'Name job' },
+    { id: 'jobCategory', label: 'Job category' },
     { id: 'jobType', label: 'Job type' },
     { id: 'locatie', label: 'Location' },
     { id: 'last_date', label: 'Last date' },
@@ -98,6 +99,7 @@ const headCells = [
 
 const filterInputs = [
     { id: 'numeJob', label: 'Search by name' },
+    { id: 'jobCategory', label: 'Search by job category' },
     { id: 'jobType', label: 'Search by job type' },
     { id: 'location', label: 'Search by location' },
     { id: 'last_date', label: 'Search by last date' },
@@ -138,6 +140,8 @@ function JobsList(props) {
                     return items;
                 else if (name === "numeJob")
                     return items.filter(x => x.numeJob.toLowerCase().includes(value.toLowerCase()))
+                else if (name === "jobCategory")
+                    return items.filter(x => x.jobCategory.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "jobType")
                     return items.filter(x => x.jobType.toLowerCase().includes(value.toLowerCase()))
                 else if (name === "location")
@@ -157,7 +161,7 @@ function JobsList(props) {
 
     useEffect(() => {
         getData();
-        
+
         return function cleanup() {
             setRecords([]);
         }
@@ -203,7 +207,7 @@ function JobsList(props) {
                         {
                             filterInputs.map((filterCell, index) => (
                                 <TableCell key={index}>
-                                    {index === 4 ? null : <TextField
+                                    {index === 5 ? null : <TextField
                                         variant="outlined"
                                         name={filterCell.id}
                                         label={filterCell.label}
@@ -220,6 +224,7 @@ function JobsList(props) {
                         recordsAfterPagingAndSortingJobs().map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell>{item.numeJob}</TableCell>
+                                <TableCell>{item.jobCategory}</TableCell>
                                 <TableCell>{item.jobType}</TableCell>
                                 <TableCell>{item.locatie}</TableCell>
                                 <TableCell>{format(item.dataMaxima)}</TableCell>
@@ -269,6 +274,10 @@ function JobsList(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
 

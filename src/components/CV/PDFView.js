@@ -4,8 +4,63 @@ import EmailIcon from '@material-ui/icons/Email';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LanguageIcon from '@material-ui/icons/Language';
+import cvService from '../../services/cv-service'
 
 const PDFView = ({ props }) => {
+
+    function format(date) {
+        return new Intl.DateTimeFormat("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        }).format(new Date(date));
+    }
+
+    function addEditCv() {
+
+        if (props.editCv === false) {
+            cvService.addCv(props.cv).then(
+                response => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Cv added with success!',
+                        type: 'success'
+                    });
+                    props.reset();
+                    props.setOpenPopup(false);
+                },
+                error => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
+                    props.setOpenPopup(false);
+                }
+            )
+        } else {
+            cvService.updateCv(props.cv).then(
+                response => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Cv updated with success!',
+                        type: 'success'
+                    });
+                    props.reset();
+                    props.setEditCv(false);
+                    props.setOpenPopup(false);
+                },
+                error => {
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
+                    props.setOpenPopup(false);
+                }
+            )
+        }
+    }
 
     return (
         <div>
@@ -17,7 +72,7 @@ const PDFView = ({ props }) => {
                 <div className="personal-info">
                     <div className="left-side">
                         <h6>Personal informations</h6>
-                        {props.cv.img_cv === '' ? null : <img src={props.cv.img_cv} alt="" />}
+                        {props.cv.img_cv === '' || props.cv.img_cv === undefined ? null : <img src={props.cv.img_cv} alt="" />}
                     </div>
 
                     <div className="right-side">
@@ -35,7 +90,7 @@ const PDFView = ({ props }) => {
                         <div className="info-row">
                             {props.cv.nationality === '' ? null : <p><span className="label">Nationalitate: </span>{props.cv.nationality}</p>}
                             {props.cv.nationality === '' ? null : <span className="delimitator">|</span>}
-                            {props.cv.dateOfBirth === '' ? null : <p><span className="label">Data nasterii: </span>{props.cv.dateOfBirth}</p>}
+                            {props.cv.dateOfBirth === '' || props.cv.dateOfBirth === null ? null : <p><span className="label">Data nasterii: </span>{format(props.cv.dateOfBirth)}</p>}
                             {props.cv.drivingLicence === '' || props.cv.dateOfBirth === '' ? null : <span className="delimitator">|</span>}
                             {props.cv.drivingLicence === '' ? null : <p><span className="label">Drive licence: </span>{props.cv.drivingLicence}</p>}
                         </div>
@@ -190,7 +245,7 @@ const PDFView = ({ props }) => {
                                         <p className="name-project">{item.project_name}</p>
                                     </div>
                                     <div className="right-side">
-                                        <p>{item.descrire}</p>
+                                        <p>{item.descriere}</p>
                                     </div>
                                 </div>
                             )
@@ -198,6 +253,12 @@ const PDFView = ({ props }) => {
                     </div>
                 }
             </div>
+
+            {props.showButton === false ? null :
+                <div className="btn-export">
+                    <button className="btn btn-primary" onClick={addEditCv}>{props.editCv === false ? "Add cv" : "Update cv"}</button>
+                </div>
+            }
         </div>
     )
 }

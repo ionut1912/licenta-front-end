@@ -51,7 +51,7 @@ export default function Sidebar(props) {
               </p>
             </li>
 
-            <li className="nav-text" onClick={() => { props.setState(4); }}>
+            <li className="nav-text" onClick={() => { props.setState(4); props.setItemForEdit(''); }}>
               <p className={props.state === 4 ? "selected" : null}>
                 <i className="fas fa-briefcase"></i>
                 <span>Add job</span>

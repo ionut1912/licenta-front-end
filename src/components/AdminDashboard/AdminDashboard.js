@@ -24,8 +24,8 @@ function AdminDashboard(props) {
             {state === 3 ? <JobsList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} /> : null}
             {state === 4 ? <NewEditJob sideState={props.showSidebar} setItemForEdit={setItemForEdit} itemForEdit={itemForEdit} /> : null}
             {state === 5 ? <Aplications sideState={props.showSidebar} /> : null}
-            {state === 6 ? <CVList sideState={props.showSidebar} /> : null}
-            {state === 7 ? <AddCV sideState={props.showSidebar} /> : null}
+            {state === 6 ? <CVList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} /> : null}
+            {state === 7 ? <AddCV sideState={props.showSidebar} setItemForEdit={setItemForEdit} itemForEdit={itemForEdit} /> : null}
         </div>
     )
 }

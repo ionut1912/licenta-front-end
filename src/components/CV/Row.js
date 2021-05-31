@@ -4,6 +4,7 @@ import "./Row.css"
 export default function Row(props) {
 
     function handleClickDelete() {
+
         if (props.deletePermanent)
             props.setConfirmDialog({
                 isOpen: true,

@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import Notification from '../Notification'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function PersonalDescription(props) {
 
     const [personalDescription, setPersonalDescription] = useState(false);
 
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
 
@@ -15,20 +18,59 @@ export default function PersonalDescription(props) {
             .required("This field is required!"),
     })
 
-    function removeDescription() {
+    function cleanAndRemoveDescriptionPermanent() {
+
         props.setCv(prevInfo => {
             return {
                 ...prevInfo,
                 personalDescription: { descriere: '' }
             }
         });
+        cvService.deletePersonalDescription(props.cv.personalDescription.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
 
-        setNotify({
-            isOpen: true,
-            message: 'Description deleted!',
-            type: 'success'
-        });
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
     }
+
+    function removeDescription() {
+        if (props.editCv && props.cv.personalDescription.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveDescriptionPermanent()
+            })
+        else
+            props.setCv(prevInfo => {
+                return {
+                    ...prevInfo,
+                    personalDescription: { descriere: '' }
+                }
+            });
+    }
+
 
     function handleSubmit(values) {
         props.setCv(prevInfo => {
@@ -58,9 +100,9 @@ export default function PersonalDescription(props) {
                 <Formik
                     enableReinitialize={true}
 
-                    initialValues={{
-                        descriere: ''
-                    }}
+                    initialValues={
+                        props.cv.personalDescription
+                    }
 
                     onSubmit={(values) => {
                         handleSubmit(values);
@@ -94,6 +136,10 @@ export default function PersonalDescription(props) {
                 <Notification
                     notify={notify}
                     setNotify={setNotify}
+                />
+                <ConfirmDialog
+                    confirmDialog={confirmDialog}
+                    setConfirmDialog={setConfirmDialog}
                 />
                 <hr className="hr" />
             </div>

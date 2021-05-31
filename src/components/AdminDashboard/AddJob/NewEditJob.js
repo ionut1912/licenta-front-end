@@ -13,7 +13,7 @@ export default function NewEditJob(props) {
 
     const [stateForm, setStateForm] = useState(1);
     const [openPopupView, setOpenPopupView] = useState(false);
-    const [recordForView, setRecordForView] = useState("");
+
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [editJob, setEditJob] = useState(false);
 
@@ -71,13 +71,6 @@ export default function NewEditJob(props) {
         setStateForm(1);
     }
 
-    function handleSubmit() {
-        console.log(jobInfo);
-        setRecordForView(jobInfo);
-        setOpenPopupView(true);
-    }
-
-
     function format(date) {
         return new Intl.DateTimeFormat("fr-CA", {
             year: "numeric",
@@ -132,18 +125,18 @@ export default function NewEditJob(props) {
                         <DetaliuSection jobInfo={jobInfo} setJobInfo={setJobInfo} addDetaliu={addDetaliu} editJob={editJob} />
                         <div className="two-btn">
                             <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
-                            <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Finish</button>
+                            <button type="submit" className="btn btn-primary" onClick={() => setOpenPopupView(true)}>Finish</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <ViewPopup
-                title={recordForView.numeJob}
-                subTitle={recordForView.locatie}
+                title={jobInfo.numeJob}
+                subTitle={jobInfo.locatie}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <JobView recordForView={recordForView} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} setEditJob={setEditJob} />
+                <JobView recordForView={jobInfo} buttons={false} buttonsAddJob={true} setOpenPopup={setOpenPopupView} setNotify={setNotify} reset={reset} editJob={editJob} setEditJob={setEditJob} />
             </ViewPopup>
 
             <Notification

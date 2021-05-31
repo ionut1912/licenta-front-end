@@ -106,12 +106,18 @@ export default function useTable(records, headCells, filterFunction) {
             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     }
 
+    const recordsAfterPagingAndSortingCVs = () => {
+        return stableSort(filterFunction.fn(records), getSorting(order, orderBy))
+            .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+    }
+
     return {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSortingUsers,
         recordsAfterPagingAndSortingJobs,
-        recordsAfterPagingAndSortingAplicarii
+        recordsAfterPagingAndSortingAplicarii,
+        recordsAfterPagingAndSortingCVs
     }
 }
 

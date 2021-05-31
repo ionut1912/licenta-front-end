@@ -3,18 +3,22 @@ import Notification from '../Notification'
 import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function ProjectSection(props) {
 
     const formRef = useRef();
 
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     const [projectExperience, setProjectExperience] = useState(false);
     const [projectFields, setProjectFields] = useState(false);
     const [project, setProject] = useState({
+        id: "",
         project_name: "",
-        descrire: ""
+        descriere: ""
     });
 
     function deleteProject(id) {
@@ -28,6 +32,50 @@ export default function ProjectSection(props) {
         });
     }
 
+    function deleteProjectPermanent(id) {
+
+        const projectForDelete = props.cv.projects.filter((item, index) => {
+            return index === id ? item : null
+        })
+
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                projects: prevInfo.projects.filter((projectItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+
+        cvService.deleteProject(projectForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+
+    }
+
     function editProject(id) {
 
         const project1 = props.cv.projects.filter((projectItem, index) => {
@@ -35,8 +83,9 @@ export default function ProjectSection(props) {
         });
 
         setProject({
+            id: project1[0].id,
             project_name: project1[0].project_name,
-            descrire: project1[0].descrire
+            descriere: project1[0].descriere
         })
 
         deleteProject(id);
@@ -44,15 +93,60 @@ export default function ProjectSection(props) {
         setProjectFields(true);
     }
 
-    function removeProject() {
+    function cleanAndRemoveProjectPermanent() {
 
         setProjectFields(false);
 
         setProject({
+            id: '',
             project_name: "",
-            descrire: ""
+            descriere: ""
         })
+        cvService.deleteProject(project.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
 
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function removeProject() {
+        if (props.editCv && project.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveProjectPermanent()
+            })
+        else {
+            setProjectFields(false);
+
+            setProject({
+                id: '',
+                project_name: "",
+                descriere: ""
+            })
+        }
     }
 
     const clickSectionTitle = () => {
@@ -75,7 +169,7 @@ export default function ProjectSection(props) {
 
         setProject({
             project_name: "",
-            descrire: ""
+            descriere: ""
         })
 
 
@@ -101,8 +195,11 @@ export default function ProjectSection(props) {
                                     <Row
                                         key={index}
                                         id={index}
+                                        rowItem={rowItem}
                                         title={rowItem.project_name}
-                                        onDelete={deleteProject}
+                                        deletePermanent={props.editCv && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editCv && rowItem.id !== '' ? deleteProjectPermanent : deleteProject}
                                         onEdit={project.project_name !== "" ? (() => { }) : editProject}
                                     />);
                             })}
@@ -118,8 +215,9 @@ export default function ProjectSection(props) {
 
                         initialValues={
                             {
+                                id: project.id,
                                 project_name: project.project_name,
-                                descrire: project.descrire
+                                descriere: project.descriere
                             }
                         }
 
@@ -164,10 +262,10 @@ export default function ProjectSection(props) {
                                     <div className="form-group col-md-12">
                                         <label htmlFor="inputDesc">Description</label>
                                         <textarea
-                                            name="descrire"
+                                            name="descriere"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
-                                            value={props.values.descrire}
+                                            value={props.values.descriere}
                                             className="form-control"
                                             id="inputDesc"
                                             placeholder="ex: Am folosit Spring boot si React" />
@@ -191,6 +289,10 @@ export default function ProjectSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )
