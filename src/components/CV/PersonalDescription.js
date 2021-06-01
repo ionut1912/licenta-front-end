@@ -20,12 +20,6 @@ export default function PersonalDescription(props) {
 
     function cleanAndRemoveDescriptionPermanent() {
 
-        props.setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                personalDescription: { descriere: '' }
-            }
-        });
         cvService.deletePersonalDescription(props.cv.personalDescription.id).then(
             () => {
                 setConfirmDialog({
@@ -37,7 +31,14 @@ export default function PersonalDescription(props) {
                     isOpen: true,
                     message: 'Deleted Successfull!',
                     type: 'error'
-                })
+                });
+
+                props.setCv(prevInfo => {
+                    return {
+                        ...prevInfo,
+                        personalDescription: { descriere: '' }
+                    }
+                });
             },
             error => {
                 setConfirmDialog({

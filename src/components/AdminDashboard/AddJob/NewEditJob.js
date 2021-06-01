@@ -8,7 +8,6 @@ import ViewPopup from '../../ViewPopup'
 import Notification from '../../Notification'
 import '../../CV/MakeCV.css'
 
-
 export default function NewEditJob(props) {
 
     const [stateForm, setStateForm] = useState(1);
@@ -28,24 +27,6 @@ export default function NewEditJob(props) {
         atributePersonale: [],
         moreDetails: []
     })
-
-    function addDetaliu(newDetaliu) {
-        setJobInfo(prevInfo => {
-            return {
-                ...prevInfo,
-                moreDetails: [...prevInfo.moreDetails, newDetaliu]
-            }
-        })
-    }
-
-    function addAtributPersonal(newAtribute) {
-        setJobInfo(prevInfo => {
-            return {
-                ...prevInfo,
-                atributePersonale: [...prevInfo.atributePersonale, newAtribute]
-            }
-        })
-    }
 
     function addSkill(newSkill) {
         setJobInfo(prevInfo => {
@@ -121,8 +102,8 @@ export default function NewEditJob(props) {
                         display: stateForm !== 2 && 'none'
                     }}>
                         <SkillSection data={jobInfo} setData={setJobInfo} addSkill={addSkill} editJob={editJob} />
-                        <AtributSection jobInfo={jobInfo} setJobInfo={setJobInfo} addAtributPersonal={addAtributPersonal} editJob={editJob} forJob={true} />
-                        <DetaliuSection jobInfo={jobInfo} setJobInfo={setJobInfo} addDetaliu={addDetaliu} editJob={editJob} />
+                        <AtributSection jobInfo={jobInfo} setJobInfo={setJobInfo} editJob={editJob} forJob={true} />
+                        <DetaliuSection jobInfo={jobInfo} setJobInfo={setJobInfo} editJob={editJob} />
                         <div className="two-btn">
                             <button className="btn btn-primary btn-prev" onClick={() => setStateForm(1)}><i className="fa fa-arrow-left" aria-hidden="true"> Previous</i></button>
                             <button type="submit" className="btn btn-primary" onClick={() => setOpenPopupView(true)}>Finish</button>

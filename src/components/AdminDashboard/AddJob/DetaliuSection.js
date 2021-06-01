@@ -20,6 +20,32 @@ export default function DetaliuSection(props) {
         detaliu: ""
     });
 
+
+    function addDetaliu(newDetaliu) {
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                moreDetails: [...prevInfo.moreDetails, newDetaliu]
+            }
+        })
+    }
+
+    function editDetaliu(id) {
+
+        const detaliu1 = props.jobInfo.moreDetails.filter((detaliuItem, index) => {
+            return index === id;
+        });
+
+        setDetaliu({
+            id: detaliu1[0].id,
+            detaliu: detaliu1[0].detaliu
+        })
+
+        deleteDetaliu(id);
+
+        setDetaliuFields(true);
+    }
+
     function deleteDetaliu(id) {
         props.setJobInfo(prevInfo => {
             return {
@@ -74,38 +100,26 @@ export default function DetaliuSection(props) {
         )
     }
 
-    function editDetaliu(id) {
-
-        const detaliu1 = props.jobInfo.moreDetails.filter((detaliuItem, index) => {
-            return index === id;
-        });
-
-        setDetaliu({
-            id: detaliu1[0].id,
-            detaliu: detaliu1[0].detaliu
-        })
-
-        deleteDetaliu(id);
-
-        setDetaliuFields(true);
-    }
-
     function cleanAndRemoveDetailPermanent() {
-
-        setDetaliuFields(false);
 
         jobService.deleteDetaliu(detaliu.id).then(
             () => {
                 setConfirmDialog({
                     ...confirmDialog,
                     isOpen: false
-                })
+                });
 
                 setNotify({
                     isOpen: true,
                     message: 'Deleted Successfull!',
                     type: 'error'
-                })
+                });
+
+                setDetaliuFields(false);
+                setDetaliu({
+                    id: '',
+                    detaliu: ""
+                });
             },
             error => {
                 setConfirmDialog({
@@ -120,11 +134,6 @@ export default function DetaliuSection(props) {
                 })
             }
         )
-
-        setDetaliu({
-            id: '',
-            detaliu: ""
-        })
     }
 
     function removeDetaliu() {
@@ -160,7 +169,7 @@ export default function DetaliuSection(props) {
 
     function handleSubmit(values) {
 
-        props.addDetaliu(values);
+        addDetaliu(values);
 
         setDetaliuFields(false);
 

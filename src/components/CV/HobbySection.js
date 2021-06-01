@@ -3,28 +3,30 @@ import { Formik } from 'formik';
 import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function HobbySection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [hobbyExperience, setHobbyExperience] = useState(false);
     const [hobbyFields, setHobbyFields] = useState(false);
     const [hobby, setHobby] = useState({
+        id: '',
         hobby_name: ""
     });
 
-    function deleteHobby(id) {
+    function addHobby(newHobby) {
         props.setCv(prevInfo => {
             return {
                 ...prevInfo,
-                hobbys: prevInfo.hobbys.filter((hobbyItem, index) => {
-                    return index !== id;
-                }
-            )};
-        })
+                hobbys: [...prevInfo.hobbys, newHobby]
+            }
+        });
     }
 
     function editHobby(id) {
@@ -34,6 +36,7 @@ export default function HobbySection(props) {
         });
 
         setHobby({
+            id: hobby1[0].id,
             hobby_name: hobby1[0].hobby_name
         })
 
@@ -42,14 +45,115 @@ export default function HobbySection(props) {
         setHobbyFields(true);
     }
 
-    function removeHobby() {
+    function deleteHobby(id) {
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                hobbys: prevInfo.hobbys.filter((hobbyItem, index) => {
+                    return index !== id;
+                }
+                )
+            };
+        })
+    }
 
-        setHobbyFields(false);
+    function deleteHobbyPermanent(id) {
 
-        setHobby({
-            hobby_name: ""
+        const hobbyForDelete = props.cv.hobbys.filter((hobbyItem, index) => {
+            return index === id;
         })
 
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                hobbys: prevInfo.hobbys.filter((hobbyItem, index) => {
+                    return index === id;
+                }
+                )
+            };
+        })
+
+        cvService.deleteHobby(hobbyForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function cleanAndRemoveHobbyPermanent() {
+
+        cvService.deleteHobby(hobby.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+                setHobbyFields(false);
+                setHobby({
+                    id: '',
+                    hobby_name: ""
+                });
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+
+    }
+
+    function removeHobby() {
+
+        if (props.editCv && hobby.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveHobbyPermanent()
+            })
+        else {
+            setHobbyFields(false);
+
+            setHobby({
+                id: '',
+                hobby_name: ""
+            })
+        }
     }
 
     const clickSectionTitle = () => {
@@ -66,11 +170,12 @@ export default function HobbySection(props) {
 
     function handleSubmit(values) {
 
-        props.addHobby(values);
+        addHobby(values);
 
         setHobbyFields(false);
 
         setHobby({
+            id: '',
             hobby_name: ""
         })
 
@@ -99,7 +204,9 @@ export default function HobbySection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.hobby_name}
-                                        onDelete={deleteHobby}
+                                        deletePermanent={props.editCv && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editCv && rowItem.id !== '' ? deleteHobbyPermanent : deleteHobby}
                                         onEdit={hobby.hobby_name !== "" ? (() => { }) : editHobby}
                                     />);
                             })}
@@ -115,6 +222,7 @@ export default function HobbySection(props) {
 
                         initialValues={
                             {
+                                id: hobby.id,
                                 hobby_name: hobby.hobby_name
                             }
                         }
@@ -175,6 +283,10 @@ export default function HobbySection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )

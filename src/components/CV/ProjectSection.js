@@ -21,6 +21,32 @@ export default function ProjectSection(props) {
         descriere: ""
     });
 
+    function addProject(newProject) {
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                projects: [...prevInfo.projects, newProject]
+            }
+        });
+    }
+
+    function editProject(id) {
+
+        const project1 = props.cv.projects.filter((projectItem, index) => {
+            return index === id;
+        });
+
+        setProject({
+            id: project1[0].id,
+            project_name: project1[0].project_name,
+            descriere: project1[0].descriere
+        })
+
+        deleteProject(id);
+
+        setProjectFields(true);
+    }
+
     function deleteProject(id) {
         props.setCv(prevInfo => {
             return {
@@ -76,32 +102,8 @@ export default function ProjectSection(props) {
 
     }
 
-    function editProject(id) {
-
-        const project1 = props.cv.projects.filter((projectItem, index) => {
-            return index === id;
-        });
-
-        setProject({
-            id: project1[0].id,
-            project_name: project1[0].project_name,
-            descriere: project1[0].descriere
-        })
-
-        deleteProject(id);
-
-        setProjectFields(true);
-    }
-
     function cleanAndRemoveProjectPermanent() {
 
-        setProjectFields(false);
-
-        setProject({
-            id: '',
-            project_name: "",
-            descriere: ""
-        })
         cvService.deleteProject(project.id).then(
             () => {
                 setConfirmDialog({
@@ -113,6 +115,14 @@ export default function ProjectSection(props) {
                     isOpen: true,
                     message: 'Deleted Successfull!',
                     type: 'error'
+                })
+
+                setProjectFields(false);
+
+                setProject({
+                    id: '',
+                    project_name: "",
+                    descriere: ""
                 })
             },
             error => {
@@ -163,11 +173,12 @@ export default function ProjectSection(props) {
 
     function handleSubmit(values) {
 
-        props.addProject(values);
+        addProject(values);
 
         setProjectFields(false);
 
         setProject({
+            id: '',
             project_name: "",
             descriere: ""
         })

@@ -47,56 +47,11 @@ export default function MakeCV(props) {
         projects: []
     });
 
-    function addWork(newWork) {
-        setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                works: [...prevInfo.works, newWork]
-            }
-        });
-    }
-
-    function addEducation(newEducation) {
-        setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                educations: [...prevInfo.educations, newEducation]
-            }
-        });
-    }
-
     function addSkill(newSkill) {
         setCv(prevInfo => {
             return {
                 ...prevInfo,
                 skills: [...prevInfo.skills, newSkill]
-            }
-        });
-    }
-
-    function addLanguage(newLanguage) {
-        setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                languages: [...prevInfo.languages, newLanguage]
-            }
-        });
-    }
-
-    function addHobby(newHobby) {
-        setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                hobbys: [...prevInfo.hobbys, newHobby]
-            }
-        });
-    }
-
-    function addProject(newProject) {
-        setCv(prevInfo => {
-            return {
-                ...prevInfo,
-                projects: [...prevInfo.projects, newProject]
             }
         });
     }
@@ -210,12 +165,12 @@ export default function MakeCV(props) {
                     <h3>Experiences</h3>
                     <hr className="hr" />
                     <PersonalDescription cv={cv} setCv={setCv} editCv={editCv} />
-                    <WorkSection cv={cv} setCv={setCv} addWork={addWork} editCv={editCv} />
-                    <EducationSection cv={cv} setCv={setCv} addEducation={addEducation} editCv={editCv} />
+                    <WorkSection cv={cv} setCv={setCv} editCv={editCv} />
+                    <EducationSection cv={cv} setCv={setCv} editCv={editCv} />
                     <SkillSection data={cv} setData={setCv} addSkill={addSkill} editCv={editCv} />
-                    <LanguageSection cv={cv} setCv={setCv} addLanguage={addLanguage} editCv={editCv} />
-                    <HobbySection cv={cv} setCv={setCv} addHobby={addHobby} editCv={editCv} />
-                    <ProjectSection cv={cv} setCv={setCv} addProject={addProject} editCv={editCv} />
+                    <LanguageSection cv={cv} setCv={setCv} editCv={editCv} />
+                    <HobbySection cv={cv} setCv={setCv} editCv={editCv} />
+                    <ProjectSection cv={cv} setCv={setCv} editCv={editCv} />
 
 
                     <div className="two-btn">

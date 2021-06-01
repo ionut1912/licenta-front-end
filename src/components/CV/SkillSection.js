@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import Row from './Row'
 import * as Yup from "yup";
 import jobService from '../../services/job.service'
+import cvService from '../../services/cv-service';
 
 export default function SkillSection(props) {
 
@@ -20,6 +21,22 @@ export default function SkillSection(props) {
         skill: ""
     });
 
+    function editSkill(id) {
+
+        const skill1 = props.data.skills.filter((skillItem, index) => {
+            return index === id;
+        });
+
+        setSkill({
+            id: skill1[0].id,
+            skill: skill1[0].skill
+        })
+
+        deleteSkill(id);
+
+        setSkillFields(true);
+    }
+
     function deleteSkill(id) {
         props.setData(prevInfo => {
             return {
@@ -31,7 +48,7 @@ export default function SkillSection(props) {
         })
     }
 
-    function deleteSkillPermanent(id) {
+    function deleteSkillJobPermanent(id) {
 
         const skillForDelete = props.data.skills.filter((item, index) => {
             return index === id ? item : null
@@ -74,31 +91,22 @@ export default function SkillSection(props) {
         )
     }
 
-    function editSkill(id) {
+    function deleteSkillCvPermanent(id) {
 
-        const skill1 = props.data.skills.filter((skillItem, index) => {
-            return index === id;
-        });
-
-        setSkill({
-            id: skill1[0].id,
-            skill: skill1[0].skill
+        const skillForDelete = props.data.skills.filter((item, index) => {
+            return index === id ? item : null
         })
 
-        deleteSkill(id);
-
-        setSkillFields(true);
-    }
-
-
-    function cleanAndRemoveSkillPermanent() {
-        setSkillFields(false);
-        setSkill({
-            id: '',
-            skill: ""
+        props.setData(prevInfo => {
+            return {
+                ...prevInfo,
+                skills: prevInfo.skills.filter((skillItem, index) => {
+                    return index !== id;
+                })
+            }
         })
 
-        jobService.deleteSkill(skill.id).then(
+        cvService.deleteSkill(skillForDelete[0].id).then(
             () => {
                 setConfirmDialog({
                     ...confirmDialog,
@@ -126,14 +134,94 @@ export default function SkillSection(props) {
         )
     }
 
+    function cleanAndRemoveSkillJobPermanent() {
+
+        jobService.deleteSkill(skill.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                });
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                });
+
+                setSkillFields(false);
+                setSkill({
+                    id: '',
+                    skill: ""
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function cleanAndRemoveSkillCvPermanent() {
+
+        cvService.deleteSkill(skill.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                });
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                });
+
+                setSkillFields(false);
+                setSkill({
+                    id: '',
+                    skill: ""
+                });
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
     function removeSkill() {
         if (props.editJob && skill.id !== '')
             setConfirmDialog({
                 isOpen: true,
                 title: 'Are you sure to delete this record?',
                 subTitle: "You can't undo this operation, this record will be deleted from datebase!",
-                onConfirm: () => cleanAndRemoveSkillPermanent()
+                onConfirm: () => cleanAndRemoveSkillJobPermanent()
             })
+        else if (props.editCv && skill.id !== '') {
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveSkillCvPermanent()
+            })
+        }
         else {
             setSkillFields(false);
             setSkill({
@@ -164,7 +252,7 @@ export default function SkillSection(props) {
         setSkill({
             id: '',
             skill: ""
-        })
+        });
     }
 
     return (
@@ -188,9 +276,9 @@ export default function SkillSection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.skill}
-                                        deletePermanent={props.editJob && rowItem.id !== '' ? true : false}
+                                        deletePermanent={props.editJob && rowItem.id !== '' ? true : (props.editCv && rowItem.id !== '' ? true : false)}
                                         setConfirmDialog={setConfirmDialog}
-                                        onDelete={props.editJob && rowItem.id !== '' ? deleteSkillPermanent : deleteSkill}
+                                        onDelete={props.editJob && rowItem.id !== '' ? deleteSkillJobPermanent : (props.editCv && rowItem.id !== '' ? deleteSkillCvPermanent : deleteSkill)}
                                         onEdit={skill.skill !== "" ? (() => { }) : editSkill}
                                     />);
                             })}
@@ -275,4 +363,3 @@ export default function SkillSection(props) {
         </div>
     )
 }
-

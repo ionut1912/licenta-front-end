@@ -3,12 +3,15 @@ import { Formik } from 'formik';
 import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function LanguageSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const languageQualifier = [
         { value: '', label: 'Choose' },
@@ -23,21 +26,20 @@ export default function LanguageSection(props) {
     const [languageExperience, setLanguageExperience] = useState(false);
     const [languageFields, setLanguageFields] = useState(false);
     const [language, setLanguage] = useState({
+        id: '',
         language_name: "",
         speak: "",
         read: "",
         write: ""
     });
 
-    function deleteLanguage(id) {
+    function addLanguage(newLanguage) {
         props.setCv(prevInfo => {
             return {
                 ...prevInfo,
-                languages: prevInfo.languages.filter((languageItem, index) => {
-                    return index !== id;
-                })
+                languages: [...prevInfo.languages, newLanguage]
             }
-        })
+        });
     }
 
     function editLanguage(id) {
@@ -47,6 +49,7 @@ export default function LanguageSection(props) {
         });
 
         setLanguage({
+            id: language1[0].id,
             language_name: language1[0].language_name,
             speak: language1[0].speak,
             read: language1[0].read,
@@ -59,17 +62,119 @@ export default function LanguageSection(props) {
 
     }
 
+    function deleteLanguage(id) {
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                languages: prevInfo.languages.filter((languageItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+    }
+
+    function deleteLanguagePermanent(id) {
+
+        const languageForDelete = props.cv.languages.filter((languageItem, index) => {
+            return index === id;
+        })
+
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                languages: prevInfo.languages.filter((languageItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+
+        cvService.deleteLanguage(languageForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function cleanAndRemoveLanguagePermanent() {
+
+        cvService.deleteLanguage(language.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+                setLanguageFields(false);
+
+                setLanguage({
+                    id: '',
+                    language_name: "",
+                    speak: "",
+                    read: "",
+                    write: ""
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
     function removeLanguage() {
 
+        if (props.editCv && language.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveLanguagePermanent()
+            })
+        else {
+            setLanguageFields(false);
 
-        setLanguageFields(false);
-
-        setLanguage({
-            language_name: "",
-            speak: "",
-            read: "",
-            write: ""
-        })
+            setLanguage({
+                id: '',
+                language_name: "",
+                speak: "",
+                read: "",
+                write: ""
+            })
+        }
 
     }
 
@@ -94,11 +199,12 @@ export default function LanguageSection(props) {
     })
 
     function handleSubmit(values) {
-        props.addLanguage(values);
+        addLanguage(values);
 
         setLanguageFields(false);
 
         setLanguage({
+            id: '',
             language_name: "",
             speak: "",
             read: "",
@@ -128,7 +234,9 @@ export default function LanguageSection(props) {
                                         key={index}
                                         id={index}
                                         title={rowItem.language_name}
-                                        onDelete={deleteLanguage}
+                                        deletePermanent={props.editCv && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editCv && rowItem.id !== '' ? deleteLanguagePermanent : deleteLanguage}
                                         onEdit={language.language_name !== "" ? (() => { }) : editLanguage}
                                     />);
                             })}
@@ -144,6 +252,7 @@ export default function LanguageSection(props) {
 
                         initialValues={
                             {
+                                id: language.id,
                                 language_name: language.language_name,
                                 speak: language.speak,
                                 read: language.read,
@@ -268,6 +377,11 @@ export default function LanguageSection(props) {
                 notify={notify}
                 setNotify={setNotify}
             />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
+
         </div>
     )
 }

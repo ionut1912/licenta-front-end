@@ -3,17 +3,21 @@ import { Formik } from 'formik';
 import Notification from '../Notification'
 import Row from './Row'
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function EducationSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [educationExperience, setEducationExperience] = useState(false);
     const [educationFields, setEducationFields] = useState(false);
 
     const [education, setEducation] = useState({
+        id: '',
         degree: "",
         city: "",
         school: "",
@@ -22,15 +26,13 @@ export default function EducationSection(props) {
         descriere: ""
     });
 
-    function deleteEducation(id) {
+    function addEducation(newEducation) {
         props.setCv(prevInfo => {
             return {
                 ...prevInfo,
-                educations: prevInfo.educations.filter((educationItem, index) => {
-                    return index !== id;
-                })
+                educations: [...prevInfo.educations, newEducation]
             }
-        })
+        });
     }
 
     function editEducation(id) {
@@ -40,6 +42,7 @@ export default function EducationSection(props) {
         });
 
         setEducation({
+            id: education1[0].id,
             degree: education1[0].degree,
             city: education1[0].city,
             school: education1[0].school,
@@ -53,18 +56,126 @@ export default function EducationSection(props) {
         setEducationFields(true);
     }
 
+    function deleteEducation(id) {
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                educations: prevInfo.educations.filter((educationItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+    }
+
+
+    function deleteEducationPermanent(id) {
+
+        const educationForDelete = props.cv.educations.filter((educationItem, index) => {
+            return index === id;
+        })
+
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                educations: prevInfo.educations.filter((educationItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+
+        cvService.deleteEducation(educationForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function cleanAndRemoveEducationPermanent() {
+
+        cvService.deleteEducation(education.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+
+                setEducationFields(false);
+
+                setEducation({
+                    id: '',
+                    degree: "",
+                    city: "",
+                    school: "",
+                    start: "",
+                    end: "",
+                    descriere: ""
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+
+    }
+
     function removeEducation() {
 
-        setEducationFields(false);
+        if (props.editCv && education.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveEducationPermanent()
+            })
+        else {
+            setEducationFields(false);
 
-        setEducation({
-            degree: "",
-            city: "",
-            school: "",
-            start: "",
-            end: "",
-            descriere: ""
-        })
+            setEducation({
+                id: '',
+                degree: "",
+                city: "",
+                school: "",
+                start: "",
+                end: "",
+                descriere: ""
+            })
+        }
 
     }
 
@@ -88,11 +199,12 @@ export default function EducationSection(props) {
 
     function handleSubmit(values) {
 
-        props.addEducation(values);
+        addEducation(values);
 
         setEducationFields(false);
 
         setEducation({
+            id: '',
             degree: "",
             city: "",
             school: "",
@@ -126,7 +238,9 @@ export default function EducationSection(props) {
                                         title={rowItem.degree}
                                         start={rowItem.start}
                                         end={rowItem.end}
-                                        onDelete={deleteEducation}
+                                        deletePermanent={props.editCv && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editCv && rowItem.id !== '' ? deleteEducationPermanent : deleteEducation}
                                         onEdit={education.degree !== "" ? (() => { }) : editEducation}
                                     />);
                             })}
@@ -141,6 +255,7 @@ export default function EducationSection(props) {
 
                         initialValues={
                             {
+                                id: education.id,
                                 degree: education.degree,
                                 city: education.city,
                                 school: education.school,
@@ -276,6 +391,10 @@ export default function EducationSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )

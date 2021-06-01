@@ -20,6 +20,30 @@ export default function AtributSection(props) {
         atribut: ""
     });
 
+    function addAtributPersonal(newAtribute) {
+        props.setJobInfo(prevInfo => {
+            return {
+                ...prevInfo,
+                atributePersonale: [...prevInfo.atributePersonale, newAtribute]
+            }
+        })
+    }
+
+    function editAtribut(id) {
+
+        const atribut1 = props.jobInfo.atributePersonale.filter((atributItem, index) => {
+            return index === id;
+        });
+
+        setAtribut({
+            id: atribut1[0].id,
+            atribut: atribut1[0].atribut
+        })
+
+        deleteAtribut(id);
+        setAtributFields(true);
+    }
+
     function deleteAtribut(id) {
         props.setJobInfo(prevInfo => {
             return {
@@ -75,41 +99,26 @@ export default function AtributSection(props) {
 
     }
 
-    function editAtribut(id) {
-
-        const atribut1 = props.jobInfo.atributePersonale.filter((atributItem, index) => {
-            return index === id;
-        });
-
-
-        setAtribut({
-            id: atribut1[0].id,
-            atribut: atribut1[0].atribut
-        })
-
-        deleteAtribut(id);
-        setAtributFields(true);
-    }
-
     function cleanAndRemoveAtributPermanent() {
 
-        setAtributFields(false);
-        setAtribut({
-            id: '',
-            atribut: ""
-        })
         jobService.deleteAtributPersonal(atribut.id).then(
             () => {
                 setConfirmDialog({
                     ...confirmDialog,
                     isOpen: false
-                })
+                });
 
                 setNotify({
                     isOpen: true,
                     message: 'Deleted Successfull!',
                     type: 'error'
-                })
+                });
+
+                setAtributFields(false);
+                setAtribut({
+                    id: '',
+                    atribut: ""
+                });
             },
             error => {
                 setConfirmDialog({
@@ -158,7 +167,7 @@ export default function AtributSection(props) {
 
     function handleSubmit(values) {
 
-        props.addAtributPersonal(values);
+        addAtributPersonal(values);
 
         setAtributFields(false);
 

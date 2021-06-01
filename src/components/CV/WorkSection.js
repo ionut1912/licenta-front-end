@@ -3,16 +3,20 @@ import Notification from '../Notification'
 import Row from './Row'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
+import cvService from '../../services/cv-service';
 
 export default function WorkSection(props) {
 
     const formRef = useRef();
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const [workExperience, setWorkExperience] = useState(false);
     const [workFields, setWorkFields] = useState(false);
     const [work, setWork] = useState({
+        id: '',
         job_title: "",
         city: "",
         company: "",
@@ -21,15 +25,13 @@ export default function WorkSection(props) {
         descriere: ""
     });
 
-    function deleteWork(id) {
+    function addWork(newWork) {
         props.setCv(prevInfo => {
             return {
                 ...prevInfo,
-                works: prevInfo.works.filter((workItem, index) => {
-                    return index !== id;
-                })
+                works: [...prevInfo.works, newWork]
             }
-        })
+        });
     }
 
     function editWork(id) {
@@ -39,6 +41,7 @@ export default function WorkSection(props) {
         });
 
         setWork({
+            id: work1[0].id,
             job_title: work1[0].job_title,
             city: work1[0].city,
             company: work1[0].company,
@@ -52,18 +55,124 @@ export default function WorkSection(props) {
         setWorkFields(true);
     }
 
-    function removeWork() {
-
-        setWorkFields(false);
-
-        setWork({
-            job_title: "",
-            city: "",
-            company: "",
-            start: "",
-            end: "",
-            descriere: ""
+    function deleteWork(id) {
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                works: prevInfo.works.filter((workItem, index) => {
+                    return index !== id;
+                })
+            }
         })
+    }
+
+    function deleteWorkPermanent(id) {
+
+        const workForDelete = props.cv.works.filter((workItem, index) => {
+            return index === id;
+        })
+
+        props.setCv(prevInfo => {
+            return {
+                ...prevInfo,
+                works: prevInfo.works.filter((workItem, index) => {
+                    return index !== id;
+                })
+            }
+        })
+
+        cvService.deleteWork(workForDelete[0].id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+    function cleanAndRemoveWorkPermanent() {
+
+        cvService.deleteWork(work.id).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'error'
+                })
+
+                setWorkFields(false);
+
+                setWork({
+                    id: '',
+                    job_title: "",
+                    city: "",
+                    company: "",
+                    start: "",
+                    end: "",
+                    descriere: ""
+                })
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+    }
+
+
+    function removeWork() {
+        if (props.editCv && work.id !== '')
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure to delete this record?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => cleanAndRemoveWorkPermanent()
+            })
+        else {
+            setWorkFields(false);
+
+            setWork({
+                id: '',
+                job_title: "",
+                city: "",
+                company: "",
+                start: "",
+                end: "",
+                descriere: ""
+            })
+        }
 
     }
 
@@ -87,11 +196,12 @@ export default function WorkSection(props) {
     })
 
     function handleSubmit(values) {
-        props.addWork(values);
+        addWork(values);
 
         setWorkFields(false);
 
         setWork({
+            id: '',
             job_title: "",
             city: "",
             company: "",
@@ -127,7 +237,9 @@ export default function WorkSection(props) {
                                         title={rowItem.job_title}
                                         start={rowItem.start}
                                         end={rowItem.end}
-                                        onDelete={deleteWork}
+                                        deletePermanent={props.editCv && rowItem.id !== '' ? true : false}
+                                        setConfirmDialog={setConfirmDialog}
+                                        onDelete={props.editCv && rowItem.id !== '' ? deleteWorkPermanent : deleteWork}
                                         onEdit={work.job_title !== "" ? (() => { }) : editWork}
                                     />);
                             })}
@@ -143,6 +255,7 @@ export default function WorkSection(props) {
 
                         initialValues={
                             {
+                                id: work.id,
                                 job_title: work.job_title,
                                 city: work.city,
                                 company: work.company,
@@ -274,6 +387,10 @@ export default function WorkSection(props) {
             <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
         </div>
     )
