@@ -150,11 +150,11 @@ export default function PersonalInfoSection(props) {
                     <form onSubmit={props.handleSubmit} >
                         <div className={addCv === true ? null : "row-img-cv"} >
                             {addCv === true ? null :
-                                <div className="left-img" style={baseImage === '' && props.values.img === null ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
+                                <div className="left-img" style={baseImage === '' && props.values.img === undefined ? { textAlign: 'center', border: '3px dashed #1c2237c0' } : { padding: '0px' }}>
                                     <div className="image-upload">
                                         <label htmlFor="file-input" >
-                                            <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' || props.values.img !== null ? "img-cv" : null} alt="" />
-                                            {baseImage === '' && props.values.img === null && <div>
+                                            <img src={baseImage !== "" ? baseImage : props.values.img} className={baseImage !== '' || props.values.img !== undefined ? "img-cv" : null} alt="" />
+                                            {baseImage === '' && props.values.img === undefined && <div>
                                                 <i className="fas fa-camera addPhoto" style={{ fontSize: '40px' }} />
                                                 <br />
                                                 <span className="addPhoto">Add photo</span>

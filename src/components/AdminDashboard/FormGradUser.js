@@ -51,7 +51,7 @@ export default function FormGradUser(props) {
                 ...recordForEdit
             })
         }
-    }, [recordForEdit])
+    }, [recordForEdit, setValues])
 
     return (
         <Form onSubmit={handleSubmit} style={{ width: '400px' }}>

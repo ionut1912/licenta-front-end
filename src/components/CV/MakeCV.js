@@ -89,7 +89,6 @@ export default function MakeCV(props) {
     }
 
     function addCVToDB(theCv) {
-        console.log(theCv);
         setViewCv(true);
         setOpenPopupView(true);
     }
@@ -102,37 +101,33 @@ export default function MakeCV(props) {
         }).format(new Date(date));
     }
 
-    function setData(values) {
-
-        setEditCv(true);
-        setCv({
-            id: values.id,
-            first_name: values.first_name,
-            last_name: values.last_name,
-            email: values.email,
-            phone: values.phone,
-            city: values.city,
-            nationality: values.nationality,
-            address: values.address,
-            dateOfBirth: values.dateOfBirth !== null ? format(values.dateOfBirth) : '',
-            drivingLicence: values.drivingLicence,
-            linkedin: values.linkedin,
-            personalSite: values.personalSite,
-            personalDescription: values.personalDescription !== null ? values.personalDescription : { descriere: '' },
-            works: values.works,
-            educations: values.educations,
-            skills: values.skills,
-            languages: values.languages,
-            hobbys: values.hobbys,
-            projects: values.projects
-        })
-
-    }
-
     useEffect(() => {
-        if (props.itemForEdit !== '' && props.itemForEdit !== undefined)
-            setData(props.itemForEdit)
-    }, [])
+        if (props.itemForEdit !== '' && props.itemForEdit !== undefined) {
+            setEditCv(true);
+            setCv({
+                id: props.itemForEdit.id,
+                first_name: props.itemForEdit.first_name,
+                last_name: props.itemForEdit.last_name,
+                email: props.itemForEdit.email,
+                phone: props.itemForEdit.phone,
+                city: props.itemForEdit.city,
+                nationality: props.itemForEdit.nationality,
+                address: props.itemForEdit.address,
+                dateOfBirth: props.itemForEdit.dateOfBirth !== null ? format(props.itemForEdit.dateOfBirth) : '',
+                drivingLicence: props.itemForEdit.drivingLicence,
+                linkedin: props.itemForEdit.linkedin,
+                personalSite: props.itemForEdit.personalSite,
+                personalDescription: props.itemForEdit.personalDescription !== null ? props.itemForEdit.personalDescription : { descriere: '' },
+                works: props.itemForEdit.works,
+                educations: props.itemForEdit.educations,
+                skills: props.itemForEdit.skills,
+                languages: props.itemForEdit.languages,
+                hobbys: props.itemForEdit.hobbys,
+                projects: props.itemForEdit.projects
+            })
+        }
+
+    }, [props.itemForEdit])
 
     return (
         <div style={{ padding: '30px' }}>

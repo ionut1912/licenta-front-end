@@ -181,7 +181,6 @@ function CVList(props) {
 
     const openInPopupView = item => {
         setRecordForView(item);
-        console.log(item)
         setOpenPopupView(true);
     }
 

@@ -60,30 +60,26 @@ export default function NewEditJob(props) {
         }).format(new Date(date));
     }
 
-    function setData(values) {
-
-        setEditJob(true);
-
-        setJobInfo({
-            id: values.id,
-            numeJob: values.numeJob,
-            jobType: values.jobType,
-            locatie: values.locatie,
-            jobCategory: values.jobCategory,
-            descriere: values.descriere,
-            dataMaxima: format(values.dataMaxima),
-            dataAdaugare: format(values.dataAdaugare),
-            skills: values.skills,
-            atributePersonale: values.atributePersonale,
-            moreDetails: values.moreDetails
-        })
-
-    }
-
     useEffect(() => {
-        if (props.itemForEdit !== '')
-            setData(props.itemForEdit)
-    }, [])
+        if (props.itemForEdit !== '') {
+            setEditJob(true);
+
+            setJobInfo({
+                id: props.itemForEdit.id,
+                numeJob: props.itemForEdit.numeJob,
+                jobType: props.itemForEdit.jobType,
+                locatie: props.itemForEdit.locatie,
+                jobCategory: props.itemForEdit.jobCategory,
+                descriere: props.itemForEdit.descriere,
+                dataMaxima: format(props.itemForEdit.dataMaxima),
+                dataAdaugare: format(props.itemForEdit.dataAdaugare),
+                skills: props.itemForEdit.skills,
+                atributePersonale: props.itemForEdit.atributePersonale,
+                moreDetails: props.itemForEdit.moreDetails
+            });
+        }
+
+    }, [props.itemForEdit])
 
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>

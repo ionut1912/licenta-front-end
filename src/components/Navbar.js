@@ -13,45 +13,61 @@ export default function Navbar(props) {
   const currentUser = AuthService.getCurrentUser();
   const currentPath = window.location.pathname;
 
+  const { setClickForSidebar, setClickForNavBar, setShowModalNav } = props;
+
   const [button, setButton] = useState(true);
 
   const [openPopupView, setOpenPopupView] = useState(false);
-  const [subTitle,setSubTitle]=useState('Sign in by entering the information below');
-
-  const handleClickNavbar = () => {
-    if (props.setClickForSidebar !== undefined)
-      props.setClickForSidebar(false);
-    props.setClickForNavBar(!props.clickForNavbar);
-    props.setShowModalNav(!props.showModalNav);
-  }
-  const handleClickSidebar = () => {
-    props.setClickForNavBar(false);
-    props.setShowModalNav(false);
-    if (props.setClickForSidebar !== undefined)
-      props.setClickForSidebar(!props.clickForSidebar);
-  }
-  const closeMobileMenu = () => {
-    props.setClickForNavBar(false);
-    props.setShowModalNav(false);
-  }
+  const [subTitle, setSubTitle] = useState('Sign in by entering the information below');
 
   const showButton = () => {
+
     if (window.innerWidth <= 1045) {
       setButton(false);
-      if (props.setClickForSidebar !== undefined)
-        props.setClickForSidebar(false);
+      if (setClickForSidebar !== undefined)
+        setClickForSidebar(false);
     } else {
       setButton(true);
-      props.setClickForNavBar(false);
-      props.setShowModalNav(false);
-      if (props.setClickForSidebar !== undefined)
-        props.setClickForSidebar(true);
+      setClickForNavBar(false);
+      setShowModalNav(false);
+      if (setClickForSidebar !== undefined)
+        setClickForSidebar(true);
     }
+
   };
 
+  const handleClickNavbar = () => {
+    if (setClickForSidebar !== undefined)
+      setClickForSidebar(false);
+    setClickForNavBar(!props.clickForNavbar);
+    setShowModalNav(!props.showModalNav);
+  }
+  const handleClickSidebar = () => {
+    setClickForNavBar(false);
+    setShowModalNav(false);
+    if (setClickForSidebar !== undefined)
+      setClickForSidebar(!props.clickForSidebar);
+  }
+  const closeMobileMenu = () => {
+    setClickForNavBar(false);
+    setShowModalNav(false);
+  }
+
   useEffect(() => {
-    showButton();
-  }, []);
+
+    if (window.innerWidth <= 1045) {
+      setButton(false);
+      if (setClickForSidebar !== undefined)
+        setClickForSidebar(false);
+    } else {
+      setButton(true);
+      setClickForNavBar(false);
+      setShowModalNav(false);
+      if (setClickForSidebar !== undefined)
+        setClickForSidebar(true);
+    }
+
+  }, [setClickForSidebar, setClickForNavBar, setShowModalNav]);
 
   function logOut() {
     AuthService.logout();
@@ -88,7 +104,7 @@ export default function Navbar(props) {
             <a href='/home'
               className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
-             Home
+              Home
               </a>
           </li>
           <li className='nav-item'>
@@ -132,14 +148,14 @@ export default function Navbar(props) {
             </li>
           </div>
         </ul>
-          <ViewPopup
-            title='Welcome'
-            subTitle={subTitle}
-            openPopup={openPopupView}
-            setOpenPopup={setOpenPopupView}
-            showLogin={true}>
-            <Login setSubTitle={setSubTitle} />
-          </ViewPopup>
+        <ViewPopup
+          title='Welcome'
+          subTitle={subTitle}
+          openPopup={openPopupView}
+          setOpenPopup={setOpenPopupView}
+          showLogin={true}>
+          <Login setSubTitle={setSubTitle} />
+        </ViewPopup>
       </div>
     </nav>
   );

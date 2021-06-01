@@ -248,7 +248,7 @@ function JobsList(props) {
                                                     isOpen: true,
                                                     title: 'Are you sure to delete this record?',
                                                     subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id); console.log(item) }
+                                                    onConfirm: () => { onDelete(item.id); }
                                                 })
 
                                             }}

@@ -23,6 +23,7 @@
     "boostrap": "^2.0.0",
     "date-fns": "^2.21.1",
     "formik": "^2.2.6",
+    "framer-motion": "^4.1.17",
     "icons": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

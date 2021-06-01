@@ -29,7 +29,6 @@ export default function Aplicare(props) {
         if (baseCV !== "") {
             values.cv = baseCV;
         }
-        console.log(values);
 
         if (currentUser !== null) {
             AplicareJobService.sendAplicareUser(currentUser.id, idJob, values).then(
