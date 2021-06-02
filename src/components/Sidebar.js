@@ -54,7 +54,7 @@ export default function Sidebar(props) {
             <li className="nav-text" onClick={() => { props.setState(4); props.setItemForEdit(''); }}>
               <p className={props.state === 4 ? "selected" : null}>
                 <i className="fas fa-briefcase"></i>
-                <span>Add job</span>
+                <span>Create job</span>
               </p>
             </li>
 
@@ -68,14 +68,14 @@ export default function Sidebar(props) {
             <li className="nav-text" onClick={() => { props.setState(6); props.setItemForEdit(''); }}>
               <p className={props.state === 6 ? "selected" : null}>
                 <FaIcons.FaAddressCard />
-                <span>All CV</span>
+                <span>Cvs</span>
               </p>
             </li>
 
             <li className="nav-text" onClick={() => { props.setState(7); props.setItemForEdit(''); }}>
               <p className={props.state === 7 ? "selected" : null}>
                 <AiIcons.AiOutlineFileAdd />
-                <span>Add CV</span>
+                <span>Create cv</span>
               </p>
             </li>
 

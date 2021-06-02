@@ -21,10 +21,12 @@ const useStyle = makeStyles(theme => ({
         fontSize: '0.9em',
         minWidth: '400px',
         overflow: 'hidden',
+        width: '100%',
+        display: 'block',
+        overflowX: 'auto',
         borderRadius: '8px 8px 8px 8px',
         boxShadow: '0 0 20px rgba(0, 0, 0, 0.15)',
         [theme.breakpoints.down(1447)]: {
-            width: '95%',
             display: 'block',
             overflowX: 'auto',
         },
@@ -267,7 +269,7 @@ function CVList(props) {
                                                     isOpen: true,
                                                     title: 'Are you sure to delete this record?',
                                                     subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id);  }
+                                                    onConfirm: () => { onDelete(item.id); }
                                                 })
 
                                             }}

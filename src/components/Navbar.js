@@ -129,7 +129,7 @@ export default function Navbar(props) {
               href='/makeCV'
               className={currentPath === '/makeCV' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
-              MakeCV
+              Make cv
               </a>
           </li>
           {currentUser ? (

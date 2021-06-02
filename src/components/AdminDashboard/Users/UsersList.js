@@ -1,84 +1,49 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableBody, TableCell, TableHead, Table, TableRow, TextField } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TextField, Toolbar, InputAdornment, TableRow, Tabs, Tab, Breadcrumbs, Avatar, Typography, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import Button from '../Button'
+import * as IoIcons from 'react-icons/io';
 import userService from '../../../services/user.service';
 import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FormPopup from '../FormPopup'
 import Notification from '../../Notification'
 import FormGradUser from '../FormGradUser'
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import ConfirmDialog from '../ConfirmDialog';
+import Search from '@material-ui/icons/Search';
 
 
 const useStyle = makeStyles(theme => ({
-    pageContent: {
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
+    papper: {
+        borderRadius: '16px'
     },
-    searchInput: {
-        width: "75%"
+    avatar: {
+        width: "50px",
+        height: "50px",
+        marginRight: '10px'
     },
-    newBtn: {
-        margin: theme.spacing(0.5),
-        textTransform: 'none',
-        position: 'absolute',
-        right: '10px'
-    },
-    img: {
-        width: "100px",
-        height: "100px",
-        borderRadius: '50%',
+    tyName: {
+        fontSize: '0.875rem'
     },
     action: {
         display: 'flex',
         width: '100%'
     },
-    filterHead: {
-        backgroundColor: '#f1f1f1'
-    },
     table: {
-        tableLayout: 'fixed',
-        borderCollapse: 'collapse',
-        margin: '25px 0',
-        fontSize: '0.9em',
-        minWidth: '400px',
-        overflow: 'hidden',
-        borderRadius: '8px 8px 8px 8px',
-        boxShadow: '0 0 20px rgba(0, 0, 0, 0.15)',
-        [theme.breakpoints.down(1447)]: {
-            width: '95%',
-            display: 'block',
-            overflowX: 'auto',
-        },
-        '& thead': {
-            padding: '12px 15px'
-        },
         '& thead tr': {
             textAlign: 'left',
             fontWeight: 'bold'
         },
-        '& tbody td': {
-            fontWeight: '300',
-            padding: '12px 15px',
-            fontSize: '16px'
-        },
-        '& tbody tr:nth-of-type(even)': {
-            backgroundColor: '#f3f3f3',
-        },
-        '& tbody tr:last-of-type': {
-            borderBottom: '2px solid #009879',
-            [theme.breakpoints.down(1340)]: {
-                borderBottom: 'none'
-            }
+        '& tbody tr:hover': {
+            backgroundColor: "#f1f1f1"
         },
         '&:focus': {
             border: 'none',
             outline: 'none'
         },
         '& .MuiTableCell-head': {
-            color: '#f1f1f1',
-            fontSize: '20px'
+            fontSize: '17px'
         },
         '& .MuiTableSortLabel-active': {
             color: "#f1f1f1"
@@ -92,23 +57,13 @@ const useStyle = makeStyles(theme => ({
 }))
 
 const headCells = [
-    { id: 'img', label: 'Image' },
     { id: 'full_name', label: 'Full name' },
     { id: 'email', label: 'Email' },
     { id: 'phone', label: 'Phone' },
     { id: 'role', label: 'Grad' },
     { id: 'actions', label: 'Actions', disableSorting: true }
-
 ]
 
-const filterInputs = [
-    { id: '', label: '' },
-    { id: 'fullName', label: 'Search by name' },
-    { id: 'email', label: 'Search by email' },
-    { id: 'phone', label: 'Search by phone' },
-    { id: 'role', label: 'Search by grad' },
-    { id: '', label: '' }
-]
 
 export default function UsersList(props) {
 
@@ -121,31 +76,11 @@ export default function UsersList(props) {
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-
-    const handleSearchInput = (e) => {
-        const { name, value } = e.target;
-        setFilterFunction({
-            fn: items => {
-                if (value === "")
-                    return items;
-                else if (name === "fullName")
-                    return items.filter(x => x.full_name.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "email")
-                    return items.filter(x => x.email.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "phone")
-                    return items.filter(x => x.phone.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "role")
-                    return items.filter(x => x.role.toLowerCase().includes(value.toLowerCase()))
-            }
-        })
-    }
-
     const {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSortingUsers
     } = useTable(records, headCells, filterFunction);
-
 
     function getData() {
         userService.getAllUsers().then(
@@ -193,66 +128,102 @@ export default function UsersList(props) {
     }
 
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
-            <Table className={classes.table}>
-                <TblHead />
-                <TableHead className={classes.filterHead}>
-                    <TableRow>
-                        {
-                            filterInputs.map((filterCell, index) => (
-                                <TableCell key={index}>
-                                    {index === 5 || index === 0 ? null : <TextField
-                                        variant="outlined"
-                                        name={filterCell.id}
-                                        label={filterCell.label}
-                                        onChange={handleSearchInput}
-                                    />
-                                    }
-                                </TableCell>
-                            ))
-                        }
-                    </TableRow>
-                </TableHead>
-                <TableBody >
-                    {
-                        recordsAfterPagingAndSortingUsers().map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell>{item.img === null ? <CloseIcon fontSize="small" style={{ marginLeft: "35px" }} /> : <img src={item.img} className={classes.img} alt="" />}</TableCell>
-                                <TableCell>{item.full_name}</TableCell>
-                                <TableCell className={classes.th}>{item.email}</TableCell>
-                                <TableCell>{item.phone}</TableCell>
-                                <TableCell>{item.role}</TableCell>
+        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} style={{ backgroundColor: '#f1f1f1' }}>
+            <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">User list</h1>
+            <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb">
+                <a style={{ color: 'black' }}>Material-U</a>
+                <a style={{ color: 'black' }}>Core</a>
+                <Typography style={{ color: '#1c2237b0' }}>Breadcrumb</Typography>
+            </Breadcrumbs>
 
-                                <TableCell  >
-                                    <div className={classes.action}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            text={<EditOutlinedIcon fontSize="small" />}
-                                            onClick={() => { openInPopup(item) }} />
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            text={<CloseIcon fontSize="small" />}
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id) }
-                                                })
+            <div className="card mb-3" style={{ width: "18rem" }}>
+                <div className="card-body">
+                    <h3 className="card-title">Numarul de utilizatori</h3>
+                    <div className="activity">
+                        <IoIcons.IoIosPaper className="activity-icon text-primary" />
+                        <div className="activity-body">
+                            <p className="card-text">5</p>
+                        </div>
+                    </div>
 
-                                            }}
-                                            style={{ marginLeft: "10px" }}
-                                        />
-                                    </div>
 
-                                </TableCell>
-                            </TableRow>))
-                    }
-                </TableBody>
-            </Table>
-            <TblPagination />
+                </div>
+            </div>
+            <Paper className={classes.papper}>
+                <Tabs
+                    value={0}
+                    indicatorColor="primary"
+                    textColor="primary"
+                >
+                    <Tab label="Item One" />
+                    <Tab label="Item Two" />
+                    <Tab label="Item Three" />
+                </Tabs>
+
+                <Toolbar style={{margin:'20px'}}>
+                    <TextField
+                        variant="outlined"
+                        className={classes.searchInput}
+                        label="Search Employees"
+                        InputProps={{
+                            startAdornment: (<InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>)
+                        }}
+
+                    />
+                </Toolbar>
+
+                <TableContainer style={{ marginTop: '25px' }}>
+                    <Table className={classes.table}>
+                        <TblHead />
+                        <TableBody >
+                            {
+                                recordsAfterPagingAndSortingUsers().map((item, index) => (
+                                    <TableRow key={index}>
+
+                                        <TableCell>
+                                            <div className="d-flex align-items-center">
+                                                {item.img === null ? null : <Avatar src={item.img} alt="" className={classes.avatar} />}
+                                                <Typography className={classes.tyName}>{item.full_name}</Typography>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className={classes.th}>{item.email}</TableCell>
+                                        <TableCell>{item.phone}</TableCell>
+                                        <TableCell>{item.role}</TableCell>
+                                        <TableCell  >
+                                            <div className={classes.action}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    text={<EditOutlinedIcon fontSize="small" />}
+                                                    onClick={() => { openInPopup(item) }} />
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    text={<CloseIcon fontSize="small" />}
+                                                    onClick={() => {
+                                                        setConfirmDialog({
+                                                            isOpen: true,
+                                                            title: 'Are you sure to delete this record?',
+                                                            subTitle: "You can't undo this operation",
+                                                            onConfirm: () => { onDelete(item.id) }
+                                                        })
+
+                                                    }}
+                                                    style={{ marginLeft: "10px" }}
+                                                />
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TblPagination />
+            </Paper>
 
             <FormPopup
                 title="Grad form"
@@ -270,7 +241,6 @@ export default function UsersList(props) {
                 setConfirmDialog={setConfirmDialog}
             />
         </div>
-
     )
 }
 

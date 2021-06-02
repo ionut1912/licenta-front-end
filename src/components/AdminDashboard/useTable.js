@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-import {TableHead, TableRow, TableCell, makeStyles, TablePagination, TableSortLabel } from '@material-ui/core'
+import { TableHead, TableRow, TableCell, makeStyles, TablePagination, TableSortLabel } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
-    headText: {
-        backgroundColor: '#009879'
-    }
-}))
+
 export default function useTable(records, headCells, filterFunction) {
 
-    const classes = useStyles();
 
     const pages = [5, 10, 25];
     const [page, setPage] = useState(0);
@@ -26,7 +21,7 @@ export default function useTable(records, headCells, filterFunction) {
         }
 
         return (
-            <TableHead className={classes.headText}>
+            <TableHead>
                 <TableRow>
                     {
                         headCells.map((headCell, index) => (
@@ -55,7 +50,7 @@ export default function useTable(records, headCells, filterFunction) {
     }
 
     const TblPagination = () => (
-        <TablePagination
+        <TablePagination style={{ marginTop: '10px' }}
             component="div"
             page={page}
             rowsPerPageOptions={pages}

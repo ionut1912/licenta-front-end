@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField, Toolbar } from '@material-ui/core';
+import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField, Toolbar, Breadcrumbs, Typography, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import jobService from '../../../services/job.service';
 import AddIcon from '@material-ui/icons/Add';
@@ -11,6 +11,7 @@ import JobView from '../../Joburi/JobView'
 import Notification from '../../Notification'
 import Button from '../Button'
 import ConfirmDialog from '../ConfirmDialog';
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 
 const useStyle = makeStyles(theme => ({
@@ -54,8 +55,7 @@ const useStyle = makeStyles(theme => ({
             outline: 'none'
         },
         '& .MuiTableCell-head': {
-            color: '#f1f1f1',
-            fontSize: '20px'
+            fontSize: '17px'
         },
         '& .MuiTableSortLabel-active': {
             color: "#f1f1f1"
@@ -72,11 +72,14 @@ const useStyle = makeStyles(theme => ({
     searchInput: {
         width: "75%"
     },
-    newBtn: {
-        margin: theme.spacing(0.5),
+    toolbar: {
         textTransform: 'none',
-        position: 'absolute',
-        right: '10px'
+        marginLeft: 'auto',
+        top: '-20px'
+    },
+    btn: {
+        padding: '5px 20px',
+        borderRadius: '20px 20px 20px 20px',
     },
     action: {
         display: 'flex',
@@ -190,78 +193,92 @@ function JobsList(props) {
     }
 
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
-            <Toolbar>
-                <Button
-                    variant="outlined"
-                    startIcon={<AddIcon />}
-                    className={classes.newBtn}
-                    onClick={() => { props.setState(4); props.setItemForEdit("") }}
-                    text="Add new job"
-                />
-            </Toolbar>
-            <Table className={classes.table}>
-                <TblHead />
-                <TableHead className={classes.filterHead}>
-                    <TableRow>
-                        {
-                            filterInputs.map((filterCell, index) => (
-                                <TableCell key={index}>
-                                    {index === 5 ? null : <TextField
-                                        variant="outlined"
-                                        name={filterCell.id}
-                                        label={filterCell.label}
-                                        onChange={handleSearchInput}
-                                    />
-                                    }
-                                </TableCell>
-                            ))
-                        }
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {
-                        recordsAfterPagingAndSortingJobs().map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell>{item.numeJob}</TableCell>
-                                <TableCell>{item.jobCategory}</TableCell>
-                                <TableCell>{item.jobType}</TableCell>
-                                <TableCell>{item.locatie}</TableCell>
-                                <TableCell>{format(item.dataMaxima)}</TableCell>
-                                <TableCell>
-                                    <div className={classes.action}>
-                                        <Button
-                                            color="default"
-                                            style={{ color: '#1769aa' }}
-                                            text={<VisibilityIcon fontSize="small" />}
-                                            onClick={() => { openInPopupView(item) }}
-                                        />
-                                        <Button
-                                            onClick={() => { props.setState(4); props.setItemForEdit(item) }}
-                                            text={<EditOutlinedIcon fontSize="small" />}
-                                            style={{ marginLeft: "10px" }}
-                                        />
-                                        <Button
-                                            color="secondary"
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id); }
-                                                })
+        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} style={{ backgroundColor: '#f1f1f1' }} >
 
-                                            }}
-                                            style={{ marginLeft: "10px" }}
-                                            text={<CloseIcon fontSize="small" />}
+            <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Job list </h1>
+            <div className="d-flex">
+                <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb">
+                    <a style={{ color: 'black' }}>Material-U</a>
+                    <a style={{ color: 'black' }}>Core</a>
+                    <Typography style={{ color: '#1c2237b0' }}>Breadcrumb</Typography>
+                </Breadcrumbs>
+
+                <Toolbar className={classes.toolbar}>
+                    <Button
+                        startIcon={<AddIcon />}
+                        className={classes.btn}
+                        onClick={() => { props.setState(4); props.setItemForEdit("") }}
+                        text="Add new job"
+                    />
+                </Toolbar>
+            </div>
+
+            <Paper>
+                <Table className={classes.table}>
+                    <TblHead />
+                    <TableHead className={classes.filterHead}>
+                        <TableRow>
+                            {
+                                filterInputs.map((filterCell, index) => (
+                                    <TableCell key={index}>
+                                        {index === 5 ? null : <TextField
+                                            variant="outlined"
+                                            name={filterCell.id}
+                                            label={filterCell.label}
+                                            onChange={handleSearchInput}
                                         />
-                                    </div>
-                                </TableCell>
-                            </TableRow>))
-                    }
-                </TableBody>
-            </Table>
-            <TblPagination />
+                                        }
+                                    </TableCell>
+                                ))
+                            }
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            recordsAfterPagingAndSortingJobs().map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{item.numeJob}</TableCell>
+                                    <TableCell>{item.jobCategory}</TableCell>
+                                    <TableCell>{item.jobType}</TableCell>
+                                    <TableCell>{item.locatie}</TableCell>
+                                    <TableCell>{format(item.dataMaxima)}</TableCell>
+                                    <TableCell>
+                                        <div className={classes.action}>
+                                            <Button
+                                                color="default"
+                                                style={{ color: '#1769aa' }}
+                                                text={<VisibilityIcon fontSize="small" />}
+                                                onClick={() => { openInPopupView(item) }}
+                                            />
+                                            <Button
+                                                onClick={() => { props.setState(4); props.setItemForEdit(item) }}
+                                                text={<EditOutlinedIcon fontSize="small" />}
+                                                style={{ marginLeft: "10px" }}
+                                            />
+                                            <Button
+                                                color="secondary"
+                                                onClick={() => {
+                                                    setConfirmDialog({
+                                                        isOpen: true,
+                                                        title: 'Are you sure to delete this record?',
+                                                        subTitle: "You can't undo this operation",
+                                                        onConfirm: () => { onDelete(item.id); }
+                                                    })
+
+                                                }}
+                                                style={{ marginLeft: "10px" }}
+                                                text={<CloseIcon fontSize="small" />}
+                                            />
+                                        </div>
+                                    </TableCell>
+                                </TableRow>))
+                        }
+                    </TableBody>
+                </Table>
+                <TblPagination />
+            </Paper>
 
             <ViewPopup
                 title={recordForView.numeJob}

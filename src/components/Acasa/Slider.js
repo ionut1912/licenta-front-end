@@ -37,8 +37,16 @@ export default function Slider({ slides }) {
 
     return (
         <div className="carousel">
-            <IoIosArrowBack className='left-arrow' onClick={prevSlide} />
-            <IoIosArrowForward className='right-arrow' onClick={nextSlide} />
+            <IoIosArrowBack
+                initial={{ x: -150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.2 }}
+                className='left-arrow' onClick={prevSlide} />
+            <IoIosArrowForward
+                initial={{ x: 150, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.3 }}
+                className='right-arrow' onClick={nextSlide} />
             <div className="carousel-inner container">
                 {slides.map((slide, index) => {
                     return (
@@ -55,11 +63,13 @@ export default function Slider({ slides }) {
                                             <motion.h1
                                                 initial={{ y: -150, opacity: 0 }}
                                                 animate={{ y: 0, opacity: 1 }}
-                                                transition={{ delay: 0.2 }}
+                                                transition={{ delay: 0.3, duration: 0.3 }}
                                             >{slide.h1}</motion.h1>
                                             {slide.p.map((item, current) => {
                                                 return (
-                                                    <p key={current} >{item}</p>
+                                                    <motion.p initial={{ x: -150, opacity: 0 }}
+                                                        animate={{ x: 0, opacity: 1 }}
+                                                        transition={{ duration: 0.5, delay: 0.5 }} key={current} >{item}</motion.p>
                                                 );
                                             })}
                                         </div>
@@ -81,9 +91,21 @@ export default function Slider({ slides }) {
             </div>
 
             <ol className="carousel-indicators">
-                <li className={current === 0 ? "active" : null} onClick={() => setCurrent(0)}></li>
-                <li className={current === 1 ? "active" : null} onClick={() => setCurrent(1)}></li>
-                <li className={current === 2 ? "active" : null} onClick={() => setCurrent(2)}></li>
+                <motion.li
+                    initial={{ y: 150, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.3, }}
+                    className={current === 0 ? "active" : null} onClick={() => setCurrent(0)}></motion.li>
+                <motion.li
+                    initial={{ y: 150, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.4, }}
+                    className={current === 1 ? "active" : null} onClick={() => setCurrent(1)}></motion.li>
+                <motion.li
+                    initial={{ y: 150, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.5, }}
+                    className={current === 2 ? "active" : null} onClick={() => setCurrent(2)}></motion.li>
             </ol>
 
         </div>
