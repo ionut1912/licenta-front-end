@@ -54,9 +54,6 @@ const useStyle = makeStyles(theme => ({
             border: 'none',
             outline: 'none'
         },
-        '& .MuiTableCell-head': {
-            fontSize: '17px'
-        },
         '& .MuiTableSortLabel-active': {
             color: "#f1f1f1"
         },

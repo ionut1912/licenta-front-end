@@ -93,7 +93,7 @@ textarea {
 }
 
 .carousel-indicators li:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   transition: 0.25s;
   background-color: #fc1930d5;
 }

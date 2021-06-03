@@ -5,6 +5,7 @@ import Login from './Login';
 import AuthService from "../services/auth.service";
 import ViewPopup from './ViewPopup'
 import './Navbar.css';
+import { motion } from "framer-motion";
 
 export default function Navbar(props) {
 
