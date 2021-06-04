@@ -60,8 +60,7 @@ const useStyle = makeStyles(theme => ({
 
 }));
 
-export default function UserStatistics() {
-
+export default function JobStatistics() {
     const classes = useStyle();
 
     return (
@@ -72,7 +71,7 @@ export default function UserStatistics() {
                     <div className={classes.statistic}>
                         <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><HiIcons.HiUserGroup /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of users</p>
+                            <p className="info">Number of jobs</p>
                             <p style={{ color: '#fa0019' }}>500</p>
                         </div>
                     </div>
@@ -84,7 +83,7 @@ export default function UserStatistics() {
                     <div className={classes.statistic}>
                         <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><FaIcons.FaUserSecret /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of admins</p>
+                            <p className="info">Number total de aplicarii</p>
                             <p style={{ color: '#182fb4' }}>3</p>
                         </div>
                     </div>
@@ -96,7 +95,7 @@ export default function UserStatistics() {
                     <div className={classes.statistic}>
                         <span className={classes.statisticImg} style={{ backgroundColor: '#f19e02' }}><FaIcons.FaUser /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of normal users</p>
+                            <p className="info">Cel mai aplicat job</p>
                             <p style={{ color: '#f19e02' }}>497</p>
                         </div>
                     </div>
@@ -108,7 +107,7 @@ export default function UserStatistics() {
                     <div className={classes.statistic}>
                         <span className={classes.statisticImg} style={{ backgroundColor: '#4c0097' }}><GiIcons.GiClick /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of users with applications</p>
+                            <p className="info">De afisat nr de aplicari pt fiecare job</p>
                             <p style={{ color: '#4c0097' }}>208</p>
                         </div>
                     </div>
@@ -117,3 +116,5 @@ export default function UserStatistics() {
         </div>
     )
 }
+
+

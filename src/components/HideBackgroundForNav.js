@@ -5,6 +5,7 @@ export default function HideBackgroundForNav(props) {
     const closeModalNav = () => {
         props.setShowModalNav(false);
         props.setClickForNavBar(false);
+        props.setClickForSideBar(false);
     }
 
     return (

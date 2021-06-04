@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableBody, TableCell, Table, TableContainer, TextField, Toolbar, InputAdornment, TableRow, Tabs, Tab, Breadcrumbs, Avatar, Typography, Paper } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Avatar, Typography, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import Button from '../Button'
 import userService from '../../../services/user.service';
@@ -8,11 +8,11 @@ import Notification from '../../Notification'
 import FormGradUser from '../FormGradUser'
 import ConfirmDialog from '../ConfirmDialog';
 import UserStatistics from './UserStatistics';
+import UserFilters from './UserFilters';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import CloseIcon from '@material-ui/icons/Close';
-import Search from '@material-ui/icons/Search';
 
 
 const useStyle = makeStyles(theme => ({
@@ -20,27 +20,10 @@ const useStyle = makeStyles(theme => ({
         borderRadius: '16px',
         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24)',
         marginBottom: '50px',
-        '& hr': {
-            margin: '-2px 0 0 0 ',
-            borderTop: '2px solid rgba(0, 0, 0, 0.2)'
-        },
-        '& .MuiTab-root': {
-            '&:first-child': {
-                borderTopLeftRadius: '16px'
-            },
-            '&:focus': {
-                border: 'none',
-                outline: 'none'
-            }
-        },
         '& .MuiButtonBase-root:focus': {
             border: 'none',
             outline: 'none'
-        },
-        '& .MuiOutlinedInput-root': {
-            borderRadius: '20px 20px 20px 20px',
-            width: '20rem'
-        },
+        }
     },
     avatar: {
         width: "60px",
@@ -48,7 +31,6 @@ const useStyle = makeStyles(theme => ({
         marginRight: '15px'
     },
     table: {
-        color: 'rgb(23,43,77)',
         '& .MuiTableCell-root': {
             borderBottom: '2px solid rgba(0, 0, 0, 0.2)',
             fontSize: '0.875rem',
@@ -58,12 +40,13 @@ const useStyle = makeStyles(theme => ({
             },
             '& .role': {
                 padding: '5px 20px',
-                borderRadius: '20px 20px 20px 20px',
+                borderRadius: '20px',
                 color: '#fff'
             }
         },
         '& .MuiTableCell-head .MuiButtonBase-root': {
             fontSize: '1.1rem',
+            color: 'rgb(23,43,77)',
         },
         '& tbody tr:hover': {
             backgroundColor: "#e7ebfc"
@@ -73,7 +56,7 @@ const useStyle = makeStyles(theme => ({
             outline: 'none'
         },
         '& .MuiTableSortLabel-active': {
-            color: "#f1f1f1"
+            color: "red"
         },
         '& .MuiFormControl-root': {
             backgroundColor: "white",
@@ -109,13 +92,7 @@ export default function UsersList(props) {
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const [currentTab, setCurrentTab] = useState(0);
-
-    const {
-        TblHead,
-        TblPagination,
-        recordsAfterPagingAndSortingUsers
-    } = useTable(records, headCells, filterFunction);
+    const { TblHead, TblPagination, recordsAfterPagingAndSortingUsers } = useTable(records, headCells, filterFunction);
 
     function getData() {
         userService.getAllUsers().then(
@@ -162,10 +139,6 @@ export default function UsersList(props) {
         })
     }
 
-    const handleChange = (event, newValue) => {
-        setCurrentTab(newValue);
-    };
-
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
             <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">User list</h1>
@@ -178,50 +151,7 @@ export default function UsersList(props) {
             <UserStatistics />
 
             <Paper className={classes.papper}>
-                <Tabs
-                    value={currentTab}
-                    indicatorColor="primary"
-                    onChange={handleChange}
-                    textColor="primary"
-                >
-                    <Tab label="All user" />
-                    <Tab label="Admin" />
-                    <Tab label="Normal user" />
-                </Tabs>
-                <hr />
-
-                <Toolbar style={{ margin: '30px 0px 30px 0' }}>
-                    <TextField
-                        variant="outlined"
-                        style={{ marginLeft: '20px' }}
-                        label="Search by name"
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                    />
-                    <TextField
-                        variant="outlined"
-                        style={{ marginLeft: '50px' }}
-                        label="Search by email"
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                    />
-                    <TextField
-                        variant="outlined"
-                        style={{ marginLeft: '50px' }}
-                        label="Search by location"
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                    />
-                </Toolbar>
+                <UserFilters />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>

@@ -15,26 +15,26 @@ import CVMaker from './components/pages/CVMaker';
 import './App.css';
 import ScrollTop from './components/ScrollTop';
 
-function App() {
+export default function App() {
 
   const loggedIn = authService.getCurrentUser();
-  const [click, setClick] = useState(true);
   const [showModalNav, setShowModalNav] = useState(false);
+  const [clickForSidebar, setClickForSidebar] = useState(false);
   const [clickForNavbar, setClickForNavBar] = useState(false);
 
 
   return (
     <>
       <Router>
-        <HideBackgroundForNav showModalNav={showModalNav} setShowModalNav={setShowModalNav} setClickForNavBar={setClickForNavBar} />
-        <Navbar clickForSidebar={click} setClickForSidebar={setClick} setShowModalNav={setShowModalNav}
+        <HideBackgroundForNav showModalNav={showModalNav} setShowModalNav={setShowModalNav} setClickForNavBar={setClickForNavBar} setClickForSideBar={setClickForSidebar} />
+        <Navbar clickForSidebar={clickForSidebar} setClickForSidebar={setClickForSidebar} setShowModalNav={setShowModalNav}
           showModalNav={showModalNav} setClickForNavBar={setClickForNavBar} clickForNavbar={clickForNavbar} />
         <Switch>
           <Route path={["/", "/home"]} exact component={Home} />
           <Route path='/about' component={About} />
           <Route path='/jobs' component={Jobs} />
-          <PrivateRouteAdmin path='/admin' loggedIn={loggedIn} clickForSidebar={click} component={Admin} />
-          <PrivateRouteUser path='/user' loggedIn={loggedIn} clickForSidebar={click} component={User} />
+          <PrivateRouteAdmin path='/admin' loggedIn={loggedIn} clickForSidebar={clickForSidebar} component={Admin} />
+          <PrivateRouteUser path='/user' loggedIn={loggedIn} clickForSidebar={clickForSidebar} component={User} />
           <Route path="/makeCV" component={CVMaker} />
           <Route component={NotFound} />
         </Switch>
@@ -44,4 +44,3 @@ function App() {
   );
 }
 
-export default App;

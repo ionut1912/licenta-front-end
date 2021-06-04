@@ -13,8 +13,6 @@ export default function FlexDinamicInfo({
     const [contentRef, inView] = useInView({
         triggerOnce: true,
         rootMargin: "-50px",
-
-
     })
 
     useEffect(() => {
@@ -23,6 +21,59 @@ export default function FlexDinamicInfo({
 
     }, [animation, inView])
 
+
+    // animation
+    const imgAnim = {
+        hidden: {
+            x: imgStart === false ? 120 : -120,
+            opacity: 0
+        },
+        visible: {
+            x: 0,
+            opacity: 1,
+            transition: { type: 'tween', delay: 0.7, duration: 0.7 }
+        }
+    }
+    const redTextAnim = {
+        hidden: {
+            opacity: 0,
+        },
+        visible: {
+            opacity: 1,
+            transition: { type: 'tween', delay: 0.9, duration: 0.9 }
+        }
+    }
+
+    const titleAnim = {
+        hidden: {
+            y: imgStart === false ? -150 : 150, opacity: 0
+        },
+        visible: {
+            y: 0, opacity: 1,
+            transition: { delay: 0.6, duration: 0.6 }
+        }
+    }
+
+    const descriptionAnim = {
+        hidden: {
+            x: imgStart === false ? -150 : 150, opacity: 0
+        },
+        visible: {
+            x: 0, opacity: 1,
+            transition: { duration: 1, delay: 1 }
+        }
+    }
+
+    const buttonAnim = {
+        hidden: {
+            opacity: 0
+        },
+        visible: {
+            opacity: 1,
+            transition: { duration: 1.5, delay: 1.5 }
+        }
+    }
+
     return (
         <div className={lightBg ? 'infoDinamic-section' : 'infoDinamic-section darkBg'}>
             <div className="container"
@@ -30,52 +81,33 @@ export default function FlexDinamicInfo({
                 <div className="row__item" style={{ flexDirection: imgStart === true ? 'row-reverse' : 'row' }}>
 
                     <div className="col__item">
-                        <motion.div className="infoDinamic-text-wrapper"
-                            animate={animation}
-                            initial="hidden"
-                            variants={{
-                                visible: {
-                                    opacity: 1,
-                                    x: 0,
-                                    transition: { type: 'spring', delay: 0.5, },
-                                },
-                                hidden: { opacity: 0, x: -50 },
-                            }}>
-                            <div className="top-line">{topLine}</div>
-                            <h1 className={lightText ? 'heading whiteColor' : 'heading'}>{headline}</h1>
-                            <p className={lightText ? 'infoDinamic-subtitle whiteColor' : 'infoDinamic-subtitle'}
+                        <div className="infoDinamic-text-wrapper">
+                            <motion.div variants={redTextAnim} animate={animation} initial="hidden"
+                                className="top-line">{topLine}</motion.div>
+                            <motion.h1 variants={titleAnim} animate={animation} initial="hidden"
+                                className={lightText ? 'heading whiteColor' : 'heading'}>{headline}</motion.h1>
+                            <motion.p variants={descriptionAnim} animate={animation} initial="hidden"
+                                className={lightText ? 'infoDinamic-subtitle whiteColor' : 'infoDinamic-subtitle'}
                                 style={description2 != null && description3 != null ? { marginBottom: '15px' } : null}>
                                 {description}
-                            </p>
+                            </motion.p>
                             {description2 != null && description3 != null ? (
-                                <div>
+                                <motion.div variants={descriptionAnim} animate={animation} initial="hidden">
                                     <p className={lightText ? 'infoDinamic-subtitle whiteColor' : 'infoDinamic-subtitle'} style={{ marginBottom: "15px" }}>{description2}</p>
                                     <p className={lightText ? 'infoDinamic-subtitle whiteColor' : 'infoDinamic-subtitle'}>{description3}</p>
-                                </div>
+                                </motion.div>
                             ) : null}
-                            <a href={goTo}>
+                            <motion.a variants={buttonAnim} animate={animation} initial="hidden" href={goTo}>
                                 <button className={buttonColor === "blue" ? "btn btn-primary btn-lg" : "btn btn-danger btn-lg"}>{buttonLabel}</button>
-                            </a>
-                        </motion.div>
+                            </motion.a>
+                        </div>
                     </div>
 
                     <div className="col__item" >
                         <div className="infoDinamic-img-wrapper">
-                            <motion.img
-                                animate={animation}
-                                initial="hidden"
-                                variants={{
-                                    visible: {
-                                        opacity: 1,
-                                        x: 0,
-                                        transition: { type: 'spring', delay: 0.5, },
-                                    },
-                                    hidden: { opacity: 0, x: 50 },
-                                }}
-                                src={img} alt={alt} className="infoDinamic-img" />
+                            <motion.img variants={imgAnim} animate={animation} initial="hidden" src={img} alt={alt} className="infoDinamic-img" />
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -60,8 +60,7 @@ const useStyle = makeStyles(theme => ({
 
 }));
 
-export default function UserStatistics() {
-
+export default function CvStatistics() {
     const classes = useStyle();
 
     return (
@@ -72,7 +71,7 @@ export default function UserStatistics() {
                     <div className={classes.statistic}>
                         <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><HiIcons.HiUserGroup /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of users</p>
+                            <p className="info">Number of cvs</p>
                             <p style={{ color: '#fa0019' }}>500</p>
                         </div>
                     </div>
@@ -117,3 +116,5 @@ export default function UserStatistics() {
         </div>
     )
 }
+
+

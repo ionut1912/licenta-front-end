@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Typography, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import Button from '../Button'
 import aplicariiService from '../../../services/aplicareJob.serivce';
@@ -7,101 +7,76 @@ import CloseIcon from '@material-ui/icons/Close';
 import Notification from '../../Notification'
 import ConfirmDialog from '../ConfirmDialog';
 import DescriptionIcon from '@material-ui/icons/Description';
+import NavigateNextIcon from "@material-ui/icons/NavigateNext"
+import AplicationFilters from './AplicationFilters';
+import AplicationStatistics from './AplicationStatistics';
+
+
 
 
 const useStyle = makeStyles(theme => ({
-    pageContent: {
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        marginTop: '50px',
-        margin: '10px',
-        padding: '10px',
-        overflowX: 'auto'
-    },
-    searchInput: {
-        width: "75%"
-    },
-    newBtn: {
-        margin: theme.spacing(0.5),
-        textTransform: 'none',
-        position: 'absolute',
-        right: '10px'
-    },
-    img: {
-        width: "100px",
-        height: "100px",
-        borderRadius: '50%',
-    },
-    action: {
-        display: 'flex',
-        width: '100%'
-    },
-    th: {
-        [theme.breakpoints.up(1447)]: {
-            maxWidth: '125px',
-            minWidth: '125px',
-            overflowX: 'auto',
-            padding: '0 !important',
-            whiteSpace: 'nowrap',
-
+    papper: {
+        borderRadius: '16px',
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24)',
+        marginBottom: '50px',
+        '& .MuiButtonBase-root:focus': {
+            border: 'none',
+            outline: 'none'
         }
     },
+    avatar: {
+        width: "60px",
+        height: "60px",
+        marginRight: '15px'
+    },
     table: {
-        tableLayout: 'fixed',
-        borderCollapse: 'collapse',
-        margin: '25px 0',
-        fontSize: '0.9em',
-        minWidth: '400px',
-        overflow: 'hidden',
-        borderRadius: '8px 8px 8px 8px',
-        boxShadow: '0 0 20px rgba(0, 0, 0, 0.15)',
-        [theme.breakpoints.down(1447)]: {
-            width: '95%',
-            display: 'block',
-            overflowX: 'auto',
-        },
-        '& thead': {
-            padding: '12px 15px'
-        },
-        '& thead tr': {
-            textAlign: 'left',
-            fontWeight: 'bold'
-        },
-        '& tbody td': {
-            fontWeight: '300',
-            padding: '12px 15px',
-            fontSize: '16px'
-        },
-        '& tbody tr:nth-of-type(even)': {
-            backgroundColor: '#f3f3f3',
-        },
-        '& tbody tr:last-of-type': {
-            borderBottom: '2px solid #009879',
-            [theme.breakpoints.down(1340)]: {
-                borderBottom: 'none'
+        '& .MuiTableCell-root': {
+            borderBottom: '2px solid rgba(0, 0, 0, 0.2)',
+            fontSize: '0.875rem',
+            letterSpacing: '0',
+            '&:first-child': {
+                paddingLeft: '30px'
+            },
+            '& .role': {
+                padding: '5px 20px',
+                borderRadius: '20px',
+                color: '#fff'
             }
+        },
+        '& .MuiTableCell-head .MuiButtonBase-root': {
+            fontSize: '1.1rem',
+            color: 'rgb(23,43,77)',
+        },
+        '& tbody tr:hover': {
+            backgroundColor: "#e7ebfc"
         },
         '&:focus': {
             border: 'none',
             outline: 'none'
         },
-        '& .MuiTableCell-head': {
-            color: '#f1f1f1',
-            fontSize: '20px'
-        },
         '& .MuiTableSortLabel-active': {
-            color: "#f1f1f1"
+            color: "red"
         },
         '& .MuiFormControl-root': {
             backgroundColor: "white",
             color: 'black'
         }
     },
-    filterHead: {
-        backgroundColor: '#f1f1f1'
-    }
+    action: {
+        display: 'flex',
+        width: '100%'
+    },
 
 }))
+
+function format(date) {
+    return new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        //time
+    }).format(new Date(date));
+}
 
 const headCells = [
     { id: 'full_name', label: 'Full name' },
@@ -115,53 +90,17 @@ const headCells = [
 
 ]
 
-const filterInputs = [
-    { id: 'fullName', label: 'Search by name' },
-    { id: 'email', label: 'Search by email' },
-    { id: 'phone', label: 'Search by phone' },
-    { id: 'numeJob', label: 'Search by job' },
-    { id: 'dataAplicare', label: 'Search by aplication date' },
-    { id: 'verificat', label: 'Search by status' },
-    { id: '', label: '' },
-    { id: '', label: '' }
-]
+export default function Aplications(props) {
 
-function Aplications(props) {
     const classes = useStyle();
+
     const [records, setRecords] = useState([]);
     const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const {
-        TblHead,
-        TblPagination,
-        recordsAfterPagingAndSortingAplicarii
-    } = useTable(records, headCells, filterFunction);
-
-
-    const handleSearchInput = (e) => {
-        const { name, value } = e.target;
-        setFilterFunction({
-            fn: items => {
-                if (value === "")
-                    return items;
-                else if (name === "fullName")
-                    return items.filter(x => x.full_name.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "email")
-                    return items.filter(x => x.email.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "phone")
-                    return items.filter(x => x.telefon.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "numeJob")
-                    return items.filter(x => x.jobName.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "dataAplicare")
-                    return items.filter(x => x.dataAplicarii.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "verificat")
-                    return items.filter(x => x.verificat.toLowerCase().includes(value.toLowerCase()))
-            }
-        })
-    }
+    const { TblHead, TblPagination, recordsAfterPagingAndSortingAplicarii } = useTable(records, headCells, filterFunction);
 
     function getData() {
         aplicariiService.getAplicarii().then(
@@ -184,7 +123,7 @@ function Aplications(props) {
             ...confirmDialog,
             isOpen: false
         })
-        // userService.deleteUser(id);
+
         getData();
 
         setNotify({
@@ -214,72 +153,71 @@ function Aplications(props) {
 
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
+            <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">User list</h1>
 
-            <Table className={classes.table}>
-                <TblHead />
-                <TableHead className={classes.filterHead}>
-                    <TableRow>
-                        {
-                            filterInputs.map((filterCell, index) => (
-                                <TableCell key={index}>
-                                    {index === 6 || index === 7 ? null : <TextField
-                                        variant="outlined"
-                                        name={filterCell.id}
-                                        label={filterCell.label}
-                                        onChange={handleSearchInput}
-                                    />
-                                    }
-                                </TableCell>
-                            ))
-                        }
-                    </TableRow>
-                </TableHead>
-                <TableBody >
-                    {
-                        recordsAfterPagingAndSortingAplicarii().map((item, index) => (
-                            <TableRow key={index}>
-                                <TableCell>{item.full_name}</TableCell>
-                                <TableCell className={classes.th}>{item.email}</TableCell>
-                                <TableCell>{item.telefon}</TableCell>
-                                <TableCell>{item.jobName}</TableCell>
-                                <TableCell className={classes.th}>{item.dataAplicarii}</TableCell>
-                                <TableCell><p className={item.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle" style={{ marginRight: '10px' }}></i>{item.verificat === true ? "Verificat" : "Neverificat"}</p></TableCell>
-                                <TableCell>
-                                    <div className={classes.action}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            text={<DescriptionIcon fontSize="small" />}
-                                            onClick={() => { downloadFile(item.id, item.full_name, item.cv); }}
-                                        />
-                                    </div>
-                                </TableCell>
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
+                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
+                <a className="text-primary">Users</a>
+            </Breadcrumbs>
 
-                                <TableCell  >
-                                    <div className={classes.action}>
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            text={<CloseIcon fontSize="small" />}
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id) }
-                                                })
+            <AplicationStatistics />
 
-                                            }}
-                                            style={{ marginLeft: "10px" }}
-                                        />
-                                    </div>
+            <Paper className={classes.papper}>
 
-                                </TableCell>
-                            </TableRow>))
-                    }
-                </TableBody>
-            </Table>
-            <TblPagination />
+                <AplicationFilters />
+
+                <TableContainer style={{ marginTop: '25px' }}>
+                    <Table className={classes.table}>
+
+                        <TableBody >
+                            {
+                                recordsAfterPagingAndSortingAplicarii().map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.full_name}</TableCell>
+                                        <TableCell className={classes.th}>{item.email}</TableCell>
+                                        <TableCell>{item.telefon}</TableCell>
+                                        <TableCell>{item.jobName}</TableCell>
+                                        <TableCell className={classes.th}>{item.dataAplicarii}</TableCell>
+                                        <TableCell><p className={item.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle" style={{ marginRight: '10px' }}></i>{item.verificat === true ? "Verificat" : "Neverificat"}</p></TableCell>
+                                        <TableCell>
+                                            <div className={classes.action}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    text={<DescriptionIcon fontSize="small" />}
+                                                    onClick={() => { downloadFile(item.id, item.full_name, item.cv); }}
+                                                />
+                                            </div>
+                                        </TableCell>
+
+                                        <TableCell  >
+                                            <div className={classes.action}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    text={<CloseIcon fontSize="small" />}
+                                                    onClick={() => {
+                                                        setConfirmDialog({
+                                                            isOpen: true,
+                                                            title: 'Are you sure to delete this record?',
+                                                            subTitle: "You can't undo this operation",
+                                                            onConfirm: () => { onDelete(item.id) }
+                                                        })
+
+                                                    }}
+                                                    style={{ marginLeft: "10px" }}
+                                                />
+                                            </div>
+
+                                        </TableCell>
+                                    </TableRow>))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TblPagination />
+            </Paper>
+
             <Notification
                 notify={notify}
                 setNotify={setNotify}
@@ -293,4 +231,4 @@ function Aplications(props) {
     )
 }
 
-export default Aplications
+

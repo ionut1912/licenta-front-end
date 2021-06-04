@@ -60,7 +60,7 @@ export default function Sidebar(props) {
 
             <li className="nav-text" onClick={() => { props.setState(5); props.setItemForEdit(''); }}>
               <p className={props.state === 5 ? "selected" : null}>
-                <IoIcons.IoIosPaper />
+                <IoIcons.IoIosPaper/>
                 <span>Aplications</span>
               </p>
             </li>

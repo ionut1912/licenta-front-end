@@ -59,9 +59,7 @@ const useStyle = makeStyles(theme => ({
     }
 
 }));
-
-export default function UserStatistics() {
-
+export default function AplicationStatistics() {
     const classes = useStyle();
 
     return (
@@ -117,3 +115,5 @@ export default function UserStatistics() {
         </div>
     )
 }
+
+

@@ -27,6 +27,9 @@ export default function Navbar(props) {
       setButton(false);
       if (setClickForSidebar !== undefined)
         setClickForSidebar(false);
+
+      setClickForNavBar(false);
+      setShowModalNav(false);
     } else {
       setButton(true);
       setClickForNavBar(false);
@@ -38,14 +41,16 @@ export default function Navbar(props) {
   };
 
   const handleClickNavbar = () => {
+    setClickForSidebar(false);
     if (setClickForSidebar !== undefined)
-      setClickForSidebar(false);
-    setClickForNavBar(!props.clickForNavbar);
-    setShowModalNav(!props.showModalNav);
+      setClickForNavBar(!props.clickForNavbar);
+    if (props.clickForSidebar === false)
+      setShowModalNav(!props.showModalNav);
   }
   const handleClickSidebar = () => {
     setClickForNavBar(false);
-    setShowModalNav(false);
+    if (props.clickForNavbar === false)
+      setShowModalNav(!props.showModalNav);
     if (setClickForSidebar !== undefined)
       setClickForSidebar(!props.clickForSidebar);
   }
@@ -60,6 +65,9 @@ export default function Navbar(props) {
       setButton(false);
       if (setClickForSidebar !== undefined)
         setClickForSidebar(false);
+
+      setClickForNavBar(false);
+      setShowModalNav(false);
     } else {
       setButton(true);
       setClickForNavBar(false);
@@ -78,37 +86,89 @@ export default function Navbar(props) {
 
   window.addEventListener('resize', showButton);
 
+
+
+  // animation
+  const logoAnim = {
+    hidden: {
+      x: -100,
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { type: 'tween', delay: 0.5, duration: 0.5 }
+    }
+  }
+
+
+  const liAnim = {
+    hidden: {
+      y: -100,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: 'tween', delay: 0.7, duration: 0.7 }
+    }
+  }
+
+  const iconsAnim = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { type: 'tween', delay: 0.7, duration: 0.7 }
+    }
+  }
+
+  const buttonAnim = {
+    hidden: {
+      x: 100, opacity: 0
+    },
+    visible: {
+      x: 0, opacity: 1,
+      transition: { delay: 0.5, duration: 0.5 }
+    }
+  }
+
   return (
     <nav className='navbar'>
       <div className='navbar-container'>
         <a href='/home' className='navbar-logo' onClick={() => { closeMobileMenu(); }}>
-          <img src={logo} alt="logo" className="logo" />
+          <motion.img variants={logoAnim} initial='hidden' animate='visible'
+            src={logo} alt="logo" className="logo" />
         </a>
 
         {currentPath === "/user" || currentPath === "/admin" ?
-          <div className='menu-icon-sidebar' onClick={handleClickSidebar}>
+          <motion.div variants={iconsAnim} initial='hidden' animate='visible'
+            className='menu-icon-sidebar' onClick={handleClickSidebar}>
             <i style={{ color: '#1c2237b0' }} className={props.clickForSidebar ? 'fas fa-times' : 'fas fa-tachometer-alt'} />
-          </div> : null
+          </motion.div> : null
         }
 
-        <div className='menu-icon-navbar' onClick={() => { handleClickNavbar(); }}>
+        <motion.div variants={iconsAnim} initial='hidden' animate='visible'
+          className='menu-icon-navbar' onClick={() => { handleClickNavbar(); }}>
           <i style={{ color: '#1c2237b0' }} className={props.clickForNavbar ? null : 'fas fa-bars'} />
-        </div>
+        </motion.div>
 
         <ul className={props.clickForNavbar ? 'nav-menu active' : 'nav-menu'}>
-          <li className="nav-item" style={props.clickForNavbar ? null : { display: 'none' }}>
+          <li
+            className="nav-item" style={props.clickForNavbar ? null : { display: 'none' }}>
             <div className='menu-icon-navbar' onClick={handleClickNavbar}>
               <i style={{ color: '#1c2237b0' }} className={props.clickForNavbar ? 'fas fa-times' : null} />
             </div>
           </li>
-          <li className='nav-item'>
+          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
             <a href='/home'
               className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
               Home
               </a>
-          </li>
-          <li className='nav-item'>
+          </motion.li>
+          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
             <a
               href='/about'
               className={currentPath === '/about' ? 'nav-links active' : 'nav-links'}
@@ -116,37 +176,37 @@ export default function Navbar(props) {
             >
               About
               </a>
-          </li>
-          <li className='nav-item'>
+          </motion.li>
+          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
             <a
               href='/jobs'
               className={currentPath === '/jobs' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
               Jobs
               </a>
-          </li>
-          <li className='nav-item'>
+          </motion.li>
+          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
             <a
               href='/makeCV'
               className={currentPath === '/makeCV' ? 'nav-links active' : 'nav-links'}
               onClick={() => { closeMobileMenu(); }}>
               Make cv
               </a>
-          </li>
+          </motion.li>
           {currentUser ? (
-            <li className='nav-item'>
+            <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
               <a
                 href={currentUser.role === "ROLE_ADMIN" ? "/admin" : "/user"}
                 className={currentPath === '/admin' || currentPath === '/user' ? 'nav-links active' : 'nav-links'}
                 onClick={() => { closeMobileMenu(); }}>
                 {currentUser.role === "ROLE_ADMIN" ? "Admin" : "User"}
               </a>
-            </li>
+            </motion.li>
           ) : null}
           <div>
-            <li className='nav-item'>
+            <motion.li variants={buttonAnim} initial='hidden' animate='visible' className='nav-item'>
               <button className={button ? ' btn nav-links-btn  ' : 'btn nav-links-mobile'} onClick={() => { currentUser ? logOut() : setOpenPopupView(true) }}>{currentUser ? "Log-out" : "Logheaza-te"}</button>
-            </li>
+            </motion.li>
           </div>
         </ul>
         <ViewPopup

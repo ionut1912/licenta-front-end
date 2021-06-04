@@ -1,89 +1,78 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableHead, TableBody, TableCell, TableRow, Table, TextField, Toolbar, Breadcrumbs, Typography, Paper } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Toolbar, Typography, Paper } from '@material-ui/core';
 import useTable from '../useTable'
-import jobService from '../../../services/job.service';
-import AddIcon from '@material-ui/icons/Add';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import CloseIcon from '@material-ui/icons/Close';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ViewPopup from '../../ViewPopup'
 import JobView from '../../Joburi/JobView'
 import Notification from '../../Notification'
 import Button from '../Button'
 import ConfirmDialog from '../ConfirmDialog';
+import JobStatistics from './JobStatistics';
+import JobFilters from './JobFilters';
+import jobService from '../../../services/job.service';
+
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CloseIcon from '@material-ui/icons/Close';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import AddIcon from '@material-ui/icons/Add';
+
 
 
 const useStyle = makeStyles(theme => ({
+    papper: {
+        borderRadius: '16px',
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24)',
+        marginBottom: '50px',
+        '& .MuiButtonBase-root:focus': {
+            border: 'none',
+            outline: 'none'
+        }
+    },
     table: {
-        tableLayout: 'fixed',
-        borderCollapse: 'collapse',
-        margin: '25px 0',
-        fontSize: '0.9em',
-        minWidth: '400px',
-        overflow: 'hidden',
-        borderRadius: '8px 8px 8px 8px',
-        boxShadow: '0 0 20px rgba(0, 0, 0, 0.15)',
-        [theme.breakpoints.down(1447)]: {
-            width: '95%',
-            display: 'block',
-            overflowX: 'auto',
-        },
-        '& thead': {
-            padding: '12px 15px'
-        },
-        '& thead tr': {
-            textAlign: 'left',
-            fontWeight: 'bold'
-        },
-        '& tbody td': {
-            fontWeight: '300',
-            padding: '12px 15px',
-            fontSize: '16px'
-        },
-        '& tbody tr:nth-of-type(even)': {
-            backgroundColor: '#f3f3f3',
-        },
-        '& tbody tr:last-of-type': {
-            borderBottom: '2px solid #009879',
-            [theme.breakpoints.down(1340)]: {
-                borderBottom: 'none'
+        '& .MuiTableCell-root': {
+            borderBottom: '2px solid rgba(0, 0, 0, 0.2)',
+            fontSize: '0.875rem',
+            letterSpacing: '0',
+            '&:first-child': {
+                paddingLeft: '30px'
+            },
+            '& .role': {
+                padding: '5px 20px',
+                borderRadius: '20px',
+                color: '#fff'
             }
+        },
+        '& .MuiTableCell-head .MuiButtonBase-root': {
+            fontSize: '1.1rem',
+            color: 'rgb(23,43,77)',
+        },
+        '& tbody tr:hover': {
+            backgroundColor: "#e7ebfc"
         },
         '&:focus': {
             border: 'none',
             outline: 'none'
         },
         '& .MuiTableSortLabel-active': {
-            color: "#f1f1f1"
+            color: "red"
         },
         '& .MuiFormControl-root': {
             backgroundColor: "white",
             color: 'black'
         }
     },
-    pageContent: {
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
-    },
-    searchInput: {
-        width: "75%"
-    },
-    toolbar: {
-        textTransform: 'none',
-        marginLeft: 'auto',
-        top: '-20px'
-    },
-    btn: {
-        padding: '5px 20px',
-        borderRadius: '20px 20px 20px 20px',
-    },
     action: {
         display: 'flex',
         width: '100%'
     },
-    filterHead: {
-        backgroundColor: '#f1f1f1'
+    toolbar: {
+
+        marginLeft: 'auto',
+
+    },
+    btn: {
+        padding: '5px 20px',
+        borderRadius: '20px 20px 20px 20px',
     }
 }))
 
@@ -97,15 +86,6 @@ const headCells = [
 
 ]
 
-const filterInputs = [
-    { id: 'numeJob', label: 'Search by name' },
-    { id: 'jobCategory', label: 'Search by job category' },
-    { id: 'jobType', label: 'Search by job type' },
-    { id: 'location', label: 'Search by location' },
-    { id: 'last_date', label: 'Search by last date' },
-    { id: '', label: '' }
-]
-
 function format(date) {
     return new Intl.DateTimeFormat("en-GB", {
         day: "2-digit",
@@ -115,43 +95,19 @@ function format(date) {
 }
 
 
-function JobsList(props) {
+export default function JobsList(props) {
 
     const classes = useStyle();
+
     const [records, setRecords] = useState([]);
     const [openPopupView, setOpenPopupView] = useState(false);
     const [recordForView, setRecordForView] = useState("");
     const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
+    
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const {
-        TblHead,
-        TblPagination,
-        recordsAfterPagingAndSortingJobs
-    } = useTable(records, headCells, filterFunction);
-
-
-    const handleSearchInput = (e) => {
-        const { name, value } = e.target;
-        setFilterFunction({
-            fn: items => {
-                if (value === "")
-                    return items;
-                else if (name === "numeJob")
-                    return items.filter(x => x.numeJob.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "jobCategory")
-                    return items.filter(x => x.jobCategory.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "jobType")
-                    return items.filter(x => x.jobType.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "location")
-                    return items.filter(x => x.locatie.toLowerCase().includes(value.toLowerCase()))
-                else if (name === "last_date")
-                    return items.filter(x => format(x.dataMaxima.toLowerCase()).includes(value.toLowerCase()))
-
-            }
-        })
-    }
+    const { TblHead, TblPagination, recordsAfterPagingAndSortingJobs } = useTable(records, headCells, filterFunction);
 
     const getData = () => {
         jobService.getJobs().then(
@@ -190,90 +146,73 @@ function JobsList(props) {
     }
 
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} style={{ backgroundColor: '#f1f1f1' }} >
+        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
 
             <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Job list </h1>
-            <div className="d-flex">
-                <Breadcrumbs
-                    separator={<NavigateNextIcon fontSize="small" />}
-                    aria-label="breadcrumb">
-                    <a style={{ color: 'black' }}>Material-U</a>
-                    <a style={{ color: 'black' }}>Core</a>
-                    <Typography style={{ color: '#1c2237b0' }}>Breadcrumb</Typography>
-                </Breadcrumbs>
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
+                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
+                <a className="text-primary">Jobs</a>
+            </Breadcrumbs>
 
-                <Toolbar className={classes.toolbar}>
-                    <Button
-                        startIcon={<AddIcon />}
-                        className={classes.btn}
-                        onClick={() => { props.setState(4); props.setItemForEdit("") }}
-                        text="Add new job"
-                    />
-                </Toolbar>
-            </div>
+            <JobStatistics />
 
-            <Paper>
-                <Table className={classes.table}>
-                    <TblHead />
-                    <TableHead className={classes.filterHead}>
-                        <TableRow>
+            <Toolbar className={classes.toolbar}>
+                <Button
+                    startIcon={<AddIcon />}
+                    className={classes.btn}
+                    onClick={() => { props.setState(4); props.setItemForEdit("") }}
+                    text="Add new job"
+                />
+            </Toolbar>
+            <Paper className={classes.papper}>
+                <JobFilters />
+
+                <TableContainer style={{ marginTop: '25px' }}>
+                    <Table className={classes.table}>
+                        <TblHead />
+                        <TableBody>
                             {
-                                filterInputs.map((filterCell, index) => (
-                                    <TableCell key={index}>
-                                        {index === 5 ? null : <TextField
-                                            variant="outlined"
-                                            name={filterCell.id}
-                                            label={filterCell.label}
-                                            onChange={handleSearchInput}
-                                        />
-                                        }
-                                    </TableCell>
-                                ))
-                            }
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSortingJobs().map((item, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{item.numeJob}</TableCell>
-                                    <TableCell>{item.jobCategory}</TableCell>
-                                    <TableCell>{item.jobType}</TableCell>
-                                    <TableCell>{item.locatie}</TableCell>
-                                    <TableCell>{format(item.dataMaxima)}</TableCell>
-                                    <TableCell>
-                                        <div className={classes.action}>
-                                            <Button
-                                                color="default"
-                                                style={{ color: '#1769aa' }}
-                                                text={<VisibilityIcon fontSize="small" />}
-                                                onClick={() => { openInPopupView(item) }}
-                                            />
-                                            <Button
-                                                onClick={() => { props.setState(4); props.setItemForEdit(item) }}
-                                                text={<EditOutlinedIcon fontSize="small" />}
-                                                style={{ marginLeft: "10px" }}
-                                            />
-                                            <Button
-                                                color="secondary"
-                                                onClick={() => {
-                                                    setConfirmDialog({
-                                                        isOpen: true,
-                                                        title: 'Are you sure to delete this record?',
-                                                        subTitle: "You can't undo this operation",
-                                                        onConfirm: () => { onDelete(item.id); }
-                                                    })
+                                recordsAfterPagingAndSortingJobs().map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.numeJob}</TableCell>
+                                        <TableCell>{item.jobCategory}</TableCell>
+                                        <TableCell>{item.jobType}</TableCell>
+                                        <TableCell>{item.locatie}</TableCell>
+                                        <TableCell>{format(item.dataMaxima)}</TableCell>
+                                        <TableCell>
+                                            <div className={classes.action}>
+                                                <Button
+                                                    color="default"
+                                                    style={{ color: '#1769aa' }}
+                                                    text={<VisibilityIcon fontSize="small" />}
+                                                    onClick={() => { openInPopupView(item) }}
+                                                />
+                                                <Button
+                                                    onClick={() => { props.setState(4); props.setItemForEdit(item) }}
+                                                    text={<EditOutlinedIcon fontSize="small" />}
+                                                    style={{ marginLeft: "10px" }}
+                                                />
+                                                <Button
+                                                    color="secondary"
+                                                    onClick={() => {
+                                                        setConfirmDialog({
+                                                            isOpen: true,
+                                                            title: 'Are you sure to delete this record?',
+                                                            subTitle: "You can't undo this operation",
+                                                            onConfirm: () => { onDelete(item.id); }
+                                                        })
 
-                                                }}
-                                                style={{ marginLeft: "10px" }}
-                                                text={<CloseIcon fontSize="small" />}
-                                            />
-                                        </div>
-                                    </TableCell>
-                                </TableRow>))
-                        }
-                    </TableBody>
-                </Table>
+                                                    }}
+                                                    style={{ marginLeft: "10px" }}
+                                                    text={<CloseIcon fontSize="small" />}
+                                                />
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <TblPagination />
             </Paper>
 
@@ -299,4 +238,3 @@ function JobsList(props) {
 
 }
 
-export default JobsList
