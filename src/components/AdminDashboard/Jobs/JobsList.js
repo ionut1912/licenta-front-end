@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Toolbar, Typography, Paper } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Toolbar, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import ViewPopup from '../../ViewPopup'
 import JobView from '../../Joburi/JobView'
@@ -37,9 +37,9 @@ const useStyle = makeStyles(theme => ({
                 paddingLeft: '30px'
             },
             '& .role': {
-                padding: '5px 20px',
+                padding: '5px 10px',
                 borderRadius: '20px',
-                color: '#fff'
+                color: '#fff',
             }
         },
         '& .MuiTableCell-head .MuiButtonBase-root': {
@@ -71,17 +71,20 @@ const useStyle = makeStyles(theme => ({
 
     },
     btn: {
-        padding: '5px 20px',
+        padding: '10px 20px',
+        marginBottom: '20px',
+        marginLeft: 'auto',
         borderRadius: '20px 20px 20px 20px',
     }
 }))
 
 const headCells = [
     { id: 'numeJob', label: 'Name job' },
+    { id: 'locatie', label: 'Location' },
     { id: 'jobCategory', label: 'Job category' },
     { id: 'jobType', label: 'Job type' },
-    { id: 'locatie', label: 'Location' },
-    { id: 'last_date', label: 'Last date' },
+    { id: 'dataAdaugare', label: 'Data adaugarii' },
+    { id: 'dataMaxima', label: 'Last date' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 
 ]
@@ -103,7 +106,7 @@ export default function JobsList(props) {
     const [openPopupView, setOpenPopupView] = useState(false);
     const [recordForView, setRecordForView] = useState("");
     const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
-    
+
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
@@ -150,8 +153,8 @@ export default function JobsList(props) {
 
             <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Job list </h1>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
-                <a className="text-primary">Jobs</a>
+                <span style={{ color: '#1c2237b0' }}>Dasboard</span>
+                <span className="text-primary">Jobs</span>
             </Breadcrumbs>
 
             <JobStatistics />
@@ -175,10 +178,18 @@ export default function JobsList(props) {
                                 recordsAfterPagingAndSortingJobs().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.numeJob}</TableCell>
-                                        <TableCell>{item.jobCategory}</TableCell>
-                                        <TableCell>{item.jobType}</TableCell>
                                         <TableCell>{item.locatie}</TableCell>
-                                        <TableCell>{format(item.dataMaxima)}</TableCell>
+                                        <TableCell>{item.jobCategory}</TableCell>
+
+                                        <TableCell><span style={item.jobType === 'FULL_TIME' ? { backgroundColor: "#f19e02" } : { backgroundColor: "#4c0097" }} className="role">
+                                            {item.jobType === 'FULL_TIME' ? "Full time" : "Part time"}</span></TableCell>
+
+                                        <TableCell>{format(item.dataAdaugare)}</TableCell>
+
+                                        <TableCell><span style={new Date(item.dataMaxima).getTime() >= new Date().getTime() ? { backgroundColor: "#40a145" } : { backgroundColor: "#f30909" }} className="role">
+                                            {format(item.dataMaxima)}</span>
+                                        </TableCell>
+
                                         <TableCell>
                                             <div className={classes.action}>
                                                 <Button
@@ -232,7 +243,7 @@ export default function JobsList(props) {
                 confirmDialog={confirmDialog}
                 setConfirmDialog={setConfirmDialog}
             />
-        </div>
+        </div >
 
     )
 

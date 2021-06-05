@@ -14,6 +14,8 @@ const PDF = (props) => {
 
   const handleExportWithComponent = (event) => {
     pdfExportComponent.current.save();
+    props.reset();
+    props.setOpenPopup(false);
   }
 
   function format(date) {

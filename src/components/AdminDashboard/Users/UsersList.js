@@ -144,8 +144,8 @@ export default function UsersList(props) {
             <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">User list</h1>
 
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
-                <a className="text-primary">Users</a>
+                <span style={{ color: '#1c2237b0' }}>Dasboard</span>
+                <span className="text-primary">Users</span>
             </Breadcrumbs>
 
             <UserStatistics />

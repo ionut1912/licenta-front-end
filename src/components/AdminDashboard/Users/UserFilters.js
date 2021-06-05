@@ -16,7 +16,11 @@ const useStyle = makeStyles(theme => ({
             '&:focus': {
                 border: 'none',
                 outline: 'none'
-            }
+            },
+            [theme.breakpoints.down(400)]: {
+                fontSize: '12px'
+            },
+
         },
         '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
@@ -28,9 +32,13 @@ const useStyle = makeStyles(theme => ({
         display: 'flex',
         flexWrap: 'wrap',
         '& .MuiTextField-root': {
-            marginLeft: '30px',
+            marginRight: '30px',
+            marginTop: '10px',
             flex: '30%%',
             maxWidth: '30%',
+            '&:last-child': {
+                marginRight: '0px',
+            },
             [theme.breakpoints.down(768)]: {
                 flex: '28%',
                 maxWidth: '28%',
@@ -40,9 +48,6 @@ const useStyle = makeStyles(theme => ({
                 maxWidth: '100%',
                 margin: '10px 0 10px 0',
             }
-        },
-        '& .MuiTextField-root:first-child': {
-            marginLeft: '0px'
         }
     }
 }))

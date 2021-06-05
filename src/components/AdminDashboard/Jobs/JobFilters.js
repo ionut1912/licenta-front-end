@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Search from '@material-ui/icons/Search';
-import { makeStyles, TextField, Toolbar, InputAdornment, Tabs, Tab, } from '@material-ui/core';
+import { makeStyles, TextField, MenuItem, FormControl, InputLabel, Select, Toolbar, InputAdornment, Tabs, Tab, } from '@material-ui/core';
 
 const useStyle = makeStyles(theme => ({
     filters: {
@@ -15,33 +15,44 @@ const useStyle = makeStyles(theme => ({
             '&:focus': {
                 border: 'none',
                 outline: 'none'
-            }
+            },
+            [theme.breakpoints.down(400)]: {
+                fontSize:'12px'
+            },
         },
-        '& .MuiOutlinedInput-root': {
+        '& .roundField .MuiOutlinedInput-root': {
             borderRadius: '20px',
 
         }
     },
     toolbar: {
-        margin: '30px 0px 30px 0',
+        margin: '30px 0px 20px 0',
         display: 'flex',
         flexWrap: 'wrap',
-        '& .MuiTextField-root': {
-            marginLeft: '30px',
-            flex: '30%%',
-            maxWidth: '30%',
-            [theme.breakpoints.down(768)]: {
-                flex: '28%',
-                maxWidth: '28%',
+        '& .MuiFormControl-root': {
+            marginRight: '30px',
+            marginTop: '10px',
+            flex: '22%',
+            maxWidth: '22%',
+            '&:last-child': {
+                marginRight: '0px',
+            },
+            [theme.breakpoints.down(1200)]: {
+                marginRight: '15px',
+                flex: '21%',
+                maxWidth: '21%',
+            },
+            [theme.breakpoints.down(840)]: {
+                marginRight: '30px',
+                marginTop: '20px',
+                flex: '40%',
+                maxWidth: '40%',
             },
             [theme.breakpoints.down(620)]: {
                 flex: '100%',
                 maxWidth: '100%',
                 margin: '10px 0 10px 0',
             }
-        },
-        '& .MuiTextField-root:first-child': {
-            marginLeft: '0px'
         }
     }
 }))
@@ -60,8 +71,8 @@ export default function JobFilters() {
         <div className={classes.filters}>
             <Tabs value={currentTab} indicatorColor="primary" onChange={handleChange} textColor="primary">
                 <Tab label="All jobs" />
-                <Tab label="The most applied jobs" />
-                <Tab label="The least applied jobs" />
+                <Tab label="Active jobs" />
+                <Tab label="Unactive jobs" />
             </Tabs>
             <hr />
 
@@ -69,39 +80,51 @@ export default function JobFilters() {
                 <TextField
                     variant="outlined"
                     label="Search by name"
+                    className="roundField"
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />
                         </InputAdornment>)
                     }}
                 />
-                <TextField
-                    variant="outlined"
-                    label="Search by category"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="end">
-                            <Search />
-                        </InputAdornment>)
-                    }}
-                />
-                <TextField
-                    variant="outlined"
-                    label="Search by type"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="end">
-                            <Search />
-                        </InputAdornment>)
-                    }}
-                />
-                <TextField
-                    variant="outlined"
-                    label="Search by location"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="start">
-                            <Search />
-                        </InputAdornment>)
-                    }}
-                />
+                <FormControl variant="outlined">
+                    <InputLabel>Search by category</InputLabel>
+                    <Select
+                        name="category"
+                        label="Search by category"
+                        value={"All"}>
+                        <MenuItem value="All">All</MenuItem>
+                        <MenuItem value="Development">Development</MenuItem>
+                        <MenuItem value="Architect">Architect</MenuItem>
+                        <MenuItem value="Front-end">Front-end</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <FormControl variant="outlined">
+                    <InputLabel>Search by type</InputLabel>
+                    <Select
+                        name="type"
+                        label="Search by type"
+                        value={"All"}>
+                        <MenuItem value="All">All</MenuItem>
+                        <MenuItem value="Development">Development</MenuItem>
+                        <MenuItem value="Architect">Architect</MenuItem>
+                        <MenuItem value="Front-end">Front-end</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <FormControl variant="outlined">
+                    <InputLabel>Search by location</InputLabel>
+                    <Select
+                        name="location"
+                        label="Search by location"
+                        value={"All"}>
+                        <MenuItem value="All">All</MenuItem>
+                        <MenuItem value="Development">Development</MenuItem>
+                        <MenuItem value="Architect">Architect</MenuItem>
+                        <MenuItem value="Front-end">Front-end</MenuItem>
+                    </Select>
+                </FormControl>
             </Toolbar>
         </div>
     )

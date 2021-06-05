@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TableHead, TableRow, TableCell, makeStyles, TablePagination, TableSortLabel } from '@material-ui/core'
+import { TableHead, TableRow, TableCell, TablePagination, TableSortLabel } from '@material-ui/core'
 
 
 export default function useTable(records, headCells, filterFunction) {

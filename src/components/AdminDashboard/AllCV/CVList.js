@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Toolbar, Typography, Paper } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Toolbar, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import ViewPopup from '../../ViewPopup'
 import PDF from '../../CV/PDF'
@@ -15,6 +15,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import * as RiIcons from 'react-icons/ri';
 
 
 const useStyle = makeStyles(theme => ({
@@ -64,12 +65,10 @@ const useStyle = makeStyles(theme => ({
         display: 'flex',
         width: '100%'
     },
-    toolbar: {
-        marginLeft: 'auto',
-
-    },
     btn: {
-        padding: '5px 20px',
+        marginLeft: 'auto',
+        marginBottom: '20px',
+        padding: '10px 20px',
         borderRadius: '20px 20px 20px 20px',
     }
 }))
@@ -155,8 +154,8 @@ export default function CVList(props) {
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
             <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Cv list </h1>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
-                <a className="text-primary">Cvs</a>
+                <span style={{ color: '#1c2237b0' }}>Dasboard</span>
+                <span className="text-primary">Cvs</span>
             </Breadcrumbs>
 
             <CvStatistics />
@@ -186,7 +185,11 @@ export default function CVList(props) {
                                         <TableCell>{item.phone}</TableCell>
                                         <TableCell>{item.city}</TableCell>
                                         <TableCell>{item.dateOfBirth !== null ? format(item.dateOfBirth) : null}</TableCell>
-                                        <TableCell>{item.linkedin !== '' ? <a href={item.linkedin}>Go to (icon)</a> : null}</TableCell>
+
+                                        <TableCell >{item.linkedin !== '' ?
+                                            <a href={item.linkedin} style={{ marginLeft: '20px' }}><RiIcons.RiShareForwardLine style={{ fontSize: '20px' }} /></a>
+                                            : null}</TableCell>
+
                                         <TableCell>
                                             <div className={classes.action}>
                                                 <Button

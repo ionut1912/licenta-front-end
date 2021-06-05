@@ -16,7 +16,10 @@ const useStyle = makeStyles(theme => ({
             '&:focus': {
                 border: 'none',
                 outline: 'none'
-            }
+            },
+            [theme.breakpoints.down(400)]: {
+                fontSize:'12px'
+            },
         },
         '& .MuiOutlinedInput-root': {
             borderRadius: '20px',
@@ -28,12 +31,23 @@ const useStyle = makeStyles(theme => ({
         display: 'flex',
         flexWrap: 'wrap',
         '& .MuiTextField-root': {
-            marginLeft: '30px',
-            flex: '30%%',
-            maxWidth: '30%',
-            [theme.breakpoints.down(768)]: {
-                flex: '28%',
-                maxWidth: '28%',
+            marginRight: '30px',
+            marginTop: '10px',
+            flex: '22%',
+            maxWidth: '22%',
+            '&:last-child': {
+                marginRight: '0px',
+            },
+            [theme.breakpoints.down(1200)]: {
+                marginRight: '15px',
+                flex: '22%',
+                maxWidth: '22%',
+            },
+            [theme.breakpoints.down(840)]: {
+                marginRight: '30px',
+                marginTop: '20px',
+                flex: '40%',
+                maxWidth: '40%',
             },
             [theme.breakpoints.down(620)]: {
                 flex: '100%',
@@ -41,9 +55,6 @@ const useStyle = makeStyles(theme => ({
                 margin: '10px 0 10px 0',
             }
         },
-        '& .MuiTextField-root:first-child': {
-            marginLeft: '0px'
-        }
     }
 }))
 
@@ -59,16 +70,16 @@ export default function AplicationFilters() {
     return (
         <div className={classes.filters}>
             <Tabs value={currentTab} indicatorColor="primary" onChange={handleChange} textColor="primary">
-                <Tab label="All user" />
-                <Tab label="Admin" />
-                <Tab label="Normal user" />
+                <Tab label="All " />
+                <Tab label="Checked" />
+                <Tab label="To check" />
             </Tabs>
             <hr />
 
             <Toolbar className={classes.toolbar}>
                 <TextField
                     variant="outlined"
-                    label="Search by name"
+                    label="Search by full name"
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />
@@ -87,6 +98,16 @@ export default function AplicationFilters() {
                 <TextField
                     variant="outlined"
                     label="Search by location"
+                    InputProps={{
+                        startAdornment: (<InputAdornment position="start">
+                            <Search />
+                        </InputAdornment>)
+                    }}
+                />
+
+                <TextField
+                    variant="outlined"
+                    label="Search by name job"
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />

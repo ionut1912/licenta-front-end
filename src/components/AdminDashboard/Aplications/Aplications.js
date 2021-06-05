@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Typography, Paper } from '@material-ui/core';
+import { makeStyles, TableBody, TableCell, Table, TableContainer, TableRow, Breadcrumbs, Paper } from '@material-ui/core';
 import useTable from '../useTable'
 import Button from '../Button'
 import aplicariiService from '../../../services/aplicareJob.serivce';
@@ -74,7 +74,6 @@ function format(date) {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-        //time
     }).format(new Date(date));
 }
 
@@ -85,7 +84,7 @@ const headCells = [
     { id: 'jobName', label: 'Name job' },
     { id: 'dataAplicarii', label: 'Data aplicarii' },
     { id: 'verificat', label: 'Verificat' },
-    { id: 'cv', label: 'Download CV', disableSorting: true },
+    { id: 'cv', label: 'Download', disableSorting: true },
     { id: 'actions', label: 'Actions', disableSorting: true }
 
 ]
@@ -153,11 +152,11 @@ export default function Aplications(props) {
 
     return (
         <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
-            <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">User list</h1>
+            <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">Application list</h1>
 
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
-                <a style={{ color: '#1c2237b0' }}>Dasboard</a>
-                <a className="text-primary">Users</a>
+                <span style={{ color: '#1c2237b0' }}>Dasboard</span>
+                <span className="text-primary">Applications</span>
             </Breadcrumbs>
 
             <AplicationStatistics />
@@ -168,17 +167,20 @@ export default function Aplications(props) {
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
-
+                        <TblHead />
                         <TableBody >
                             {
                                 recordsAfterPagingAndSortingAplicarii().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.full_name}</TableCell>
-                                        <TableCell className={classes.th}>{item.email}</TableCell>
+                                        <TableCell >{item.email}</TableCell>
                                         <TableCell>{item.telefon}</TableCell>
                                         <TableCell>{item.jobName}</TableCell>
-                                        <TableCell className={classes.th}>{item.dataAplicarii}</TableCell>
-                                        <TableCell><p className={item.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle" style={{ marginRight: '10px' }}></i>{item.verificat === true ? "Verificat" : "Neverificat"}</p></TableCell>
+                                        <TableCell>{format(item.dataAplicarii)}</TableCell>
+                                        <TableCell><span style={item.verificat === true ? { backgroundColor: "#40a145" } : { backgroundColor: "#f30909" }} className="role">
+                                            {item.verificat === true ? "Verificat" : "Neverificat"}</span>
+                                        </TableCell>
+
                                         <TableCell>
                                             <div className={classes.action}>
                                                 <Button
@@ -226,7 +228,7 @@ export default function Aplications(props) {
                 confirmDialog={confirmDialog}
                 setConfirmDialog={setConfirmDialog}
             />
-        </div>
+        </div >
 
     )
 }

@@ -1,8 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core';
-import * as FaIcons from 'react-icons/fa';
-import * as HiIcons from 'react-icons/hi';
 import * as GiIcons from 'react-icons/gi';
+import * as GoIcons from 'react-icons/go';
 
 
 const useStyle = makeStyles(theme => ({
@@ -44,7 +43,7 @@ const useStyle = makeStyles(theme => ({
         alignItems: 'center',
     },
     statisticImg: {
-        padding: '10px 12px',
+        padding: '10px 12px 8px 12px',
         color: '#fff',
         marginRight: '15px',
         borderRadius: '50%'
@@ -65,13 +64,13 @@ export default function AplicationStatistics() {
     return (
         <div className={classes.statistics}>
 
-            <div className="card mb-3" style={{ backgroundColor: '#fda1a1' }}>
+            <div className="card mb-3" style={{ backgroundColor: '#fae5bf' }}>
                 <div className="card-body">
                     <div className={classes.statistic}>
-                        <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><HiIcons.HiUserGroup /></span>
+                        <span className={classes.statisticImg} style={{ backgroundColor: '#f19e02' }}><GiIcons.GiClick /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of users</p>
-                            <p style={{ color: '#fa0019' }}>500</p>
+                            <p className="info">Number of applications</p>
+                            <p style={{ color: '#f19e02' }}>500</p>
                         </div>
                     </div>
                 </div>
@@ -80,38 +79,27 @@ export default function AplicationStatistics() {
             <div className="card mb-3" style={{ backgroundColor: '#a8b5ff' }}>
                 <div className="card-body">
                     <div className={classes.statistic}>
-                        <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><FaIcons.FaUserSecret /></span>
+                        <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><GiIcons.GiCheckMark /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of admins</p>
+                            <p className="info">Number of applications checked</p>
                             <p style={{ color: '#182fb4' }}>3</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="card mb-3" style={{ backgroundColor: '#fae5bf' }}>
+            <div className="card mb-3" style={{ backgroundColor: '#fda1a1' }}>
                 <div className="card-body">
                     <div className={classes.statistic}>
-                        <span className={classes.statisticImg} style={{ backgroundColor: '#f19e02' }}><FaIcons.FaUser /></span>
+                        <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><GoIcons.GoX /></span>
                         <div className={classes.statisticInfo}>
-                            <p className="info">Number of normal users</p>
-                            <p style={{ color: '#f19e02' }}>497</p>
+                            <p className="info">Number of applications to check</p>
+                            <p style={{ color: '#fa0019' }}>497</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="card mb-3" style={{ backgroundColor: '#ddbefaf6' }}>
-                <div className="card-body">
-                    <div className={classes.statistic}>
-                        <span className={classes.statisticImg} style={{ backgroundColor: '#4c0097' }}><GiIcons.GiClick /></span>
-                        <div className={classes.statisticInfo}>
-                            <p className="info">Number of users with applications</p>
-                            <p style={{ color: '#4c0097' }}>208</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     )
 }
