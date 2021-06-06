@@ -23,6 +23,23 @@ class UserService {
     deleteUser(userId) {
         return axios.delete(API_URL + `user/${userId}`);
     }
+
+    getNumberOfUsers() {
+        return axios.get(API_URL + 'user/numberOfUsers');
+    }
+
+    getNumberOfAdmins() {
+        return axios.get(API_URL + 'user/numberOfAdmins');
+    }
+
+    getNumberOfNormalUsers() {
+        return axios.get(API_URL + 'user/numberOfNormalUsers');
+    }
+
+    getNumberOfUsersWithAplications() {
+        return axios.get(API_URL + 'user/numberOfUsersWithApplications');
+    }
+
 }
 
 export default new UserService();

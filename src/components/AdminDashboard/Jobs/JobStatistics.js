@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core';
 import * as AiIcons from 'react-icons/ai'
 import * as MdIcons from 'react-icons/md'
-
+import jobService from '../../../services/job.service'
 
 
 const useStyle = makeStyles(theme => ({
@@ -64,6 +64,43 @@ const useStyle = makeStyles(theme => ({
 export default function JobStatistics() {
     const classes = useStyle();
 
+    const [statistics, setStatistics] = useState({
+        jobs: '',
+        jobsActive: '',
+        jobsInactive: '',
+    })
+
+    useEffect(() => {
+        jobService.getNumberOfJobs().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    jobs: response.data
+                }
+            })
+        )
+
+        jobService.getNumberOfActiveJobs().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    jobsActive: response.data
+                }
+            })
+        )
+
+        jobService.getNumberOfInactiveJobs().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    jobsInactive: response.data
+                }
+            })
+        )
+
+    }, [setStatistics])
+
+    
     return (
         <div className={classes.statistics}>
 
@@ -73,7 +110,7 @@ export default function JobStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#4c0097' }}><MdIcons.MdWork /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of jobs</p>
-                            <p style={{ color: '#4c0097' }}>500</p>
+                            <p style={{ color: '#4c0097' }}>{statistics.jobs}</p>
                         </div>
                     </div>
                 </div>
@@ -85,7 +122,7 @@ export default function JobStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><AiIcons.AiFillEye /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of active jobs</p>
-                            <p style={{ color: '#fa0019  ' }}>3</p>
+                            <p style={{ color: '#fa0019  ' }}>{statistics.jobsActive}</p>
                         </div>
                     </div>
                 </div>
@@ -97,7 +134,7 @@ export default function JobStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><AiIcons.AiFillEyeInvisible /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of inactive jobs</p>
-                            <p style={{ color: '#182fb4' }}>497</p>
+                            <p style={{ color: '#182fb4' }}>{statistics.jobsInactive}</p>
                         </div>
                     </div>
                 </div>

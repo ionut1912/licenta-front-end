@@ -243,7 +243,7 @@ export default function JobsList(props) {
                 confirmDialog={confirmDialog}
                 setConfirmDialog={setConfirmDialog}
             />
-        </div >
+        </div>
 
     )
 

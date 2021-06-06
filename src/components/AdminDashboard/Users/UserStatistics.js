@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core';
 import * as FaIcons from 'react-icons/fa';
 import * as HiIcons from 'react-icons/hi';
 import * as GiIcons from 'react-icons/gi';
+import userService from '../../../services/user.service'
 
 
 const useStyle = makeStyles(theme => ({
@@ -64,6 +65,55 @@ export default function UserStatistics() {
 
     const classes = useStyle();
 
+
+    const [statistics, setStatistics] = useState({
+        users: '',
+        admins: '',
+        normalUsers: '',
+        usersWithApplications: '',
+    })
+
+    useEffect(() => {
+        userService.getNumberOfUsers().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    users: response.data
+                }
+            })
+        )
+
+        userService.getNumberOfAdmins().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    admins: response.data
+                }
+            })
+        )
+
+        userService.getNumberOfNormalUsers().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    normalUsers: response.data
+                }
+            })
+        )
+
+        userService.getNumberOfUsersWithAplications().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    usersWithApplications: response.data
+                }
+            })
+        )
+
+
+
+    }, [setStatistics])
+
     return (
         <div className={classes.statistics}>
 
@@ -73,7 +123,7 @@ export default function UserStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><HiIcons.HiUserGroup /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of users</p>
-                            <p style={{ color: '#fa0019' }}>500</p>
+                            <p style={{ color: '#fa0019' }}>{statistics.users}</p>
                         </div>
                     </div>
                 </div>
@@ -85,7 +135,7 @@ export default function UserStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><FaIcons.FaUserSecret /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of admins</p>
-                            <p style={{ color: '#182fb4' }}>3</p>
+                            <p style={{ color: '#182fb4' }}>{statistics.admins}</p>
                         </div>
                     </div>
                 </div>
@@ -97,7 +147,7 @@ export default function UserStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#f19e02' }}><FaIcons.FaUser /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of normal users</p>
-                            <p style={{ color: '#f19e02' }}>497</p>
+                            <p style={{ color: '#f19e02' }}>{statistics.normalUsers}</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +159,7 @@ export default function UserStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#4c0097' }}><GiIcons.GiClick /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of users with applications</p>
-                            <p style={{ color: '#4c0097' }}>208</p>
+                            <p style={{ color: '#4c0097' }}>{statistics.usersWithApplications}</p>
                         </div>
                     </div>
                 </div>

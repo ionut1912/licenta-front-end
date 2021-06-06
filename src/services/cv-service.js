@@ -50,6 +50,14 @@ class CvService {
         return axios.delete(API_URL + `cvs/project/${id}`);
     }
 
+    getNumberOfCvs() {
+        return axios.get(API_URL + 'cvs/numberOfCvs');
+    }
+
+    getMostUsedSkill() {
+        return axios.get(API_URL + 'cvs/skill/mostUsedSkill');
+    }
+
 }
 
 export default new CvService();

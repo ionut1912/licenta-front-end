@@ -20,6 +20,18 @@ class AplicareJobService {
         return axios.put(API_URL + `aplicarii/${id}`);
     }
 
+    getNumberOfApplications() {
+        return axios.get(API_URL + 'aplicarii/numberOfApplications');
+    }
+
+    getNumberOfApplicationsChecked() {
+        return axios.get(API_URL + 'aplicarii/numberOfApplicationsChecked');
+    }
+
+    getNumberOfApplicationsToCheck() {
+        return axios.get(API_URL + 'aplicarii/numberOfApplicationsToCheck');
+    }
+
 }
 
 export default new AplicareJobService();

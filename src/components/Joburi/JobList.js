@@ -17,7 +17,8 @@ export default function JobList({ data, filter }) {
     }
 
     function jobsAfterFilteringAndSearching() {
-        return data.filter(element => filter.search === "" ? data : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
+        return data.filter(element => new Date(element.dataMaxima).getTime() >= new Date().getTime())
+            .filter(element => filter.search === "" ? data : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
             .filter(element => filter.location === "All" ? data : filter.location.toLowerCase().includes(element.locatie.toLowerCase()))
             .filter(element => filter.category === "All" ? data : filter.category.toLowerCase().includes(element.jobCategory.toLowerCase()))
             .filter(element => filter.type === "All" ? data : filter.type.toLowerCase().includes(element.jobType.toLowerCase()))

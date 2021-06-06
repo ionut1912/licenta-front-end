@@ -28,11 +28,25 @@ class JobService {
     deleteSkill(idSkill) {
         return axios.delete(API_URL + `skills/${idSkill}`);
     }
+
     deleteAtributPersonal(idAtribut) {
         return axios.delete(API_URL + `atributes/${idAtribut}`);
     }
+
     deleteDetaliu(idDetaliu) {
         return axios.delete(API_URL + `detalii/${idDetaliu}`);
+    }
+
+    getNumberOfJobs() {
+        return axios.get(API_URL + 'jobs/numberOfJobs');
+    }
+
+    getNumberOfActiveJobs() {
+        return axios.get(API_URL + 'jobs/numberOfActiveJobs');
+    }
+
+    getNumberOfInactiveJobs() {
+        return axios.get(API_URL + 'jobs/numberOfInactiveJobs');
     }
 }
 

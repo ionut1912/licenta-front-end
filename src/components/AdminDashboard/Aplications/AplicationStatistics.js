@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core';
 import * as GiIcons from 'react-icons/gi';
 import * as GoIcons from 'react-icons/go';
+import aplicareService from '../../../services/aplicareJob.serivce'
 
 
 const useStyle = makeStyles(theme => ({
@@ -61,6 +62,42 @@ const useStyle = makeStyles(theme => ({
 export default function AplicationStatistics() {
     const classes = useStyle();
 
+    const [statistics, setStatistics] = useState({
+        applications: '',
+        applicationsChecked: '',
+        applicationsUnChecked: '',
+    })
+
+    useEffect(() => {
+        aplicareService.getNumberOfApplications().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    applications: response.data
+                }
+            })
+        )
+
+        aplicareService.getNumberOfApplicationsChecked().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    applicationsChecked: response.data
+                }
+            })
+        )
+
+        aplicareService.getNumberOfApplicationsToCheck().then(
+            response => setStatistics(info => {
+                return {
+                    ...info,
+                    applicationsUnChecked: response.data
+                }
+            })
+        )
+
+    }, [setStatistics])
+
     return (
         <div className={classes.statistics}>
 
@@ -70,7 +107,7 @@ export default function AplicationStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#f19e02' }}><GiIcons.GiClick /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of applications</p>
-                            <p style={{ color: '#f19e02' }}>500</p>
+                            <p style={{ color: '#f19e02' }}>{statistics.applications}</p>
                         </div>
                     </div>
                 </div>
@@ -82,7 +119,7 @@ export default function AplicationStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#182fb4' }}><GiIcons.GiCheckMark /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of applications checked</p>
-                            <p style={{ color: '#182fb4' }}>3</p>
+                            <p style={{ color: '#182fb4' }}>{statistics.applicationsChecked}</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +131,7 @@ export default function AplicationStatistics() {
                         <span className={classes.statisticImg} style={{ backgroundColor: '#fa0019' }}><GoIcons.GoX /></span>
                         <div className={classes.statisticInfo}>
                             <p className="info">Number of applications to check</p>
-                            <p style={{ color: '#fa0019' }}>497</p>
+                            <p style={{ color: '#fa0019' }}>{statistics.applicationsUnChecked}</p>
                         </div>
                     </div>
                 </div>
