@@ -6,8 +6,6 @@ import '../ViewPopup.css'
 export default function JobView(props) {
 
     const [showApplay, setShowApplay] = useState(false);
-    const [messageAplicare, setMessageAplicare] = useState("");
-    const [stateAplicare, setStateAplicare] = useState(false);
 
     const close = () => {
         props.setOpenPopup(false)
@@ -105,13 +103,12 @@ export default function JobView(props) {
                     </div>
                 </div>
             ) : (
-                messageAplicare !== "" ? <h1 style={{ padding: "50px", fontSize: "40px" }} className={stateAplicare === true ? "text-success" : "text-danger"}>{messageAplicare}</h1> :
-                    <Aplicare showDetails={setShowApplay} close={close} idJob={props.recordForView.id} setMessage={setMessageAplicare} state={setStateAplicare} />
+                <Aplicare idJob={props.recordForView.id} setNotify={props.setNotify} state={setShowApplay} />
             )}
             {props.buttons !== false ? (
                 <div className="modal-footer">
                     <button className="btn btn-cancel" onClick={close}>Close</button>
-                    <button className="btn btn-apply" onClick={() => { setShowApplay(!showApplay); setMessageAplicare("") }}>{showApplay === false ? "Apply now" : "See details"}</button>
+                    <button className="btn btn-apply" onClick={() => setShowApplay(!showApplay)}>{showApplay === false ? "Apply now" : "See details"}</button>
                 </div>
             ) : null}
             {props.buttonsAddJob !== false ? (

@@ -6,10 +6,14 @@ import aplicariiService from '../../../services/aplicareJob.serivce';
 import CloseIcon from '@material-ui/icons/Close';
 import Notification from '../../Notification'
 import ConfirmDialog from '../ConfirmDialog';
+
 import DescriptionIcon from '@material-ui/icons/Description';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
+
 import AplicationFilters from './AplicationFilters';
 import AplicationStatistics from './AplicationStatistics';
+
+import { motion } from "framer-motion";
 
 
 
@@ -150,8 +154,20 @@ export default function Aplications(props) {
     }
 
 
+    // animation
+    const contentAnim = {
+        hidden: {
+            opacity: 0
+        },
+        visible: {
+            opacity: 1,
+            transition: { type: 'spring', delay: 0.5, duration: 0.5 }
+        }
+    }
+
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
+        <motion.div variants={contentAnim} initial='hidden' animate='visible'
+            className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"} >
             <h1 style={{ padding: "10px 0 5px 0px" }} className="title-section">Application list</h1>
 
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />}>
@@ -228,7 +244,7 @@ export default function Aplications(props) {
                 confirmDialog={confirmDialog}
                 setConfirmDialog={setConfirmDialog}
             />
-        </div >
+        </motion.div>
 
     )
 }

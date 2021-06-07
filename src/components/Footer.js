@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import ContactService from '../services/contact.service';
 import Notification from './Notification'
 import './Footer.css';
+
+import { useInView } from 'react-intersection-observer'
+import { useAnimation, motion } from 'framer-motion'
 
 export default function Footer() {
 
@@ -46,10 +49,53 @@ export default function Footer() {
         );
     }
 
+
+    //animation
+    const animation = useAnimation();
+    const [contentRef, inView] = useInView({
+        triggerOnce: true,
+        rootMargin: "0px",
+    })
+
+    const animation2 = useAnimation();
+    const [contentRefBottom, inViewBottom] = useInView({
+        triggerOnce: true,
+        rootMargin: "30px",
+    })
+
+    const showFooterContent = {
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { delay: 0.5, duration: 0.5, ease: [0.6, 0.05, -0.01, 0.9] },
+        },
+        hidden: { opacity: 0, y: 50 }
+    }
+
+    const showFooterBottom = {
+        visible: {
+            opacity: 1,
+            transition: { delay: 0.4, duration: 0.4 },
+        },
+        hidden: { opacity: 0 }
+    }
+
+    useEffect(() => {
+        if (inView)
+            animation.start('visible')
+
+        if (inViewBottom)
+            animation2.start('visible')
+
+    }, [animation,animation2, inView, inViewBottom])
+
     return (
         <>
             <div className="footer">
-                <div className="footer-content">
+                <motion.div className="footer-content" ref={contentRef}
+                    animate={animation}
+                    initial="hidden"
+                    variants={showFooterContent}>
                     <div className="footer-section about">
                         <h1 className="logo-text"><span>C</span>rystal System</h1>
                         <br />
@@ -120,10 +166,12 @@ export default function Footer() {
                             )}
                         </Formik>
                     </div>
-                </div>
+                </motion.div>
 
                 <div className="footer-bottom">
-                    Copyright &copy; 2021. Desgined by <span>Matei Alexandru</span>
+                    <motion.span ref={contentRefBottom} animate={animation2} initial="hidden" variants={showFooterBottom}>
+                        Copyright &copy; 2021. Desgined by <span>Matei Alexandru</span>
+                    </motion.span>
                 </div>
             </div>
             <Notification

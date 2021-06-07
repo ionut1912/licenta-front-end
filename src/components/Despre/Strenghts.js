@@ -1,17 +1,84 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import './Strenghts.css'
+import { useInView } from 'react-intersection-observer'
+import { useAnimation, motion } from 'framer-motion'
 
 export default function Strenghts({ strenghts }) {
 
     const [current, setCurrent] = useState(0);
 
+    const [repet, setRepet] = useState(false);
+
+    const animation = useAnimation();
+    const [contentRef, inViewFirstPart] = useInView({
+        triggerOnce: true,
+    })
+
+    const animation2 = useAnimation();
+    const [contentRef2, inViewSecondPart] = useInView({
+        triggerOnce: true,
+    })
+
+    const titleAnim = {
+        hidden: {
+            x: -150, opacity: 0
+        },
+        visible: {
+            x: 0, opacity: 1,
+            transition: { delay: 0.6, duration: 0.6 }
+        }
+    }
+
+    const cardAnim = {
+        hidden: {
+            x: 150, opacity: 0
+        },
+        visible: {
+            x: 0, opacity: 1,
+            transition: { duration: 1, delay: 1 }
+        }
+    }
+
+    const descriptionAnim = {
+        hidden: {
+            x: -150, opacity: 0
+        },
+        visible: {
+            x: 0, opacity: 1,
+            transition: { duration: 0.5, delay: 0.5 }
+        }
+    }
+
+    const imgAnim = {
+        hidden: {
+            x: 150, opacity: 0
+        },
+        visible: {
+            x: 0, opacity: 1,
+            transition: { duration: 0.6, delay: 0.6 }
+        }
+    }
+
+    useEffect(() => {
+        if (inViewFirstPart)
+            animation.start('visible')
+
+        if (inViewSecondPart) {
+            animation2.start('visible')
+            setRepet(true);
+        }
+
+    }, [animation, animation2, inViewFirstPart, inViewSecondPart])
+
+
     return (
-        <div className="strenghts-section">
-            <h1 className="section-title" style={{ color: '#fff', marginBottom: '20px' }}>Our strenghts</h1>
+        <div className="strenghts-section" ref={contentRef}>
+            <motion.h1 variants={titleAnim} animate={animation} initial="hidden"
+                className="section-title" style={{ color: '#fff', marginBottom: '20px' }} >Our strenghts</motion.h1>
             <div className="strengths container">
 
-                <div className="row">
+                <motion.div variants={cardAnim} animate={animation} initial="hidden" className="row">
                     {strenghts.map((strenght, index) => {
                         return (
                             <div key={index} className={index === current ? "strength-col-logo active" : "strength-col-logo "} onClick={() => { setCurrent(index) }}>
@@ -20,7 +87,7 @@ export default function Strenghts({ strenghts }) {
                             </div>
                         )
                     })}
-                </div>
+                </motion.div>
 
                 {strenghts.map((strenght, index) => {
                     return (
@@ -33,12 +100,13 @@ export default function Strenghts({ strenghts }) {
                                             <ul>
                                                 {strenght.text.map((item, nr) => {
                                                     return (
-                                                        <li className='list-item' key={nr}>
+                                                        <motion.li className='list-item' key={nr} ref={contentRef2}
+                                                            variants={descriptionAnim} animate={repet === true ? 'visible' : animation2} initial="hidden" >
                                                             <span style={item[0] === '-' ? { marginRight: '50px' } : null}>
                                                                 {item[0] === '-' ? null : <DoneAllIcon />}
                                                             </span>
                                                             {item}
-                                                        </li>
+                                                        </motion.li>
                                                     );
                                                 })}
                                             </ul>
@@ -46,7 +114,8 @@ export default function Strenghts({ strenghts }) {
                                     </div>
 
                                     <div className="strength-col-details">
-                                        <img src={strenght.img} alt={"img " + index} className="strength-img" />
+                                        <motion.img ref={contentRef2} variants={imgAnim} animate={repet === true ? 'visible' : animation2} initial="hidden"
+                                            src={strenght.img} alt={"img " + index} className="strength-img" />
                                     </div>
 
                                 </div>

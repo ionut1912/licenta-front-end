@@ -33,12 +33,19 @@ export default function Aplicare(props) {
         if (currentUser !== null) {
             AplicareJobService.sendAplicareUser(currentUser.id, idJob, values).then(
                 () => {
-                    props.setMessage("Ai aplicat cu succes!")
-                    props.state(true)
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Ai aplicat cu succes!',
+                        type: 'success'
+                    });
+                    props.state(false)
                 },
                 error => {
-                    props.setMessage("Network error!")
-                    props.state(false)
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
                 }
 
 
@@ -47,12 +54,19 @@ export default function Aplicare(props) {
         } else {
             AplicareJobService.sendAplicareNoUser(idJob, values).then(
                 () => {
-                    props.setMessage("Ai aplicat cu succes!")
-                    props.state(true)
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Ai aplicat cu succes!',
+                        type: 'success'
+                    });
+                    props.state(false)
                 },
                 error => {
-                    props.setMessage("Network error!")
-                    props.state(false)
+                    props.setNotify({
+                        isOpen: true,
+                        message: 'Network error!',
+                        type: 'error'
+                    });
                 }
             )
         }

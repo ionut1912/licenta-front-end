@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import ViewPopup from '../ViewPopup';
 import JobView from '../Joburi/JobView'
+import Notification from '../Notification'
 import './JobList.css'
 
 export default function JobList({ data, filter }) {
 
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
 
     function format(date) {
         return new Intl.DateTimeFormat("en-GB", {
@@ -79,8 +81,14 @@ export default function JobList({ data, filter }) {
                     recordForView={currentItem}
                     setOpenPopup={setOpenPopupView}
                     buttonsAddJob={false}
+                    setNotify={setNotify}
                 />
             </ViewPopup>
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
         </div>
     )
 }

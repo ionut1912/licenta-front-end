@@ -2,6 +2,7 @@ import React from 'react';
 import { locations, types, categories } from './JobEnums';
 import './Filters.css'
 
+
 export default function Filters(props) {
 
      const handleChangeLocations = (selectedOption) => {
@@ -58,11 +59,10 @@ export default function Filters(props) {
      //      })
      // }
 
-
      return (
           <div className="container-fluid">
                <div className="filters form-row">
-                    <div className="filter form-group col-md-3">
+                    <div className="form-group col-md-3">
                          <label htmlFor="location">Locations:</label>
                          <select className="custom-select" id="location" onChange={handleChangeLocations}>
                               {locations.map((item, index) => {
@@ -85,7 +85,7 @@ export default function Filters(props) {
 
                     </div>
 
-                    <div className="form-group col-md-3" >
+                    <div className="form-group col-md-3">
                          <label htmlFor="type">Types:</label>
                          <select className="custom-select" id="type" onChange={handleChangeTypes}>
                               {types.map((item, index) => {

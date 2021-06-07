@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import UserService from '../../services/user.service';
 import AuthService from '../../services/auth.service'
 import "./UserProfile.css"
+import { motion } from "framer-motion";
 
 export default function UserProfile(props) {
 
@@ -76,9 +77,23 @@ export default function UserProfile(props) {
         });
     };
 
+    // animation
+    const contentAnim = {
+        hidden: {
+        
+            opacity: 0
+        },
+        visible: {
+     
+            opacity: 1,
+            transition: { type: 'tween', delay: 0.5, duration: 0.5 }
+        }
+    }
+
     return (
-        <div className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
-            <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">Datele mele</h1>
+        <motion.div variants={contentAnim} initial='hidden' animate='visible'
+            className={props.sideState === true && window.innerWidth > 960 ? "dash-on dash-content" : "dash-content"}>
+            <h1 style={{ padding: "10px 0 10px 0px" }} className="title-section">My informations</h1>
             <Formik
 
                 initialValues={
@@ -103,16 +118,17 @@ export default function UserProfile(props) {
                         <div className="form-group">
                             {edit === false ? <label className="col-sm-2 col-form-label img-label" style={{ alignSelf: 'center' }}>Profile picture:</label> : null}
 
-                            <div className={props.values.img === null && baseImage === '' ? "profil-img" : null}>
+                            < div className={props.values.img === null && baseImage === '' ? "profil-img" : null} >
                                 <img src={baseImage !== "" ? baseImage : props.values.img} className={props.values.img === null && baseImage === "" ? null : "avatar"} alt="" />
                                 {props.values.img === null && baseImage === '' && <span className="firstLetter">{props.values.full_name[0]}</span>}
-                            </div>
+                            </div >
 
                             {edit === true ? <div style={{ display: 'flex' }}>
                                 <input type="file" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
                                 <p className="file-name text-primary">{fileChoosen}</p>
-                            </div> : null}
-                        </div>
+                            </div> : null
+                            }
+                        </div >
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
                             <div className=" col-md-6 col-sm-8">
@@ -165,24 +181,26 @@ export default function UserProfile(props) {
                                 {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
                             </div>
                         </div>
-                        {edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
-                        {edit === true && <div className="btns">
-                            <button type="button" className="btn btn-outline-primary btn-detalii"
-                                onClick={() => {
-                                    setBaseImage("");
-                                    setFileChosen("No file choosen");
-                                    setEdit(false);
-                                    props.setFieldValue('id', currentUser.id);
-                                    props.setFieldValue('img', currentUser.img);
-                                    props.setFieldValue('full_name', currentUser.full_name);
-                                    props.setFieldValue('email', currentUser.email);
-                                    props.setFieldValue('phone', currentUser.phone);
-                                }}>Elimina modificarile</button>
-                            <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
-                        </div>}
-                    </form>
+                        { edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
+                        {
+                            edit === true && <div className="btns">
+                                <button type="button" className="btn btn-outline-primary btn-detalii"
+                                    onClick={() => {
+                                        setBaseImage("");
+                                        setFileChosen("No file choosen");
+                                        setEdit(false);
+                                        props.setFieldValue('id', currentUser.id);
+                                        props.setFieldValue('img', currentUser.img);
+                                        props.setFieldValue('full_name', currentUser.full_name);
+                                        props.setFieldValue('email', currentUser.email);
+                                        props.setFieldValue('phone', currentUser.phone);
+                                    }}>Elimina modificarile</button>
+                                <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
+                            </div>
+                        }
+                    </form >
                 )}
-            </Formik>
+            </Formik >
             <hr className="hr" />
 
             <div className="card mb-3" style={{ width: "18rem" }}>
@@ -200,7 +218,7 @@ export default function UserProfile(props) {
 
                 </div>
             </div>
-        </div>
+        </motion.div >
 
     )
 }

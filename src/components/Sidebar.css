@@ -8,13 +8,13 @@
   position: fixed;
   top: 0;
   left: -100%;
-  transition: 850ms;
+  transition: all 0.7s ease;
   z-index: 2;
 }
 
 .sidebar .nav-menu.active {
   left: 0;
-  transition: 350ms;
+  transition: all 0.5s ease;
 }
 
 .sidebar .nav-text {
