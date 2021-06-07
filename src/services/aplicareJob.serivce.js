@@ -32,6 +32,10 @@ class AplicareJobService {
         return axios.get(API_URL + 'aplicarii/numberOfApplicationsToCheck');
     }
 
+    getNumberLastWeekApps() {
+        return axios.get(API_URL + 'aplicarii/numberLastWeekApps');
+    }
+
 }
 
 export default new AplicareJobService();

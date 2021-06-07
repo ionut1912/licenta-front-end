@@ -48,6 +48,10 @@ class JobService {
     getNumberOfInactiveJobs() {
         return axios.get(API_URL + 'jobs/numberOfInactiveJobs');
     }
+
+    getNumberOfJobsPerLocations() {
+        return axios.get(API_URL + 'jobs/jobStatistic');
+    }
 }
 
 export default new JobService();

@@ -125,10 +125,10 @@ export default function History() {
 
             <ol className="carousel-indicators">
                 <motion.a variants={indicatorAnim} initial='hidden' animate='visible' transition={{ delay: 0.3, duration: 0.3 }}>
-                    <li className={current === 1 ? "active" : null} onClick={() => { setCurrent(1); setSide('bottom'); }}></li>
+                    <li className={current === 1 ? "active" : null} onClick={() => { setCurrent(1); current === 2 && setSide('bottom'); }}></li>
                 </motion.a>
                 <motion.a variants={indicatorAnim} initial='hidden' animate='visible' transition={{ delay: 0.6, duration: 0.6 }}>
-                    <li className={current === 2 ? "active" : null} onClick={() => { setCurrent(2); setSide('bottom'); }}></li>
+                    <li className={current === 2 ? "active" : null} onClick={() => { setCurrent(2); current === 1 && setSide('bottom'); }}></li>
                 </motion.a>
             </ol>
 
