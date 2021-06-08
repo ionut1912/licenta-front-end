@@ -20,10 +20,6 @@ class UserService {
         return axios.put(API_URL + 'user', newInfo);
     }
 
-    deleteUser(userId) {
-        return axios.delete(API_URL + `user/${userId}`);
-    }
-
     getNumberOfUsers() {
         return axios.get(API_URL + 'user/numberOfUsers');
     }

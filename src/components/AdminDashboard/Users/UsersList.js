@@ -12,7 +12,6 @@ import UserFilters from './UserFilters';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import CloseIcon from '@material-ui/icons/Close';
 
 import { motion } from "framer-motion";
 
@@ -126,21 +125,6 @@ export default function UsersList(props) {
         setOpenPopup(true);
     }
 
-    const onDelete = id => {
-        setConfirmDialog({
-            ...confirmDialog,
-            isOpen: false
-        })
-        userService.deleteUser(id);
-        getData();
-
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfull!',
-            type: 'error'
-        })
-    }
-
     // animation
     const contentAnim = {
         hidden: {
@@ -192,21 +176,6 @@ export default function UsersList(props) {
                                                 color="primary"
                                                 text={<EditOutlinedIcon fontSize="small" />}
                                                 onClick={() => { openInPopup(item) }} />
-                                            <Button
-                                                variant="contained"
-                                                color="secondary"
-                                                text={<CloseIcon fontSize="small" />}
-                                                onClick={() => {
-                                                    setConfirmDialog({
-                                                        isOpen: true,
-                                                        title: 'Are you sure to delete this record?',
-                                                        subTitle: "You can't undo this operation",
-                                                        onConfirm: () => { onDelete(item.id) }
-                                                    })
-
-                                                }}
-                                                style={{ marginLeft: "10px" }}
-                                            />
                                         </div>
                                     </TableCell>
                                 </TableRow>

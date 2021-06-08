@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 export default function History() {
 
-
     const [current, setCurrent] = useState(1);
     const [side, setSide] = useState('');
     const length = 2
