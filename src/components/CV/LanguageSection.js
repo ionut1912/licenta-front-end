@@ -187,6 +187,8 @@ export default function LanguageSection(props) {
 
     const formSchema = Yup.object().shape({
         language_name: Yup.string()
+            .max(70, "Language name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Language name can't contains number")
             .required("This field is required!"),
         speak: Yup.string()
             .required("This field is required!"),
@@ -298,7 +300,7 @@ export default function LanguageSection(props) {
                                         </div>
                                     </div>
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputSpeech">Speech level</label>
+                                        <label htmlFor="inputSpeech">Speech level*</label>
                                         <select id="inputSpeech"
                                             name="speak"
                                             onChange={props.handleChange}
@@ -319,7 +321,7 @@ export default function LanguageSection(props) {
 
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputRead">Read level</label>
+                                        <label htmlFor="inputRead">Read level*</label>
                                         <select id="inputRead"
                                             name="read"
                                             onChange={props.handleChange}
@@ -338,7 +340,7 @@ export default function LanguageSection(props) {
                                     </div>
 
                                     <div className="form-group col-md-6">
-                                        <label htmlFor="inputWrite">Write level</label>
+                                        <label htmlFor="inputWrite">Write level*</label>
                                         <select id="inputWrite"
                                             name="write"
                                             onChange={props.handleChange}

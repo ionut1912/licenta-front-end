@@ -15,6 +15,7 @@ export default function PersonalDescription(props) {
 
     const formSchema = Yup.object().shape({
         descriere: Yup.string()
+            .max(1000, "Descripion is to long!")
             .required("This field is required!"),
     })
 
@@ -121,9 +122,12 @@ export default function PersonalDescription(props) {
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                         value={props.values.descriere}
-                                        className="form-control"
+                                        className={props.errors.descriere && props.touched.descriere ? "form-control is-invalid" : "form-control"}
                                         id="inputDescrierePersonala"
                                         placeholder="" />
+                                    <div className="invalid-feedback">
+                                        {props.errors.descriere && props.touched.descriere && <p>{props.errors.descriere}</p>}
+                                    </div>
                                 </div>
                             </div>
 

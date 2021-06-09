@@ -16,6 +16,8 @@ export default function EducationSection(props) {
     const [educationExperience, setEducationExperience] = useState(false);
     const [educationFields, setEducationFields] = useState(false);
 
+    const [onGoing, setOnGoing] = useState(false);
+
     const [education, setEducation] = useState({
         id: '',
         degree: "",
@@ -187,18 +189,28 @@ export default function EducationSection(props) {
 
     const formSchema = Yup.object().shape({
         degree: Yup.string()
+            .max(100, "Degree is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Degree can't contains number")
             .required("This field is required!"),
         school: Yup.string()
+            .max(45, "School name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "This field can't contains number")
             .required("This field is required!"),
         start: Yup.date()
             .required("This field is required!"),
         end: Yup.date()
             .required("This field is required!")
-            .min(Yup.ref('start'), "End date can't be before start date!")
+            .when("start",
+                (start, schema) => start && schema.min(start, "End date can't be before start date")),
+        city: Yup.string()
+            .max(45, "City name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
+        descriere: Yup.string()
+            .max(500, "Description is to long!")
     })
 
     function handleSubmit(values) {
-
+        console.log(values);
         addEducation(values);
 
         setEducationFields(false);
@@ -309,8 +321,11 @@ export default function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.city}
-                                            className="form-control"
+                                            className={props.errors.city && props.touched.city ? "form-control is-invalid" : "form-control"}
                                             id="inputCity" placeholder="" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.city && props.touched.city && <p>{props.errors.city}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-row">
@@ -330,7 +345,7 @@ export default function EducationSection(props) {
                                     </div>
                                 </div>
                                 <div className="form-row">
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-5">
                                         <label htmlFor="inputStart">Start date*</label>
                                         <input type="month"
                                             name="start"
@@ -345,7 +360,7 @@ export default function EducationSection(props) {
                                         </div>
                                     </div>
 
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-5">
                                         <label htmlFor="inputEnd">End date*</label>
                                         <input type="month"
                                             name="end"
@@ -353,7 +368,21 @@ export default function EducationSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.end}
                                             className={props.errors.end && props.touched.end ? "form-control is-invalid" : "form-control"}
-                                            id="inputEnd" placeholder="" />
+                                            id="inputEnd" placeholder="" 
+                                            disabled={onGoing}
+                                            />
+                                        <div className="invalid-feedback">
+                                            {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group col-md-2" style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <label htmlFor="inputCurrent">Ongoing</label>
+                                        <label class="switch" id="inputCurrent">
+                                            <input type="checkbox" check={onGoing}
+                                                onChange={() => { setOnGoing(!onGoing) }} />
+                                            <span class="slider round"></span>
+                                        </label>
                                         <div className="invalid-feedback">
                                             {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
                                         </div>
@@ -368,14 +397,17 @@ export default function EducationSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.descriere}
-                                            className="form-control"
+                                            className={props.errors.descriere && props.touched.descriere ? "form-control is-invalid" : "form-control"}
                                             id="inputDescriere"
                                             placeholder="" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.descriere && props.touched.descriere && <p>{props.errors.descriere}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="select-option">
                                     <button type="reset" onClick={() => { removeEducation(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
-                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
+                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save" onClick={() => console.log(props.values.end)}></i>Save</button>
                                 </div>
                             </form>
                         )}

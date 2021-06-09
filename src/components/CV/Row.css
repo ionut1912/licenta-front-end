@@ -7,13 +7,13 @@
 }
 
 .detail h1 {
-    color: rgb(0, 0, 2);
+    color: rgb(47, 46, 53);
     font-size: 23px;
 }
 
 .detail p {
     font-size: 15px;
-    color: rgba(22, 22, 22, 0.959);
+    color: rgba(100, 99, 99, 0.959);
     margin-bottom: 0px;
 }
 

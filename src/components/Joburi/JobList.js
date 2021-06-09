@@ -30,7 +30,7 @@ export default function JobList({ data, filter }) {
         <div className="container-fluid">
             <div className="row justify-content-center" >
 
-                {jobsAfterFilteringAndSearching().map((item, index) => {
+                {jobsAfterFilteringAndSearching().sort((a, b) => b.id - a.id).map((item, index) => {
                     return (
                         <div key={index} style={{ padding: '20px' }}>
                             <div className="card col-shadow py-2 mb-3">

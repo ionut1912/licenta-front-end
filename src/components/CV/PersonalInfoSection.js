@@ -16,15 +16,35 @@ export default function PersonalInfoSection(props) {
 
     const validateSchema = Yup.object().shape({
         first_name: Yup.string()
+            .max(45, "First name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "First name can't contains number")
             .required("This field is required!"),
         last_name: Yup.string()
+            .max(60, "Last name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Last name can't contains number")
             .required("This field is required!"),
         email: Yup.string()
             .email("Invalid email!")
+            .max(60, "Email is to long!")
             .required("This field is required!"),
         phone: Yup.string()
             .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
-            .required("This field is required!")
+            .required("This field is required!"),
+        city: Yup.string()
+            .max(45, "City is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "City can't contains number"),
+        nationality: Yup.string()
+            .max(45, "Nationality is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Nationality can't contains number"),
+        address: Yup.string()
+            .max(250, "Address is to long!"),
+        drivingLicence: Yup.string()
+            .max(150, "Your input is to long!"),
+        linkedin: Yup.string()
+            .max(500, "Your input is to long!"),
+        personalSite: Yup.string()
+            .max(500, "Your input is to long!"),
+
     })
 
     const [baseImage, setBaseImage] = useState("");
@@ -258,21 +278,27 @@ export default function PersonalInfoSection(props) {
                                 <input type="text"
                                     name="city"
                                     value={props.values.city}
-                                    className="form-control"
+                                    className={props.errors.city && props.touched.city ? "form-control is-invalid" : "form-control"}
                                     id="inputCity1"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}
                                 />
+                                <div className="invalid-feedback">
+                                    {props.errors.city && props.touched.city && <p>{props.errors.city}</p>}
+                                </div>
                             </div>
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputNationality">Nationality</label>
                                 <input type="text"
                                     name="nationality"
                                     value={props.values.nationality}
-                                    className="form-control"
+                                    className={props.errors.nationality && props.touched.nationality ? "form-control is-invalid" : "form-control"}
                                     id="inputNationality"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
+                                <div className="invalid-feedback">
+                                    {props.errors.nationality && props.touched.nationality && <p>{props.errors.nationality}</p>}
+                                </div>
                             </div>
                         </div>
 
@@ -282,11 +308,14 @@ export default function PersonalInfoSection(props) {
                                 <input type="text"
                                     name="address"
                                     value={props.values.address}
-                                    className="form-control"
+                                    className={props.errors.address && props.touched.address ? "form-control is-invalid" : "form-control"}
                                     id="inputAddress"
                                     placeholder="1234 Main St"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur} />
+                                <div className="invalid-feedback">
+                                    {props.errors.address && props.touched.address && <p >{props.errors.address}</p>}
+                                </div>
                             </div>
                         </div>
 
@@ -313,12 +342,15 @@ export default function PersonalInfoSection(props) {
                                     <input type="text"
                                         name="drivingLicence"
                                         value={props.values.drivingLicence}
-                                        className="form-control"
+                                        className={props.errors.drivingLicence && props.touched.drivingLicence ? "form-control is-invalid" : "form-control"}
                                         id="inputDrivingLicence"
                                         placeholder="B"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                     />
+                                    <div className="invalid-feedback">
+                                        {props.errors.drivingLicence && props.touched.drivingLicence && <p >{props.errors.drivingLicence}</p>}
+                                    </div>
                                 </div>
 
                             </div>
@@ -328,10 +360,13 @@ export default function PersonalInfoSection(props) {
                                     <input type="text"
                                         name="linkedin"
                                         value={props.values.linkedin}
-                                        className="form-control"
+                                        className={props.errors.linkedin && props.touched.linkedin ? "form-control is-invalid" : "form-control"}
                                         id="inputLinkedIn"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur} />
+                                    <div className="invalid-feedback">
+                                        {props.errors.linkedin && props.touched.linkedin && <p >{props.errors.linkedin}</p>}
+                                    </div>
                                 </div>
 
                                 <div className="form-group col-md-6">
@@ -339,11 +374,14 @@ export default function PersonalInfoSection(props) {
                                     <input type="text"
                                         name="personalSite"
                                         value={props.values.personalSite}
-                                        className="form-control"
+                                        className={props.errors.personalSite && props.touched.personalSite ? "form-control is-invalid" : "form-control"}
                                         id="inputWebsite"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                     />
+                                    <div className="invalid-feedback">
+                                        {props.errors.personalSite && props.touched.personalSite && <p >{props.errors.personalSite}</p>}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -360,7 +398,7 @@ export default function PersonalInfoSection(props) {
                     </form>
                 )}
             </Formik>
-        </div >
+        </div>
 
     )
 }

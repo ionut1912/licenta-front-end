@@ -164,6 +164,7 @@ export default function DetaliuSection(props) {
 
     const formSchema = Yup.object().shape({
         detaliu: Yup.string()
+            .max(500, "This field is to long!")
             .required("This field is required!"),
     })
 

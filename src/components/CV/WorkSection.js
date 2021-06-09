@@ -185,14 +185,25 @@ export default function WorkSection(props) {
 
     const formSchema = Yup.object().shape({
         job_title: Yup.string()
+            .max(100, "Job title is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Job title can't contains number")
             .required("This field is required!"),
         company: Yup.string()
+            .max(45, "Company name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Company name can't contains number")
             .required("This field is required!"),
         start: Yup.date()
             .required("This field is required!"),
         end: Yup.date()
             .required("This field is required!")
-            .min(Yup.ref('start'), "End date can't be before start date!")
+            .when("start",
+                (start, schema) => start && schema.min(start, "End date can't be before start date")),
+        city: Yup.string()
+            .max(45, "City name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
+        descriere: Yup.string()
+            .max(500, "Description is to long!")
+
     })
 
     function handleSubmit(values) {
@@ -308,8 +319,11 @@ export default function WorkSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.city}
-                                            className="form-control"
+                                            className={props.errors.city && props.touched.city ? "form-control is-invalid" : "form-control"}
                                             id="inputCity2" placeholder="" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.city && props.touched.city && <p>{props.errors.city}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-row">
@@ -365,8 +379,11 @@ export default function WorkSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.descriere}
-                                            className="form-control"
+                                            className={props.errors.descriere && props.touched.descriere ? "form-control is-invalid" : "form-control"}
                                             id="inputDescription" placeholder="" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.descriere && props.touched.descriere && <p>{props.errors.descriere}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="select-option">

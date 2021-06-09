@@ -30,7 +30,7 @@ export default function Login({ setSubTitle }) {
     const classes = useStyles();
 
     const [toggler, setToggler] = useState(false);
-    
+
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
 
@@ -39,6 +39,7 @@ export default function Login({ setSubTitle }) {
     const SigninSchema = Yup.object().shape({
         email: Yup.string()
             .email("Invalid email!")
+            .max(60, "Email is to long!")
             .required("This field is required!"),
         password: Yup.string()
             .min(6, "Password is to short!")
@@ -50,9 +51,11 @@ export default function Login({ setSubTitle }) {
         full_name: Yup.string()
             .min(4, "Name is to short!")
             .max(100, "Name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Name can't contains number")
             .required("Name is required!"),
         email: Yup.string()
             .email("Invalid email!")
+            .max(60, "Email is to long!")
             .required("Email is required!"),
         phone: Yup.string()
             .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')

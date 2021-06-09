@@ -241,6 +241,7 @@ export default function SkillSection(props) {
 
     const formSchema = Yup.object().shape({
         skill: Yup.string()
+            .max(100, "Skill is to long!")
             .required("This field is required!"),
     })
 

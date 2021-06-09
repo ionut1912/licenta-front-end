@@ -162,6 +162,7 @@ export default function AtributSection(props) {
 
     const formSchema = Yup.object().shape({
         atribut: Yup.string()
+            .max(500, "This field is to long!")
             .required("This field is required!"),
     })
 

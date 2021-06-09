@@ -7,6 +7,8 @@ export default function StaticInfoSection(props) {
 
     const validateSchema = Yup.object().shape({
         numeJob: Yup.string()
+            .max(100, "Nume job is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Nume job can't contains number")
             .required("This field is required!"),
         jobType: Yup.string()
             .required("This field is required!"),
@@ -15,6 +17,7 @@ export default function StaticInfoSection(props) {
         jobCategory: Yup.string()
             .required("This field is required!"),
         descriere: Yup.string()
+            .max(1000, "Description is to long!")
             .required("This field is required!"),
         dataMaxima: Yup.string()
             .required("This field is required!")

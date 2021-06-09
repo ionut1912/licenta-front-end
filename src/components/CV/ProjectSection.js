@@ -168,7 +168,11 @@ export default function ProjectSection(props) {
 
     const formSchema = Yup.object().shape({
         project_name: Yup.string()
+            .max(100, "Project name is to long!")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Project name can't contains number")
             .required("This field is required!"),
+        descriere: Yup.string()
+            .max(1000, "Description is to long!")
     })
 
     function handleSubmit(values) {
@@ -277,9 +281,12 @@ export default function ProjectSection(props) {
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                             value={props.values.descriere}
-                                            className="form-control"
+                                            className={props.errors.descriere && props.touched.descriere ? "form-control is-invalid" : "form-control"}
                                             id="inputDesc"
                                             placeholder="ex: Am folosit Spring boot si React" />
+                                        <div className="invalid-feedback">
+                                            {props.errors.descriere && props.touched.descriere && <p>{props.errors.descriere}</p>}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="select-option">
