@@ -1,81 +1,91 @@
-.filtrare-aplicatii{
-    padding:10px 0px 10px 0px;
+.filtrare-aplicatii {
+    padding: 10px 0px 10px 0px;
     margin-bottom: 20px;
     display: flex;
 }
-.filtrare-aplicatii .custom-select{
+
+.filtrare-aplicatii .custom-select {
     width: 250px;
 }
 
-.filtrare-aplicatii .input-group{
+.filtrare-aplicatii .input-group {
     margin-left: auto;
     padding-right: 0px;
     width: 250px;
 }
 
-.dash-content .card{
+.dash-content .card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.411), 0 1px 10px rgba(0, 0, 0, 0.24);
     border-radius: 5px;
 }
 
-.dash-content .card-body{
-    padding:1rem 1.25rem 1rem 1.25rem;
+.dash-content .card-body {
+    padding: 1rem 1.25rem 1rem 1.25rem;
 }
 
-.body-aplicare{
-    display:flex;
+.body-aplicare {
+    display: flex;
 }
 
-.info-aplicare .card-title{
+.info-aplicare{
+    margin-right: 5px;
+}
+.info-aplicare .card-title {
     margin-bottom: 3px;
 }
 
-.info-aplicare p{
-    font-size:16px;
+.info-aplicare p {
+    font-size: 16px;
 }
 
-.btn-detalii{
-    align-self:center;
+.btn-detalii {
+    align-self: center;
     margin-left: auto;
 }
 
-.state-red{
-    color:rgb(221, 22, 22);
+.view-delete {
+    align-self: center;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-.state-green{
-    color:rgb(16, 153, 50);
+.btn-view-app {
+    margin-bottom: 10px;
 }
 
-.card i{
+.state-red {
+    color: rgb(221, 22, 22);
+}
+
+.state-green {
+    color: rgb(16, 153, 50);
+}
+
+.card i {
     margin-right: 5px;
 }
 
-.footer-aplicare{
-    display:flex;
+.footer-aplicare {
+    display: flex;
 }
 
 @media screen and (max-width: 590px) {
-    .filtrare-aplicatii{
-       flex-direction: column;
+    .filtrare-aplicatii {
+        flex-direction: column;
     }
-
-    .filtrare-aplicatii .custom-select{
+    .filtrare-aplicatii .custom-select {
         width: 100%;
     }
-
-    .filtrare-aplicatii .input-group{
+    .filtrare-aplicatii .input-group {
         margin-left: 0px;
-        padding:20px 0;
+        padding: 20px 0;
         width: 100%;
     }
-
 }
 
-
-
 @media screen and (max-width: 550px) {
-    .info-aplicare h3{
-      font-size: 1.25rem;
+    .info-aplicare h3 {
+        font-size: 1.25rem;
     }
 }

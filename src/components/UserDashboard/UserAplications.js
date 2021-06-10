@@ -2,25 +2,78 @@ import React, { useState } from 'react';
 import ViewPopup from '../ViewPopup';
 import JobView from '../Joburi/JobView';
 import JobService from '../../services/job.service';
+import Notification from '../Notification';
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
 import "./UserAplications.css"
 import { motion } from "framer-motion";
+
+import aplicareService from '../../services/aplicareJob.serivce'
+import AuthService from '../../services/auth.service'
+import UserService from '../../services/user.service';
 
 export default function UserAplications(props) {
 
     const [filter, setFilter] = useState('');
     const [search, setSearch] = useState('');
 
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const [openPopupView, setOpenPopupView] = useState(false);
+
     const [currentItem, setCurrentItem] = useState("");
 
     function format(date) {
         return new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
             month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+            year: "numeric"
         }).format(new Date(date));
+    }
+
+    function openConfirmDialog(idAplicare) {
+        setConfirmDialog({
+            isOpen: true,
+            title: 'Are you sure want delete that application?',
+            subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+            onConfirm: () => deleteAplicare(idAplicare)
+        })
+    }
+
+    function deleteAplicare(idAplicare) {
+        aplicareService.deleteAplicare(idAplicare).then(
+            () => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                });
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'success'
+                });
+
+                const currentUser = AuthService.getCurrentUser();
+
+                UserService.getUserAplications(currentUser.id).then(
+                    response => {
+                        props.setAplicariUser(response.data);
+                    }
+                );
+            },
+            error => {
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                })
+
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
     }
 
     function showDetaliiAplicare(idJob) {
@@ -120,8 +173,10 @@ export default function UserAplications(props) {
                                     <h3 className="card-title text-primary">{aplicare.jobName}</h3>
                                     <p className="card-text">Ai aplicat la data de: {format(aplicare.dataAplicarii)}</p>
                                 </div>
-                                <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => showDetaliiAplicare(aplicare.idJob)}>Detalii aplicare</button>
-
+                                <div className="view-delete">
+                                    <button type="button" className="btn btn-outline-primary btn-view-app" onClick={() => showDetaliiAplicare(aplicare.idJob)}>Detalii aplicare</button>
+                                    <button type="button" className="btn btn-outline-primary" onClick={() => openConfirmDialog(aplicare.id)}>Delete aplicare</button>
+                                </div>
                             </div>
                             <hr className="hr" />
                             <div className="footer-aplicare">
@@ -134,6 +189,14 @@ export default function UserAplications(props) {
             })
             }
 
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
 
             <ViewPopup
                 title={currentItem.numeJob}

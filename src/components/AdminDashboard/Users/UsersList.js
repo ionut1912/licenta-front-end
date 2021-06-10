@@ -107,17 +107,27 @@ export default function UsersList(props) {
     }, [])
 
     const editGrad = (user, resetForm) => {
-        userService.updateUserInformation(user);
-        getData();
+        userService.updateUserInformation(user).then(
+            response => {
+                getData();
+                setNotify({
+                    isOpen: true,
+                    message: 'Submitted Successfull!',
+                    type: 'success'
+                })
+            },
+            error => {
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
         resetForm()
-        setRecordForEdit(null)
-        setOpenPopup(false)
+        setRecordForEdit(null);
+        setOpenPopup(false);
 
-        setNotify({
-            isOpen: true,
-            message: 'Submitted Successfull!',
-            type: 'success'
-        })
     }
 
     const openInPopup = item => {

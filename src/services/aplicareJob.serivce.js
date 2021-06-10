@@ -20,6 +20,10 @@ class AplicareJobService {
         return axios.put(API_URL + `aplicarii/${id}`);
     }
 
+    deleteAplicare(id) {
+        return axios.delete(API_URL + `aplicarii/${id}`);
+    }
+
     getNumberOfApplications() {
         return axios.get(API_URL + 'aplicarii/numberOfApplications');
     }

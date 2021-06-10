@@ -20,6 +20,10 @@ class UserService {
         return axios.put(API_URL + 'user', newInfo);
     }
 
+    deleteUserImg(id) {
+        return axios.put(API_URL + `user/deleteImg/${id}`);
+    }
+
     getNumberOfUsers() {
         return axios.get(API_URL + 'user/numberOfUsers');
     }

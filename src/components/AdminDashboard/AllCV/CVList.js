@@ -110,6 +110,35 @@ export default function CVList(props) {
 
     const { TblHead, TblPagination, recordsAfterPagingAndSortingCVs } = useTable(records, headCells, filterFunction);
 
+
+    const openInPopupView = item => {
+        setRecordForView(item);
+        setOpenPopupView(true);
+    }
+
+    const onDelete = id => {
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
+        cvService.deleteCv(id).then(
+            response => {
+                getData();
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'success'
+                })
+            },
+            error =>
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+        );
+    }
+
     const getData = () => {
         cvService.getCvs().then(
             response => setRecords(response.data)
@@ -123,33 +152,6 @@ export default function CVList(props) {
             setRecords([]);
         }
     }, [])
-
-
-    const openInPopupView = item => {
-        setRecordForView(item);
-        setOpenPopupView(true);
-    }
-
-    const onDelete = id => {
-        setConfirmDialog({
-            ...confirmDialog,
-            isOpen: false
-        })
-        cvService.deleteCv(id).then(
-            response => setNotify({
-                isOpen: true,
-                message: 'Deleted Successfull!',
-                type: 'error'
-            }),
-            error =>
-                setNotify({
-                    isOpen: true,
-                    message: 'Deleted Successfull!',
-                    type: 'error'
-                })
-        );
-        getData();
-    }
 
     // animation
     const contentAnim = {
@@ -220,7 +222,7 @@ export default function CVList(props) {
                                                     onClick={() => {
                                                         setConfirmDialog({
                                                             isOpen: true,
-                                                            title: 'Are you sure to delete this record?',
+                                                            title: 'Are you sure want delete this record?',
                                                             subTitle: "You can't undo this operation",
                                                             onConfirm: () => { onDelete(item.id); }
                                                         })

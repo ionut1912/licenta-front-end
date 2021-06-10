@@ -12,8 +12,8 @@ export default function UserDashboard(props) {
     const [currentUserGrad, setCurrentUserGrad] = useState("");
     const nrAplicarii = aplicariUser.length;
 
-    useEffect(() => {
 
+    useEffect(() => {
         const currentUser = AuthService.getCurrentUser();
 
         setCurrentUserGrad(currentUser.role);
@@ -30,7 +30,7 @@ export default function UserDashboard(props) {
         <div>
             <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} gradUser={currentUserGrad} />
             {state === 1 ? <UserProfile sideState={props.showSidebar} nrAplicarii={nrAplicarii} setState={setState} /> : null}
-            {state === 2 ? <UserAplications sideState={props.showSidebar} aplicariUser={aplicariUser} /> : null}
+            {state === 2 ? <UserAplications sideState={props.showSidebar} aplicariUser={aplicariUser} setAplicariUser={setAplicariUser} /> : null}
         </div>
 
     )

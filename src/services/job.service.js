@@ -50,7 +50,15 @@ class JobService {
     }
 
     getNumberOfJobsPerLocations() {
-        return axios.get(API_URL + 'jobs/jobStatistic');
+        return axios.get(API_URL + 'jobs/jobsPerLocation');
+    }
+
+    getNumberOfApplicationsPerJob() {
+        return axios.get(API_URL + 'jobs/applicationsPerJob');
+    }
+
+    getNumberOfApplicationsPerJobLastWeek() {
+        return axios.get(API_URL + 'jobs/applicationsFromLastWeekPerJob');
     }
 }
 

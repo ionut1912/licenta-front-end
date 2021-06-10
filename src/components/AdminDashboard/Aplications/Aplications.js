@@ -105,20 +105,6 @@ export default function Aplications(props) {
 
     const { TblHead, TblPagination, recordsAfterPagingAndSortingAplicarii } = useTable(records, headCells, filterFunction);
 
-    function getData() {
-        aplicariiService.getAplicarii().then(
-            response =>
-                setRecords(response.data)
-        )
-    }
-
-    useEffect(() => {
-        getData();
-
-        return function cleanup() {
-            setRecords([]);
-        }
-    }, [])
 
 
     const onDelete = id => {
@@ -127,13 +113,25 @@ export default function Aplications(props) {
             isOpen: false
         })
 
-        getData();
+        aplicariiService.deleteAplicare(id).then(
+            response => {
+                getData();
 
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfull!',
-            type: 'error'
-        })
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'success'
+                })
+            },
+            error => {
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
+
     }
 
     function downloadFile(idForUpdateVerificat, numeAplicant, base64String) {
@@ -150,8 +148,34 @@ export default function Aplications(props) {
         }
         a.click();
 
-        aplicariiService.updateVerificat(idForUpdateVerificat);
+        aplicariiService.updateVerificat(idForUpdateVerificat).then(
+            response => {
+                getData();
+            },
+            error => {
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        );
     }
+
+    function getData() {
+        aplicariiService.getAplicarii().then(
+            response =>
+                setRecords(response.data)
+        )
+    }
+
+    useEffect(() => {
+        getData();
+
+        return function cleanup() {
+            setRecords([]);
+        }
+    }, [])
 
 
     // animation
@@ -217,7 +241,7 @@ export default function Aplications(props) {
                                                     onClick={() => {
                                                         setConfirmDialog({
                                                             isOpen: true,
-                                                            title: 'Are you sure to delete this record?',
+                                                            title: 'Are you sure want delete this record?',
                                                             subTitle: "You can't undo this operation",
                                                             onConfirm: () => { onDelete(item.id) }
                                                         })

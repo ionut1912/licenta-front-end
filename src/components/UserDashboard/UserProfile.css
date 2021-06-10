@@ -22,10 +22,10 @@
 }
 
 .avatar {
-    width: 120px;
-    height: 120px;
+    width: 118px;
+    height: 118px;
     border-radius: 50%;
-    margin: 20px 30px 30px 10px;
+    margin: 20px 0px 30px 0px;
 }
 
 .firstLetter {
@@ -37,8 +37,8 @@
 .form-profile .input-file {
     display: block;
     position: relative;
-    width: 150px;
     cursor: pointer;
+    width: 300px;
     border: 0;
     height: 40px;
     border-radius: 5px;
@@ -47,6 +47,10 @@
 
 .form-profile .input-file:hover:after {
     background: #fc1930;
+}
+
+.form-profile .file-name {
+    width: 100%;
 }
 
 .form-profile .input-file:after {
@@ -62,10 +66,6 @@
     content: 'Upload image';
     line-height: 40px;
     border-radius: 5px;
-}
-
-.input-img {
-    margin-left: 30px;
 }
 
 .form-profile {
@@ -111,13 +111,33 @@
     margin-bottom: 15px;
 }
 
-@media screen and (max-width:580px) {
+@media screen and (max-width:800px) {
+    .form-profile .input-file {
+        margin-left: 40px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .form-profile .btn-edit-send {
+        width: 170px;
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width:575px) {
     .img-label {
         max-width: 250px;
     }
-    .form-profile .btn-edit-send {
+    .form-profile .btn-edit-send,.form-profile.btn-detalii {
         width: 165px;
-        margin-left: 50px;
+    }
+    .form-profile .input-file {
+        margin-left: 0px;
+    }
+    .form-profile .file-name {
+        width: 80px;
     }
 }
 
@@ -125,11 +145,22 @@
     .img-label {
         max-width: 220px;
     }
+    .form-profile .input-file:after {
+        font-size: 14px;
+    }
+
+    .form-profile .btn-edit-send, .form-propfile .btn-detalii {
+        font-size: 10px;
+    }
 }
 
 @media screen and (max-width:430px) {
     .form-profile .input-file {
         width: 110px;
+    }
+    .form-profile .chosee {
+        padding-right: 0px;
+        padding-left: 0px;
     }
     .form-profile .input-file:after {
         font-size: 14px;
@@ -142,8 +173,20 @@
         padding: 5px;
     }
     .form-profile .btn-edit-send {
-        width: 160px;
+        width: 110px;
         margin-left: 5px;
         padding: 5px;
+    }
+}
+
+@media screen and (max-width:380px) {
+    .form-profile .input-file {
+        width: 80px;
+    }
+    .form-profile .input-file:after {
+        font-size: 10px;
+    }
+    .form-profile .file-name {
+        font-size: 12x;
     }
 }

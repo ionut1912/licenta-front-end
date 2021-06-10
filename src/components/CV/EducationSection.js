@@ -161,7 +161,7 @@ export default function EducationSection(props) {
         if (props.editCv && education.id !== '')
             setConfirmDialog({
                 isOpen: true,
-                title: 'Are you sure to delete this record?',
+                title: 'Are you sure want delete this record?',
                 subTitle: "You can't undo this operation, this record will be deleted from datebase!",
                 onConfirm: () => cleanAndRemoveEducationPermanent()
             })

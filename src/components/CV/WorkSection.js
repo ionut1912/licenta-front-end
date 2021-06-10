@@ -156,7 +156,7 @@ export default function WorkSection(props) {
         if (props.editCv && work.id !== '')
             setConfirmDialog({
                 isOpen: true,
-                title: 'Are you sure to delete this record?',
+                title: 'Are you sure want delete this record?',
                 subTitle: "You can't undo this operation, this record will be deleted from datebase!",
                 onConfirm: () => cleanAndRemoveWorkPermanent()
             })

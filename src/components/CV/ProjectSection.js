@@ -144,7 +144,7 @@ export default function ProjectSection(props) {
         if (props.editCv && project.id !== '')
             setConfirmDialog({
                 isOpen: true,
-                title: 'Are you sure to delete this record?',
+                title: 'Are you sure want delete this record?',
                 subTitle: "You can't undo this operation, this record will be deleted from datebase!",
                 onConfirm: () => cleanAndRemoveProjectPermanent()
             })

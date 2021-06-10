@@ -4,6 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import UserService from '../../services/user.service';
 import AuthService from '../../services/auth.service'
+import Notification from '../Notification';
+import ConfirmDialog from '../AdminDashboard/ConfirmDialog'
 import "./UserProfile.css"
 import { motion } from "framer-motion";
 
@@ -11,6 +13,9 @@ export default function UserProfile(props) {
 
     const [edit, setEdit] = useState(false);
     const [fileChoosen, setFileChosen] = useState('No file choosen');
+
+    const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const currentUser = AuthService.getCurrentUser();
 
@@ -49,9 +54,16 @@ export default function UserProfile(props) {
                 };
 
                 localStorage.setItem("user", JSON.stringify(currentUserr));
+                setNotify({
+                    isOpen: true,
+                    message: "Updated informations with success",
+                    type: 'success'
+                });
             }
         );
 
+        setBaseImage("");
+        setFileChosen("No file choosen");
         setEdit(false);
     }
 
@@ -80,6 +92,62 @@ export default function UserProfile(props) {
             };
         });
     };
+
+    function removeImgFromDB(resetImgForm) {
+        UserService.deleteUserImg(currentUser.id).then(
+            response => {
+                let currentUserr = {
+                    id: currentUser.id,
+                    img: null,
+                    full_name: currentUser.full_name,
+                    email: currentUser.email,
+                    phone: currentUser.phone,
+                    role: currentUser.role,
+                    token: currentUser.token,
+                    type: currentUser.type
+                };
+
+                localStorage.setItem("user", JSON.stringify(currentUserr));
+                resetImgForm();
+                setNotify({
+                    isOpen: true,
+                    message: "Deleted image with success",
+                    type: 'success'
+                });
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                });
+            },
+            error => {
+                setNotify({
+                    isOpen: true,
+                    message: "Network error",
+                    type: 'error'
+                });
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false
+                });
+            }
+        )
+    }
+
+    const deleteImg = (resetImgForm) => {
+        if (baseImage === "") {
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Are you sure want delete profile image?',
+                subTitle: "You can't undo this operation, this record will be deleted from datebase!",
+                onConfirm: () => removeImgFromDB(resetImgForm)
+            })
+
+        } else {
+            setBaseImage("");
+            setFileChosen("No file choosen");
+        }
+
+    }
 
     // animation
     const contentAnim = {
@@ -122,20 +190,23 @@ export default function UserProfile(props) {
                         <div className="form-group">
                             {edit === false ? <label className="col-sm-2 col-form-label img-label" style={{ alignSelf: 'center' }}>Profile picture:</label> : null}
 
-                            < div className={props.values.img === null && baseImage === '' ? "profil-img" : null} >
+                            <div className={edit === true ? (props.values.img === null && baseImage === '' ? "profil-img" : "col-sm-2 col-form-label") :
+                                (props.values.img === null && baseImage === '' ? "profil-img" : null)} >
                                 <img src={baseImage !== "" ? baseImage : props.values.img} className={props.values.img === null && baseImage === "" ? null : "avatar"} alt="" />
                                 {props.values.img === null && baseImage === '' && <span className="firstLetter">{props.values.full_name[0]}</span>}
-                            </div >
+                            </div>
 
-                            {edit === true ? <div style={{ display: 'flex' }}>
-                                <input type="file" onChange={uploadImage} className="input-file input-img" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
-                                <p className="file-name text-primary">{fileChoosen}</p>
-                            </div> : null
-                            }
-                        </div >
+                            {edit === true ?
+                                <div style={{ display: 'flex' }} className="col-md-6 col-sm-8 chosee">
+                                    <input type="file" onChange={uploadImage} className="input-file" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
+                                    <p className="file-name text-primary">{fileChoosen}</p>
+
+                                </div> : null}
+
+                        </div>
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
-                            <div className=" col-md-6 col-sm-8">
+                            <div className="col-md-6 col-sm-8">
                                 {edit === true ? <input type="text"
                                     className="form-control text-primary"
                                     name="full_name"
@@ -186,25 +257,29 @@ export default function UserProfile(props) {
                             </div>
                         </div>
                         { edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
-                        {
-                            edit === true && <div className="btns">
-                                <button type="button" className="btn btn-outline-primary btn-detalii"
-                                    onClick={() => {
-                                        setBaseImage("");
-                                        setFileChosen("No file choosen");
-                                        setEdit(false);
-                                        props.setFieldValue('id', currentUser.id);
-                                        props.setFieldValue('img', currentUser.img);
-                                        props.setFieldValue('full_name', currentUser.full_name);
-                                        props.setFieldValue('email', currentUser.email);
-                                        props.setFieldValue('phone', currentUser.phone);
-                                    }}>Elimina modificarile</button>
-                                <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
-                            </div>
+
+                        {edit === true && <div className="btns">
+                            <button type="button" className="btn btn-outline-primary btn-detalii btn-edit-send" style={{ marginLeft: '0px' }}
+                                onClick={() => {
+                                    setBaseImage("");
+                                    setFileChosen("No file choosen");
+                                    setEdit(false);
+                                    props.setFieldValue('id', currentUser.id);
+                                    props.setFieldValue('img', currentUser.img);
+                                    props.setFieldValue('full_name', currentUser.full_name);
+                                    props.setFieldValue('email', currentUser.email);
+                                    props.setFieldValue('phone', currentUser.phone);
+                                }}>Elimina modificarile</button>
+
+                            {props.values.img === null && baseImage === "" ? null : <button type="button"
+                                className="btn btn-outline-primary btn-edit-send"
+                                onClick={() => deleteImg(() => props.setFieldValue('img', null))}>Elimina imaginea</button>}
+                            <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
+                        </div>
                         }
-                    </form >
+                    </form>
                 )}
-            </Formik >
+            </Formik>
             <hr className="hr" />
 
             <div className="card mb-3" style={{ width: "18rem" }}>
@@ -218,11 +293,19 @@ export default function UserProfile(props) {
                             <a className="card-text  text-primary" href="#/" onClick={() => props.setState(2)}>Vezi istoricul aplicarilor</a>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-        </motion.div >
+
+            <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
+
+        </motion.div>
 
     )
 }

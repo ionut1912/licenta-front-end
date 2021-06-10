@@ -170,7 +170,6 @@ export default function Login({ setSubTitle }) {
 
                                 {props => (
 
-
                                     <form onSubmit={props.handleSubmit} className="form">
                                         <div className="form-group-input">
                                             <TextField
@@ -227,7 +226,7 @@ export default function Login({ setSubTitle }) {
 
                                         />
 
-                                        <div className="line">
+                                        {/* <div className="line">
                                             <span className="line-bar"></span>
                                             <span className="line-text">OR</span>
                                             <span className="line-bar"></span>
@@ -239,7 +238,7 @@ export default function Login({ setSubTitle }) {
                                                     <span>Sign in with Facebook</span>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <p className="titlee title-subs">Don't have an account? <span className="linktext" onClick={() => { props.resetForm(); setToggler(true); setSubTitle('Sign up by entering the information below') }}>Sign up</span></p>
                                     </form>
 

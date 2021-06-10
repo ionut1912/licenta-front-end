@@ -116,7 +116,9 @@ export default function JobsList(props) {
 
     const getData = () => {
         jobService.getJobs().then(
-            response => setRecords(response.data)
+            response => {
+                setRecords(response.data)
+            }
         )
     }
 
@@ -139,14 +141,23 @@ export default function JobsList(props) {
             ...confirmDialog,
             isOpen: false
         })
-        jobService.deleteJob(id);
-        getData();
-        setNotify({
-            isOpen: true,
-            message: 'Deleted Successfull!',
-            type: 'error'
-        })
-
+        jobService.deleteJob(id).then(
+            response => {
+                getData()
+                setNotify({
+                    isOpen: true,
+                    message: 'Deleted Successfull!',
+                    type: 'success'
+                })
+            },
+            error => {
+                setNotify({
+                    isOpen: true,
+                    message: 'Network error!',
+                    type: 'error'
+                })
+            }
+        )
 
     }
 
@@ -222,7 +233,7 @@ export default function JobsList(props) {
                                                     onClick={() => {
                                                         setConfirmDialog({
                                                             isOpen: true,
-                                                            title: 'Are you sure to delete this record?',
+                                                            title: 'Are you sure want delete this record?',
                                                             subTitle: "You can't undo this operation",
                                                             onConfirm: () => { onDelete(item.id); }
                                                         })
