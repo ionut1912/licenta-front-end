@@ -16,8 +16,6 @@ export default function EducationSection(props) {
     const [educationExperience, setEducationExperience] = useState(false);
     const [educationFields, setEducationFields] = useState(false);
 
-    const [onGoing, setOnGoing] = useState(false);
-
     const [education, setEducation] = useState({
         id: '',
         degree: "",
@@ -197,11 +195,12 @@ export default function EducationSection(props) {
             .matches(/^[a-zA-Z ,.'-]+$/, "This field can't contains number")
             .required("This field is required!"),
         start: Yup.date()
-            .required("This field is required!"),
-        end: Yup.date()
             .required("This field is required!")
-            .when("start",
-                (start, schema) => start && schema.min(start, "End date can't be before start date")),
+            .max(format(new Date()), "Start date can't be in the future"),
+        end: Yup.date()
+            .when("onGoing", (onGoing, schema) => onGoing === false ?
+                schema.when("start",
+                    (start, schema) => start ? schema.required("This field is required!").min(start, "End date can't be before start date") : schema.required("This field is required!")) : schema),
         city: Yup.string()
             .max(45, "City name is to long!")
             .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
@@ -210,8 +209,16 @@ export default function EducationSection(props) {
     })
 
     function handleSubmit(values) {
-        console.log(values);
-        addEducation(values);
+        const educationForAdd = {
+            id: values.id,
+            degree: values.degree,
+            city: values.city,
+            school: values.school,
+            start: values.start,
+            end: values.onGoing === false ? values.end : 'In curs',
+            descriere: values.descriere
+        }
+        addEducation(educationForAdd);
 
         setEducationFields(false);
 
@@ -227,18 +234,24 @@ export default function EducationSection(props) {
 
     }
 
+    function format(date) {
+        return new Intl.DateTimeFormat("fr-CA", {
+            year: "numeric",
+            month: "2-digit"
+        }).format(new Date(date));
+    }
+
+
     return (
         <div className="form-cls">
             <div className="position-relative">
                 <h3 className="text-secondary" onClick={() => clickSectionTitle()}><i className="fas fa-user-graduate icon text-dark"></i>Education and Qualifications</h3>
                 {props.cv.educations.length === 0 ? null : <span className="indicator">{props.cv.educations.length}</span>}
             </div>
-
             <hr className="hr" />
             <div className="education-section" style={{
                 display: educationExperience === false && 'none'
             }}>
-
                 <div className="form-row">
                     {props.cv.educations.length === 0 ? null : (
                         <div className="form-group col-md-12">
@@ -272,7 +285,8 @@ export default function EducationSection(props) {
                                 city: education.city,
                                 school: education.school,
                                 start: education.start,
-                                end: education.end,
+                                end: education.end !== "In curs" ? education.end : '',
+                                onGoing: education.end !== "In curs" ? false : true,
                                 descriere: education.descriere
                             }
                         }
@@ -368,24 +382,22 @@ export default function EducationSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.end}
                                             className={props.errors.end && props.touched.end ? "form-control is-invalid" : "form-control"}
-                                            id="inputEnd" placeholder="" 
-                                            disabled={onGoing}
-                                            />
+                                            id="inputEnd" placeholder=""
+                                            disabled={props.values.onGoing}
+                                        />
                                         <div className="invalid-feedback">
                                             {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
                                         </div>
                                     </div>
 
                                     <div className="form-group col-md-2" style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <label htmlFor="inputCurrent">Ongoing</label>
-                                        <label class="switch" id="inputCurrent">
-                                            <input type="checkbox" check={onGoing}
-                                                onChange={() => { setOnGoing(!onGoing) }} />
-                                            <span class="slider round"></span>
+                                        <label>Ongoing</label>
+                                        <label className="switch">
+                                            <input type="checkbox" checked={props.values.onGoing}
+                                                onChange={() => { props.setFieldValue('onGoing', !props.values.onGoing) }} />
+
+                                            <span className="slider round"></span>
                                         </label>
-                                        <div className="invalid-feedback">
-                                            {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
-                                        </div>
                                     </div>
                                 </div>
 
@@ -407,7 +419,7 @@ export default function EducationSection(props) {
                                 </div>
                                 <div className="select-option">
                                     <button type="reset" onClick={() => { removeEducation(); props.resetForm() }} className="btn"><i className="fas fa-trash-alt"></i>Delete</button>
-                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save" onClick={() => console.log(props.values.end)}></i>Save</button>
+                                    <button type="submit" name="submit" className="btn"><i className="fas fa-save"></i>Save</button>
                                 </div>
                             </form>
                         )}

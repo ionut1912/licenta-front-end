@@ -193,11 +193,12 @@ export default function WorkSection(props) {
             .matches(/^[a-zA-Z ,.'-]+$/, "Company name can't contains number")
             .required("This field is required!"),
         start: Yup.date()
-            .required("This field is required!"),
-        end: Yup.date()
             .required("This field is required!")
-            .when("start",
-                (start, schema) => start && schema.min(start, "End date can't be before start date")),
+            .max(format(new Date()), "Start date can't be in the future"),
+        end: Yup.date()
+            .when("onGoing", (onGoing, schema) => onGoing === false ?
+                schema.when("start",
+                    (start, schema) => start ? schema.required("This field is required!").min(start, "End date can't be before start date") : schema.required("This field is required!")) : schema),
         city: Yup.string()
             .max(45, "City name is to long!")
             .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
@@ -207,7 +208,18 @@ export default function WorkSection(props) {
     })
 
     function handleSubmit(values) {
-        addWork(values);
+
+        const workForAdd = {
+            id: values.id,
+            job_title: values.job_title,
+            city: values.city,
+            company: values.company,
+            start: values.start,
+            end: values.onGoing === false ? values.end : 'In curs',
+            descriere: values.descriere
+        }
+
+        addWork(workForAdd);
 
         setWorkFields(false);
 
@@ -222,6 +234,14 @@ export default function WorkSection(props) {
         })
 
     }
+
+    function format(date) {
+        return new Intl.DateTimeFormat("fr-CA", {
+            year: "numeric",
+            month: "2-digit"
+        }).format(new Date(date));
+    }
+
 
     return (
         <div className="form-cls">
@@ -271,7 +291,8 @@ export default function WorkSection(props) {
                                 city: work.city,
                                 company: work.company,
                                 start: work.start,
-                                end: work.end,
+                                end: work.end !== "In curs" ? work.end : '',
+                                onGoing: work.end !== "In curs" ? false : true,
                                 descriere: work.descriere
                             }
                         }
@@ -342,7 +363,7 @@ export default function WorkSection(props) {
                                     </div>
                                 </div>
                                 <div className="form-row">
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-5">
                                         <label htmlFor="inputStartDate">Start date*</label>
                                         <input type="month"
                                             name="start"
@@ -356,7 +377,7 @@ export default function WorkSection(props) {
                                         </div>
                                     </div>
 
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-5">
                                         <label htmlFor="inputEndDate">End date*</label>
                                         <input type="month"
                                             name="end"
@@ -364,10 +385,21 @@ export default function WorkSection(props) {
                                             onBlur={props.handleBlur}
                                             value={props.values.end}
                                             className={props.errors.end && props.touched.end ? "form-control is-invalid" : "form-control"}
-                                            id="inputEndDate" />
+                                            id="inputEndDate"
+                                            disabled={props.values.onGoing} />
                                         <div className="invalid-feedback">
                                             {props.errors.end && props.touched.end && <p >{props.errors.end}</p>}
                                         </div>
+                                    </div>
+
+                                    <div className="form-group col-md-2" style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <label>Ongoing</label>
+                                        <label className="switch">
+                                            <input type="checkbox" checked={props.values.onGoing}
+                                                onChange={() => { props.setFieldValue('onGoing', !props.values.onGoing) }} />
+
+                                            <span className="slider round"></span>
+                                        </label>
                                     </div>
                                 </div>
 

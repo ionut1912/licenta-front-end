@@ -40,6 +40,8 @@ export default function PersonalInfoSection(props) {
             .max(250, "Address is to long!"),
         drivingLicence: Yup.string()
             .max(150, "Your input is to long!"),
+        dateOfBirth: Yup.date()
+            .max(new Date(), "Date of birth can't be in the future"),
         linkedin: Yup.string()
             .max(500, "Your input is to long!"),
         personalSite: Yup.string()
@@ -330,11 +332,14 @@ export default function PersonalInfoSection(props) {
                                         name="dateOfBirth"
                                         value={props.values.dateOfBirth}
                                         data-date-format="dd-mm-yyyy"
-                                        className="form-control"
+                                        className={props.errors.dateOfBirth && props.touched.dateOfBirth ? "form-control is-invalid" : "form-control"}
                                         id="inputDateBirth"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
                                     />
+                                    <div className="invalid-feedback">
+                                        {props.errors.dateOfBirth && props.touched.dateOfBirth && <p >{props.errors.dateOfBirth}</p>}
+                                    </div>
                                 </div>
 
                                 <div className="form-group col-md-6">

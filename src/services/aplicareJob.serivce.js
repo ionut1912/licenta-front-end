@@ -43,7 +43,6 @@ class AplicareJobService {
     getNumberAppsFromLastMonth() {
         return axios.get(API_URL + 'aplicarii/numberAppsFromLastMonthPerDay');
     }
-
 }
 
 export default new AplicareJobService();

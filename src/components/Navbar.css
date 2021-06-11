@@ -29,6 +29,7 @@
 } */
 
 .navbar .navbar-container {
+
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Pie, Line, Bar } from 'react-chartjs-2'
+import { Pie, Doughnut, Line } from 'react-chartjs-2'
 import { makeStyles } from '@material-ui/core';
 
 import jobService from '../../../services/job.service';
@@ -10,28 +10,25 @@ const useStyle = makeStyles(theme => ({
     charts: {
         '& .pie-charts-group': {
             display: 'flex',
+            height: '100%',
             flexWrap: 'wrap',
-            margin: '20px 10px 70px 10px',
-            '& .card-title': {
-                padding: '20px'
+            justifyContent: 'center',
+            margin: '20px 100px 70px 10px',
+            '& .second-chart': {
+                width: '250px'
+            },
+            '& .third-chart': {
+                marginLeft: '300px',
+                width: '250px'
             }
         },
-        '& .card': {
-            margin: '30px 30px 0 0',
-            heigth: '500px',
-            flex: '45%',
-            maxWidth: '45%',
-
-
+        '& .chart-title': {
+            textAlign: 'center',
+            margin: '30px 0 20px 0'
         },
-        '& .card-body': {
-            margin: 'auto',
-            flex: '45%',
-            heigth: '500px',
-            maxWidth: '45%',
-            paddingBottom: '20px',
-        },
-
+        '& .first-chart': {
+            width: '100%'
+        }
     }
 
 }));
@@ -101,88 +98,80 @@ export default function StatisticsGraphics() {
 
     return (
         <div className={classes.charts}>
-            <div className="pie-charts-group">
-                <div className="card mb-5" >
-                    <h5 class="card-title">Number of jobs per location</h5>
-                    <div className="card-body" >
-                        <Pie
-                            data={{
-                                labels: jobPerLocation.labels,
-                                datasets: [{
-                                    data: jobPerLocation.data,
-                                    backgroundColor: ['#f30000', '#4c0097', '#0275d8', 'rgb(76, 175, 80)', '#f19e02']
-                                }]
-                            }}
-                            options={{
-                                plugins: {
-                                    legend: {
-                                        display: true,
-                                        position: "bottom",
-                                        labels: {
-                                            maxWidth: '300px',
-                                            usePointStyle: true,
-                                            pointStyle: 'circle'
-                                        }
-                                    },
-                                }
-                            }}
-                        >
-                        </Pie>
-                    </div>
-                </div>
-
-                <div className="card mb-5" >
-                    <h5 class="card-title">Number of applications per job</h5>
-                    <div className="card-body">
-
-                        <Pie
-                            data={{
-                                labels: aplicariPerJob.labels,
-                                datasets: [{
-                                    data: aplicariPerJob.data,
-                                    backgroundColor: ['#f30000', '#4c0097', '#0275d8', 'rgb(76, 175, 80)', '#f19e02']
-                                }]
-                            }}
-                            options={{
-                                plugins: {
-                                    legend: {
-                                        display: false,
-                                    }
-                                }
-                            }}
-                        >
-                        </Pie>
-                    </div>
-                </div>
+            <div className="first-chart">
+                <h6 className="chart-title">Number of applications from last month</h6>
+                <Line
+                    height={"50%"}
+                    data={{
+                        labels: aplicariByDay.labels,
+                        datasets: [{
+                            label: 'Applications per day',
+                            data: aplicariByDay.data,
+                            fill: false,
+                            backgroundColor: 'rgb(76, 175, 80)',
+                            borderColor: 'rgb(76, 175, 80)',
+                            pointRadius: 5,
+                        }
+                        ]
+                    }}
+                    options={{
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        scales: {
+                            y: {
+                                suggestedMax: 7
+                            }
+                        }
+                    }}>
+                </Line>
             </div>
 
-            <Line
-                data={{
-                    labels: aplicariByDay.labels,
-                    datasets: [{
-                        label: 'Applications per day',
-                        data: aplicariByDay.data,
-                        fill: false,
-                        backgroundColor: 'rgb(76, 175, 80)',
-                        borderColor: 'rgb(76, 175, 80)',
-                        pointRadius: 5,
-                    }
-                    ]
-                }}
-                options={{
-                    plugins: {
-                        legend: {
-                            display: false,
-                        }
-                    },
-                    scales: {
-                        yAxes: {
 
-                        }
-                    }
-                }}
-            >
-            </Line>
+            <div className="pie-charts-group">
+
+                <div className="second-chart">
+                    <h6 className="chart-title">Number of jobs per location</h6>
+                    <Doughnut
+                        data={{
+                            labels: jobPerLocation.labels,
+                            datasets: [{
+                                data: jobPerLocation.data,
+                                backgroundColor: ['#f30000', '#4c0097', '#0275d8', 'rgb(76, 175, 80)', '#f19e02']
+                            }]
+                        }}
+                        options={{
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                },
+                            }
+                        }}>
+                    </Doughnut>
+                </div>
+
+                <div className="third-chart">
+                    <h6 className="chart-title">Nuber of applications per job</h6>
+                    <Pie
+                        data={{
+                            labels: aplicariPerJob.labels,
+                            datasets: [{
+                                data: aplicariPerJob.data,
+                                backgroundColor: ['#f30000', '#4c0097', '#0275d8', 'rgb(76, 175, 80)', '#f19e02']
+                            }]
+                        }}
+                        options={{
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            }
+                        }}>
+                    </Pie>
+                </div>
+            </div>
         </div>
     )
 }
