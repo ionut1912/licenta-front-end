@@ -107,12 +107,31 @@ export default function JobsList(props) {
     const [records, setRecords] = useState([]);
     const [openPopupView, setOpenPopupView] = useState(false);
     const [recordForView, setRecordForView] = useState("");
-    const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const { TblHead, TblPagination, recordsAfterPagingAndSortingJobs } = useTable(records, headCells, filterFunction);
+    const filterData = (records) => {
+
+        return records.filter(element => filter.tab === 0 ? element : filter.tab === 1 ? (new Date(element.dataMaxima).getTime() >= new Date().getTime())
+            : (new Date(element.dataMaxima).getTime() < new Date().getTime()))
+            .filter(element => filter.name === "" ? element : element.numeJob.toLowerCase().includes(filter.name.toLowerCase()))
+            .filter(element => filter.location.length === 0 ? element : filter.location.includes(element.locatie))
+            .filter(element => filter.category.length === 0 ? element : filter.category.includes(element.jobCategory))
+            .filter(element => filter.type.length === 0 ? element : filter.type.includes(element.jobType))
+
+    }
+
+    const { TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterData);
+
+    const [filter, setFilter] = useState({
+        tab: 0,
+        name: "",
+        location: [],
+        category: [],
+        type: []
+    });
+
 
     const getData = () => {
         jobService.getJobs().then(
@@ -193,14 +212,14 @@ export default function JobsList(props) {
                 />
             </Toolbar>
             <Paper className={classes.papper}>
-                <JobFilters />
+                <JobFilters setFilter={setFilter} filter={filter}/>
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
                         <TblHead />
                         <TableBody>
                             {
-                                recordsAfterPagingAndSortingJobs().map((item, index) => (
+                                recordsAfterPagingAndSorting().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.numeJob}</TableCell>
                                         <TableCell>{item.locatie}</TableCell>

@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
           '& .MuiChip-deleteIcon': {
                color: '#fff'
           }
-
      },
      input: {
           '& .MuiInputBase-root': {
@@ -88,7 +87,7 @@ export default function Filters(props) {
                               onChange={handleChangeLocations}
                               options={locations}
                               disableCloseOnSelect
-                              getOptionLabel={(option) => option.label}
+                              getOptionLabel={(option) => option}
                               renderOption={(option, { selected }) => (
                                    <React.Fragment>
                                         <Checkbox
@@ -96,7 +95,7 @@ export default function Filters(props) {
                                              checkedIcon={checkedIcon}
                                              checked={selected}
                                         />
-                                        {option.label}
+                                        {option}
                                    </React.Fragment>
                               )}
                               renderInput={(params) => (
@@ -120,7 +119,7 @@ export default function Filters(props) {
                               onChange={handleChangeCategories}
                               options={categories}
                               disableCloseOnSelect
-                              getOptionLabel={(option) => option.label}
+                              getOptionLabel={(option) => option}
                               renderOption={(option, { selected }) => (
                                    <React.Fragment>
                                         <Checkbox
@@ -128,7 +127,7 @@ export default function Filters(props) {
                                              checkedIcon={checkedIcon}
                                              checked={selected}
                                         />
-                                        {option.label}
+                                        {option}
                                    </React.Fragment>
                               )}
                               renderInput={(params) => (
@@ -153,7 +152,7 @@ export default function Filters(props) {
                               onChange={handleChangeTypes}
                               options={types}
                               disableCloseOnSelect
-                              getOptionLabel={(option) => option.label}
+                              getOptionLabel={(option) => option === "FULL_TIME" ? "full-time" : "part-time"}
                               renderOption={(option, { selected }) => (
                                    <React.Fragment>
                                         <Checkbox
@@ -161,7 +160,7 @@ export default function Filters(props) {
                                              checkedIcon={checkedIcon}
                                              checked={selected}
                                         />
-                                        {option.label}
+                                        {option === "FULL_TIME" ? "full-time" : "part-time"}
                                    </React.Fragment>
                               )}
                               renderInput={(params) => (

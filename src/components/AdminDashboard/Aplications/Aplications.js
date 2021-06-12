@@ -98,14 +98,31 @@ export default function Aplications(props) {
     const classes = useStyle();
 
     const [records, setRecords] = useState([]);
-    const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const { TblHead, TblPagination, recordsAfterPagingAndSortingAplicarii } = useTable(records, headCells, filterFunction);
 
+    const filterData = (records) => {
 
+        return records.filter(element => filter.tab === 0 ? element : filter.tab === 1 ? (element.verificat === true)
+            : (element.verificat === false))
+            .filter(element => filter.name === "" ? element : element.full_name.toLowerCase().includes(filter.name.toLowerCase()))
+            .filter(element => filter.email === "" ? element : element.email.toLowerCase().includes(filter.email.toLowerCase()))
+            .filter(element => filter.phone === "" ? element : element.telefon.toLowerCase().includes(filter.phone.toLowerCase()))
+            .filter(element => filter.job === "" ? element : element.jobName.toLowerCase().includes(filter.job.toLowerCase()))
+
+    }
+
+    const { TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterData);
+
+    const [filter, setFilter] = useState({
+        tab: 0,
+        name: "",
+        email: "",
+        phone: "",
+        job: ""
+    });
 
     const onDelete = id => {
         setConfirmDialog({
@@ -203,14 +220,14 @@ export default function Aplications(props) {
 
             <Paper className={classes.papper}>
 
-                <AplicationFilters />
+                <AplicationFilters setFilter={setFilter} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
                         <TblHead />
                         <TableBody >
                             {
-                                recordsAfterPagingAndSortingAplicarii().map((item, index) => (
+                                recordsAfterPagingAndSorting().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.full_name}</TableCell>
                                         <TableCell >{item.email}</TableCell>

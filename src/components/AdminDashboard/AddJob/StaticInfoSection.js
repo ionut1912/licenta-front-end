@@ -82,10 +82,10 @@ export default function StaticInfoSection(props) {
                                     id="inputNJ"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}>
+                                    <option value="">Choose</option>
                                     {types.map((item, index) => {
                                         return (
-                                            index === 0 ? <option key={index} value="">Choose</option> :
-                                                <option key={index} value={item.value}>{item.label}</option>
+                                            <option key={index} value={item}>{item === "FULL_TIME" ? "full-time" : "part-time"}</option>
                                         )
                                     })}
                                 </select>
@@ -104,10 +104,10 @@ export default function StaticInfoSection(props) {
                                     id="inputLocatie"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}>
+                                    <option value="">Choose</option>
                                     {locations.map((item, index) => {
                                         return (
-                                            index === 0 ? <option key={index} value="">Choose</option> :
-                                                <option key={index} value={item.value}>{item.label}</option>
+                                            <option key={index} value={item}>{item}</option>
                                         )
                                     })}
                                 </select>
@@ -122,10 +122,10 @@ export default function StaticInfoSection(props) {
                                     id="inputCategory"
                                     onChange={props.handleChange}
                                     onBlur={props.handleBlur}>
+                                    <option value="">Choose</option>
                                     {categories.map((item, index) => {
                                         return (
-                                            index === 0 ? <option key={index} value="">Choose</option> :
-                                                <option key={index} value={item.value}>{item.label}</option>
+                                            <option key={index} value={item}>{item}</option>
                                         )
                                     })}
                                 </select>

@@ -18,7 +18,7 @@ const useStyle = makeStyles(theme => ({
                 outline: 'none'
             },
             [theme.breakpoints.down(400)]: {
-                fontSize:'12px'
+                fontSize: '12px'
             },
         },
         '& .MuiOutlinedInput-root': {
@@ -58,18 +58,63 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
-export default function AplicationFilters() {
+export default function AplicationFilters(props) {
     const classes = useStyle();
 
     const [currentTab, setCurrentTab] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const handleChangeTab = (event, newValue) => {
         setCurrentTab(newValue);
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                tab: newValue
+            }
+        });
     };
+
+    function handleChangeName(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                name: selectedOption.target.value
+            }
+        });
+    }
+    function handleChangeEmail(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                email: selectedOption.target.value
+            }
+        });
+    }
+
+    function handleChangePhone(selectedOption) {
+       
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                phone: selectedOption.target.value
+            }
+        });
+    }
+
+    function handleChangeJob(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                job: selectedOption.target.value
+            }
+        });
+    }
 
     return (
         <div className={classes.filters}>
-            <Tabs value={currentTab} indicatorColor="primary" onChange={handleChange} textColor="primary">
+            <Tabs value={currentTab} indicatorColor="primary" onChange={handleChangeTab} textColor="primary">
                 <Tab label="All " />
                 <Tab label="Checked" />
                 <Tab label="To check" />
@@ -85,24 +130,27 @@ export default function AplicationFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangeName}
                 />
                 <TextField
                     variant="outlined"
                     label="Search by email"
                     InputProps={{
-                        startAdornment: (<InputAdornment position="end">
+                        startAdornment: (<InputAdornment position="start">
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangeEmail}
                 />
                 <TextField
                     variant="outlined"
-                    label="Search by location"
+                    label="Search by phone"
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangePhone}
                 />
 
                 <TextField
@@ -113,6 +161,7 @@ export default function AplicationFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangeJob}
                 />
             </Toolbar>
         </div>

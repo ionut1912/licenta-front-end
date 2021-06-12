@@ -76,7 +76,7 @@ const headCells = [
     { id: 'email', label: 'Email' },
     { id: 'phone', label: 'Phone' },
     { id: 'role', label: 'Grad' },
-    { id: 'actions', label: 'Actions', disableSorting: true }
+    { id: 'action', label: 'Action', disableSorting: true }
 ]
 
 
@@ -87,19 +87,36 @@ export default function UsersList(props) {
     const [recordForEdit, setRecordForEdit] = useState(null);
     const [records, setRecords] = useState([]);
 
-    const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
-
     const [openPopup, setOpenPopup] = useState(false);
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const { TblHead, TblPagination, recordsAfterPagingAndSortingUsers } = useTable(records, headCells, filterFunction);
+    const filterData = (records) => {
+
+        return records.filter(element => filter.tab === 0 ? element : filter.tab === 1 ? (element.role === "ROLE_ADMIN")
+            : (element.role === "ROLE_USER"))
+            .filter(element => filter.name === "" ? element : element.full_name.toLowerCase().includes(filter.name.toLowerCase()))
+            .filter(element => filter.email === "" ? element : element.email.toLowerCase().includes(filter.email.toLowerCase()))
+            .filter(element => filter.phone === "" ? element : element.phone.toLowerCase().includes(filter.phone.toLowerCase()))
+
+    }
+
+    const { TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterData);
+
+
+    const [filter, setFilter] = useState({
+        tab: 0,
+        name: "",
+        email: "",
+        phone: ""
+    });
+
 
     function getData() {
         userService.getAllUsers().then(
             response =>
                 setRecords(response.data)
-        )
+        ) 
     }
 
     useEffect(() => {
@@ -159,13 +176,13 @@ export default function UsersList(props) {
             <UserStatistics />
 
             <Paper className={classes.papper}>
-                <UserFilters />
+                <UserFilters setFilter={setFilter} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
                         <TblHead />
                         <TableBody >
-                            {recordsAfterPagingAndSortingUsers().map((item, index) => (
+                            {recordsAfterPagingAndSorting().map((item, index) => (
                                 <TableRow key={index}>
 
                                     <TableCell>

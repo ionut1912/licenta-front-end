@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TableHead, TableRow, TableCell, TablePagination, TableSortLabel } from '@material-ui/core'
 
 
-export default function useTable(records, headCells, filterFunction) {
+export default function useTable(records, headCells, filterData) {
 
 
     const pages = [5, 10, 25];
@@ -55,7 +55,7 @@ export default function useTable(records, headCells, filterFunction) {
             page={page}
             rowsPerPageOptions={pages}
             rowsPerPage={rowsPerPage}
-            count={records.length}
+            count={filterData(records).length}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
         />)
@@ -86,33 +86,15 @@ export default function useTable(records, headCells, filterFunction) {
     }
 
 
-    const recordsAfterPagingAndSortingUsers = () => {
-        return stableSort(filterFunction.fn(records), getSorting(order, orderBy))
-            .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-    }
-
-    const recordsAfterPagingAndSortingJobs = () => {
-        return stableSort(filterFunction.fn(records), getSorting(order, orderBy))
-            .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-    }
-
-    const recordsAfterPagingAndSortingAplicarii = () => {
-        return stableSort(filterFunction.fn(records), getSorting(order, orderBy))
-            .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-    }
-
-    const recordsAfterPagingAndSortingCVs = () => {
-        return stableSort(filterFunction.fn(records), getSorting(order, orderBy))
+    const recordsAfterPagingAndSorting = () => {
+        return stableSort(filterData(records), getSorting(order, orderBy))
             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     }
 
     return {
         TblHead,
         TblPagination,
-        recordsAfterPagingAndSortingUsers,
-        recordsAfterPagingAndSortingJobs,
-        recordsAfterPagingAndSortingAplicarii,
-        recordsAfterPagingAndSortingCVs
+        recordsAfterPagingAndSorting
     }
 }
 

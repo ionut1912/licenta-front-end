@@ -100,16 +100,42 @@ export default function CVList(props) {
 
     const classes = useStyle();
 
+    const [enums, setEnums] = useState({
+        cities: [],
+        skills: [],
+        languages: []
+    })
+
     const [records, setRecords] = useState([]);
     const [openPopupView, setOpenPopupView] = useState(false);
     const [recordForView, setRecordForView] = useState("");
-    const [filterFunction, setFilterFunction] = useState({ fn: items => { return items } })
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const { TblHead, TblPagination, recordsAfterPagingAndSortingCVs } = useTable(records, headCells, filterFunction);
 
+    const filterData = (records) => {
+
+        return records.filter(element => filter.name === "" ? element :
+            (element.first_name.toLowerCase().includes(filter.name.toLowerCase())) || element.last_name.toLowerCase().includes(filter.name.toLocaleLowerCase()))
+            .filter(element => filter.email === "" ? element : element.email.toLowerCase().includes(filter.email.toLowerCase()))
+            .filter(element => filter.phone === "" ? element : element.phone.toLowerCase().includes(filter.phone.toLowerCase()))
+            .filter(element => filter.city.length === 0 ? element : filter.city.includes(element.city))
+            .filter(element => filter.skill.length === 0 ? element : filter.skill.includes(element.skills.skill))
+            .filter(element => filter.language.length === 0 ? element : filter.language.includes(element.languages.language_name))
+
+    }
+
+    const { TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterData);
+
+    const [filter, setFilter] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        city: [],
+        skill: [],
+        language: []
+    });
 
     const openInPopupView = item => {
         setRecordForView(item);
@@ -141,7 +167,29 @@ export default function CVList(props) {
 
     const getData = () => {
         cvService.getCvs().then(
-            response => setRecords(response.data)
+            response => {
+                const cities = []
+                const skills = []
+                const languages = []
+
+                setRecords(response.data)
+                response.data.map((item) => {
+                    if (cities.indexOf(item.city) > -1)
+                        cities.push(item.city)
+
+                    if (skills.indexOf(item.skills.skill) !== -1)
+                        skills.push(item.skills.skill)
+
+                    if (languages.indexOf(item.languages.language_name) !== -1)
+                        languages.push(item.languages.language_name)
+                })
+
+                setEnums({
+                    cities: cities,
+                    skills: skills,
+                    languages: languages
+                })
+            }
         )
     }
 
@@ -184,14 +232,14 @@ export default function CVList(props) {
             </Toolbar>
 
             <Paper className={classes.papper}>
-                <CvFilters />
+                <CvFilters setFilter={setFilter} filter={filter} cities={enums.cities} skills={enums.skills} languages={enums.languages} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
                         <TblHead />
                         <TableBody>
                             {
-                                recordsAfterPagingAndSortingCVs().map((item, index) => (
+                                recordsAfterPagingAndSorting().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.first_name}</TableCell>
                                         <TableCell>{item.last_name}</TableCell>

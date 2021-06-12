@@ -1,6 +1,14 @@
 import React from 'react'
 import Search from '@material-ui/icons/Search';
-import { makeStyles, TextField, Toolbar, InputAdornment } from '@material-ui/core';
+import { makeStyles, Checkbox, TextField, Toolbar, InputAdornment } from '@material-ui/core';
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 const useStyle = makeStyles(theme => ({
@@ -42,8 +50,72 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
-export default function CvFilters() {
+export default function CvFilters(props) {
     const classes = useStyle();
+
+    function handleChangeName(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                name: selectedOption.target.value
+            }
+        });
+    }
+
+    function handleChangeEmail(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                email: selectedOption.target.value
+            }
+        });
+    }
+
+    function handleChangePhone(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                phone: selectedOption.target.value
+            }
+        });
+    }
+
+
+    const handleChangeCity = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                city: selectedOption
+            }
+        });
+    });
+
+
+    const handleChangeSkill = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                skill: selectedOption
+            }
+        });
+    });
+
+
+    const handleChangeLanguage = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                language: selectedOption
+            }
+        });
+    });
+
     return (
         <div className={classes.filters}>
             <Toolbar className={classes.toolbar}>
@@ -55,6 +127,7 @@ export default function CvFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangeName}
                 />
                 <TextField
                     variant="outlined"
@@ -64,15 +137,7 @@ export default function CvFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
-                />
-                <TextField
-                    variant="outlined"
-                    label="Search by city"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="start">
-                            <Search />
-                        </InputAdornment>)
-                    }}
+                    onChange={handleChangeEmail}
                 />
                 <TextField
                     variant="outlined"
@@ -82,25 +147,91 @@ export default function CvFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangePhone}
                 />
-                <TextField
-                    variant="outlined"
-                    label="Search by skills"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="start">
-                            <Search />
-                        </InputAdornment>)
-                    }}
-                />
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="cities"
+                    className={classes.inputMultiple}
+                    value={props.filter.category}
+                    onChange={handleChangeCity}
+                    options={props.cities}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
 
-                <TextField
-                    variant="outlined"
-                    label="Search by languages"
-                    InputProps={{
-                        startAdornment: (<InputAdornment position="start">
-                            <Search />
-                        </InputAdornment>)
-                    }}
+                        />
+                    )}
+                />
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="skills"
+                    className={classes.inputMultiple}
+                    value={props.filter.category}
+                    onChange={handleChangeSkill}
+                    options={props.skills}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
+
+                        />
+                    )}
+                />
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="languages"
+                    className={classes.inputMultiple}
+                    value={props.filter.category}
+                    onChange={handleChangeLanguage}
+                    options={props.languages}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
+
+                        />
+                    )}
                 />
             </Toolbar>
         </div>

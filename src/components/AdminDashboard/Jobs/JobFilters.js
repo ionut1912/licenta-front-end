@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 import Search from '@material-ui/icons/Search';
-import { makeStyles, TextField, MenuItem, FormControl, InputLabel, Select, Toolbar, InputAdornment, Tabs, Tab, } from '@material-ui/core';
+import { makeStyles, Checkbox, TextField, Toolbar, InputAdornment, Tabs, Tab} from '@material-ui/core';
+
+import { locations, types, categories } from '../../Joburi/JobEnums'
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const useStyle = makeStyles(theme => ({
     filters: {
@@ -17,7 +27,7 @@ const useStyle = makeStyles(theme => ({
                 outline: 'none'
             },
             [theme.breakpoints.down(400)]: {
-                fontSize:'12px'
+                fontSize: '12px'
             },
         },
         '& .roundField .MuiOutlinedInput-root': {
@@ -58,21 +68,69 @@ const useStyle = makeStyles(theme => ({
 }))
 
 
-export default function JobFilters() {
+export default function JobFilters(props) {
     const classes = useStyle();
 
     const [currentTab, setCurrentTab] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const handleChangeTab = (event, newValue) => {
         setCurrentTab(newValue);
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                tab: newValue
+            }
+        });
     };
+
+    function handleChangeName(selectedOption) {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                name: selectedOption.target.value
+            }
+        });
+    }
+
+
+    const handleChangeLocations = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                location: selectedOption
+            }
+        });
+    });
+
+    const handleChangeCategories = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                category: selectedOption
+            }
+        });
+    });
+
+    const handleChangeTypes = ((event, selectedOption) => {
+
+        props.setFilter(prevFilter => {
+            return {
+                ...prevFilter,
+                type: selectedOption
+            }
+        });
+    });
+
 
     return (
         <div className={classes.filters}>
-            <Tabs value={currentTab} indicatorColor="primary" onChange={handleChange} textColor="primary">
+            <Tabs value={currentTab} indicatorColor="primary" onChange={handleChangeTab} textColor="primary">
                 <Tab label="All jobs" />
                 <Tab label="Active jobs" />
-                <Tab label="Unactive jobs" />
+                <Tab label="Inactive jobs" />
             </Tabs>
             <hr />
 
@@ -86,45 +144,99 @@ export default function JobFilters() {
                             <Search />
                         </InputAdornment>)
                     }}
+                    onChange={handleChangeName}
                 />
-                <FormControl variant="outlined">
-                    <InputLabel>Search by category</InputLabel>
-                    <Select
-                        name="category"
-                        label="Search by category"
-                        value={"All"}>
-                        <MenuItem value="All">All</MenuItem>
-                        <MenuItem value="Development">Development</MenuItem>
-                        <MenuItem value="Architect">Architect</MenuItem>
-                        <MenuItem value="Front-end">Front-end</MenuItem>
-                    </Select>
-                </FormControl>
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    value={props.filter.location}
+                    id="locations"
+                    className={classes.inputMultiple}
+                    onChange={handleChangeLocations}
+                    options={locations}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
 
-                <FormControl variant="outlined">
-                    <InputLabel>Search by type</InputLabel>
-                    <Select
-                        name="type"
-                        label="Search by type"
-                        value={"All"}>
-                        <MenuItem value="All">All</MenuItem>
-                        <MenuItem value="Development">Development</MenuItem>
-                        <MenuItem value="Architect">Architect</MenuItem>
-                        <MenuItem value="Front-end">Front-end</MenuItem>
-                    </Select>
-                </FormControl>
+                        />
+                    )}
+                />
 
-                <FormControl variant="outlined">
-                    <InputLabel>Search by location</InputLabel>
-                    <Select
-                        name="location"
-                        label="Search by location"
-                        value={"All"}>
-                        <MenuItem value="All">All</MenuItem>
-                        <MenuItem value="Development">Development</MenuItem>
-                        <MenuItem value="Architect">Architect</MenuItem>
-                        <MenuItem value="Front-end">Front-end</MenuItem>
-                    </Select>
-                </FormControl>
+
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="categories"
+                    className={classes.inputMultiple}
+                    value={props.filter.category}
+                    onChange={handleChangeCategories}
+                    options={categories}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
+
+                        />
+                    )}
+                />
+
+
+
+
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="types"
+                    className={classes.inputMultiple}
+                    value={props.filter.type}
+                    onChange={handleChangeTypes}
+                    options={types}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option === "FULL_TIME" ? "full-time" : "part-time"}
+                    renderOption={(option, { selected }) => (
+                        <React.Fragment>
+                            <Checkbox
+                                icon={icon}
+                                checkedIcon={checkedIcon}
+                                checked={selected}
+                            />
+                            {option === "FULL_TIME" ? "full-time" : "part-time"}
+                        </React.Fragment>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="outlined"
+
+                        />
+                    )}
+                />
+
             </Toolbar>
         </div>
     )
