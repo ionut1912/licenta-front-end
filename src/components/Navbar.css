@@ -17,7 +17,7 @@
   font-size: 1.2rem;
   top: 0;
   box-shadow: 0 0 15px 1px rgb(0 0 0 / 25%);
-  z-index: 999;
+  z-index: 2000;
   width: 100%;
   position: sticky;
   font-family: 'PT Sans', sans-serif;

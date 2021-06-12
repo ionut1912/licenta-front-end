@@ -1,5 +1,5 @@
 .filters {
-  padding: 60px 50px 0px;
+  padding: 40px 50px 0px;
   margin: 0;
 }
 
@@ -11,28 +11,14 @@
   margin: auto;
 }
 
-.filters .custom-select, .filters .input-group {
-  height: 50px;
-}
-
-.filters .btn{
-  margin:20px auto 0px auto;
-}
-
 @media screen and (max-width:986px) {
   .filters {
     padding: 60px 0px 0px;
-  }
-  .filters .custom-select, .filters .form-control {
-    font-size: 14px;
   }
 }
 
 @media screen and (max-width:768px) {
   .filters {
     padding: 40px 20px 0px;
-  }
-  .filters .custom-select, .filters .form-control {
-    font-size: 16px;
   }
 }

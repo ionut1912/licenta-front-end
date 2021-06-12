@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import { useInView } from 'react-intersection-observer'
 import { useAnimation, motion } from 'framer-motion'
 
+
 const useStyles = makeStyles(theme => ({
   map: {
     background: '#fff',
@@ -67,7 +68,7 @@ export default function Locations() {
       <div className="container" style={{ padding: '30px 0' }}>
         <motion.iframe
           variants={mapAnim} animate={animation} initial="hidden"
-          className={classes.frame} src="https://www.google.com.qa/maps/d/u/0/embed?mid=1y8f94yVaPDnNB8Ve8LreG86Bq3qfvBx2" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" height="520" title="map"></motion.iframe>
+          className={classes.frame} src="https://www.google.com.qa/maps/d/embed?mid=1y8f94yVaPDnNB8Ve8LreG86Bq3qfvBx2&hl=en"  scrolling="no" frameBorder="0" marginHeight="0" marginWidth="0" height="520" title="map"></motion.iframe>
       </div>
     </div>
   )

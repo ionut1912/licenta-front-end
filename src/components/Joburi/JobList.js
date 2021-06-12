@@ -18,12 +18,30 @@ export default function JobList({ data, filter }) {
         }).format(new Date(date));
     }
 
+
     function jobsAfterFilteringAndSearching() {
+
+        const locations = []
+        filter.location.map((item) => {
+            return locations.push(item.value);
+        })
+
+        const categories = []
+        filter.category.map((item) => {
+            return categories.push(item.value);
+        })
+
+        const types = []
+        filter.type.map((item) => {
+            return types.push(item.value);
+        })
+
         return data.filter(element => new Date(element.dataMaxima).getTime() >= new Date().getTime())
             .filter(element => filter.search === "" ? data : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
-            .filter(element => filter.location === "All" ? data : filter.location.toLowerCase().includes(element.locatie.toLowerCase()))
-            .filter(element => filter.category === "All" ? data : filter.category.toLowerCase().includes(element.jobCategory.toLowerCase()))
-            .filter(element => filter.type === "All" ? data : filter.type.toLowerCase().includes(element.jobType.toLowerCase()))
+            .filter(element => filter.location.length === 0 ? data : locations.includes(element.locatie))
+            .filter(element => filter.category.length === 0 ? data : categories.includes(element.jobCategory))
+            .filter(element => filter.type.length === 0 ? data : types.includes(element.jobType))
+
     }
 
     return (

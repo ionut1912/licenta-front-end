@@ -12,9 +12,9 @@ function Jobs() {
     const [jobs, setJobs] = useState([]);
 
     const [filter, setFilter] = useState({
-        location: "All",
-        category: "All",
-        type: "All",
+        location: [],
+        category: [],
+        type: [],
         search: "",
     });
 
@@ -32,7 +32,7 @@ function Jobs() {
     return (
         <div>
             <FlexDinamicInfo {...MakeCVInfoData} />
-            <Filters setFilter={setFilter} />
+            <Filters setFilter={setFilter} filter={filter} />
             <JobList data={jobs} filter={filter} />
             <Footer />
         </div>

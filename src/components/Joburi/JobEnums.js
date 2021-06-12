@@ -1,5 +1,5 @@
 export const locations = [
-    { value: 'All', label: 'All' },
+
     { value: 'Bucuresti,Romania', label: 'Bucuresti,Romania' },
     { value: 'Galati,Romania', label: 'Galati,Romania' },
     { value: 'Chisinau,Republica Moldova', label: 'Chisinau,Republica Moldova' },
@@ -8,7 +8,6 @@ export const locations = [
 ];
 
 export const categories = [
-    { value: 'All', label: 'All' },
     { value: 'Development', label: 'Development' },
     { value: 'Architect', label: 'Architect' },
     { value: 'Front-end', label: 'Front-end' }
@@ -16,7 +15,7 @@ export const categories = [
 ];
 
 export const types = [
-    { value: 'All', label: 'All' },
+
     { value: 'FULL_TIME', label: 'full-time' },
     { value: 'PART_TIME', label: 'part-time' }
 ];
