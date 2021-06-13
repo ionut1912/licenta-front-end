@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import logo from '../images/logo.png';
-import Login from './Login';
+import Login from './LoginSistem/Login'
 import AuthService from "../services/auth.service";
 import ViewPopup from './ViewPopup'
 import './Navbar.css';
@@ -222,17 +222,3 @@ export default function Navbar(props) {
   );
 }
 
-
-
-
-// const [navbar, setNavbar] = useState(false);
-
- // const changeNavStyle = () => {
-  //   if (window.scrollY >= 250) {
-  //     setNavbar(true);
-  //   } else {
-  //     setNavbar(false);
-  //   }
-  // }
-
-  // window.addEventListener('scroll', changeNavStyle);

@@ -27,6 +27,18 @@ class AuthService {
         });
     }
 
+    generateVerifyCode(email, codeType) {
+        return axios.put(API_URL + `sendCode/${email}/${codeType}`)
+    }
+
+    checkVerifyCodee(email, codeType, code) {
+        return axios.put(API_URL + `checkCode/${codeType}/${email}/${code}`)
+    }
+
+    changePassword(email, password) {
+        return axios.put(API_URL + `changePassword/${email}/${password}`)
+    }
+
     logout() {
         localStorage.removeItem("user");
     }
