@@ -121,7 +121,7 @@ export default function Aplications(props) {
         name: "",
         email: "",
         phone: "",
-        job: ""
+        job: props.showApplications === "" ? "" : props.showApplications
     });
 
     const onDelete = id => {
@@ -188,7 +188,6 @@ export default function Aplications(props) {
 
     useEffect(() => {
         getData();
-
         return function cleanup() {
             setRecords([]);
         }
@@ -220,7 +219,7 @@ export default function Aplications(props) {
 
             <Paper className={classes.papper}>
 
-                <AplicationFilters setFilter={setFilter} />
+                <AplicationFilters setFilter={setFilter} filter={filter} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>

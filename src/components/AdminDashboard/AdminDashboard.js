@@ -15,15 +15,17 @@ function AdminDashboard(props) {
     const [itemForEdit, setItemForEdit] = useState('');
     const currentUserGrad = useState(AuthService.getCurrentUser().role);
 
+    const [showApplications, setShowApplcations] = useState('');
+
 
     return (
         <div>
-            <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} gradUser={currentUserGrad} setItemForEdit={setItemForEdit} />
+            <Sidebar showSidebar={props.showSidebar} setState={setState} state={state} gradUser={currentUserGrad} setItemForEdit={setItemForEdit} setShowApplcations={setShowApplcations} />
             {state === 1 ? <Statistics sideState={props.showSidebar} /> : null}
             {state === 2 ? <UsersList sideState={props.showSidebar} /> : null}
-            {state === 3 ? <JobsList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} /> : null}
+            {state === 3 ? <JobsList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} setShowApplcations={setShowApplcations} /> : null}
             {state === 4 ? <NewEditJob sideState={props.showSidebar} setItemForEdit={setItemForEdit} itemForEdit={itemForEdit} /> : null}
-            {state === 5 ? <Aplications sideState={props.showSidebar} /> : null}
+            {state === 5 ? <Aplications sideState={props.showSidebar} showApplications={showApplications} /> : null}
             {state === 6 ? <CVList sideState={props.showSidebar} setState={setState} setItemForEdit={setItemForEdit} /> : null}
             {state === 7 ? <AddCV sideState={props.showSidebar} setItemForEdit={setItemForEdit} itemForEdit={itemForEdit} /> : null}
         </div>

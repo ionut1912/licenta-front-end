@@ -95,16 +95,9 @@ function format(date) {
     }).format(new Date(date));
 }
 
-
 export default function CVList(props) {
 
     const classes = useStyle();
-
-    const [enums, setEnums] = useState({
-        cities: [],
-        skills: [],
-        languages: []
-    })
 
     const [records, setRecords] = useState([]);
     const [openPopupView, setOpenPopupView] = useState(false);
@@ -114,6 +107,19 @@ export default function CVList(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
 
+    function getSkillsFromCv(skills) {
+        const cvSkills = []
+        skills.map((item) => cvSkills.indexOf(item.skill) === -1 ? cvSkills.push(item.skill) : null)
+        return cvSkills;
+    }
+
+    function getLanguagesFromCv(languages) {
+        const cvLanguages = []
+        languages.map((item) => cvLanguages.indexOf(item.language_name) === -1 ? cvLanguages.push(item.language_name) : null)
+        return cvLanguages;
+    }
+
+
     const filterData = (records) => {
 
         return records.filter(element => filter.name === "" ? element :
@@ -121,10 +127,10 @@ export default function CVList(props) {
             .filter(element => filter.email === "" ? element : element.email.toLowerCase().includes(filter.email.toLowerCase()))
             .filter(element => filter.phone === "" ? element : element.phone.toLowerCase().includes(filter.phone.toLowerCase()))
             .filter(element => filter.city.length === 0 ? element : filter.city.includes(element.city))
-            .filter(element => filter.skill.length === 0 ? element : filter.skill.includes(element.skills.skill))
-            .filter(element => filter.language.length === 0 ? element : filter.language.includes(element.languages.language_name))
-
+            .filter(element => filter.skill.length === 0 ? element : filter.skill.some(r => getSkillsFromCv(element.skills).indexOf(r) >= 0))
+            .filter(element => filter.language.length === 0 ? element : filter.language.some(r => getLanguagesFromCv(element.languages).indexOf(r) >= 0))
     }
+
 
     const { TblHead, TblPagination, recordsAfterPagingAndSorting } = useTable(records, headCells, filterData);
 
@@ -167,29 +173,7 @@ export default function CVList(props) {
 
     const getData = () => {
         cvService.getCvs().then(
-            response => {
-                const cities = []
-                const skills = []
-                const languages = []
-
-                setRecords(response.data)
-                response.data.map((item) => {
-                    if (cities.indexOf(item.city) > -1)
-                        cities.push(item.city)
-
-                    if (skills.indexOf(item.skills.skill) !== -1)
-                        skills.push(item.skills.skill)
-
-                    if (languages.indexOf(item.languages.language_name) !== -1)
-                        languages.push(item.languages.language_name)
-                })
-
-                setEnums({
-                    cities: cities,
-                    skills: skills,
-                    languages: languages
-                })
-            }
+            response => setRecords(response.data)
         )
     }
 
@@ -232,7 +216,7 @@ export default function CVList(props) {
             </Toolbar>
 
             <Paper className={classes.papper}>
-                <CvFilters setFilter={setFilter} filter={filter} cities={enums.cities} skills={enums.skills} languages={enums.languages} />
+                <CvFilters setFilter={setFilter} filter={filter} records={records} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>

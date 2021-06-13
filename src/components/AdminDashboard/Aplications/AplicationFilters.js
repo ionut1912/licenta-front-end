@@ -93,7 +93,7 @@ export default function AplicationFilters(props) {
     }
 
     function handleChangePhone(selectedOption) {
-       
+
         props.setFilter(prevFilter => {
             return {
                 ...prevFilter,
@@ -152,10 +152,10 @@ export default function AplicationFilters(props) {
                     }}
                     onChange={handleChangePhone}
                 />
-
                 <TextField
                     variant="outlined"
                     label="Search by name job"
+                    value={props.filter.job}
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />

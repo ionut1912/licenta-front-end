@@ -10,6 +10,7 @@ import JobStatistics from './JobStatistics';
 import JobFilters from './JobFilters';
 import jobService from '../../../services/job.service';
 
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -155,6 +156,11 @@ export default function JobsList(props) {
         setOpenPopupView(true);
     }
 
+    const showApplications = item => {
+        props.setShowApplcations(item);
+        props.setState(5);
+    }
+
     const onDelete = id => {
         setConfirmDialog({
             ...confirmDialog,
@@ -212,7 +218,7 @@ export default function JobsList(props) {
                 />
             </Toolbar>
             <Paper className={classes.papper}>
-                <JobFilters setFilter={setFilter} filter={filter}/>
+                <JobFilters setFilter={setFilter} filter={filter} />
 
                 <TableContainer style={{ marginTop: '25px' }}>
                     <Table className={classes.table}>
@@ -236,6 +242,12 @@ export default function JobsList(props) {
 
                                         <TableCell>
                                             <div className={classes.action}>
+
+                                                <Button
+                                                    color="primary"
+                                                    text={<AssignmentIcon fontSize="small" />}
+                                                    onClick={() => { showApplications(item.numeJob) }}
+                                                />
                                                 <Button
                                                     color="default"
                                                     style={{ color: '#1769aa' }}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Search from '@material-ui/icons/Search';
 import { makeStyles, Checkbox, TextField, Toolbar, InputAdornment } from '@material-ui/core';
 
@@ -52,6 +52,12 @@ const useStyle = makeStyles(theme => ({
 
 export default function CvFilters(props) {
     const classes = useStyle();
+
+    const [enums, setEnums] = useState({
+        cities: [],
+        skills: [],
+        languages: []
+    })
 
     function handleChangeName(selectedOption) {
 
@@ -116,6 +122,40 @@ export default function CvFilters(props) {
         });
     });
 
+
+    useEffect(() => {
+        const cities = [];
+        const skills = [];
+        const languages = [];
+
+
+        props.records.map((item) => {
+
+            item.skills.map((skill1) => {
+                if (skills.indexOf(skill1.skill) === -1)
+                    return skills.push(skill1.skill)
+                else return null
+            })
+
+            item.languages.map((language1) => {
+                if (languages.indexOf(language1.language_name) === -1)
+                    return languages.push(language1.language_name)
+                else return null
+            })
+
+            if (cities.indexOf(item.city) === -1)
+                return cities.push(item.city)
+            else return null
+        })
+
+        setEnums({
+            cities: cities,
+            skills: skills,
+            languages: languages
+        })
+
+    }, [setEnums, props.records])
+
     return (
         <div className={classes.filters}>
             <Toolbar className={classes.toolbar}>
@@ -156,7 +196,7 @@ export default function CvFilters(props) {
                     className={classes.inputMultiple}
                     value={props.filter.category}
                     onChange={handleChangeCity}
-                    options={props.cities}
+                    options={enums.cities}
                     disableCloseOnSelect
                     getOptionLabel={(option) => option}
                     renderOption={(option, { selected }) => (
@@ -184,7 +224,7 @@ export default function CvFilters(props) {
                     className={classes.inputMultiple}
                     value={props.filter.category}
                     onChange={handleChangeSkill}
-                    options={props.skills}
+                    options={enums.skills}
                     disableCloseOnSelect
                     getOptionLabel={(option) => option}
                     renderOption={(option, { selected }) => (
@@ -212,7 +252,7 @@ export default function CvFilters(props) {
                     className={classes.inputMultiple}
                     value={props.filter.category}
                     onChange={handleChangeLanguage}
-                    options={props.languages}
+                    options={enums.languages}
                     disableCloseOnSelect
                     getOptionLabel={(option) => option}
                     renderOption={(option, { selected }) => (

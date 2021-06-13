@@ -59,13 +59,13 @@ const useStyle = makeStyles(theme => ({
     }
 
 }));
-export default function AplicationStatistics() {
+export default function AplicationStatistics(props) {
     const classes = useStyle();
 
     const [statistics, setStatistics] = useState({
         applications: '',
         applicationsChecked: '',
-        applicationsUnChecked: '',
+        applicationsUnChecked: ''
     })
 
     useEffect(() => {
