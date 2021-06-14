@@ -28,7 +28,7 @@ export default function PersonalInfoSection(props) {
             .max(60, "Email is to long!")
             .required("This field is required!"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
+            .matches(/^(\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\s|\.|-)?([0-9]{3}(\s|\.|-|)){2}$/, 'Invalid phone number')
             .required("This field is required!"),
         city: Yup.string()
             .max(45, "City is to long!")

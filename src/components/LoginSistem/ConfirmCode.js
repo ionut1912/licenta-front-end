@@ -2,16 +2,32 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import AuthService from "../../services/auth.service";
+import { TextField, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
+
+const useStyles = makeStyles(theme => ({
+    icon: {
+        '& .MuiIconButton-root': {
+            outline: 'none'
+        }
+    },
+    input: {
+        '& .MuiOutlinedInput-root': {
+            backgroundColor: '#f1f1f1'
+        }
+    }
+}))
 
 
 export default function ConfirmCode({ state, setState, setNotify, setSubTitle, codeType, email, password }) {
 
     let history = useHistory();
 
+    const classes = useStyles();
+
     const codeSchema = Yup.object().shape({
-        code1: Yup.string()
+        code: Yup.string()
             .required("This field is required!"),
     })
 
@@ -43,7 +59,7 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
 
 
     function handleVerify(values) {
-        const code = "pumzYL"
+        const code = values.code;
         if (codeType === "password") {
             AuthService.checkVerifyCodee(codeType, email, code).then(
                 response => {
@@ -115,7 +131,7 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
 
     return (
         /********************************* Verify code for change password/active cont ****************************************************************/
-        <div className={codeType === "activation" ? "active-code" : "change-code"} style={{
+        <div className="confirmCode" style={{
             display: state !== 3 && 'none'
         }}>
             <div className="wrapperr">
@@ -124,19 +140,12 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                         <Formik
                             initialValues={
                                 {
-                                    code1: '',
-                                    code2: '',
-                                    code3: '',
-                                    code4: '',
-                                    code5: '',
-                                    code6: '',
-                                    code7: '',
-                                    code8: '',
+                                    code: '',
                                 }
                             }
 
                             onSubmit={(values, { resetForm }) => {
-                                handleVerify();
+                                handleVerify(values);
                                 resetForm({ values: '' })
                             }}
 
@@ -146,107 +155,20 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
 
                                 <form onSubmit={props.handleSubmit} className="form">
                                     <div className="form-group-input">
-                                        <input
+                                        <TextField
                                             variant="outlined"
                                             type="text"
-                                            name="code1"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code1}
-                                            autoComplete="current-code"
+                                            name="code"
+                                            fullWidth
+                                            className={classes.input}
+                                            label="Verification code"
+                                            value={props.values.code}
+                                            autoComplete="current-email"
                                             onChange={props.handleChange}
                                             onBlur={props.handleBlur}
                                         />
 
-                                        <input
-                                            variant="outlined"
-                                            type="text"
-                                            name="code2"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code2}
-                                            autoComplete="current-code"
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                        />
-
-                                        <input
-                                            variant="outlined"
-                                            type="text"
-                                            name="code3"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code3}
-                                            autoComplete="current-code"
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                        />
-
-                                        <input
-                                            variant="outlined"
-                                            type="text"
-                                            name="code4"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code4}
-                                            autoComplete="current-code"
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                        />
-
-                                        <input
-                                            variant="outlined"
-                                            type="text"
-                                            name="code5"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code5}
-                                            autoComplete="current-code"
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                        />
-
-                                        <input
-                                            variant="outlined"
-                                            type="text"
-                                            name="code6"
-                                            maxLength="1"
-                                            label="Email address"
-                                            value={props.values.code6}
-                                            autoComplete="current-code"
-                                            onChange={props.handleChange}
-                                            onBlur={props.handleBlur}
-                                        />
-
-                                        {codeType === "activation" ? null :
-                                            <input
-                                                variant="outlined"
-                                                type="text"
-                                                name="code7"
-                                                maxLength="1"
-                                                label="Email address"
-                                                value={props.values.code7}
-                                                autoComplete="current-code"
-                                                onChange={props.handleChange}
-                                                onBlur={props.handleBlur}
-                                            />
-                                        }
-
-                                        {codeType === "activation" ? null :
-                                            <input
-                                                variant="outlined"
-                                                type="text"
-                                                name="code8"
-                                                maxLength="1"
-                                                label="Email address"
-                                                value={props.values.code8}
-                                                autoComplete="current-code"
-                                                onChange={props.handleChange}
-                                                onBlur={props.handleBlur}
-                                            />
-                                        }
-
-                                        {props.errors.code1 && props.touched.code1 && <p className="text-danger">{props.errors.code1}</p>}
+                                        {props.errors.code && props.touched.code && <p className="text-danger">{props.errors.code}</p>}
                                     </div>
 
                                     <input
@@ -256,7 +178,7 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                                         value="Verify"
                                     />
 
-                                    <p className="linktext" style={{ margin: '10px 0 -10px 0' }} onClick={() => handleSendEmail()}>Send code again </p>
+                                    <p className="linktext" style={{ margin: '10px 0 -10px 0', textAlign: 'center' }} onClick={() => handleSendEmail()}>Send code again </p>
                                     <p className="titlee title-subs" style={{ marginTop: '0px' }}>Go to login? <span className="linktext"
                                         onClick={() => {
                                             props.resetForm();

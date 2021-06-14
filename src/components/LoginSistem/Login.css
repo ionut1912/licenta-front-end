@@ -71,38 +71,4 @@
   background: #474cf0;
 }
 
-.active-code .wrapperr, .change-code .wrapperr {
-  text-align: center;
-}
 
-.active-code input {
-  margin: 0 5px;
-  text-align: center;
-  line-height: 45px;
-  font-size: 24px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: solid 2px rgba(145, 144, 144, 0.973);
-  outline: none;
-  width: 12%;
-  transition: all 0.2s ease-in-out;
-}
-
-.active-code input:focus, .change-code input:focus {
-  border-color: #474cf0;
-}
-
-.change-code input {
-  margin: 0 5px;
-  text-align: center;
-  line-height: 45px;
-  font-size: 24px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: solid 2px rgba(145, 144, 144, 0.973);
-  outline: none;
-  width: 8%;
-  transition: all 0.2s ease-in-out;
-}

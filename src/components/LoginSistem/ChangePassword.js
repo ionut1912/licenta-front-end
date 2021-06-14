@@ -214,7 +214,7 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
                                                 value={props.values.password}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-                                                autoComplete="new-password"
+                                                autoComplete="new-password2"
                                                 InputProps={{
                                                     endAdornment: (
                                                         < InputAdornment position="end" className={classes.icon}>
@@ -242,7 +242,7 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
                                                 value={props.values.password2}
                                                 onChange={props.handleChange}
                                                 onBlur={props.handleBlur}
-                                                autoComplete="new-password"
+                                                autoComplete="new-password2"
                                                 InputProps={{
                                                     endAdornment: (
                                                         < InputAdornment position="end" className={classes.icon}>

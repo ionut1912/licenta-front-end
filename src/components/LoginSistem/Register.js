@@ -42,7 +42,7 @@ export default function Register({ state, setState, setNotify, setSubTitle }) {
             .max(60, "Email is to long!")
             .required("Email is required!"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/, 'Must be exactyle 10 digits')
+            .matches(/^(\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\s|\.|-)?([0-9]{3}(\s|\.|-|)){2}$/, 'Invalid phone number')
             .required("Phone is required!"),
         password: Yup.string()
             .min(6, "Password is to short!")
