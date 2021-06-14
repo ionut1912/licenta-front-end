@@ -2,16 +2,17 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import AuthService from "../../services/auth.service";
+import { useHistory } from 'react-router-dom';
 
 
 
-export default function ConfirmCode({ state, setState, setNotify, setSubTitle, codeType, email }) {
+export default function ConfirmCode({ state, setState, setNotify, setSubTitle, codeType, email, password }) {
+
+    let history = useHistory();
 
     const codeSchema = Yup.object().shape({
         code1: Yup.string()
             .required("This field is required!"),
-
-
     })
 
     function handleSendEmail() {
@@ -24,22 +25,30 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                     type: 'success'
                 })
             },
-            error => setNotify({
-                isOpen: true,
-                message: "Network error!",
-                type: 'error'
-            })
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                })
+            }
         )
     }
 
 
     function handleVerify(values) {
-        const code = "RgVFLYHC"
+        const code = "pumzYL"
         if (codeType === "password") {
             AuthService.checkVerifyCodee(codeType, email, code).then(
                 response => {
                     if (response.data === true) {
-                        setSubTitle('Change password by entering the information below') 
+                        setSubTitle('Change password by entering the information below')
                         setNotify({
                             isOpen: true,
                             message: "Code is correct!",
@@ -61,7 +70,46 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                 })
             )
         } else if (codeType === "activation") {
+            AuthService.checkVerifyCodee(codeType, email, code).then(
+                response => {
+                    if (response.data === true) {
+                        AuthService.login(email, password).then(
+                            () => {
 
+                                const currentUser = AuthService.getCurrentUser();
+                                if (currentUser.role === "ROLE_USER") {
+                                    history.push("/user");
+                                    window.location.reload();
+
+                                } else if (currentUser.role === "ROLE_ADMIN") {
+                                    history.push("/admin");
+                                    window.location.reload();
+
+                                }
+                            },
+                            error => {
+                                const resMessage =
+                                    (error.response &&
+                                        error.response.data &&
+                                        error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+
+                                setNotify({
+                                    isOpen: true,
+                                    message: resMessage,
+                                    type: 'error'
+                                });
+                            }
+                        )
+                    } else
+                        setNotify({
+                            isOpen: true,
+                            message: "Code is incorrect!",
+                            type: 'error'
+                        })
+                }
+            )
         }
     }
 
@@ -209,7 +257,14 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                                     />
 
                                     <p className="linktext" style={{ margin: '10px 0 -10px 0' }} onClick={() => handleSendEmail()}>Send code again </p>
-                                    <p className="titlee title-subs" style={{ marginTop: '0px' }}>Go to login? <span className="linktext" onClick={() => { props.resetForm(); setState(1); setSubTitle('Sign in by entering the information below') }}>Sign in</span></p>
+                                    <p className="titlee title-subs" style={{ marginTop: '0px' }}>Go to login? <span className="linktext"
+                                        onClick={() => {
+                                            props.resetForm();
+                                            setState(1);
+                                            setSubTitle('Sign in by entering the information below');
+                                            codeType === "password" && AuthService.setCodeToNull(email)
+                                        }}
+                                    >Sign in</span></p>
                                 </form>
 
                             )}

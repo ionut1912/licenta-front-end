@@ -39,6 +39,8 @@ export default function Login({ setSubTitle }) {
 
     const [email, setEmail] = useState("");
 
+    const [password, setPassword] = useState("");
+
     const [showPassword, setShowPassword] = useState(false);
 
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
@@ -57,43 +59,64 @@ export default function Login({ setSubTitle }) {
 
     function handleLogin(values) {
 
-         const { email, password } = values;
+        const { email, password } = values;
 
+        AuthService.getVerificationCode(email, password).then(
+            response => {
+                if (response.data === "") {
+                    AuthService.login(email, password).then(
+                        () => {
 
-        // setCodeType("activation");
+                            const currentUser = AuthService.getCurrentUser();
+                            if (currentUser.role === "ROLE_USER") {
+                                history.push("/user");
+                                window.location.reload();
 
-        // setState(3);
-        // setSubTitle('Enter the verification code we sent to your email')
+                            } else if (currentUser.role === "ROLE_ADMIN") {
+                                history.push("/admin");
+                                window.location.reload();
 
-        AuthService.login(email, password).then(
-            () => {
+                            }
+                        },
+                        error => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
 
-                const currentUser = AuthService.getCurrentUser();
-                if (currentUser.role === "ROLE_USER") {
-                    history.push("/user");
-                    window.location.reload();
-
-                } else if (currentUser.role === "ROLE_ADMIN") {
-                    history.push("/admin");
-                    window.location.reload();
-
+                            setNotify({
+                                isOpen: true,
+                                message: resMessage,
+                                type: 'error'
+                            });
+                        }
+                    )
+                } else if (response.data === "Email or password are wrong") {
+                    setNotify({
+                        isOpen: true,
+                        message: "Email or password are wrong",
+                        type: 'error'
+                    })
+                }
+                else {
+                    setCodeType("activation");
+                    setEmail(email);
+                    setPassword(password);
+                    setState(3);
+                    setSubTitle('Enter the verification code we sent to your email for activation')
                 }
             },
-            error => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                setNotify({
-                    isOpen: true,
-                    message: resMessage,
-                    type: 'error'
-                });
-            }
+            error => setNotify({
+                isOpen: true,
+                message: "Network error",
+                type: 'error'
+            })
         )
+
+
+
     }
 
 
@@ -197,7 +220,7 @@ export default function Login({ setSubTitle }) {
 
             <Register setState={setState} state={state} setNotify={setNotify} setSubTitle={setSubTitle} />
 
-            <ConfirmCode setState={setState} state={state} setNotify={setNotify} setSubTitle={setSubTitle} codeType={codeType} email={email} />
+            <ConfirmCode setState={setState} state={state} setNotify={setNotify} setSubTitle={setSubTitle} codeType={codeType} email={email} password={password} />
 
             <ChangePassword setState={setState} state={state} setNotify={setNotify} setSubTitle={setSubTitle} setCodeType={setCodeType} setEmail={setEmail} email={email} />
 

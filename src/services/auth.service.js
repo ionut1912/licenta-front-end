@@ -39,6 +39,14 @@ class AuthService {
         return axios.put(API_URL + `changePassword/${email}/${password}`)
     }
 
+    getVerificationCode(email,password){
+        return axios.get(API_URL + `getVerificationCode/${email}/${password}`)
+    }
+
+    setCodeToNull(email){
+        return axios.put(API_URL + `setCodeToNull/${email}`)
+    }
+
     logout() {
         localStorage.removeItem("user");
     }

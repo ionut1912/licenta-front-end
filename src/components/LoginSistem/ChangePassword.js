@@ -60,7 +60,7 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
 
         AuthService.generateVerifyCode(email, "password").then(
             response => {
-                setSubTitle('Enter the verification code we sent to your email') 
+                setSubTitle('Enter the verification code we sent to your email')
                 setEmail(email);
                 setCodeType("password");
                 setNotify({
@@ -70,11 +70,19 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
                 })
                 setState(3)
             },
-            error => setNotify({
-                isOpen: true,
-                message: "Network error!",
-                type: 'error'
-            })
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                })
+            }
         )
     }
 
@@ -90,11 +98,19 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
                 })
                 setState(1)
             },
-            error => setNotify({
-                isOpen: true,
-                message: "Network error!",
-                type: 'error'
-            })
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                })
+            }
         )
     }
 
@@ -250,7 +266,13 @@ export default function ChangePassword({ state, setState, setNotify, setSubTitle
                                             value="Send"
                                         />
 
-                                        <p className="titlee title-subs" style={{ marginTop: '0px' }}>Go to login? <span className="linktext" onClick={() => { props.resetForm(); setState(1); setSubTitle('Sign in by entering the information below') }}>Sign in</span></p>
+                                        <p className="titlee title-subs" style={{ marginTop: '0px' }}>Go to login? <span className="linktext"
+                                            onClick={() => {
+                                                props.resetForm();
+                                                setState(1);
+                                                setSubTitle('Sign in by entering the information below')
+                                                AuthService.setCodeToNull(email);
+                                            }}>Sign in</span></p>
                                     </form>
 
                                 )}
