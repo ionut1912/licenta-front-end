@@ -34,6 +34,7 @@ export default function Aplicare(props) {
         }
 
         if (currentUser !== null) {
+
             AplicareJobService.sendAplicareUser(currentUser.id, idJob, values).then(
                 () => {
                     props.setNotify({
@@ -46,12 +47,10 @@ export default function Aplicare(props) {
                 error => {
                     props.setNotify({
                         isOpen: true,
-                        message: 'Network error!',
+                        message: error.message,
                         type: 'error'
                     });
                 }
-
-
             )
 
         } else {

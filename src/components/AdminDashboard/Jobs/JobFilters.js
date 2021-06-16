@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Search from '@material-ui/icons/Search';
-import { makeStyles, Checkbox, TextField, Toolbar, InputAdornment, Tabs, Tab} from '@material-ui/core';
+import { makeStyles, Checkbox, TextField, Toolbar, InputAdornment, Tabs, Tab } from '@material-ui/core';
 
 import { locations, types, categories } from '../../Joburi/JobEnums'
 
@@ -29,17 +29,35 @@ const useStyle = makeStyles(theme => ({
             [theme.breakpoints.down(400)]: {
                 fontSize: '12px'
             },
-        },
-        '& .roundField .MuiOutlinedInput-root': {
-            borderRadius: '20px',
-
         }
     },
     toolbar: {
         margin: '30px 0px 20px 0',
         display: 'flex',
         flexWrap: 'wrap',
-        '& .MuiFormControl-root': {
+        '& .field.MuiFormControl-root': {
+            marginRight: '30px',
+            marginTop: '10px',
+            flex: '22%',
+            maxWidth: '22%',
+            [theme.breakpoints.down(1220)]: {
+                marginRight: '15px',
+                flex: '30%',
+                maxWidth: '30%',
+            },
+            [theme.breakpoints.down(840)]: {
+                marginRight: '30px',
+                marginTop: '20px',
+                flex: '40%',
+                maxWidth: '40%',
+            },
+            [theme.breakpoints.down(620)]: {
+                flex: '100%',
+                maxWidth: '100%',
+                margin: '10px 0 10px 0',
+            }
+        },
+        '& .MuiAutocomplete-root': {
             marginRight: '30px',
             marginTop: '10px',
             flex: '22%',
@@ -47,10 +65,10 @@ const useStyle = makeStyles(theme => ({
             '&:last-child': {
                 marginRight: '0px',
             },
-            [theme.breakpoints.down(1200)]: {
+            [theme.breakpoints.down(1220)]: {
                 marginRight: '15px',
-                flex: '21%',
-                maxWidth: '21%',
+                flex: '30%',
+                maxWidth: '30%',
             },
             [theme.breakpoints.down(840)]: {
                 marginRight: '30px',
@@ -64,6 +82,7 @@ const useStyle = makeStyles(theme => ({
                 margin: '10px 0 10px 0',
             }
         }
+
     }
 }))
 
@@ -138,7 +157,7 @@ export default function JobFilters(props) {
                 <TextField
                     variant="outlined"
                     label="Search by name"
-                    className="roundField"
+                    className="field"
                     InputProps={{
                         startAdornment: (<InputAdornment position="start">
                             <Search />

@@ -76,7 +76,7 @@ export default function Filters(props) {
      return (
           <div className="container-fluid">
                <div className="filters form-row">
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-6 col-lg-3">
                          <label htmlFor="locations">Locations:</label>
                          <Autocomplete
                               multiple
@@ -108,7 +108,7 @@ export default function Filters(props) {
                          />
                     </div>
 
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-6 col-lg-3">
                          <label htmlFor="categories">Categories:</label>
                          <Autocomplete
                               multiple
@@ -141,7 +141,7 @@ export default function Filters(props) {
 
                     </div>
 
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-6 col-lg-3">
                          <label htmlFor="types">Types:</label>
                          <Autocomplete
                               multiple
@@ -173,7 +173,7 @@ export default function Filters(props) {
                          />
                     </div>
 
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-6 col-lg-3">
                          <label htmlFor="search">Search:</label>
                          <TextField
                               style={{ width: '100%' }}
