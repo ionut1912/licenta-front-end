@@ -244,6 +244,7 @@ export default function JobsList(props) {
                                             <div className={classes.action}>
 
                                                 <Button
+                                                    style={{ backgroundColor: "#4c0097"}}
                                                     color="primary"
                                                     text={<AssignmentIcon fontSize="small" />}
                                                     onClick={() => { showApplications(item.numeJob) }}

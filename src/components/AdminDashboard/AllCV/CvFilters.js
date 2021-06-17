@@ -214,7 +214,7 @@ export default function CvFilters(props) {
                     limitTags={2}
                     id="cities"
                     className={classes.inputMultiple}
-                    value={props.filter.category}
+                    value={props.filter.city}
                     onChange={handleChangeCity}
                     options={enums.cities}
                     disableCloseOnSelect
@@ -233,6 +233,7 @@ export default function CvFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
+                            label="Cities"
 
                         />
                     )}
@@ -242,7 +243,7 @@ export default function CvFilters(props) {
                     limitTags={2}
                     id="skills"
                     className={classes.inputMultiple}
-                    value={props.filter.category}
+                    value={props.filter.skill}
                     onChange={handleChangeSkill}
                     options={enums.skills}
                     disableCloseOnSelect
@@ -261,7 +262,7 @@ export default function CvFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
-
+                            label="Skills"
                         />
                     )}
                 />
@@ -270,7 +271,7 @@ export default function CvFilters(props) {
                     limitTags={2}
                     id="languages"
                     className={classes.inputMultiple}
-                    value={props.filter.category}
+                    value={props.filter.language}
                     onChange={handleChangeLanguage}
                     options={enums.languages}
                     disableCloseOnSelect
@@ -289,6 +290,7 @@ export default function CvFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
+                            label="Languages"
 
                         />
                     )}

@@ -189,11 +189,11 @@ export default function JobFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
+                            label="Locations"
 
                         />
                     )}
                 />
-
 
                 <Autocomplete
                     multiple
@@ -219,13 +219,11 @@ export default function JobFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
+                            label="Categories"
 
                         />
                     )}
                 />
-
-
-
 
                 <Autocomplete
                     multiple
@@ -251,7 +249,7 @@ export default function JobFilters(props) {
                         <TextField
                             {...params}
                             variant="outlined"
-
+                            label="Types"
                         />
                     )}
                 />
