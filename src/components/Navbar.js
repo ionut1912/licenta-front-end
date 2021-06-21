@@ -137,7 +137,7 @@ export default function Navbar(props) {
   return (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <a href='/home' className='navbar-logo' onClick={() => { closeMobileMenu(); }}>
+        <a href={currentUser !== null && currentUser.role === "ROLE_ADMIN" ? "/admin" : '/home'} className='navbar-logo' onClick={() => { closeMobileMenu(); }}>
           <motion.img variants={logoAnim} initial='hidden' animate='visible'
             src={logo} alt="logo" className="logo" />
         </a>
@@ -148,11 +148,11 @@ export default function Navbar(props) {
             <i style={{ color: '#1c2237b0' }} className={props.clickForSidebar ? 'fas fa-times' : 'fas fa-tachometer-alt'} />
           </motion.div> : null
         }
-
-        <motion.div variants={iconsAnim} initial='hidden' animate='visible'
-          className='menu-icon-navbar' onClick={() => { handleClickNavbar(); }}>
-          <i style={{ color: '#1c2237b0' }} className={props.clickForNavbar ? null : 'fas fa-bars'} />
-        </motion.div>
+        {currentPath === "/admin" ? null :
+          <motion.div variants={iconsAnim} initial='hidden' animate='visible'
+            className='menu-icon-navbar' onClick={() => { handleClickNavbar(); }}>
+            <i style={{ color: '#1c2237b0' }} className={props.clickForNavbar ? null : 'fas fa-bars'} />
+          </motion.div>}
 
         <ul className={props.clickForNavbar ? 'nav-menu active' : 'nav-menu'}>
           <li
@@ -161,45 +161,53 @@ export default function Navbar(props) {
               <i style={{ color: '#1c2237b0' }} className={props.clickForNavbar ? 'fas fa-times' : null} />
             </div>
           </li>
-          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
-            <a href='/home'
-              className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
-              onClick={() => { closeMobileMenu(); }}>
-              Home
+          {currentUser !== null && currentUser.role === "ROLE_ADMIN" ? null :
+            <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
+              <a href='/home'
+                className={currentPath === '/home' || currentPath === '/' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
+                Home
               </a>
-          </motion.li>
-          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
-            <a
-              href='/about'
-              className={currentPath === '/about' ? 'nav-links active' : 'nav-links'}
-              onClick={() => { closeMobileMenu(); }}
-            >
-              About
+            </motion.li>}
+
+          {currentUser !== null && currentUser.role === "ROLE_ADMIN" ? null :
+            <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
+              <a
+                href='/about'
+                className={currentPath === '/about' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}
+              >
+                About
               </a>
-          </motion.li>
-          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
-            <a
-              href='/jobs'
-              className={currentPath === '/jobs' ? 'nav-links active' : 'nav-links'}
-              onClick={() => { closeMobileMenu(); }}>
-              Jobs
+            </motion.li>}
+
+          {currentUser !== null && currentUser.role === "ROLE_ADMIN" ? null :
+            <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
+              <a
+                href='/jobs'
+                className={currentPath === '/jobs' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
+                Jobs
               </a>
-          </motion.li>
-          <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
-            <a
-              href='/makeCV'
-              className={currentPath === '/makeCV' ? 'nav-links active' : 'nav-links'}
-              onClick={() => { closeMobileMenu(); }}>
-              Make cv
+            </motion.li>}
+
+          {currentUser !== null && currentUser.role === "ROLE_ADMIN" ? null :
+            <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
+              <a
+                href='/makeCV'
+                className={currentPath === '/makeCV' ? 'nav-links active' : 'nav-links'}
+                onClick={() => { closeMobileMenu(); }}>
+                Make cv
               </a>
-          </motion.li>
+            </motion.li>}
+
           {currentUser ? (
             <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
               <a
-                href={currentUser.role === "ROLE_ADMIN" ? "/admin" : "/user"}
-                className={currentPath === '/admin' || currentPath === '/user' ? 'nav-links active' : 'nav-links'}
+                href={currentUser.role === "ROLE_USER" && "/user"}
+                className={currentPath === '/user' && currentUser.role === "ROLE_USER" ? 'nav-links active' : 'nav-links'}
                 onClick={() => { closeMobileMenu(); }}>
-                {currentUser.role === "ROLE_ADMIN" ? "Admin" : "User"}
+                {currentUser.role === "ROLE_USER" && "User"}
               </a>
             </motion.li>
           ) : null}

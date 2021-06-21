@@ -8,8 +8,6 @@ import Jobs from './components/pages/Jobs';
 import User from './components/pages/User';
 import Admin from './components/pages/Admin';
 import NotFound from './components/pages/NotFound';
-import PrivateRouteAdmin from './components/PrivateRouteAdmin';
-import PrivateRouteUser from './components/PrivateRouteUser';
 import authService from './services/auth.service';
 import CVMaker from './components/pages/CVMaker';
 import './App.css';
@@ -24,23 +22,36 @@ export default function App() {
 
 
   return (
-    <>
-      <Router>
-        <HideBackgroundForNav showModalNav={showModalNav} setShowModalNav={setShowModalNav} setClickForNavBar={setClickForNavBar} setClickForSideBar={setClickForSidebar} />
-        <Navbar clickForSidebar={clickForSidebar} setClickForSidebar={setClickForSidebar} setShowModalNav={setShowModalNav}
-          showModalNav={showModalNav} setClickForNavBar={setClickForNavBar} clickForNavbar={clickForNavbar} />
+    <Router>
+      <HideBackgroundForNav showModalNav={showModalNav} setShowModalNav={setShowModalNav} setClickForNavBar={setClickForNavBar} setClickForSideBar={setClickForSidebar} />
+      <Navbar clickForSidebar={clickForSidebar} setClickForSidebar={setClickForSidebar} setShowModalNav={setShowModalNav}
+        showModalNav={showModalNav} setClickForNavBar={setClickForNavBar} clickForNavbar={clickForNavbar} />
+
+      {loggedIn ? (loggedIn.role === "ROLE_USER" ?
         <Switch>
           <Route path={["/", "/home"]} exact component={Home} />
           <Route path='/about' component={About} />
           <Route path='/jobs' component={Jobs} />
-          <PrivateRouteAdmin path='/admin' loggedIn={loggedIn} clickForSidebar={clickForSidebar} component={Admin} />
-          <PrivateRouteUser path='/user' loggedIn={loggedIn} clickForSidebar={clickForSidebar} component={User} />
           <Route path="/makeCV" component={CVMaker} />
+          <User path='/user' click={clickForSidebar} component={User} />
           <Route component={NotFound} />
         </Switch>
-        <ScrollTop />
-      </Router>
-    </>
+        : loggedIn.role === "ROLE_ADMIN" &&
+        <Switch>
+          <Admin path='/admin' click={clickForSidebar} component={Admin} />
+          <Route component={NotFound} />
+        </Switch>
+      ) : <Switch>
+        <Route path={["/", "/home"]} exact component={Home} />
+        <Route path='/about' component={About} />
+        <Route path='/jobs' component={Jobs} />
+        <Route path="/makeCV" component={CVMaker} />
+        <Route component={NotFound} />
+      </Switch>
+      }
+
+      <ScrollTop />
+    </Router>
   );
 }
 

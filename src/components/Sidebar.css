@@ -53,3 +53,25 @@
 .sidebar span {
   margin-left: 16px;
 }
+
+.log-out {
+  display: block;
+  text-align: center;
+  margin: 4rem 0 2rem 0.5rem;
+  border-radius: 4px;
+  width: 200px;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 8px 20px;
+  background-color: #fc1930d5;
+  border-color: #fc1930d5;
+  transition: all 0.5s ease-out;
+}
+
+.log-out:hover {
+  transform: translateY(-3px);
+  transition: 0.25s;
+  background-color: #7038f5d5;
+  border-color: #7038f5d5;
+}

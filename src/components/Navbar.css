@@ -29,7 +29,6 @@
 } */
 
 .navbar .navbar-container {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,9 +176,11 @@
     font-size: 1.8rem;
     cursor: pointer;
   }
+  
   .navbar .fa-times {
     font-size: 2rem;
   }
+
   .navbar .nav-links-mobile {
     display: block;
     text-align: center;
@@ -194,6 +195,7 @@
     border-color: #fc1930d5;
     transition: all 0.5s ease-out;
   }
+  
   .navbar .nav-links-mobile:hover {
     transform: translateX(-3px);
     transition: 0.25s;

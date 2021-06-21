@@ -5,8 +5,20 @@ import * as FaIcons from 'react-icons/fa';
 import * as VscIcons from 'react-icons/vsc';
 import * as AiIcons from 'react-icons/ai';
 import './Sidebar.css';
+import AuthService from "../services/auth.service";
+import { useHistory } from 'react-router-dom';
 
 export default function Sidebar(props) {
+
+  let history = useHistory();
+
+  const currentUser = AuthService.getCurrentUser();
+
+  function logOut() {
+    AuthService.logout();
+    history.push("/home");
+    window.location.reload();
+  }
 
   return (
     <div className="sidebar">
@@ -78,6 +90,10 @@ export default function Sidebar(props) {
                 <span>Create cv</span>
               </p>
             </li>
+
+            {currentUser !== null && currentUser.role === "ROLE_ADMIN" && window.innerWidth <= 1045 ? <li className="nav-text">
+              <button className='btn log-out' onClick={() => logOut()}>Log-out</button>
+            </li> : null}
 
           </ul>
         )
