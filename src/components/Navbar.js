@@ -201,13 +201,13 @@ export default function Navbar(props) {
               </a>
             </motion.li>}
 
-          {currentUser ? (
+          {currentUser && currentUser.role === "ROLE_USER" ? (
             <motion.li variants={liAnim} initial='hidden' animate='visible' className='nav-item'>
               <a
-                href={currentUser.role === "ROLE_USER" && "/user"}
-                className={currentPath === '/user' && currentUser.role === "ROLE_USER" ? 'nav-links active' : 'nav-links'}
+                href="/user"
+                className={currentPath === '/user' ? 'nav-links active' : 'nav-links'}
                 onClick={() => { closeMobileMenu(); }}>
-                {currentUser.role === "ROLE_USER" && "User"}
+                User
               </a>
             </motion.li>
           ) : null}

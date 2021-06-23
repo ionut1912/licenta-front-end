@@ -63,7 +63,7 @@ export default function Login({ setSubTitle }) {
 
         AuthService.getVerificationCode(email, password).then(
             response => {
-                if (response.data === "") {
+                if (response.data.message === null) {
                     AuthService.login(email, password).then(
                         () => {
 
@@ -108,11 +108,20 @@ export default function Login({ setSubTitle }) {
                     setSubTitle('Enter the verification code we sent to your email for activation')
                 }
             },
-            error => setNotify({
-                isOpen: true,
-                message: "Network error",
-                type: 'error'
-            })
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setNotify({
+                    isOpen: true,
+                    message: resMessage,
+                    type: 'error'
+                });
+            }
         )
 
 

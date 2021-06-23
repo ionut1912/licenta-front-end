@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import authHeader from './auth-header'
 
 const API_URL = 'http://localhost:8184/';
 
@@ -26,15 +26,15 @@ class JobService {
     }
 
     deleteSkill(idSkill) {
-        return axios.delete(API_URL + `skills/${idSkill}`);
+        return axios.delete(API_URL + `skills/${idSkill}`, { headers: authHeader() });
     }
 
     deleteAtributPersonal(idAtribut) {
-        return axios.delete(API_URL + `atributes/${idAtribut}`);
+        return axios.delete(API_URL + `atributes/${idAtribut}`, { headers: authHeader() });
     }
 
     deleteDetaliu(idDetaliu) {
-        return axios.delete(API_URL + `detalii/${idDetaliu}`);
+        return axios.delete(API_URL + `detalii/${idDetaliu}`, { headers: authHeader() });
     }
 
     getNumberOfJobs() {
