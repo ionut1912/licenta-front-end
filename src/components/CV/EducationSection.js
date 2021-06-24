@@ -426,11 +426,13 @@ export default function EducationSection(props) {
                     </Formik>
                 </div>
 
-                <div className="toggler-additionalInfo">
+                {educationFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setEducationFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another education</span>
                 </div>
+                    : null}
                 <hr className="hr" />
             </div>
+
 
             <Notification
                 notify={notify}

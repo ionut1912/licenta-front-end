@@ -85,3 +85,22 @@
         font-size: 16px;
     }
 }
+
+
+@media screen and (max-width:500px) {
+    .top-line {
+        font-size: 11px;
+    }
+    .heading {
+        font-size: 30px;
+    }
+    .infoDinamic-subtitle {
+        font-size: 12px;
+    }
+
+    .infoDinamic-section .btn{
+        width:140px;
+        padding:10px;
+    }
+}
+

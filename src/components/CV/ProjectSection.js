@@ -298,9 +298,9 @@ export default function ProjectSection(props) {
                     </Formik>
                 </div>
 
-                <div className="toggler-additionalInfo">
+                {projectFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setProjectFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another project</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
 

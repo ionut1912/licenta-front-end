@@ -268,9 +268,9 @@ export default function AtributSection(props) {
                 </div>
 
 
-                <div className="toggler-additionalInfo">
+                {atributFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setAtributFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another atribut</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
             <Notification

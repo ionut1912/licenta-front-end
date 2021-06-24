@@ -9,7 +9,7 @@
     font-size: 27px;
     list-style-type: none;
     padding: 20px;
-    width: 33.33%;
+    width: 50%;
     position: relative;
     color: #1c2237c0;
 }
@@ -123,10 +123,6 @@
     top: 12px;
 }
 
-.group-margin-left {
-    margin-left: 5px;
-}
-
 .personalDetails, .experience, .finish, .addJob {
     padding: 30px;
     background: #fff;
@@ -171,7 +167,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .switch {
-    margin:8px 0 0 3px;
+    margin: 8px 0 0 3px;
     position: relative;
     display: inline-block;
     width: 60px;
@@ -194,7 +190,6 @@ select.form-control:not([size]):not([multiple]) {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-
 }
 
 .slider:before {
@@ -269,7 +264,7 @@ input:checked+.slider:before {
 
 .toggler-additionalInfo span {
     color: #007bff;
-    width: 100%;
+    display: inline-block;
     cursor: pointer;
     margin-bottom: 0px;
 }
@@ -341,8 +336,26 @@ input:checked+.slider:before {
     .btn-additionalInfo {
         padding: 10px 50px;
     }
-    .two-btn .btn-primary {
+    .two-btn .btn {
         width: 150px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .toggler-additionalInfo {
+        font-size: 16px;
+    }
+    .btn-additionalInfo {
+        padding: 10px 20px;
+    }
+    .two-btn {
+        padding: 10px;
+    }
+    .two-btn .btn {
+        width: 110px;
+    }
+    .two-btn .btn:last-child {
+        margin-left: 10px;
     }
 }
 
@@ -353,10 +366,34 @@ input:checked+.slider:before {
     .progressbar li:after {
         top: 30px;
     }
-    .btn-additionalInfo {
-        padding: 10px 50px;
+    .row-img-cv {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0px;
     }
-    .two-btn .btn-primary {
+    .row-img-cv .left-img {
+        margin: auto auto 20px auto;
+    }
+    .row-img-cv .form-row {
+        width: 100%;
+    }
+    .row-img-cv .form-group label, .row-img-cv .form-group input {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .btn-next {
+        padding: 20px 0 20px 0;
+    }
+    .btn-next .btn {
         width: 150px;
+    }
+    .two-btn {
+        padding: 0px;
+    }
+    .two-btn .btn {
+        padding: 10px 2px 10px 2px;
+        width: 90px;
     }
 }

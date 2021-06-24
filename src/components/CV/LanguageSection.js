@@ -369,9 +369,9 @@ export default function LanguageSection(props) {
                 </div>
 
 
-                <div className="toggler-additionalInfo">
+                {languageFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-additionalInfo" onClick={() => { setLanguageFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another language</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
 

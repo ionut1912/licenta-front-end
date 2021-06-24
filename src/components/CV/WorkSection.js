@@ -427,9 +427,9 @@ export default function WorkSection(props) {
                     </Formik>
                 </div>
 
-                <div className="toggler-additionalInfo">
+                {workFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setWorkFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another work</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
 

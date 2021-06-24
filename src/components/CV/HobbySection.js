@@ -276,9 +276,10 @@ export default function HobbySection(props) {
                     </Formik>
                 </div>
 
-                <div className="toggler-additionalInfo">
+                {hobbyFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setHobbyFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another hobby</span>
                 </div>
+                    : null}
                 <hr className="hr" />
             </div>
 

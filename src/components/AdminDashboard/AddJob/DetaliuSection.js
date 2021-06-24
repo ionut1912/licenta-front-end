@@ -270,9 +270,9 @@ export default function DetaliuSection(props) {
                 </div>
 
 
-                <div className="toggler-additionalInfo">
+                {detaliuFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setDetaliuFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another detaliu</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
 

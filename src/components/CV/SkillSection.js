@@ -347,9 +347,9 @@ export default function SkillSection(props) {
                 </div>
 
 
-                <div className="toggler-additionalInfo">
+                {skillFields === false ? <div className="toggler-additionalInfo">
                     <span className="btn-moreInfo" onClick={() => { setSkillFields(true) }}><i className="fa fa-plus-circle" aria-hidden="true"></i> Add another skill</span>
-                </div>
+                </div> : null}
                 <hr className="hr" />
             </div>
 
