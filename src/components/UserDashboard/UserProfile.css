@@ -97,6 +97,10 @@
     margin-left: 80px;
 }
 
+.info-apps {
+    width: 18rem;
+}
+
 .activity {
     display: flex;
     padding-top: 10px;
@@ -130,7 +134,7 @@
     .img-label {
         max-width: 250px;
     }
-    .form-profile .btn-edit-send,.form-profile.btn-detalii {
+    .form-profile .btn-edit-send, .form-profile.btn-detalii {
         width: 165px;
     }
     .form-profile .input-file {
@@ -148,7 +152,6 @@
     .form-profile .input-file:after {
         font-size: 14px;
     }
-
     .form-profile .btn-edit-send, .form-propfile .btn-detalii {
         font-size: 10px;
     }
@@ -169,24 +172,29 @@
         margin-left: 10px;
     }
     .form-profile .btn-detalii {
-        width: 150px;
-        padding: 5px;
+        width: 120px;
+        padding: 2px;
     }
     .form-profile .btn-edit-send {
-        width: 110px;
+        width: 100px;
         margin-left: 5px;
-        padding: 5px;
+        padding: 2px;
     }
 }
 
 @media screen and (max-width:380px) {
     .form-profile .input-file {
-        width: 80px;
+        width: 70px;
     }
     .form-profile .input-file:after {
         font-size: 10px;
     }
     .form-profile .file-name {
-        font-size: 12x;
+        font-size: 12px;
+        width: 40px;
+    }
+
+    .info-apps {
+        width: 16rem;
     }
 }

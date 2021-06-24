@@ -188,7 +188,7 @@ export default function LanguageSection(props) {
     const formSchema = Yup.object().shape({
         language_name: Yup.string()
             .max(70, "Language name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Language name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Language name can't contains number or symbols")
             .required("This field is required!"),
         speak: Yup.string()
             .required("This field is required!"),
@@ -309,7 +309,7 @@ export default function LanguageSection(props) {
                                             className={props.errors.speak && props.touched.speak ? "form-control is-invalid" : "form-control"}>
                                             {languageQualifier.map((item, index) => {
                                                 return (
-                                                    <option key={index} value={item.value}>{item.label}</option>
+                                                    <option key={index} value={item.value} className="test">{item.label}</option>
                                                 )
                                             })}
                                         </select>

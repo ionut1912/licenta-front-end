@@ -17,11 +17,11 @@ export default function PersonalInfoSection(props) {
     const validateSchema = Yup.object().shape({
         first_name: Yup.string()
             .max(45, "First name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "First name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "First name can't contains number or symbols")
             .required("This field is required!"),
         last_name: Yup.string()
             .max(60, "Last name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Last name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Last name can't contains number or symbols")
             .required("This field is required!"),
         email: Yup.string()
             .email("Invalid email!")
@@ -32,10 +32,10 @@ export default function PersonalInfoSection(props) {
             .required("This field is required!"),
         city: Yup.string()
             .max(45, "City is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "City can't contains number"),
+            .matches(/^[a-zA-Z ,.'-]+$/, "City can't contains number or symbols"),
         nationality: Yup.string()
             .max(45, "Nationality is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Nationality can't contains number"),
+            .matches(/^[a-zA-Z ,.'-]+$/, "Nationality can't contains number or symbols"),
         address: Yup.string()
             .max(250, "Address is to long!"),
         drivingLicence: Yup.string()
@@ -203,11 +203,14 @@ export default function PersonalInfoSection(props) {
                             }
                             <div className="form-row">
                                 <div className={addCv === true ? "form-group col-md-6" : "form-group col-md-12"} >
-                                    <label htmlFor="inputfn" className="group-margin-left">First name*</label>
+                                    <label htmlFor="inputfn" className={addCv === false ? "group-margin-left" : null}>First name*</label>
                                     <input type="text"
                                         name="first_name"
                                         value={props.values.first_name}
-                                        className={props.errors.first_name && props.touched.first_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left"}
+                                        className={addCv === false ? (props.errors.first_name && props.touched.first_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left")
+                                            : (
+                                                props.errors.first_name && props.touched.first_name ? "form-control is-invalid" : "form-control"
+                                            )}
                                         id="inputfn"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
@@ -219,11 +222,14 @@ export default function PersonalInfoSection(props) {
                                 </div>
 
                                 <div className={addCv === true ? "form-group col-md-6" : "form-group col-md-12"}>
-                                    <label htmlFor="inputln" className="group-margin-left">Last name*</label>
+                                    <label htmlFor="inputln" className={addCv === false ? "group-margin-left" : null}>Last name*</label>
                                     <input type="text"
                                         name="last_name"
                                         value={props.values.last_name}
-                                        className={props.errors.last_name && props.touched.last_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left"}
+                                        className={addCv === false ? (props.errors.first_name && props.touched.first_name ? "form-control is-invalid group-margin-left" : "form-control group-margin-left")
+                                            : (
+                                                props.errors.first_name && props.touched.first_name ? "form-control is-invalid" : "form-control"
+                                            )}
                                         id="inputln"
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}

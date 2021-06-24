@@ -35,7 +35,7 @@ export default function Register({ state, setState, setNotify, setSubTitle }) {
         full_name: Yup.string()
             .min(4, "Name is to short!")
             .max(100, "Name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Name can't contains number or symbols")
             .required("Name is required!"),
         email: Yup.string()
             .email("Invalid email!")

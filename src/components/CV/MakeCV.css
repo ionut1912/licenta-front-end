@@ -123,6 +123,10 @@
     top: 12px;
 }
 
+.group-margin-left {
+    margin-left: 5px;
+}
+
 .personalDetails, .experience, .finish, .addJob {
     padding: 30px;
     background: #fff;
@@ -306,6 +310,10 @@ input:checked+.slider:before {
     font-size: 22px;
 }
 
+.languages-section #inputSpeech .test{
+    width: 30px;
+}
+
 @media screen and (max-width: 1000px) {
     .btn-moreInfo {
         padding: 10px 30px;
@@ -374,15 +382,23 @@ input:checked+.slider:before {
     .row-img-cv .left-img {
         margin: auto auto 20px auto;
     }
-    .row-img-cv .form-row {
-        width: 100%;
-    }
-    .row-img-cv .form-group label, .row-img-cv .form-group input {
+    .group-margin-left {
         margin-left: 0px;
     }
 }
 
 @media screen and (max-width: 400px) {
+
+    .select-option {
+        grid-gap: 10px;
+        padding-right: 0px;
+        padding-left: 10px;
+    }
+
+    .select-option i {
+        margin-right: 3px;
+    }
+
     .btn-next {
         padding: 20px 0 20px 0;
     }

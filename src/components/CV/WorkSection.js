@@ -186,11 +186,11 @@ export default function WorkSection(props) {
     const formSchema = Yup.object().shape({
         job_title: Yup.string()
             .max(100, "Job title is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Job title can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Job title can't contains number or symbols")
             .required("This field is required!"),
         company: Yup.string()
             .max(45, "Company name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Company name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Company name can't contains number or symbols")
             .required("This field is required!"),
         start: Yup.date()
             .required("This field is required!")
@@ -201,7 +201,7 @@ export default function WorkSection(props) {
                     (start, schema) => start ? schema.required("This field is required!").min(start, "End date can't be before start date") : schema.required("This field is required!")) : schema),
         city: Yup.string()
             .max(45, "City name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
+            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number or symbols"),
         descriere: Yup.string()
             .max(500, "Description is to long!")
 

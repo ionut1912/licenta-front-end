@@ -23,7 +23,7 @@ export default function UserProfile(props) {
         full_name: Yup.string()
             .min(4, "Name is to short!")
             .max(100, "Name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Full name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Full name can't contains number or symbols")
             .required("This field is required!"),
         email: Yup.string()
             .email("Invalid email!")
@@ -256,7 +256,7 @@ export default function UserProfile(props) {
                                 {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
                             </div>
                         </div>
-                        { edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
+                        {edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
 
                         {edit === true && <div className="btns">
                             <button type="button" className="btn btn-outline-primary btn-detalii btn-edit-send" style={{ marginLeft: '0px' }}
@@ -282,7 +282,7 @@ export default function UserProfile(props) {
             </Formik>
             <hr className="hr" />
 
-            <div className="card mb-3" style={{ width: "18rem" }}>
+            <div className="card mb-3 info-apps">
                 <div className="card-body">
                     <h3 className="card-title">Activitatea mea</h3>
                     <div className="activity">

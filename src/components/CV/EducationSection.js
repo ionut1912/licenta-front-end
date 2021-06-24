@@ -188,11 +188,11 @@ export default function EducationSection(props) {
     const formSchema = Yup.object().shape({
         degree: Yup.string()
             .max(100, "Degree is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Degree can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Degree can't contains number or symbols")
             .required("This field is required!"),
         school: Yup.string()
             .max(45, "School name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "This field can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "This field can't contains number or symbols")
             .required("This field is required!"),
         start: Yup.date()
             .required("This field is required!")
@@ -203,7 +203,7 @@ export default function EducationSection(props) {
                     (start, schema) => start ? schema.required("This field is required!").min(start, "End date can't be before start date") : schema.required("This field is required!")) : schema),
         city: Yup.string()
             .max(45, "City name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number"),
+            .matches(/^[a-zA-Z ,.'-]+$/, "City name can't contains number or symbols"),
         descriere: Yup.string()
             .max(500, "Description is to long!")
     })

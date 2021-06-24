@@ -16,7 +16,7 @@ export default function Aplicare(props) {
     const validateSchema = Yup.object().shape({
         full_name: Yup.string()
             .max(100, "First name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Full name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Full name can't contains number or symbols")
             .required("This field is required!"),
         email: Yup.string()
             .email("Invalid email!")

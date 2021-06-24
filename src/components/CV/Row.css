@@ -21,11 +21,12 @@
     display: grid;
     grid-template-columns: repeat(2, auto);
     grid-gap: 20px;
-    width: 100%;
     padding-right: 30px;
     justify-self: end;
     justify-content: end;
     font-size: 30px;
+    margin: auto;
+    width: 50%;
 }
 
 .actions .edit {
@@ -41,4 +42,48 @@
     transform: translateY(-2px);
     transition: 0.25s;
     color: #fc1930d5;
+}
+
+@media screen and (max-width: 450px) {
+    .actions .edit {
+        margin-right: 5px;
+    }
+    .roww .actions {
+        grid-gap: 10px;
+        padding-right: 10px;
+        font-size: 30px;
+    }
+    .detail h1 {
+        color: rgb(47, 46, 53);
+        font-size: 20px;
+    }
+    
+    .detail p {
+        font-size: 13px;
+        color: rgba(100, 99, 99, 0.959);
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .actions .edit {
+        margin-right: 5px;
+    }
+    .roww .actions {
+        grid-gap: 5px;
+        padding-right: 0px;
+        margin-left: 5px;
+        font-size: 18px;
+    }
+
+    .detail h1 {
+        color: rgb(47, 46, 53);
+        font-size: 18px;
+    }
+    
+    .detail p {
+        font-size: 12px;
+        color: rgba(100, 99, 99, 0.959);
+        margin-bottom: 0px;
+    }
 }

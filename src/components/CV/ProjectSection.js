@@ -169,7 +169,7 @@ export default function ProjectSection(props) {
     const formSchema = Yup.object().shape({
         project_name: Yup.string()
             .max(100, "Project name is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Project name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Project name can't contains number or symbols")
             .required("This field is required!"),
         descriere: Yup.string()
             .max(1000, "Description is to long!")

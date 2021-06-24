@@ -166,7 +166,7 @@ export default function HobbySection(props) {
     const formSchema = Yup.object().shape({
         hobby_name: Yup.string()
             .max(100, "Hobby is to long!")
-            .matches(/^[a-zA-Z ,.'-]+$/, "Hobby name can't contains number")
+            .matches(/^[a-zA-Z ,.'-]+$/, "Hobby name can't contains number or symbols")
             .required("This field is required!"),
     })
 
