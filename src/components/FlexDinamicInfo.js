@@ -25,11 +25,13 @@ export default function FlexDinamicInfo({
     // animation
     const imgAnim = {
         hidden: {
-            x: imgStart === false ? 120 : -120,
+            x: imgStart === false ? null : -120,
+            y: imgStart === false ? 120 : null,
             opacity: 0
         },
         visible: {
-            x: 0,
+            x: imgStart === false ? null : 0,
+            y: imgStart === false ? 0 : null,
             opacity: 1,
             transition: { type: 'tween', delay: 0.7, duration: 0.7 }
         }
@@ -56,10 +58,14 @@ export default function FlexDinamicInfo({
 
     const descriptionAnim = {
         hidden: {
-            x: imgStart === false ? -150 : 150, opacity: 0
+            x: imgStart === false ? -150 : null,
+            y: imgStart === false ? null : 150,
+            opacity: 0
         },
         visible: {
-            x: 0, opacity: 1,
+            x: imgStart === false ? 0 : null,
+            y: imgStart === false ? null : 0,
+            opacity: 1,
             transition: { duration: 1, delay: 1 }
         }
     }

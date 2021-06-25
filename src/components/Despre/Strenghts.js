@@ -22,17 +22,17 @@ export default function Strenghts({ strenghts }) {
 
     const titleAnim = {
         hidden: {
-            x: -150, opacity: 0
+            y: 100, opacity: 0
         },
         visible: {
-            x: 0, opacity: 1,
+            y: 0, opacity: 1,
             transition: { delay: 0.6, duration: 0.6 }
         }
     }
 
     const cardAnim = {
         hidden: {
-            x: 150, opacity: 0
+            x: -150, opacity: 0
         },
         visible: {
             x: 0, opacity: 1,
@@ -52,10 +52,10 @@ export default function Strenghts({ strenghts }) {
 
     const imgAnim = {
         hidden: {
-            x: 150, opacity: 0
+            y: 150, opacity: 0
         },
         visible: {
-            x: 0, opacity: 1,
+            y: 0, opacity: 1,
             transition: { duration: 0.6, delay: 0.6 }
         }
     }
@@ -112,12 +112,13 @@ export default function Strenghts({ strenghts }) {
                                             </ul>
                                         </div>
                                     </div>
-
                                     <div className="strength-col-details">
-                                        <motion.img ref={contentRef2} variants={imgAnim} animate={repet === true ? 'visible' : animation2} initial="hidden"
-                                            src={strenght.img} alt={"img " + index} className="strength-img" />
+                                        {window.innerWidth <= 800 ?
+                                            <img src={strenght.img} alt={"img " + index} className="strength-img" /> :
+                                            <motion.img ref={contentRef2} variants={imgAnim} animate={repet === true ? 'visible' : animation2} initial="hidden"
+                                                src={strenght.img} alt={"img " + index} className="strength-img" />
+                                        }
                                     </div>
-
                                 </div>
                             }
                         </div>

@@ -106,7 +106,7 @@
 }
 
 @media screen and (max-width: 800px) {
-  .strength-img {
+  .strength-col-details:last-child {
     display: none;
   }
   .strength-col-details {
