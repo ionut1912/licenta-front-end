@@ -34,7 +34,7 @@
 .btn-export {
     display: flex;
     justify-content: center;
-    margin:50px 0 20px 0;
+    margin: 50px 0 20px 0;
 }
 
 .heading-cv {
@@ -242,9 +242,13 @@
     }
 }
 
-@media screen and (max-width:42px) {
+@media screen and (max-width:450px) {
     .cv-body .title-category span {
         width: 110px;
+    }
+    .cv-body .personal-info img {
+        height: 100px;
+        width: 60px;
     }
     .cv-body .language-classifer {
         width: 110px;
@@ -261,5 +265,62 @@
     }
     .cv-body .right-side {
         width: 100px;
+    }
+}
+
+@media screen and (max-width:390px) {
+    .cv-body p {
+        font-size: 8px;
+    }
+    .cv-body .title-category span {
+        width: 100px;
+    }
+    .cv-body .personal-info img {
+        height: 80px;
+        width: 50px;
+    }
+    .cv-body .language-classifer {
+        width: 100px;
+    }
+    .cv-body .language-classifer li {
+        padding: 1px 5px 1px 5px;
+    }
+    .btn-export {
+        margin: 50px auto 20px auto;
+        width: 70px;
+    }
+    .cv-body .left-side {
+        width: 25px;
+    }
+    .cv-body h6, .title-work, .title-degree {
+        font-size: 10px;
+    }
+    .cv-body .left-side p {
+        font-size: 9px;
+    }
+    .cv-body .right-side {
+        width: 90px;
+    }
+}
+
+@media screen and (max-width:340px) {
+    .cv-body .title-category span {
+        width: 90px;
+    }
+    .cv-body .personal-info img {
+        height: 75px;
+        width: 45px;
+    }
+    .cv-body .language-classifer {
+        width: 100px;
+    }
+    .cv-body .language-classifer li {
+        padding: 1px 5px 1px 5px;
+    }
+    .cv-body h6, .title-work, .title-degree {
+        font-size: 9.5px;
+    }
+    .cv-body .right-side {
+        width: 80px;
     }
 }
