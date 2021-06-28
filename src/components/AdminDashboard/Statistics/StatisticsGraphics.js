@@ -15,12 +15,38 @@ const useStyle = makeStyles(theme => ({
             justifyContent: 'center',
             margin: '20px 100px 70px 10px',
             '& .second-chart': {
-                width: '250px'
+                width: '250px',
+                [theme.breakpoints.down(1230)]: {
+                    width: '200px',
+                },
+                [theme.breakpoints.down(875)]: {
+                    width: '220px',
+                },
+                [theme.breakpoints.down(810)]: {
+                    marginLeft: '0px',
+                    width: '320px',
+                },
             },
             '& .third-chart': {
                 marginLeft: '300px',
-                width: '250px'
+                width: '250px',
+                [theme.breakpoints.down(1230)]: {
+                    marginLeft: '200px',
+                    width: '200px',
+                },
+                [theme.breakpoints.down(1045)]: {
+                    marginLeft: '300px',
+                },
+                [theme.breakpoints.down(875)]: {
+                    marginLeft: '200px',
+                    width: '220px',
+                },
+                [theme.breakpoints.down(810)]: {
+                    marginLeft: '0px',
+                    width: '320px',
+                },
             }
+
         },
         '& .chart-title': {
             textAlign: 'center',

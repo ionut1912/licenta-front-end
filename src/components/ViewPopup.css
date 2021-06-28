@@ -143,3 +143,31 @@
         padding: 0.5rem 0.5rem;
     }
 }
+
+@media screen and (max-width: 370px) {
+    .modal-header .title-header {
+        font-size: 20px;
+    }
+    .modal-header p {
+        font-size: 12px;
+    }
+    .modal-body h4 {
+        font-size: 1.3rem;
+    }
+    .modal-body p {
+        font-size: 0.7rem;
+    }
+    .modal-body li {
+        font-size: 0.7rem;
+    }
+    .modal-body li span {
+        font-size: 0.9rem;
+    }
+
+    .modal-header-login .title-header {
+        font-size: 2.5rem;
+    }
+    .modal-header-login p {
+        font-size: 14px;
+    }
+}
