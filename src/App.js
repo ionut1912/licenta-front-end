@@ -38,7 +38,7 @@ export default function App() {
         </Switch>
         : loggedIn.role === "ROLE_ADMIN" &&
         <Switch>
-          <Admin path='/admin' click={clickForSidebar} component={Admin} />
+          <Admin path={["/", "/admin"]} click={clickForSidebar} component={Admin} />
           <Route component={NotFound} />
         </Switch>
       ) : <Switch>

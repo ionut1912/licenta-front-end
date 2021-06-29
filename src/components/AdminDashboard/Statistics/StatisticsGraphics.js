@@ -13,7 +13,7 @@ const useStyle = makeStyles(theme => ({
             height: '100%',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            margin: '20px 100px 70px 10px',
+            marginBottom: '70px',
             '& .second-chart': {
                 width: '250px',
                 [theme.breakpoints.down(1230)]: {
@@ -23,8 +23,7 @@ const useStyle = makeStyles(theme => ({
                     width: '220px',
                 },
                 [theme.breakpoints.down(810)]: {
-                    marginLeft: '0px',
-                    width: '320px',
+                    margin: 'auto',
                 },
             },
             '& .third-chart': {
@@ -42,10 +41,13 @@ const useStyle = makeStyles(theme => ({
                     width: '220px',
                 },
                 [theme.breakpoints.down(810)]: {
+                    margin: 'auto',
                     marginLeft: '0px',
-                    width: '320px',
                 },
-            }
+            },
+            [theme.breakpoints.down(810)]: {
+                flexDirection: 'column'
+            },
 
         },
         '& .chart-title': {

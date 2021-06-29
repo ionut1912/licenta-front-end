@@ -91,7 +91,7 @@ export default function Sidebar(props) {
               </p>
             </li>
 
-            {currentUser !== null && currentUser.role === "ROLE_ADMIN" && window.innerWidth <= 1045 ? <li className="nav-text">
+            {currentUser !== null && currentUser.role === "ROLE_ADMIN" && window.innerWidth <= 1045 ? <li className="nav-text" style={{ paddingBottom: '50px' }}>
               <button className='btn log-out' onClick={() => logOut()}>Log-out</button>
             </li> : null}
 
@@ -100,7 +100,7 @@ export default function Sidebar(props) {
         }
 
       </nav>
-    </div>
+    </div >
   )
 }
 

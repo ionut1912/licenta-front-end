@@ -231,7 +231,7 @@ export default function JobsList(props) {
                                         <TableCell>{item.locatie}</TableCell>
                                         <TableCell>{item.jobCategory}</TableCell>
 
-                                        <TableCell><span style={item.jobType === 'FULL_TIME' ? { backgroundColor: "#f19e02" } : { backgroundColor: "#4c0097" }} className="role">
+                                        <TableCell><span style={item.jobType === 'FULL_TIME' ? { backgroundColor: "#f19e02", display: 'block', textAlign: 'center' } : { backgroundColor: "#4c0097", display: 'block', textAlign: 'center' }} className="role">
                                             {item.jobType === 'FULL_TIME' ? "Full time" : "Part time"}</span></TableCell>
 
                                         <TableCell>{format(item.dataAdaugare)}</TableCell>
@@ -244,7 +244,7 @@ export default function JobsList(props) {
                                             <div className={classes.action}>
 
                                                 <Button
-                                                    style={{ backgroundColor: "#4c0097"}}
+                                                    style={{ backgroundColor: "#4c0097" }}
                                                     color="primary"
                                                     text={<AssignmentIcon fontSize="small" />}
                                                     onClick={() => { showApplications(item.numeJob) }}

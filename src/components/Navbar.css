@@ -126,6 +126,8 @@
     height: 100vh;
     position: fixed;
     top: 0px;
+    overflow: auto;
+    padding: 20px 0 50px 0;
     right: -100%;
     opacity: 1;
     transition: all 0.5s ease;
@@ -176,11 +178,9 @@
     font-size: 1.8rem;
     cursor: pointer;
   }
-  
   .navbar .fa-times {
     font-size: 2rem;
   }
-
   .navbar .nav-links-mobile {
     display: block;
     text-align: center;
@@ -195,11 +195,26 @@
     border-color: #fc1930d5;
     transition: all 0.5s ease-out;
   }
-  
   .navbar .nav-links-mobile:hover {
     transform: translateX(-3px);
     transition: 0.25s;
     background-color: #7038f5d5;
     border-color: #7038f5d5;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar .nav-links-mobile {
+    font-size: 1.2rem;
+    padding: 14px 10px;
+
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .navbar .nav-links-mobile {
+    font-size: 1rem;
+    padding: 14px 10px;
+
   }
 }

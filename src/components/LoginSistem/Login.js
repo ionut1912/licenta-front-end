@@ -23,6 +23,12 @@ const useStyles = makeStyles(theme => ({
     input: {
         '& .MuiOutlinedInput-root': {
             backgroundColor: '#f1f1f1'
+        },
+        '& .MuiSvgIcon-root': {
+            [theme.breakpoints.down(350)]: {
+                width: '1.1rem',
+                height: '1.1rem'
+            }
         }
     }
 }))
