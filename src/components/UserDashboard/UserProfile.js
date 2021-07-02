@@ -256,7 +256,7 @@ export default function UserProfile(props) {
                                 {props.errors.phone && props.touched.phone && <p className="text-danger">{props.errors.phone}</p>}
                             </div>
                         </div>
-                        {edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Editeaza datele</button>}
+                        {edit === false && <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => setEdit(true)}>Edit data</button>}
 
                         {edit === true && <div className="btns">
                             <button type="button" className="btn btn-outline-primary btn-detalii btn-edit-send" style={{ marginLeft: '0px' }}
@@ -269,12 +269,12 @@ export default function UserProfile(props) {
                                     props.setFieldValue('full_name', currentUser.full_name);
                                     props.setFieldValue('email', currentUser.email);
                                     props.setFieldValue('phone', currentUser.phone);
-                                }}>Elimina modificarile</button>
+                                }}>Remove changes</button>
 
                             {props.values.img === null && baseImage === "" ? null : <button type="button"
                                 className="btn btn-outline-primary btn-edit-send"
-                                onClick={() => deleteImg(() => props.setFieldValue('img', null))}>Elimina imaginea</button>}
-                            <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Salveaza modificarile</button>
+                                onClick={() => deleteImg(() => props.setFieldValue('img', null))}>Remove picture</button>}
+                            <button type="submit" name="submit" className="btn btn-outline-primary btn-edit-send" >Save changes</button>
                         </div>
                         }
                     </form>
@@ -284,13 +284,13 @@ export default function UserProfile(props) {
 
             <div className="card mb-3 info-apps">
                 <div className="card-body">
-                    <h3 className="card-title">Activitatea mea</h3>
+                    <h3 className="card-title">My activity</h3>
                     <div className="activity">
                         <IoIcons.IoIosPaper className="activity-icon text-primary" />
                         <div className="activity-body">
-                            <p className="card-text">Ati aplicat de {props.nrAplicarii} ori</p>
+                            <p className="card-text">You applied for {props.nrAplicarii} {props.nrAplicarii === 1 ? "time" : "times"}</p>
                             <hr className="hr" />
-                            <a className="card-text  text-primary" href="#/" onClick={() => props.setState(2)}>Vezi istoricul aplicarilor</a>
+                            <a className="card-text  text-primary" href="#/" onClick={() => props.setState(2)}>See application history</a>
                         </div>
                     </div>
                 </div>

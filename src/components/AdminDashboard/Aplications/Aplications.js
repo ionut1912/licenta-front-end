@@ -220,59 +220,59 @@ export default function Aplications(props) {
             <Paper className={classes.papper}>
 
                 <AplicationFilters setFilter={setFilter} filter={filter} />
+                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
+                    <TableContainer style={{ marginTop: '25px' }}>
+                        <Table className={classes.table}>
+                            <TblHead />
+                            <TableBody >
+                                {
+                                    recordsAfterPagingAndSorting().map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{item.full_name}</TableCell>
+                                            <TableCell >{item.email}</TableCell>
+                                            <TableCell>{item.telefon}</TableCell>
+                                            <TableCell>{item.jobName}</TableCell>
+                                            <TableCell>{format(item.dataAplicarii)}</TableCell>
+                                            <TableCell><span style={item.verificat === true ? { backgroundColor: "#40a145" } : { backgroundColor: "#f30909" }} className="role">
+                                                {item.verificat === true ? "Checked" : "ToCheck"}</span>
+                                            </TableCell>
 
-                <TableContainer style={{ marginTop: '25px' }}>
-                    <Table className={classes.table}>
-                        <TblHead />
-                        <TableBody >
-                            {
-                                recordsAfterPagingAndSorting().map((item, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{item.full_name}</TableCell>
-                                        <TableCell >{item.email}</TableCell>
-                                        <TableCell>{item.telefon}</TableCell>
-                                        <TableCell>{item.jobName}</TableCell>
-                                        <TableCell>{format(item.dataAplicarii)}</TableCell>
-                                        <TableCell><span style={item.verificat === true ? { backgroundColor: "#40a145" } : { backgroundColor: "#f30909" }} className="role">
-                                            {item.verificat === true ? "Verificat" : "Neverificat"}</span>
-                                        </TableCell>
+                                            <TableCell>
+                                                <div className={classes.action}>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        text={<DescriptionIcon fontSize="small" />}
+                                                        onClick={() => { downloadFile(item.id, item.full_name, item.cv); }}
+                                                    />
+                                                </div>
+                                            </TableCell>
 
-                                        <TableCell>
-                                            <div className={classes.action}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    text={<DescriptionIcon fontSize="small" />}
-                                                    onClick={() => { downloadFile(item.id, item.full_name, item.cv); }}
-                                                />
-                                            </div>
-                                        </TableCell>
+                                            <TableCell  >
+                                                <div className={classes.action}>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        text={<CloseIcon fontSize="small" />}
+                                                        onClick={() => {
+                                                            setConfirmDialog({
+                                                                isOpen: true,
+                                                                title: 'Are you sure want delete this record?',
+                                                                subTitle: "You can't undo this operation",
+                                                                onConfirm: () => { onDelete(item.id) }
+                                                            })
 
-                                        <TableCell  >
-                                            <div className={classes.action}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    text={<CloseIcon fontSize="small" />}
-                                                    onClick={() => {
-                                                        setConfirmDialog({
-                                                            isOpen: true,
-                                                            title: 'Are you sure want delete this record?',
-                                                            subTitle: "You can't undo this operation",
-                                                            onConfirm: () => { onDelete(item.id) }
-                                                        })
+                                                        }}
+                                                        style={{ marginLeft: "10px" }}
+                                                    />
+                                                </div>
 
-                                                    }}
-                                                    style={{ marginLeft: "10px" }}
-                                                />
-                                            </div>
-
-                                        </TableCell>
-                                    </TableRow>))
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                            </TableCell>
+                                        </TableRow>))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>}
                 <TblPagination />
             </Paper>
 

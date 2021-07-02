@@ -151,42 +151,43 @@ export default function UserAplications(props) {
 
             <div className="filtrare-aplicatii">
                 <select className="custom-select" id="inputGroupSelect01" onChange={onChangeSelect}>
-                    <option value="Toate aplicarile">Toate aplicarile</option>
-                    <option value="Aplicarile in curs de verificare">Aplicarile in curs de verificare</option>
-                    <option value="Aplicarile verificate">Aplicarile verificate</option>
+                    <option value="Toate aplicarile">All applications</option>
+                    <option value="Aplicarile in curs de verificare">Applications to check</option>
+                    <option value="Aplicarile verificate">Applications checked</option>
                 </select>
 
                 <div className="input-group">
                     <div className="input-group-prepend">
                         <span className="input-group-text"><i className="fas fa-search"></i></span>
                     </div>
-                    <input type="text" className="form-control" onChange={onChangeSearch} placeholder="Cauta dupa titlu" />
+                    <input type="text" className="form-control" onChange={onChangeSearch} placeholder="Search by title" />
                 </div>
             </div>
 
-            {recordsAfterFilterAndSearching().sort((a, b) => b.id - a.id).map((aplicare, index) => {
-                return (
-                    <div className="card mb-3" key={index}>
-                        <div className="card-body">
-                            <div className="body-aplicare">
-                                <div className="info-aplicare">
-                                    <h3 className="card-title text-primary">{aplicare.jobName}</h3>
-                                    <p className="card-text">Ai aplicat la data de: {format(aplicare.dataAplicarii)}</p>
+            {recordsAfterFilterAndSearching().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
+                recordsAfterFilterAndSearching().sort((a, b) => b.id - a.id).map((aplicare, index) => {
+                    return (
+                        <div className="card mb-3" key={index}>
+                            <div className="card-body">
+                                <div className="body-aplicare">
+                                    <div className="info-aplicare">
+                                        <h3 className="card-title text-primary">{aplicare.jobName}</h3>
+                                        <p className="card-text">You applied on: {format(aplicare.dataAplicarii)}</p>
+                                    </div>
+                                    <div className="view-delete">
+                                        <button type="button" className="btn btn-outline-primary btn-view-app" onClick={() => showDetaliiAplicare(aplicare.idJob)}>Application details</button>
+                                        <button type="button" className="btn btn-outline-primary" onClick={() => openConfirmDialog(aplicare.id)}>Delete application</button>
+                                    </div>
                                 </div>
-                                <div className="view-delete">
-                                    <button type="button" className="btn btn-outline-primary btn-view-app" onClick={() => showDetaliiAplicare(aplicare.idJob)}>Detalii aplicare</button>
-                                    <button type="button" className="btn btn-outline-primary" onClick={() => openConfirmDialog(aplicare.id)}>Delete aplicare</button>
+                                <hr className="hr" />
+                                <div className="footer-aplicare">
+                                    <p className={aplicare.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle"></i>{aplicare.verificat === true ? "Checked" : "To check"}</p>
+                                    <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => downloadFile(aplicare.cv)}>CV aplication</button>
                                 </div>
-                            </div>
-                            <hr className="hr" />
-                            <div className="footer-aplicare">
-                                <p className={aplicare.verificat === true ? "card-text state-green" : "card-text state-red"}><i className="fas fa-circle"></i>{aplicare.verificat === true ? "Verificat" : "In curs de verificare"}</p>
-                                <button type="button" className="btn btn-outline-primary btn-detalii" onClick={() => downloadFile(aplicare.cv)}>CV aplicare</button>
                             </div>
                         </div>
-                    </div>
-                )
-            })
+                    )
+                })
             }
 
             <Notification

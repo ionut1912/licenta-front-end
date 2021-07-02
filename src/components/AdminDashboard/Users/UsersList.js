@@ -116,7 +116,7 @@ export default function UsersList(props) {
         userService.getAllUsers().then(
             response =>
                 setRecords(response.data)
-        ) 
+        )
     }
 
     useEffect(() => {
@@ -177,39 +177,39 @@ export default function UsersList(props) {
 
             <Paper className={classes.papper}>
                 <UserFilters setFilter={setFilter} />
+                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
+                    <TableContainer style={{ marginTop: '25px' }}>
+                        <Table className={classes.table}>
+                            <TblHead />
+                            <TableBody >
+                                {recordsAfterPagingAndSorting().map((item, index) => (
+                                    <TableRow key={index}>
 
-                <TableContainer style={{ marginTop: '25px' }}>
-                    <Table className={classes.table}>
-                        <TblHead />
-                        <TableBody >
-                            {recordsAfterPagingAndSorting().map((item, index) => (
-                                <TableRow key={index}>
-
-                                    <TableCell>
-                                        <div className="d-flex align-items-center">
-                                            {item.img === null ? null : <Avatar src={item.img} alt="" className={classes.avatar} />}
-                                            <Typography style={item.img === null ? { marginLeft: '75px' } : null}>{item.full_name}</Typography>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className={classes.th}>{item.email}</TableCell>
-                                    <TableCell>{item.phone}</TableCell>
-                                    <TableCell><span style={item.role === 'ROLE_USER' ? { backgroundColor: "#f19e02" } : { backgroundColor: "#4c0097" }} className="role">
-                                        {item.role === 'ROLE_USER' ? "User" : "Admin"}</span>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className={classes.action}>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                text={<EditOutlinedIcon fontSize="small" />}
-                                                onClick={() => { openInPopup(item) }} />
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                        <TableCell>
+                                            <div className="d-flex align-items-center">
+                                                {item.img === null ? null : <Avatar src={item.img} alt="" className={classes.avatar} />}
+                                                <Typography style={item.img === null ? { marginLeft: '75px' } : null}>{item.full_name}</Typography>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className={classes.th}>{item.email}</TableCell>
+                                        <TableCell>{item.phone}</TableCell>
+                                        <TableCell><span style={item.role === 'ROLE_USER' ? { backgroundColor: "#f19e02" } : { backgroundColor: "#4c0097" }} className="role">
+                                            {item.role === 'ROLE_USER' ? "User" : "Admin"}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className={classes.action}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    text={<EditOutlinedIcon fontSize="small" />}
+                                                    onClick={() => { openInPopup(item) }} />
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>}
                 <TblPagination />
             </Paper>
 

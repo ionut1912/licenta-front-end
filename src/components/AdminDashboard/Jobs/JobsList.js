@@ -219,13 +219,12 @@ export default function JobsList(props) {
             </Toolbar>
             <Paper className={classes.papper}>
                 <JobFilters setFilter={setFilter} filter={filter} />
-
-                <TableContainer style={{ marginTop: '25px' }}>
-                    <Table className={classes.table}>
-                        <TblHead />
-                        <TableBody>
-                            {
-                                recordsAfterPagingAndSorting().map((item, index) => (
+                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px',marginTop:'30px' }}>No results found!</h1> :
+                    <TableContainer style={{ marginTop: '25px' }}>
+                        <Table className={classes.table}>
+                            <TblHead />
+                            <TableBody>
+                                {recordsAfterPagingAndSorting().map((item, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{item.numeJob}</TableCell>
                                         <TableCell>{item.locatie}</TableCell>
@@ -277,11 +276,13 @@ export default function JobsList(props) {
                                             </div>
                                         </TableCell>
                                     </TableRow>))
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                }
                 <TblPagination />
+
             </Paper>
 
             <ViewPopup

@@ -25,6 +25,9 @@ const useStyle = makeStyles(theme => ({
                 [theme.breakpoints.down(810)]: {
                     margin: 'auto',
                 },
+                [theme.breakpoints.down(500)]: {
+                    width: '150px'
+                },
             },
             '& .third-chart': {
                 marginLeft: '300px',
@@ -41,8 +44,10 @@ const useStyle = makeStyles(theme => ({
                     width: '220px',
                 },
                 [theme.breakpoints.down(810)]: {
-                    margin: 'auto',
-                    marginLeft: '0px',
+                    margin: 'auto'
+                },
+                [theme.breakpoints.down(500)]: {
+                    width: '150px'
                 },
             },
             [theme.breakpoints.down(810)]: {
@@ -55,7 +60,10 @@ const useStyle = makeStyles(theme => ({
             margin: '30px 0 20px 0'
         },
         '& .first-chart': {
-            width: '100%'
+            width: '100%',
+            [theme.breakpoints.down(500)]: {
+                marginLeft: '-25px'
+            },
         }
     }
 
@@ -129,7 +137,6 @@ export default function StatisticsGraphics() {
             <div className="first-chart">
                 <h6 className="chart-title">Number of applications from last month</h6>
                 <Line
-                    height={"50%"}
                     data={{
                         labels: aplicariByDay.labels,
                         datasets: [{
@@ -143,6 +150,7 @@ export default function StatisticsGraphics() {
                         ]
                     }}
                     options={{
+                        aspectRatio: 4,
                         plugins: {
                             legend: {
                                 display: false,
@@ -181,7 +189,7 @@ export default function StatisticsGraphics() {
                 </div>
 
                 <div className="third-chart">
-                    <h6 className="chart-title">Nuber of applications per job</h6>
+                    <h6 className="chart-title">Number of applications per job</h6>
                     <Pie
                         data={{
                             labels: aplicariPerJob.labels,

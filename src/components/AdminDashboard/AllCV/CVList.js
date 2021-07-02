@@ -217,59 +217,59 @@ export default function CVList(props) {
 
             <Paper className={classes.papper}>
                 <CvFilters setFilter={setFilter} filter={filter} records={records} />
+                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
+                    <TableContainer style={{ marginTop: '25px' }}>
+                        <Table className={classes.table}>
+                            <TblHead />
+                            <TableBody>
+                                {
+                                    recordsAfterPagingAndSorting().map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{item.first_name}</TableCell>
+                                            <TableCell>{item.last_name}</TableCell>
+                                            <TableCell>{item.email}</TableCell>
+                                            <TableCell>{item.phone}</TableCell>
+                                            <TableCell>{item.city}</TableCell>
+                                            <TableCell>{item.dateOfBirth !== null ? format(item.dateOfBirth) : null}</TableCell>
 
-                <TableContainer style={{ marginTop: '25px' }}>
-                    <Table className={classes.table}>
-                        <TblHead />
-                        <TableBody>
-                            {
-                                recordsAfterPagingAndSorting().map((item, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{item.first_name}</TableCell>
-                                        <TableCell>{item.last_name}</TableCell>
-                                        <TableCell>{item.email}</TableCell>
-                                        <TableCell>{item.phone}</TableCell>
-                                        <TableCell>{item.city}</TableCell>
-                                        <TableCell>{item.dateOfBirth !== null ? format(item.dateOfBirth) : null}</TableCell>
+                                            <TableCell >{item.linkedin !== '' ?
+                                                <a href={item.linkedin} style={{ marginLeft: '20px' }}><RiIcons.RiShareForwardLine style={{ fontSize: '20px' }} /></a>
+                                                : null}</TableCell>
 
-                                        <TableCell >{item.linkedin !== '' ?
-                                            <a href={item.linkedin} style={{ marginLeft: '20px' }}><RiIcons.RiShareForwardLine style={{ fontSize: '20px' }} /></a>
-                                            : null}</TableCell>
+                                            <TableCell>
+                                                <div className={classes.action}>
+                                                    <Button
+                                                        color="default"
+                                                        style={{ color: '#1769aa' }}
+                                                        text={<VisibilityIcon fontSize="small" />}
+                                                        onClick={() => { openInPopupView(item) }}
+                                                    />
+                                                    <Button
+                                                        onClick={() => { props.setState(7); props.setItemForEdit(item); }}
+                                                        text={<EditOutlinedIcon fontSize="small" />}
+                                                        style={{ marginLeft: "10px" }}
+                                                    />
+                                                    <Button
+                                                        color="secondary"
+                                                        onClick={() => {
+                                                            setConfirmDialog({
+                                                                isOpen: true,
+                                                                title: 'Are you sure want delete this record?',
+                                                                subTitle: "You can't undo this operation",
+                                                                onConfirm: () => { onDelete(item.id); }
+                                                            })
 
-                                        <TableCell>
-                                            <div className={classes.action}>
-                                                <Button
-                                                    color="default"
-                                                    style={{ color: '#1769aa' }}
-                                                    text={<VisibilityIcon fontSize="small" />}
-                                                    onClick={() => { openInPopupView(item) }}
-                                                />
-                                                <Button
-                                                    onClick={() => { props.setState(7); props.setItemForEdit(item); }}
-                                                    text={<EditOutlinedIcon fontSize="small" />}
-                                                    style={{ marginLeft: "10px" }}
-                                                />
-                                                <Button
-                                                    color="secondary"
-                                                    onClick={() => {
-                                                        setConfirmDialog({
-                                                            isOpen: true,
-                                                            title: 'Are you sure want delete this record?',
-                                                            subTitle: "You can't undo this operation",
-                                                            onConfirm: () => { onDelete(item.id); }
-                                                        })
-
-                                                    }}
-                                                    style={{ marginLeft: "10px" }}
-                                                    text={<CloseIcon fontSize="small" />}
-                                                />
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                                        }}
+                                                        style={{ marginLeft: "10px" }}
+                                                        text={<CloseIcon fontSize="small" />}
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>}
                 <TblPagination />
             </Paper>
 

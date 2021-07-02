@@ -61,7 +61,7 @@ export default function StaticInfoSection(props) {
 
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="inputNJ">Nume job*</label>
+                                <label htmlFor="inputNJ">Name job*</label>
                                 <input type="text"
                                     name="numeJob"
                                     value={props.values.numeJob}
@@ -96,7 +96,7 @@ export default function StaticInfoSection(props) {
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-4">
-                                <label htmlFor="inputLocatie">Locatie*</label>
+                                <label htmlFor="inputLocatie">Location*</label>
                                 <select
                                     name="locatie"
                                     value={props.values.locatie}
@@ -152,7 +152,7 @@ export default function StaticInfoSection(props) {
 
                         <div className="form-row">
                             <div className="form-group col-md-12">
-                                <label htmlFor="inputDescriere">Descriere*</label>
+                                <label htmlFor="inputDescriere">Description*</label>
                                 <textarea
                                     name="descriere"
                                     value={props.values.descriere}
