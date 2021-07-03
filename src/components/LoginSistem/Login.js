@@ -99,13 +99,7 @@ export default function Login({ setSubTitle }) {
                             });
                         }
                     )
-                } else if (response.data === "Email or password are wrong") {
-                    setNotify({
-                        isOpen: true,
-                        message: "Email or password are wrong",
-                        type: 'error'
-                    })
-                }
+                } 
                 else {
                     setCodeType("activation");
                     setEmail(email);
@@ -129,9 +123,6 @@ export default function Login({ setSubTitle }) {
                 });
             }
         )
-
-
-
     }
 
 
@@ -229,9 +220,6 @@ export default function Login({ setSubTitle }) {
             </div>
 
 
-
-
-            {/*************************************************************************************Register**************************************************************************************/}
 
             <Register setState={setState} state={state} setNotify={setNotify} setSubTitle={setSubTitle} />
 

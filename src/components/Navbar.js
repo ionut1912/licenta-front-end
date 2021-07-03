@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import logo from '../images/logo.png';
 import Login from './LoginSistem/Login'
 import AuthService from "../services/auth.service";
 import ViewPopup from './ViewPopup'
@@ -139,7 +138,7 @@ export default function Navbar(props) {
       <div className='navbar-container'>
         <a href={currentUser !== null && currentUser.role === "ROLE_ADMIN" ? "/admin" : '/home'} className='navbar-logo' onClick={() => { closeMobileMenu(); }}>
           <motion.img variants={logoAnim} initial='hidden' animate='visible'
-            src={logo} alt="logo" className="logo" />
+            src="./images/logo.png" alt="logo" className="logo" />
         </a>
 
         {currentPath === "/user" || currentPath === "/admin" ?

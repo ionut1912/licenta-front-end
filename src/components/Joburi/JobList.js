@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ViewPopup from '../ViewPopup';
 import JobView from '../Joburi/JobView'
 import Notification from '../Notification'
 import './JobList.css'
+import { useInView } from 'react-intersection-observer'
+import { useAnimation, motion } from 'framer-motion'
 
 export default function JobList({ data, filter }) {
+
+
+    const animation = useAnimation();
+    const [contentRef, inView] = useInView({
+        triggerOnce: true,
+        rootMargin: "-50px",
+    })
 
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
@@ -21,16 +30,30 @@ export default function JobList({ data, filter }) {
 
     function jobsAfterFilteringAndSearching() {
 
-        return data.filter(element => new Date(element.dataMaxima).getTime() >= new Date().getTime())
-            .filter(element => filter.search === "" ? element : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
+        return data.filter(element => filter.search === "" ? element : element.numeJob.toLowerCase().includes(filter.search.toLowerCase()))
             .filter(element => filter.location.length === 0 ? element : filter.location.includes(element.locatie))
             .filter(element => filter.category.length === 0 ? element : filter.category.includes(element.jobCategory))
             .filter(element => filter.type.length === 0 ? element : filter.type.includes(element.jobType))
     }
 
+    useEffect(() => {
+        if (inView)
+            animation.start('visible')
+    }, [animation, inView]);
+
+    const anim = {
+        hidden: {
+            opacity: 0
+        },
+        visible: {
+            opacity: 1,
+            transition: { duration: .3, delay: .3 }
+        }
+    }
+
     return (
-        <div className="container-fluid">
-            <div className="row justify-content-center" >
+        <motion.div ref={contentRef} variants={anim} animate={animation} initial="hidden" className="container-fluid">
+            <div className="row justify-content-center">
 
                 {jobsAfterFilteringAndSearching().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
                     jobsAfterFilteringAndSearching().sort((a, b) => b.id - a.id).map((item, index) => {
@@ -92,7 +115,7 @@ export default function JobList({ data, filter }) {
                 notify={notify}
                 setNotify={setNotify}
             />
-        </div>
+        </motion.div>
     )
 }
 

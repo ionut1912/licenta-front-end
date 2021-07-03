@@ -70,7 +70,7 @@ export default function ServicesTestimonial({ data }) {
                 title={currentItem.name}
                 openPopup={openPopupView}
                 setOpenPopup={setOpenPopupView}>
-                <ViewService recordForView={currentItem} buttonsAddJob={false} />
+                <ViewService recordForView={currentItem} />
             </ViewPopup>
         </div>
     )

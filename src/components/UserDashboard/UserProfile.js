@@ -200,10 +200,9 @@ export default function UserProfile(props) {
                                 <div style={{ display: 'flex' }} className="col-md-6 col-sm-8 chosee">
                                     <input type="file" onChange={uploadImage} className="input-file" style={{ alignSelf: 'center' }} accept=".png,.jpg,.jpeg" />
                                     <p className="file-name text-primary">{fileChoosen}</p>
-
                                 </div> : null}
-
                         </div>
+                        
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
                             <div className="col-md-6 col-sm-8">

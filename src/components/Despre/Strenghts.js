@@ -13,6 +13,7 @@ export default function Strenghts({ strenghts }) {
     const animation = useAnimation();
     const [contentRef, inViewFirstPart] = useInView({
         triggerOnce: true,
+        rootMargin: "50px",
     })
 
     const animation2 = useAnimation();
@@ -73,12 +74,12 @@ export default function Strenghts({ strenghts }) {
 
 
     return (
-        <div className="strenghts-section" ref={contentRef}>
-            <motion.h1 variants={titleAnim} animate={animation} initial="hidden"
+        <div className="strenghts-section" >
+            <motion.h1 ref={contentRef} variants={titleAnim} animate={animation} initial="hidden"
                 className="section-title" style={{ color: '#fff', marginBottom: '20px' }} >Our strenghts</motion.h1>
             <div className="strengths container">
 
-                <motion.div variants={cardAnim} animate={animation} initial="hidden" className="row">
+                <motion.div ref={contentRef} variants={cardAnim} animate={animation} initial="hidden" className="row">
                     {strenghts.map((strenght, index) => {
                         return (
                             <div key={index} className={index === current ? "strength-col-logo active" : "strength-col-logo "} onClick={() => { setCurrent(index) }}>

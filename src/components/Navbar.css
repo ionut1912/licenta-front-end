@@ -23,10 +23,7 @@
   font-family: 'PT Sans', sans-serif;
 }
 
-/* .navbar.active{
-  border-bottom: none;
-  position: sticky;
-} */
+
 
 .navbar .navbar-container {
   display: flex;
@@ -76,10 +73,7 @@
   width: 100px;
 }
 
-/* .navbar .nav-links:-webkit-any-link{
-  color: #1c2237b0;
-  text-decoration: none;
-} */
+
 
 .navbar .nav-links.active {
   color: rgb(6, 5, 90);
@@ -118,7 +112,7 @@
   .NavbarItems {
     position: relative;
   }
-  /* de verificat pe net ce face right si left*/
+
   .navbar .nav-menu {
     display: flex;
     flex-direction: column;

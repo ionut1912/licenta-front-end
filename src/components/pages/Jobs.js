@@ -7,7 +7,7 @@ import FlexDinamicInfo from '../FlexDinamicInfo';
 import { MakeCVInfoData } from '../Joburi/MakeCVInfoData';
 
 
-function Jobs() {
+export default function Jobs() {
 
     const [jobs, setJobs] = useState([]);
 
@@ -20,7 +20,7 @@ function Jobs() {
 
     function loadData() {
 
-        JobService.getJobs().then(
+        JobService.getJobsActives().then(
             response =>
                 setJobs(response.data));
     }
@@ -39,4 +39,4 @@ function Jobs() {
     )
 }
 
-export default Jobs
+

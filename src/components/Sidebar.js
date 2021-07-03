@@ -100,7 +100,7 @@ export default function Sidebar(props) {
         }
 
       </nav>
-    </div >
+    </div>
   )
 }
 
