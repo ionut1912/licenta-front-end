@@ -89,8 +89,10 @@ export default function Aplicare(props) {
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
+            //citim continutul fisierului
             fileReader.readAsDataURL(file);
 
+            //returnam rezultatul(continutul codificat in baza 64)
             fileReader.onload = () => {
                 resolve(fileReader.result);
             };

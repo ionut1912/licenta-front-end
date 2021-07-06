@@ -26,6 +26,7 @@ export default function EducationSection(props) {
         descriere: ""
     });
 
+    //adaugarea educatiilor in lista
     function addEducation(newEducation) {
         props.setCv(prevInfo => {
             return {
@@ -35,6 +36,7 @@ export default function EducationSection(props) {
         });
     }
 
+    //editarea educatiei
     function editEducation(id) {
 
         const education1 = props.cv.educations.filter((educationItem, index) => {
@@ -56,6 +58,7 @@ export default function EducationSection(props) {
         setEducationFields(true);
     }
 
+    //stergerea educatiei adaugate recent sau in procesul creerari cv-ului
     function deleteEducation(id) {
         props.setCv(prevInfo => {
             return {
@@ -68,6 +71,7 @@ export default function EducationSection(props) {
     }
 
 
+    //stergerea educatiei din baza de date
     function deleteEducationPermanent(id) {
 
         const educationForDelete = props.cv.educations.filter((educationItem, index) => {
@@ -111,6 +115,7 @@ export default function EducationSection(props) {
         )
     }
 
+    //curatarea educatiei daca are id(nu este adaugata recent)
     function cleanAndRemoveEducationPermanent() {
 
         cvService.deleteEducation(education.id).then(
@@ -154,6 +159,7 @@ export default function EducationSection(props) {
 
     }
 
+    //curatarea educatiei
     function removeEducation() {
 
         if (props.editCv && education.id !== '')
@@ -164,6 +170,7 @@ export default function EducationSection(props) {
                 onConfirm: () => cleanAndRemoveEducationPermanent()
             })
         else {
+          //curatarea educatiei daca nu id(este adaugata recent)
             setEducationFields(false);
 
             setEducation({

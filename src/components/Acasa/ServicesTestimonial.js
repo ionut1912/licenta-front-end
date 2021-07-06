@@ -10,8 +10,6 @@ export default function ServicesTestimonial({ data }) {
     const [openPopupView, setOpenPopupView] = useState(false);
     const [currentItem, setCurrentItem] = useState("");
 
-
-
     const animation = useAnimation();
     const [contentRef, inView] = useInView({
         triggerOnce: true,
