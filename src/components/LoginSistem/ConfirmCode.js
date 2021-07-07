@@ -79,11 +79,19 @@ export default function ConfirmCode({ state, setState, setNotify, setSubTitle, c
                         })
 
                 },
-                error => setNotify({
-                    isOpen: true,
-                    message: "Network error!",
-                    type: 'error'
-                })
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    setNotify({
+                        isOpen: true,
+                        message: resMessage,
+                        type: 'error'
+                    })
+                }
             )
         } else if (codeType === "activation") {
             AuthService.checkVerifyCodee(codeType, email, code).then(

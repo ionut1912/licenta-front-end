@@ -78,7 +78,7 @@ export default function UserProfile(props) {
         }
     };
 
-  
+
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -123,11 +123,17 @@ export default function UserProfile(props) {
                 });
             },
             error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: "Network error",
+                    message: resMessage,
                     type: 'error'
-                });
+                })
                 setConfirmDialog({
                     ...confirmDialog,
                     isOpen: false
@@ -205,7 +211,7 @@ export default function UserProfile(props) {
                                     <p className="file-name text-primary">{fileChoosen}</p>
                                 </div> : null}
                         </div>
-                        
+
                         <div className="form-group">
                             <label htmlFor="inputFullName" className="col-sm-2 col-form-label">Full name:</label>
                             <div className="col-md-6 col-sm-8">

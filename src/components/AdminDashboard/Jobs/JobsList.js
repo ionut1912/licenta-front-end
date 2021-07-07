@@ -176,9 +176,15 @@ export default function JobsList(props) {
                 })
             },
             error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: 'Network error!',
+                    message: resMessage,
                     type: 'error'
                 })
             }
@@ -219,7 +225,7 @@ export default function JobsList(props) {
             </Toolbar>
             <Paper className={classes.papper}>
                 <JobFilters setFilter={setFilter} filter={filter} />
-                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px',marginTop:'30px' }}>No results found!</h1> :
+                {recordsAfterPagingAndSorting().length === 0 ? <h1 style={{ textAlign: 'center', color: "#fc1930d5", fontSize: '60px', marginTop: '30px' }}>No results found!</h1> :
                     <TableContainer style={{ marginTop: '25px' }}>
                         <Table className={classes.table}>
                             <TblHead />

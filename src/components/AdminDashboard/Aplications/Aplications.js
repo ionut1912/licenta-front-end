@@ -141,9 +141,15 @@ export default function Aplications(props) {
                 })
             },
             error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: 'Network error!',
+                    message: resMessage,
                     type: 'error'
                 })
             }
@@ -170,9 +176,15 @@ export default function Aplications(props) {
                 getData();
             },
             error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: 'Network error!',
+                    message: resMessage,
                     type: 'error'
                 })
             }
@@ -191,6 +203,7 @@ export default function Aplications(props) {
         return function cleanup() {
             setRecords([]);
         }
+
     }, [])
 
 

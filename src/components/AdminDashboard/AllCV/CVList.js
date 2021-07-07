@@ -162,12 +162,19 @@ export default function CVList(props) {
                     type: 'success'
                 })
             },
-            error =>
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: 'Network error!',
+                    message: resMessage,
                     type: 'error'
                 })
+            }
         );
     }
 

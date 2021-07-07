@@ -30,11 +30,17 @@ const PDFView = ({ props }) => {
                     props.setOpenPopup(false);
                 },
                 error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
                     props.setNotify({
                         isOpen: true,
-                        message: 'Network error!',
+                        message: resMessage,
                         type: 'error'
-                    });
+                    })
                     props.setOpenPopup(false);
                 }
             )
@@ -51,11 +57,17 @@ const PDFView = ({ props }) => {
                     props.setOpenPopup(false);
                 },
                 error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
                     props.setNotify({
                         isOpen: true,
-                        message: 'Network error!',
+                        message: resMessage,
                         type: 'error'
-                    });
+                    })
                     props.setOpenPopup(false);
                 }
             )

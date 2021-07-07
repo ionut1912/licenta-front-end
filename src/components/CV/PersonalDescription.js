@@ -47,9 +47,15 @@ export default function PersonalDescription(props) {
                     isOpen: false
                 })
 
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
                 setNotify({
                     isOpen: true,
-                    message: 'Network error!',
+                    message: resMessage,
                     type: 'error'
                 })
             }

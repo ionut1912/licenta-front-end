@@ -25,11 +25,17 @@ export default function JobView(props) {
                     close();
                 },
                 error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
                     props.setNotify({
                         isOpen: true,
-                        message: 'Network error!',
+                        message: resMessage,
                         type: 'error'
-                    });
+                    })
                     close();
                 }
             )
@@ -46,11 +52,17 @@ export default function JobView(props) {
                     close();
                 },
                 error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
                     props.setNotify({
                         isOpen: true,
-                        message: 'Network error!',
+                        message: resMessage,
                         type: 'error'
-                    });
+                    })
                     close();
                 }
             )
