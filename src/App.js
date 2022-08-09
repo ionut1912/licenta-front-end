@@ -19,8 +19,7 @@ export default function App() {
   const [showModalNav, setShowModalNav] = useState(false);
   const [clickForSidebar, setClickForSidebar] = useState(false);
   const [clickForNavbar, setClickForNavBar] = useState(false);
-
-
+ 
   return (
     <Router>
       <HideBackgroundForNav showModalNav={showModalNav} setShowModalNav={setShowModalNav} setClickForNavBar={setClickForNavBar} setClickForSideBar={setClickForSidebar} />
@@ -39,7 +38,8 @@ export default function App() {
         : loggedIn.role === "ROLE_ADMIN" &&
         <Switch>
           <Admin path={["/", "/admin"]} click={clickForSidebar} component={Admin} />
-          <Route component={NotFound} />
+          <Route component={NotFound
+          } />
         </Switch>
       ) : <Switch>
         <Route path={["/", "/home"]} exact component={Home} />

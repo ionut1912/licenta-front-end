@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import { TextField, InputAdornment, makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import AuthService from "../../services/auth.service";
+import AutService from "../../services/auth.service";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
